@@ -1,0 +1,24 @@
+PODS:
+  - Cely (2.0.3):
+    - Cely/Core (= 2.0.3)
+  - Cely/Core (2.0.3)
+
+DEPENDENCIES:
+  - Cely (from `https://github.com/chaione/Cely`, branch `master`)
+
+EXTERNAL SOURCES:
+  Cely:
+    :branch: master
+    :git: https://github.com/chaione/Cely
+
+CHECKOUT OPTIONS:
+  Cely:
+    :commit: 6ecab266d282e8177eee71a6e77cda78ee399c9f
+    :git: https://github.com/chaione/Cely
+
+SPEC CHECKSUMS:
+  Cely: 764f96dfc009b0b725afe801255b2dac54c7bd76
+
+PODFILE CHECKSUM: ff6a26098825a6eee16ba8ab7eba47f423845adb
+
+COCOAPODS: 1.5.3

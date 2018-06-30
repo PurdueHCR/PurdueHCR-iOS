@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CAD413D8FEBCA2B82AC82444 /* Pods_Platinum_Points.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA6F3DC308283CE27E4D34 /* Pods_Platinum_Points.framework */; };
 		D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90120DF35D800201E74 /* AppDelegate.swift */; };
 		D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90320DF35D800201E74 /* PointOptionViewController.swift */; };
 		D30FC90620DF35D800201E74 /* PointOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90520DF35D800201E74 /* PointOverviewViewController.swift */; };
@@ -18,7 +19,9 @@
 		D3D062B520E7F59800E8B3A3 /* Points.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3D062B420E7F59800E8B3A3 /* Points.plist */; };
 		D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062B620E7F73C00E8B3A3 /* DataManager.swift */; };
 		D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062B820E7F75B00E8B3A3 /* Data.swift */; };
-		D3D062BB20E7FACD00E8B3A3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062BA20E7FACD00E8B3A3 /* AccountViewController.swift */; };
+		D3D062BD20E816AB00E8B3A3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062BC20E816AB00E8B3A3 /* User.swift */; };
+		D3D062BF20E818CF00E8B3A3 /* LoginStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062BE20E818CF00E8B3A3 /* LoginStyle.swift */; };
+		D3D062C120E8192400E8B3A3 /* platinum-banner.png in Resources */ = {isa = PBXBuildFile; fileRef = D3D062C020E8192400E8B3A3 /* platinum-banner.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D8E9E68CBCDEABF5F7177E3 /* Pods-Platinum Points.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Platinum Points.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points.debug.xcconfig"; sourceTree = "<group>"; };
+		614DAB94E9078A278BDB559C /* Pods-Platinum Points.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Platinum Points.release.xcconfig"; path = "Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points.release.xcconfig"; sourceTree = "<group>"; };
 		D30FC8FE20DF35D800201E74 /* Platinum Points.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Platinum Points.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC90120DF35D800201E74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D30FC90320DF35D800201E74 /* PointOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOptionViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +61,10 @@
 		D3D062B420E7F59800E8B3A3 /* Points.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Points.plist; sourceTree = "<group>"; };
 		D3D062B620E7F73C00E8B3A3 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		D3D062B820E7F75B00E8B3A3 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
-		D3D062BA20E7FACD00E8B3A3 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		D3D062BC20E816AB00E8B3A3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D3D062BE20E818CF00E8B3A3 /* LoginStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStyle.swift; sourceTree = "<group>"; };
+		D3D062C020E8192400E8B3A3 /* platinum-banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "platinum-banner.png"; sourceTree = "<group>"; };
+		FABA6F3DC308283CE27E4D34 /* Pods_Platinum_Points.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Platinum_Points.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAD413D8FEBCA2B82AC82444 /* Pods_Platinum_Points.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +93,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FEF3EC75CED09292AAA60A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FABA6F3DC308283CE27E4D34 /* Pods_Platinum_Points.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4BDE08ABB5123F87B9AE7A78 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2D8E9E68CBCDEABF5F7177E3 /* Pods-Platinum Points.debug.xcconfig */,
+				614DAB94E9078A278BDB559C /* Pods-Platinum Points.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D30FC8F520DF35D700201E74 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +117,8 @@
 				D30FC91720DF35D900201E74 /* Platinum PointsTests */,
 				D30FC92220DF35D900201E74 /* Platinum PointsUITests */,
 				D30FC8FF20DF35D800201E74 /* Products */,
+				4BDE08ABB5123F87B9AE7A78 /* Pods */,
+				1FEF3EC75CED09292AAA60A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,7 +135,6 @@
 		D30FC90020DF35D800201E74 /* Platinum Points */ = {
 			isa = PBXGroup;
 			children = (
-				D3D062BA20E7FACD00E8B3A3 /* AccountViewController.swift */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90320DF35D800201E74 /* PointOptionViewController.swift */,
 				D30FC90520DF35D800201E74 /* PointOverviewViewController.swift */,
@@ -118,6 +145,9 @@
 				D30FC90C20DF35D900201E74 /* LaunchScreen.storyboard */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
 				D3D062B420E7F59800E8B3A3 /* Points.plist */,
+				D3D062BC20E816AB00E8B3A3 /* User.swift */,
+				D3D062BE20E818CF00E8B3A3 /* LoginStyle.swift */,
+				D3D062C020E8192400E8B3A3 /* platinum-banner.png */,
 			);
 			path = "Platinum Points";
 			sourceTree = "<group>";
@@ -147,9 +177,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D30FC92820DF35D900201E74 /* Build configuration list for PBXNativeTarget "Platinum Points" */;
 			buildPhases = (
+				A5C898E10175517DDFBCD7DA /* [CP] Check Pods Manifest.lock */,
 				D30FC8FA20DF35D800201E74 /* Sources */,
 				D30FC8FB20DF35D800201E74 /* Frameworks */,
 				D30FC8FC20DF35D800201E74 /* Resources */,
+				048480FFE35B9004ADB231AC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -246,6 +278,7 @@
 			files = (
 				D30FC90E20DF35D900201E74 /* LaunchScreen.storyboard in Resources */,
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
+				D3D062C120E8192400E8B3A3 /* platinum-banner.png in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				D3D062B520E7F59800E8B3A3 /* Points.plist in Resources */,
 			);
@@ -267,6 +300,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		048480FFE35B9004ADB231AC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Cely/Cely.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cely.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5C898E10175517DDFBCD7DA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Platinum Points-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D30FC8FA20DF35D800201E74 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -274,8 +346,9 @@
 			files = (
 				D30FC90620DF35D800201E74 /* PointOverviewViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
-				D3D062BB20E7FACD00E8B3A3 /* AccountViewController.swift in Sources */,
+				D3D062BD20E816AB00E8B3A3 /* User.swift in Sources */,
 				D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */,
+				D3D062BF20E818CF00E8B3A3 /* LoginStyle.swift in Sources */,
 				D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */,
 				D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */,
 			);
@@ -448,6 +521,7 @@
 		};
 		D30FC92920DF35D900201E74 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D8E9E68CBCDEABF5F7177E3 /* Pods-Platinum Points.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -466,6 +540,7 @@
 		};
 		D30FC92A20DF35D900201E74 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 614DAB94E9078A278BDB559C /* Pods-Platinum Points.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

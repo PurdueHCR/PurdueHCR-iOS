@@ -1,0 +1,6 @@
+framework module Cely {
+  umbrella header "Cely-umbrella.h"
+
+  export *
+  module * { export * }
+}
