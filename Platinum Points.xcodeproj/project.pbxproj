@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90120DF35D800201E74 /* AppDelegate.swift */; };
-		D30FC90420DF35D800201E74 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90320DF35D800201E74 /* FirstViewController.swift */; };
-		D30FC90620DF35D800201E74 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90520DF35D800201E74 /* SecondViewController.swift */; };
+		D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90320DF35D800201E74 /* PointOptionViewController.swift */; };
+		D30FC90620DF35D800201E74 /* PointOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90520DF35D800201E74 /* PointOverviewViewController.swift */; };
 		D30FC90920DF35D800201E74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90720DF35D800201E74 /* Main.storyboard */; };
 		D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90A20DF35D900201E74 /* Assets.xcassets */; };
 		D30FC90E20DF35D900201E74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90C20DF35D900201E74 /* LaunchScreen.storyboard */; };
 		D30FC91920DF35D900201E74 /* Platinum_PointsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC91820DF35D900201E74 /* Platinum_PointsTests.swift */; };
 		D30FC92420DF35D900201E74 /* Platinum_PointsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */; };
+		D3D062B520E7F59800E8B3A3 /* Points.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3D062B420E7F59800E8B3A3 /* Points.plist */; };
+		D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062B620E7F73C00E8B3A3 /* DataManager.swift */; };
+		D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062B820E7F75B00E8B3A3 /* Data.swift */; };
+		D3D062BB20E7FACD00E8B3A3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062BA20E7FACD00E8B3A3 /* AccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +41,8 @@
 /* Begin PBXFileReference section */
 		D30FC8FE20DF35D800201E74 /* Platinum Points.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Platinum Points.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC90120DF35D800201E74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D30FC90320DF35D800201E74 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		D30FC90520DF35D800201E74 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		D30FC90320DF35D800201E74 /* PointOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOptionViewController.swift; sourceTree = "<group>"; };
+		D30FC90520DF35D800201E74 /* PointOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOverviewViewController.swift; sourceTree = "<group>"; };
 		D30FC90820DF35D800201E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D30FC90A20DF35D900201E74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D30FC90D20DF35D900201E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +53,10 @@
 		D30FC91F20DF35D900201E74 /* Platinum PointsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Platinum PointsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platinum_PointsUITests.swift; sourceTree = "<group>"; };
 		D30FC92520DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3D062B420E7F59800E8B3A3 /* Points.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Points.plist; sourceTree = "<group>"; };
+		D3D062B620E7F73C00E8B3A3 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		D3D062B820E7F75B00E8B3A3 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		D3D062BA20E7FACD00E8B3A3 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +107,17 @@
 		D30FC90020DF35D800201E74 /* Platinum Points */ = {
 			isa = PBXGroup;
 			children = (
+				D3D062BA20E7FACD00E8B3A3 /* AccountViewController.swift */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
-				D30FC90320DF35D800201E74 /* FirstViewController.swift */,
-				D30FC90520DF35D800201E74 /* SecondViewController.swift */,
+				D30FC90320DF35D800201E74 /* PointOptionViewController.swift */,
+				D30FC90520DF35D800201E74 /* PointOverviewViewController.swift */,
+				D3D062B620E7F73C00E8B3A3 /* DataManager.swift */,
+				D3D062B820E7F75B00E8B3A3 /* Data.swift */,
 				D30FC90720DF35D800201E74 /* Main.storyboard */,
 				D30FC90A20DF35D900201E74 /* Assets.xcassets */,
 				D30FC90C20DF35D900201E74 /* LaunchScreen.storyboard */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
+				D3D062B420E7F59800E8B3A3 /* Points.plist */,
 			);
 			path = "Platinum Points";
 			sourceTree = "<group>";
@@ -235,6 +247,7 @@
 				D30FC90E20DF35D900201E74 /* LaunchScreen.storyboard in Resources */,
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
+				D3D062B520E7F59800E8B3A3 /* Points.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,9 +272,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D30FC90620DF35D800201E74 /* SecondViewController.swift in Sources */,
+				D30FC90620DF35D800201E74 /* PointOverviewViewController.swift in Sources */,
+				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
+				D3D062BB20E7FACD00E8B3A3 /* AccountViewController.swift in Sources */,
+				D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */,
 				D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */,
-				D30FC90420DF35D800201E74 /* FirstViewController.swift in Sources */,
+				D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
