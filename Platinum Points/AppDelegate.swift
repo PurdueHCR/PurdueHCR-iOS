@@ -8,6 +8,7 @@
 
 import UIKit
 import Cely
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,15 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
         Cely.setup(with: window!, forModel: User(), requiredProperties: [.token], withOptions: [
-            .loginStyle: CottonCandy(),
-            .loginCompletionBlock: { (username: String, password: String) in
-                if username == "asdf" && password == "asdf" {
-                    //Cely.save(username, forKey: "username")
-                    //Cely.save("FAKETOKEN:\(username)\(password)", forKey: "token", securely: true)
-                    Cely.changeStatus(to: .loggedIn)
-                }
-            }
+            .loginStoryboard: UIStoryboard(name: "LoginStoryboard", bundle: nil)
             ])
         // Override point for customization after application launch.
         return true

@@ -14,4 +14,7 @@ struct User: CelyUser {
     enum Property: CelyProperty {
         case token = "token"
     }
+    var permissionLevel:Int?
+    var accountID:String?
+    var name:String?
 }

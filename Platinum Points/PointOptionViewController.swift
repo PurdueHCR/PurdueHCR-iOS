@@ -53,10 +53,11 @@ class PointOptionViewController: UITableViewController{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // get a reference to the second view controller
-        //let secondViewController = segue.destination as! SecondViewController
+        let nextViewController = segue.destination as! TypeSubmitViewController
         
-        // set a variable in the second view controller with the data to pass
-        //secondViewController.receivedData = "hello"
+        let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+        
+        nextViewController.typeName = pointSystem![(indexPath?.section)!].points?[(indexPath?.row)!]
     }
 }
 

@@ -9,6 +9,7 @@
 import Foundation
 
 
+
 private let POINTS_PLIST = Bundle.main.path(forResource: "Points", ofType: "plist")
 
 
@@ -45,3 +46,11 @@ class DataManager {
         return _pointSystem
     }
 }
+
+
+//class DataManager {
+//
+//    func retrievePointTypes() -> [PointGroup] {
+//        return nil;
+//    }
+//}
