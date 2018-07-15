@@ -5,5 +5,6 @@ target 'Platinum Points' do
   pod 'Cely', :git => 'https://github.com/chaione/Cely', :branch => 'master' 
   pod 'ValueStepper'
   pod 'Firebase/Core'
-  pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Auth'
 end

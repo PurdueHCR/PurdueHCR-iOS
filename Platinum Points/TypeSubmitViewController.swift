@@ -15,12 +15,12 @@ class TypeSubmitViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var countStepper: ValueStepper!
     @IBOutlet var descriptionField: UITextView!
     
-    var typeName:String?
+    var type:PointType?
     var user:User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        typeLabel.text? = typeName!
+        typeLabel.text? = type!.pointDescription
         
         // Do any additional setup after loading the view.
     }

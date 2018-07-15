@@ -10,12 +10,47 @@ import UIKit
 
 class PointOptionViewController: UITableViewController{
 
-    var pointSystem: [PointType]?
+    var pointSystem = [PointGroup]()
     
+//    init(){
+//        super.init(nibName:nil,bundle:nil)
+//        pointSystem = DataManager.sharedManager.getPointGroups(onDone: { [weak self] (pg:[PointGroup]) in
+//            self?.pointSystem = pg;
+//            self?.tableView.reloadData()
+//            print("Please relaod")
+//        }) ?? [PointGroup]()
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        pointSystem = DataManager.sharedManager.getPointGroups(onDone: { [weak self] (pg:[PointGroup]) in
+//            self?.pointSystem = pg;
+//            self?.tableView.reloadData()
+//            print("Please relaod")
+//        }) ?? [PointGroup]()
+    //    }
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
-        pointSystem = DataManager.sharedManager.allSheet1s()
         // Do any additional setup after loading the view, typically from a nib.
+        pointSystem = DataManager.sharedManager.getPointGroups(onDone: { [weak self] (pg:[PointGroup]) in
+            if let strongSelf = self {
+                strongSelf.pointSystem = pg;
+                DispatchQueue.main.async {
+                    strongSelf.tableView.reloadData()
+                }
+                print("Please relaod")
+            }
+            else{
+                print("self is nil")
+            }
+            
+        }) ?? [PointGroup]()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let name = User.get(.name) as! String
+        self.title = "Welcome "+name
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,22 +59,25 @@ class PointOptionViewController: UITableViewController{
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (pointSystem![section].points!.count);
+        print("Get the count: ", pointSystem[section].points.count)
+        return (pointSystem[section].points.count);
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
-        cell.textLabel?.text = pointSystem![indexPath.section].points![indexPath.row]
+        cell.textLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointDescription
         
         return(cell)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return (pointSystem!.count)
+        print("Get the numb sections: ", pointSystem.count)
+        return (pointSystem.count)
     }
     
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return pointSystem![section].pointValue! + " Points";
+        return pointSystem[section].pointValue.description + " Points" ;
     }
     
     // method to run when table view cell is tapped
@@ -57,7 +95,7 @@ class PointOptionViewController: UITableViewController{
         
         let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
         
-        nextViewController.typeName = pointSystem![(indexPath?.section)!].points?[(indexPath?.row)!]
+        nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
     }
 }
 

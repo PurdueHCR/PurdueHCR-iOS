@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PointType : CustomStringConvertible {
+class PointTypes : CustomStringConvertible {
     var points : [String]? = nil;
     var pointValue: String? = nil;
     var description: String {
@@ -16,22 +16,37 @@ class PointType : CustomStringConvertible {
     }
 }
 
-//class PointType {
-//    var pointValue = 0;
-//    var pointDescription:String? = nil;
-//    var residentCanSubmit = false;
-//    var pointID:String? = nil;
-//
-//}
-//
-//class PointGroup {
-//    var points:[PointType]? = nil;
-//}
-//
-//class PointLog {
-//    var pointDescription:String? = nil;
-//    var type:PointType? = nil;
-//    var resident:String? = nil;
-//    var id:String? = nil;
-//}
+class PointType {
+    var pointValue:Int
+    var pointDescription:String
+    var residentCanSubmit:Bool
+    var pointID:Int
+    
+    init(pv:Int,pd:String,rcs:Bool,pid:Int){
+        self.pointValue = pv
+        self.pointDescription = pd
+        self.residentCanSubmit = rcs
+        self.pointID = pid
+    }
+
+}
+
+class PointGroup{
+    var points = [PointType]();
+    var pointValue: Int;
+
+    init(val:Int){
+        self.pointValue = val
+    }
+    func add(pt:PointType){
+        points.append(pt)
+    }
+}
+
+class PointLog {
+    var pointDescription:String? = nil;
+    var type:PointType? = nil;
+    var resident:String? = nil;
+    var id:String? = nil;
+}
 

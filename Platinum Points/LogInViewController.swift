@@ -8,6 +8,7 @@
 
 import UIKit
 import Cely
+import FirebaseAuth
 
 class LogInViewController: UIViewController {
 
@@ -18,6 +19,7 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -30,9 +32,37 @@ class LogInViewController: UIViewController {
 
     @IBAction func login(_ sender: Any) {
         print("logon")
-        Cely.changeStatus(to: .loggedIn)
+        guard let email = username.text, let password = password.text else {
+            postErrorNotification(message: "Please enter all information.")
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            guard let usr = user, error == nil else {
+                self.postErrorNotification(message: error!.localizedDescription)
+                return
+            }
+            DataManager.sharedManager.getUserWhenLogginIn(id: usr.user.uid, onDone: { (success:Bool) in
+                if(success){
+                    Cely.changeStatus(to: .loggedIn)
+                }
+                else{
+                    fatalError("Something bad happend that should not have happend. Somehow you have an account without a corresponding entry in user table.")
+                }
+            })
+            
+        //Cely.changeStatus(to: .loggedIn)
+        }
     }
     
+    func postErrorNotification(message:String){
+        let alert = UIAlertController(title: "Error in Sign Up", message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+        
 
     
     /*    // MARK: - Navigation
