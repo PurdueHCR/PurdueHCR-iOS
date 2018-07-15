@@ -19,7 +19,10 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if Auth.auth().currentUser != nil {
+            User.save(Auth.auth().currentUser?.providerID as Any, as: .id)
+            Cely.changeStatus(to: .loggedIn)
+        }
 
         // Do any additional setup after loading the view.
     }
@@ -44,6 +47,7 @@ class LogInViewController: UIViewController {
             }
             DataManager.sharedManager.getUserWhenLogginIn(id: usr.user.uid, onDone: { (success:Bool) in
                 if(success){
+                    User.save(Auth.auth().currentUser?.providerID as Any, as: .id)
                     Cely.changeStatus(to: .loggedIn)
                 }
                 else{

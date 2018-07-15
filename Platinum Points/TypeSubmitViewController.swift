@@ -31,6 +31,32 @@ class TypeSubmitViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func submit(_ sender: Any) {
+        guard let description = descriptionField.text, !description.isEmpty else{
+            print("Description is empty")
+            return
+        }
+        let count = countStepper.value
+        if ( count <= 0){
+            print("Count is illegal number")
+            return
+        }
+        guard let pointType = type else{
+            print("PointType not found")
+            return
+        }
+        
+        let pointLog = PointLog(pointDescription: description, resident: User.get(.name) as! String, type: pointType)
+        DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
+            if(err != nil){
+                self.postErrorNotification(message: err.debugDescription)
+                print("Error in posting: ",err.debugDescription)
+            }
+            else{
+                //post success
+                print("Success")
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
         
     }
     
@@ -43,6 +69,14 @@ class TypeSubmitViewController: UIViewController, UITextFieldDelegate {
         if(textField.text == ""){
             textField.text = "Please Enter A Description of What You Did"
         }
+    }
+    
+    func postErrorNotification(message:String){
+        let alert = UIAlertController(title: "Error in Submit", message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
     }
 
 

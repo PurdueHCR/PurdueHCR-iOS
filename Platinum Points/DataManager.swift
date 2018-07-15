@@ -55,8 +55,9 @@ class DataManager {
     }
     
     
-    func writePoints(){
+    func writePoints(log:PointLog, onDone:@escaping (_ err:Error?)->Void){
         // take in a point log, write it to house then write the ref to the user
+        fbh.addPointLog(log: log, onDone: onDone)
     }
     
     

@@ -34,6 +34,12 @@ struct User: CelyUser {
             switch self {
             case .name:
                 return true
+            case .house:
+                return true
+            case .permissionLevel:
+                return true
+            case .email:
+                return true
             default:
                 return false
             }

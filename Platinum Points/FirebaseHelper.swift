@@ -15,8 +15,7 @@ class FirebaseHelper {
     let NAME = "Name"
     let PERMISSION_LEVEL = "Permission Level"
     let HOUSE = "House"
-    let UNCONFIRMED_POINTS = "Unconfirmed Points"
-    let CONFIRMED_POINTS = "Confirmed Points"
+    let POINTS = "Unconfirmed Points"
     let USERS = "Users"
     
     init(){
@@ -104,14 +103,14 @@ class FirebaseHelper {
     }
     
     // Write the point to the house points log and write the reference to the user
-    // 
+    // put in onDone to handle what happens when it returns
     func addPointLog(log:PointLog, onDone:@escaping (_ err:Error?)->Void){
         let house = User.get(.house) as! String
         var ref: DocumentReference? = nil
         // write the document to the HOUSE table and save the reference
-        ref = self.db.collection(self.HOUSE).document(house).collection(self.UNCONFIRMED_POINTS).addDocument(data: [
+        ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: [
             "Description" : log.pointDescription as Any,
-            "PointTypeID" : log.id as Any,
+            "PointTypeID" : ( log.type.pointID * -1) as Any,
             "Resident"    : log.resident as Any
         ]){ err in
             if ( err == nil){

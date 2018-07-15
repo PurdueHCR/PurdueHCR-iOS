@@ -44,9 +44,13 @@ class PointGroup{
 }
 
 class PointLog {
-    var pointDescription:String? = nil;
-    var type:PointType? = nil;
-    var resident:String? = nil;
-    var id:String? = nil;
+    var pointDescription:String;
+    var type:PointType;
+    var resident:String;
+    init(pointDescription:String, resident:String, type:PointType){
+        self.pointDescription = pointDescription
+        self.type = type
+        self.resident = resident
+    }
 }
 
