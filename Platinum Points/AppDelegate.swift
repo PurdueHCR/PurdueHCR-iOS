@@ -21,7 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .loginStoryboard: UIStoryboard(name: "LoginStoryboard", bundle: nil)
             ])
         // Override point for customization after application launch.
-        _ = DataManager.sharedManager.getPointGroups()
+        DataManager.sharedManager.initializeData()
+        if Auth.auth().currentUser != nil {
+            DataManager.sharedManager.getUserWhenLogginIn(id: (Auth.auth().currentUser?.uid)!, onDone: { (success:Bool) in
+                if(success){
+                    User.save(Auth.auth().currentUser?.uid as Any, as: .id)
+                    Cely.changeStatus(to: .loggedIn)
+                }
+                else{
+                    fatalError("Something bad happend that should not have happend. Somehow you have an account without a corresponding entry in user table.")
+                }
+            })
+        }
         return true
     }
 

@@ -19,11 +19,6 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if Auth.auth().currentUser != nil {
-            User.save(Auth.auth().currentUser?.providerID as Any, as: .id)
-            Cely.changeStatus(to: .loggedIn)
-        }
-
         // Do any additional setup after loading the view.
     }
 

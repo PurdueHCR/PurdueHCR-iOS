@@ -8,19 +8,37 @@
 
 import UIKit
 
+class ApprovalCell: UITableViewCell {
+    @IBOutlet var reasonLabel: UILabel!
+    @IBOutlet var nameLabel: UILabel!
+    
+}
+
 class RHPApprovalTableViewController: UITableViewController {
     
-    let text = ["Jason said hello to Molli","Brian Played a club game", "Marisa got an interview", "Camile went to Fac Fellow", "Ashley went to a floor dinner"]
-
+    var refresher: UIRefreshControl?
+    var unconfirmedLogs = [PointLog]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        unconfirmedLogs = DataManager.sharedManager.getUnconfirmedPointLogs() ?? [PointLog]()
+        resfreshData()
+        refresher = UIRefreshControl()
+        refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+        tableView.refreshControl = refresher
     }
+    
+    @objc func resfreshData(){
+        DataManager.sharedManager.refreshUnconfirmedPointLogs(onDone: { (pointLogs:[PointLog]) in
+            self.unconfirmedLogs = pointLogs
+            DispatchQueue.main.async { [unowned self] in
+                self.tableView.reloadData()
+            }
+            self.tableView.refreshControl?.endRefreshing()
+        })
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -36,14 +54,15 @@ class RHPApprovalTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return text.count
+        return unconfirmedLogs.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
-        cell.textLabel?.text = text[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ApprovalCell
+        
+        cell.reasonLabel?.text = unconfirmedLogs[indexPath.row].type.pointDescription
+        cell.nameLabel?.text = unconfirmedLogs[indexPath.row].resident
 
         return cell
     }
@@ -60,16 +79,39 @@ class RHPApprovalTableViewController: UITableViewController {
 
     
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        let approve = UITableViewRowAction(style: .normal, title: "Approve") { action, index in
+            print("Approve button tapped")
+            let log = self.unconfirmedLogs.remove(at: index.row)
+            self.handlePointApproval(log: log, approve: true)
+            self.tableView.deleteRows(at: [index], with: .automatic)
+        }
+        approve.backgroundColor = .green
+        
+        let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
+            print("Delete button tapped")
+            let log = self.unconfirmedLogs.remove(at: index.row)
+            self.handlePointApproval(log: log, approve: false)
+            self.tableView.deleteRows(at: [index], with: .automatic)
+        }
+        delete.backgroundColor = .red
+        
+        return [approve, delete]
     }
     
-
+    
+    func handlePointApproval(log:PointLog, approve:Bool){
+        DataManager.sharedManager.confirmOrDenyPoints(log: log, approved: approve, onDone: { (err: Error?) in
+            if(err != nil){
+                print("Failed to handle log")
+                self.unconfirmedLogs.append(log)
+                DispatchQueue.main.async { [unowned self] in
+                    self.tableView.reloadData()
+                }
+            }
+        })
+    }
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {

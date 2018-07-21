@@ -47,10 +47,20 @@ class PointLog {
     var pointDescription:String;
     var type:PointType;
     var resident:String;
+    var logID:String? = nil;
     init(pointDescription:String, resident:String, type:PointType){
         self.pointDescription = pointDescription
         self.type = type
         self.resident = resident
+    }
+}
+extension PointLog: Equatable {
+    static func == (lhs: PointLog, rhs: PointLog) -> Bool {
+        return
+            lhs.type.pointID == rhs.type.pointID &&
+                lhs.resident == rhs.resident &&
+                lhs.pointDescription == rhs.pointDescription &&
+                lhs.logID == rhs.logID
     }
 }
 

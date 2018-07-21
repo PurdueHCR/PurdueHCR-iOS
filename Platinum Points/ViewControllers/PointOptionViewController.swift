@@ -11,41 +11,10 @@ import UIKit
 class PointOptionViewController: UITableViewController{
 
     var pointSystem = [PointGroup]()
-    
-//    init(){
-//        super.init(nibName:nil,bundle:nil)
-//        pointSystem = DataManager.sharedManager.getPointGroups(onDone: { [weak self] (pg:[PointGroup]) in
-//            self?.pointSystem = pg;
-//            self?.tableView.reloadData()
-//            print("Please relaod")
-//        }) ?? [PointGroup]()
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        pointSystem = DataManager.sharedManager.getPointGroups(onDone: { [weak self] (pg:[PointGroup]) in
-//            self?.pointSystem = pg;
-//            self?.tableView.reloadData()
-//            print("Please relaod")
-//        }) ?? [PointGroup]()
-    //    }
-    //
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        pointSystem = DataManager.sharedManager.getPointGroups(onDone: { [weak self] (pg:[PointGroup]) in
-            if let strongSelf = self {
-                strongSelf.pointSystem = pg;
-                DispatchQueue.main.async {
-                    strongSelf.tableView.reloadData()
-                }
-                print("Please relaod")
-            }
-            else{
-                print("self is nil")
-            }
-            
-        }) ?? [PointGroup]()
+        pointSystem = DataManager.sharedManager.getPointGroups() ?? [PointGroup]()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +28,6 @@ class PointOptionViewController: UITableViewController{
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Get the count: ", pointSystem[section].points.count)
         return (pointSystem[section].points.count);
     }
     
@@ -71,7 +39,6 @@ class PointOptionViewController: UITableViewController{
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        print("Get the numb sections: ", pointSystem.count)
         return (pointSystem.count)
     }
     
