@@ -33,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             })
         }
+        else{
+            Cely.logout()
+        }
         return true
     }
 

@@ -29,7 +29,6 @@ class LogInViewController: UIViewController {
     
 
     @IBAction func login(_ sender: Any) {
-        print("logon")
         guard let email = username.text, let password = password.text else {
             postErrorNotification(message: "Please enter all information.")
             return

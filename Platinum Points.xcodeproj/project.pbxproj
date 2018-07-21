@@ -14,6 +14,7 @@
 		D30FBEED20FC0878000DD221 /* ColorAndPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEC20FC0878000DD221 /* ColorAndPictureView.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
+		D30FBEF3210380F3000DD221 /* PointLogOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */; };
 		D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90120DF35D800201E74 /* AppDelegate.swift */; };
 		D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90320DF35D800201E74 /* PointOptionViewController.swift */; };
 		D30FC90620DF35D800201E74 /* PointOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90520DF35D800201E74 /* PointOverviewViewController.swift */; };
@@ -59,6 +60,7 @@
 		D30FBEEC20FC0878000DD221 /* ColorAndPictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAndPictureView.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
+		D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointLogOverviewController.swift; sourceTree = "<group>"; };
 		D30FC8FE20DF35D800201E74 /* Platinum Points.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Platinum Points.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC90120DF35D800201E74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D30FC90320DF35D800201E74 /* PointOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOptionViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				D30FC90520DF35D800201E74 /* PointOverviewViewController.swift */,
 				D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */,
 				D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */,
+				D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D30FBEF3210380F3000DD221 /* PointLogOverviewController.swift in Sources */,
 				D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */,
 				D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */,
 				D30FBEED20FC0878000DD221 /* ColorAndPictureView.swift in Sources */,
