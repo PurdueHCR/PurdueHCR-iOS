@@ -18,8 +18,10 @@ class PointOptionViewController: UITableViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let name = User.get(.name) as! String
-        self.title = "Welcome "+name
+        guard let name = User.get(.name) else{
+            return
+        }
+        self.title = "Welcome " + (name as! String)
     }
 
     override func didReceiveMemoryWarning() {

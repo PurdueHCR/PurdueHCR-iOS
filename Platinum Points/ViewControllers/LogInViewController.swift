@@ -39,17 +39,16 @@ class LogInViewController: UIViewController {
                 self.postErrorNotification(message: error!.localizedDescription)
                 return
             }
+            //The DataManager will handle setting all the elements in User.properties
             DataManager.sharedManager.getUserWhenLogginIn(id: usr.user.uid, onDone: { (success:Bool) in
                 if(success){
-                    User.save(Auth.auth().currentUser?.providerID as Any, as: .id)
+                    User.save(Auth.auth().currentUser?.uid as Any, as: .id)
                     Cely.changeStatus(to: .loggedIn)
                 }
                 else{
                     fatalError("Something bad happend that should not have happend. Somehow you have an account without a corresponding entry in user table.")
                 }
             })
-            
-        //Cely.changeStatus(to: .loggedIn)
         }
     }
     
@@ -60,16 +59,5 @@ class LogInViewController: UIViewController {
         
         self.present(alert, animated: true)
     }
-        
-
-    
-    /*    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -19,6 +19,8 @@ struct User: CelyUser {
         case id = "id"
         case house = "house"
         case permissionLevel = "pmlevel"
+        case points = "points"
+        case floorID = "flrCode"
         
         
         func securely() -> Bool {
@@ -39,6 +41,10 @@ struct User: CelyUser {
             case .permissionLevel:
                 return true
             case .email:
+                return true
+            case .points:
+                return true
+            case .floorID:
                 return true
             default:
                 return false

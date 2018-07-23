@@ -17,6 +17,9 @@ class FirebaseHelper {
     let HOUSE = "House"
     let POINTS = "Points"
     let USERS = "Users"
+    let TOTAL_POINTS = "TotalPoints"
+    let FLOOR_ID = "FloorID"
+
     
     init(){
         FirebaseApp.configure()
@@ -31,7 +34,9 @@ class FirebaseHelper {
         db.collection("Users").document(User.get(.id) as! String).setData([
             self.NAME: User.get(.name)!,
             self.PERMISSION_LEVEL: User.get(.permissionLevel)!,
-            self.HOUSE:User.get(.house)!
+            self.HOUSE:User.get(.house)!,
+            self.FLOOR_ID:User.get(.floorID)!,
+            self.TOTAL_POINTS:0
         ]){ err in
             onDone(err)
         }
@@ -89,10 +94,11 @@ class FirebaseHelper {
         
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                 User.save(document.data()![self.HOUSE] as Any, as: .house)
+                User.save(document.data()![self.FLOOR_ID] as Any, as: .floorID)
                 User.save(document.data()![self.NAME] as Any, as: .name)
                 User.save(document.data()![self.PERMISSION_LEVEL] as Any, as: .permissionLevel)
+                User.save(document.data()![self.TOTAL_POINTS] as Any, as: .points)
                 onDone(true)
             } else {
                 print("Document does not exist")
@@ -110,7 +116,8 @@ class FirebaseHelper {
         ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: [
             "Description" : log.pointDescription as Any,
             "PointTypeID" : ( log.type.pointID * -1) as Any,
-            "Resident"    : log.resident as Any
+            "Resident"    : log.resident as Any,
+            FLOOR_ID      : log.floorCode as Any
         ]){ err in
             if ( err == nil){
                 let userID = User.get(.id) as! String
@@ -247,8 +254,9 @@ class FirebaseHelper {
                     let description = document.data()["Description"] as! String
                     let idType = (document.data()["PointTypeID"] as! Int) * -1
                     let resident = document.data()["Resident"] as! String
+                    let floorCode = document.data()["FloorID"] as! String
                     let pointType = DataManager.sharedManager.getPointType(value: idType)
-                    let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType)
+                    let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorCode: floorCode)
                     pointLog.logID = id
                     pointLogs.append(pointLog)
                 }
@@ -258,13 +266,42 @@ class FirebaseHelper {
         }
     }
     
+    func refreshUserInformation(onDone:@escaping (_ err:Error?)->Void){
+        let userRef = self.db.collection(self.USERS).document(User.get(.id) as! String)
+        userRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                User.save(document.data()![self.HOUSE] as Any, as: .house)
+                User.save(document.data()![self.FLOOR_ID] as Any, as: .floorID)
+                User.save(document.data()![self.NAME] as Any, as: .name)
+                User.save(document.data()![self.PERMISSION_LEVEL] as Any, as: .permissionLevel)
+                User.save(document.data()![self.TOTAL_POINTS] as Any, as: .points)
+                onDone(error)
+            } else {
+                print("Document does not exist")
+                onDone(error)
+            }
+        }
+    }
     
-    
-    // I should have an on start update method then when the app starts
-    // 1. Pull and cache point types
-    // 2. Pull House Information
-    // 3. Pull updated user information
-    // 4. 
+    func refreshHouseInformation(onDone:@escaping ( _ houses:[House])->Void){
+        let houseRef = self.db.collection(self.HOUSE)
+        houseRef.getDocuments() { (querySnapshot, err) in
+            var houseArray = [House]()
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for houseDocument in querySnapshot!.documents
+                {
+                    let points = houseDocument.data()[self.TOTAL_POINTS] as! Int
+                    let hex = houseDocument.data()["Color"] as! String
+                    let id = houseDocument.documentID
+                    houseArray.append(House(id: id, points: points, hexColor:hex))
+                }
+                houseArray.sort(by: {$0.totalPoints > $1.totalPoints})
+                onDone(houseArray)
+            }
+        }
+    }
     
     
 }

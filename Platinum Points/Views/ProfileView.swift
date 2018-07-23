@@ -31,8 +31,12 @@ class ProfileView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        reloadData()
+    }
+    
+    func reloadData(){
         nameLabel.text = User.get(.name) as! String + "\nWelcome"
-        totalPointsLabel.text = "0\npoints"
+        totalPointsLabel.text = (User.get(.points) as! Int).description + "\npoints"
         totalPointsLabel.layer.borderWidth = 1.0
         totalPointsLabel.layer.borderColor = UIColor.lightGray.cgColor
         achievementLabel.text = "You haven't done\n anything yet."

@@ -28,8 +28,23 @@ class ColorAndPictureView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        backgroundView.backgroundColor = .blue
         
+        let houseName = User.get(.house) as! String
+        if(houseName == "Platinum"){
+            imageView.image = #imageLiteral(resourceName: "Platinum")
+        }
+        else if(houseName == "Copper"){
+            imageView.image = #imageLiteral(resourceName: "Copper")
+        }
+        else if(houseName == "Palladium"){
+            imageView.image = #imageLiteral(resourceName: "Palladium")
+        }
+        else if(houseName == "Silver"){
+            imageView.image = #imageLiteral(resourceName: "Silver")
+        }
+        else if(houseName == "Titanium"){
+            imageView.image = #imageLiteral(resourceName: "Titanium")
+        }
     }
 
 }

@@ -70,6 +70,7 @@ class SignUpViewController: UIViewController {
             //let room = codeParts[1]
             if(houseID == "9bBnfSE3LW"){
                 User.save("Platinum", as: .house)
+                User.save("4N", as: .floorID)
                 User.save("0", as: .permissionLevel)
                 return true
             }

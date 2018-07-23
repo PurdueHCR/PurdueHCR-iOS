@@ -21,6 +21,7 @@ class DataManager {
     private var _pointSystem: [PointGroup]? = nil;
     private var _points: [PointType]? = nil
     private var _unconfirmedPointLogs: [PointLog]? = nil
+    private var _houses: [House]? = nil
     
     private init(){}
     
@@ -34,7 +35,7 @@ class DataManager {
                 return pt
             }
         }
-        return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1) // The famouse this should never happen comment
+        return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1) // The famous this should never happen comment
     }
     
     func createUser(onDone:@escaping (_ err:Error?)->Void ){
@@ -80,6 +81,9 @@ class DataManager {
         return self._unconfirmedPointLogs
     }
     
+    func refreshUser(onDone:@escaping (_ err:Error?)->Void){
+        fbh.refreshUserInformation(onDone: onDone)
+    }
     
     func refreshUnconfirmedPointLogs(onDone:@escaping (_ pointLogs:[PointLog])->Void ){
         fbh.getUnconfirmedPoints(onDone: {[weak self] (pointLogs:[PointLog]) in
@@ -90,11 +94,28 @@ class DataManager {
         })
     }
     
+    func refreshHouses(onDone:@escaping ( _ houses:[House]) ->Void){
+        fbh.refreshHouseInformation(onDone: { (houses:[House]) in
+            self._houses = houses
+            onDone(houses)
+        })
+    }
+    
+    func getHouses() -> [House]?{
+        return self._houses
+    }
+    
+    
+    
     func initializeData(){
+        guard let _ = User.get(.name) else{
+            return;
+        }
         refreshPointGroups(onDone: {(onDone:[PointGroup]) in
             
             self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in} )
         })
+        refreshHouses(onDone:{(onDone:[House]) in return})
     }
 
 }

@@ -45,7 +45,7 @@ class TypeSubmitViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let pointLog = PointLog(pointDescription: description, resident: User.get(.name) as! String, type: pointType)
+        let pointLog = PointLog(pointDescription: description, resident: User.get(.name) as! String, type: pointType, floorCode: User.get(.floorID) as! String)
         DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
             if(err != nil){
                 self.postErrorNotification(message: err.debugDescription)

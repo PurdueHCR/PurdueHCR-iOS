@@ -7,4 +7,6 @@ target 'Platinum Points' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'KDCircularProgress'
+  pod 'Charts'
 end
