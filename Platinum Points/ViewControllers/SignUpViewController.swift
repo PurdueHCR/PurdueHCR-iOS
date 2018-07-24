@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 import Cely
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var emailField: UITextField!
     @IBOutlet var nameField: UITextField!
@@ -20,12 +20,28 @@ class SignUpViewController: UIViewController {
     @IBOutlet var codeField: UITextField!
     
     
+    var fortyPercent = CGFloat(0.0)
+    var lastChange = 0.0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fortyPercent = self.view.frame.size.height * 0.4
+        self.emailField.delegate = self
+        self.nameField.delegate = self
+        self.passwordField.delegate = self
+        self.verifyPasswordField.delegate = self
+        self.codeField.delegate = self
+        // Do any additional setup after loading the view.
+    }
+    
     @IBAction func submitSignUp(_ sender: Any) {
         let email = emailField.text
         let password = passwordField.text
         let verifyPassword = verifyPasswordField.text
         let name = nameField.text
         let code = codeField.text
+        
+        
         
         if( hasErrors(emailOptional: email, passwordOptional: password, verifyPasswordOptional: verifyPassword, nameOptional: name, codeOptional: code)){
             postErrorNotification(message: "Not All Fields Are Correct. Please verify your information and try again.")
@@ -50,7 +66,9 @@ class SignUpViewController: UIViewController {
                     if err != nil {
                         self.postErrorNotification(message: "Failed to create user. Please try again later.")
                     } else {
+                        DataManager.sharedManager.initializeData(finished:{() in return})
                         Cely.changeStatus(to: .loggedIn)
+                        
                     }
                 }))
             }
@@ -115,17 +133,50 @@ class SignUpViewController: UIViewController {
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        moveTextField(textField: textField, up: true)
+    }
     
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        moveTextField(textField: textField, up: false)
+    }
+
+    func moveTextField(textField:UITextField, up:Bool){
+        if(up && textField.frame.minY > self.fortyPercent){
+            let movement = self.fortyPercent - textField.frame.minY
+            self.lastChange = Double(movement)
+            UIView.beginAnimations("TextFieldMove", context: nil)
+            UIView.setAnimationBeginsFromCurrentState(true)
+            UIView.setAnimationDuration(0.3)
+            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+            UIView.commitAnimations()
+        }
+        else if(!up && self.lastChange != 0.0){
+            let movement = CGFloat(self.lastChange * -1.0)
+            self.lastChange = 0.0
+            UIView.beginAnimations("TextFieldMove", context: nil)
+            UIView.setAnimationBeginsFromCurrentState(true)
+            UIView.setAnimationDuration(0.3)
+            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+            UIView.commitAnimations()
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 
     /*
     // MARK: - Navigation

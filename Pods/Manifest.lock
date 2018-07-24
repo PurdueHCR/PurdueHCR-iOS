@@ -22,6 +22,9 @@ PODS:
   - Firebase/Firestore (5.4.1):
     - Firebase/CoreOnly
     - FirebaseFirestore (= 0.12.6)
+  - Firebase/Storage (5.4.1):
+    - Firebase/CoreOnly
+    - FirebaseStorage (= 3.0.0)
   - FirebaseAnalytics (5.0.1):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
@@ -47,6 +50,9 @@ PODS:
     - Protobuf (~> 3.1)
   - FirebaseInstanceID (3.1.1):
     - FirebaseCore (~> 5.0)
+  - FirebaseStorage (3.0.0):
+    - FirebaseCore (~> 5.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/Defines (2.1.4)
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
@@ -88,6 +94,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
+  - Firebase/Storage
   - KDCircularProgress
   - ValueStepper
 
@@ -101,6 +108,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseFirestore
     - FirebaseInstanceID
+    - FirebaseStorage
     - GoogleToolboxForMac
     - gRPC
     - gRPC-Core
@@ -133,6 +141,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 4c28e3b9708ba48a765e76515f913a71596eb5dd
   FirebaseFirestore: d4a3a7787624e612298a320da95935b8dc036c1d
   FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
+  FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   gRPC: 81b990caa01d7c32605d300c2ffd1b5ba0ef9e49
   gRPC-Core: a56b086a8ef5ced6f6ba5be5bc0a63fca185015a
@@ -145,6 +154,6 @@ SPEC CHECKSUMS:
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   ValueStepper: e84d21a2ce62a7975df8b222c7273d6810f7e78c
 
-PODFILE CHECKSUM: 53bb33e8e37c969ef123da1ca38f2c87f6d252bb
+PODFILE CHECKSUM: bb72ce30d079b27a96f6a24668f8c3859a033a8e
 
 COCOAPODS: 1.5.3

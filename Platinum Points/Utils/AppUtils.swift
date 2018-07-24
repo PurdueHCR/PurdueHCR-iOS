@@ -33,4 +33,19 @@ class AppUtils {
         )
     }
     
+    class AtomicCounter {
+        private var queue:DispatchQueue
+        private (set) var value: Int = 0
+        
+        init(identifier:String){
+            queue = DispatchQueue(label: identifier)
+        }
+        
+        func increment() {
+            queue.sync {
+                value += 1
+            }
+        }
+    }
+    
 }

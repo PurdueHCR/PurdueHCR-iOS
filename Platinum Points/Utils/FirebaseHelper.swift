@@ -9,9 +9,11 @@
 import Foundation
 import Firebase
 
+
 class FirebaseHelper {
     
     let db: Firestore
+    let storage: Storage
     let NAME = "Name"
     let PERMISSION_LEVEL = "Permission Level"
     let HOUSE = "House"
@@ -22,8 +24,8 @@ class FirebaseHelper {
 
     
     init(){
-        FirebaseApp.configure()
         db = Firestore.firestore()
+        storage = Storage.storage()
         let settings = db.settings
         settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
@@ -72,9 +74,6 @@ class FirebaseHelper {
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                for document in querySnapshot!.documents{
-                    print("\(document.documentID) => \(document.data())")
-                }
                 for pointDocument in querySnapshot!.documents
                 {
                     let description = pointDocument.data()["Description"] as! String
@@ -241,6 +240,7 @@ class FirebaseHelper {
     {
         let house = User.get(.house) as! String
         let docRef = db.collection(self.HOUSE).document(house).collection(self.POINTS)
+        let userFloorCode = User.get(.floorID) as! String
         
         docRef.whereField("PointTypeID", isLessThan: 0).getDocuments()
             { (querySnapshot, error) in
@@ -250,15 +250,19 @@ class FirebaseHelper {
                 }
                 var pointLogs = [PointLog]()
                 for document in querySnapshot!.documents {
-                    let id = document.documentID
-                    let description = document.data()["Description"] as! String
-                    let idType = (document.data()["PointTypeID"] as! Int) * -1
-                    let resident = document.data()["Resident"] as! String
                     let floorCode = document.data()["FloorID"] as! String
-                    let pointType = DataManager.sharedManager.getPointType(value: idType)
-                    let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorCode: floorCode)
-                    pointLog.logID = id
-                    pointLogs.append(pointLog)
+                    // The reason I check this here instead of in the query is because Firestore does not support,
+                    // at the time of writing, the ability to query the data on more than one field. :(
+                    if(floorCode == userFloorCode){
+                        let id = document.documentID
+                        let description = document.data()["Description"] as! String
+                        let idType = (document.data()["PointTypeID"] as! Int) * -1
+                        let resident = document.data()["Resident"] as! String
+                        let pointType = DataManager.sharedManager.getPointType(value: idType)
+                        let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorCode: floorCode)
+                        pointLog.logID = id
+                        pointLogs.append(pointLog)
+                    }
                 }
                 onDone(pointLogs)
                 
@@ -302,6 +306,40 @@ class FirebaseHelper {
             }
         }
     }
+    
+    func refreshRewards(onDone:@escaping (_ rewards:[Reward])->Void ){
+        self.db.collection("Rewards").getDocuments(){ (querySnapshot, err) in
+            var rewardArray = [Reward]()
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for rewardDocument in querySnapshot!.documents
+                {
+                    let requiredPoints = rewardDocument.data()["RequiredValue"] as! Int
+                    let fileName = rewardDocument.data()["FileName"] as! String
+                    let name = rewardDocument.documentID
+                    rewardArray.append(Reward(requiredValue: requiredPoints, fileName: fileName, rewardName: name))
+                }
+                rewardArray.sort(by: {$0.requiredValue < $1.requiredValue})
+                onDone(rewardArray)
+            }
+        }
+    }
+    
+    func retrievePictureFromFilename(filename:String,onDone:@escaping ( _ image:UIImage) ->Void ){
+        let pathReference = storage.reference(withPath: filename)
+        // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                // Uh-oh, an error occurred!
+                print(error.localizedDescription)
+            } else {
+                // Data for filename is returned
+                onDone(UIImage(data: data!)!)
+            }
+        }
+    }
+    
     
     
 }

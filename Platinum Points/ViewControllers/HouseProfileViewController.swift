@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Cely
 
 class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     
@@ -26,9 +28,15 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         scrollView.refreshControl = refresher
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
         
         // Do any additional setup after loading the view, typically from a nib.
     }
+    @objc func logOut(_ sender: Any) {
+        try? Auth.auth().signOut()
+        Cely.logout()
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         refreshData()
@@ -38,6 +46,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         refreshCount = 0
         DataManager.sharedManager.refreshUser(onDone: {(err:Error?) in
             self.profileView.reloadData()
+            self.colorAndPictureView.refresh()
             self.handleRefresher()
         })
         DataManager.sharedManager.refreshHouses(onDone: {(hs:[House]) in

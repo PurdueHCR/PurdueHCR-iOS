@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 
 
@@ -22,6 +22,7 @@ class DataManager {
     private var _points: [PointType]? = nil
     private var _unconfirmedPointLogs: [PointLog]? = nil
     private var _houses: [House]? = nil
+    private var _rewards: [Reward]? = nil
     
     private init(){}
     
@@ -105,17 +106,76 @@ class DataManager {
         return self._houses
     }
     
+    func refreshRewards(onDone:@escaping ( _ rewards:[Reward])-> Void){
+        fbh.refreshRewards(onDone: { ( rewards:[Reward]) in
+            let total = rewards.count
+            let counter = AppUtils.AtomicCounter(identifier: "refreshRewards")
+            for reward in rewards {
+                self.getImage(filename: reward.fileName, onDone: {(image:UIImage) in
+                    reward.image = image
+                    counter.increment()
+                    if(counter.value == total){
+                        self._rewards = rewards
+                        onDone(rewards)
+                    }
+                })
+            }
+            
+        })
+    }
     
+    func getRewards() -> [Reward]?{
+        return self._rewards
+    }
     
-    func initializeData(){
+    func getImage(filename:String, onDone:@escaping ( _ image:UIImage) ->Void ){
+        let url = getDocumentsDirectory()
+        let fileManager = FileManager.default
+        let imagePath = url.appendingPathComponent(filename)
+        if fileManager.fileExists(atPath: imagePath.absoluteString){
+            onDone(UIImage(contentsOfFile: imagePath.absoluteString)!)
+        }else{
+            fbh.retrievePictureFromFilename(filename: filename, onDone: {(image:UIImage) in
+                if let data = UIImagePNGRepresentation(image) {
+                    try? data.write(to: imagePath)
+                }
+                onDone(image)
+            })
+        }
+    }
+    
+    func initializeData(finished:@escaping ()->Void){
+        print("INITIALIZE")
+        let counter = AppUtils.AtomicCounter(identifier: "initializer")
         guard let _ = User.get(.name) else{
             return;
         }
         refreshPointGroups(onDone: {(onDone:[PointGroup]) in
-            
-            self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in} )
+            counter.increment()
+            self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in
+                counter.increment()
+                if(counter.value == 4){
+                    finished();
+                }
+            } )
         })
-        refreshHouses(onDone:{(onDone:[House]) in return})
+        refreshHouses(onDone:{(onDone:[House]) in
+            counter.increment()
+            if(counter.value == 4){
+                finished();
+            }
+        })
+        refreshRewards(onDone: {(rewards:[Reward]) in
+            counter.increment()
+            if(counter.value == 4){
+                finished();
+            }
+        })
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 
 }

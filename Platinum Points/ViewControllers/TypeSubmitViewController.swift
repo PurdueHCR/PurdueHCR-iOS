@@ -9,7 +9,7 @@
 import UIKit
 import ValueStepper
 
-class TypeSubmitViewController: UIViewController, UITextFieldDelegate {
+class TypeSubmitViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet var typeLabel: UILabel!
     @IBOutlet var countStepper: ValueStepper!
@@ -21,7 +21,10 @@ class TypeSubmitViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         typeLabel.text? = type!.pointDescription
-        
+        descriptionField.layer.borderColor = UIColor.black.cgColor
+        descriptionField.layer.borderWidth = 1
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
         // Do any additional setup after loading the view.
     }
     
@@ -44,33 +47,34 @@ class TypeSubmitViewController: UIViewController, UITextFieldDelegate {
             print("PointType not found")
             return
         }
-        
-        let pointLog = PointLog(pointDescription: description, resident: User.get(.name) as! String, type: pointType, floorCode: User.get(.floorID) as! String)
-        DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
-            if(err != nil){
-                self.postErrorNotification(message: err.debugDescription)
-                print("Error in posting: ",err.debugDescription)
+        for _ in 0 ..< Int(count) {
+            let pointLog = PointLog(pointDescription: description, resident: User.get(.name) as! String, type: pointType, floorCode: User.get(.floorID) as! String)
+            DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
+                if(err != nil){
+                    self.postErrorNotification(message: err.debugDescription)
+                    print("Error in posting: ",err.debugDescription)
+                }
+                else{
+                    //post success
+                    print("Success")
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
-            else{
-                //post success
-                print("Success")
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
-        
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if(textField.text == "Please Enter A Description of What You Did"){
-            textField.text = ""
-        }
-    }
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        if(textField.text == ""){
-            textField.text = "Please Enter A Description of What You Did"
         }
     }
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if(textView.text == "Tell us about what you did!"){
+            textView.text = ""
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if(textView.text == ""){
+            textView.text = "Tell us about what you did!"
+        }
+    }
+
     func postErrorNotification(message:String){
         let alert = UIAlertController(title: "Error in Submit", message: message, preferredStyle: .alert)
         
@@ -79,7 +83,9 @@ class TypeSubmitViewController: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true)
     }
 
-
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        self.descriptionField.resignFirstResponder()
+    }
 /*    // MARK: - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation

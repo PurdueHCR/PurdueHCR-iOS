@@ -26,17 +26,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fdf-wP-pFp">
-                    <rect key="frame" x="-13" y="199" width="313" height="67"/>
+                    <rect key="frame" x="-13" y="199" width="315" height="67"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="67" id="2Ef-mV-zKF"/>
-                        <constraint firstAttribute="width" constant="313" id="XFS-QR-Sf5"/>
+                        <constraint firstAttribute="height" constant="67" id="dO5-Wb-uE8"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QO9-hV-CVG">
-                    <rect key="frame" x="300" y="199" width="316" height="67"/>
+                    <rect key="frame" x="302" y="199" width="315" height="67"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -49,17 +48,17 @@
                 </label>
             </subviews>
             <constraints>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="baseline" secondItem="QO9-hV-CVG" secondAttribute="baseline" id="4Zu-lg-rQD"/>
-                <constraint firstAttribute="trailing" secondItem="QO9-hV-CVG" secondAttribute="trailing" constant="-16" id="EBd-Ic-rg9"/>
-                <constraint firstAttribute="bottom" secondItem="Fdf-wP-pFp" secondAttribute="bottom" constant="20" symbolic="YES" id="Mrw-Sj-KTM"/>
-                <constraint firstItem="QO9-hV-CVG" firstAttribute="leading" secondItem="Fdf-wP-pFp" secondAttribute="trailing" id="Rbh-lN-JPx"/>
-                <constraint firstItem="M3y-Bg-bXw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="SNX-I2-gky"/>
-                <constraint firstItem="M3y-Bg-bXw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="Ysb-cS-iDP"/>
-                <constraint firstItem="M3y-Bg-bXw" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="aze-W8-3y9"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-13" id="jk3-aj-JTD"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="firstBaseline" secondItem="QO9-hV-CVG" secondAttribute="firstBaseline" id="rjF-fI-kw3"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="width" secondItem="QO9-hV-CVG" secondAttribute="width" constant="-3" id="v8Q-IZ-iRD"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="M3y-Bg-bXw" secondAttribute="bottom" constant="39" id="yTz-Xa-CRP"/>
+                <constraint firstItem="M3y-Bg-bXw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="0PA-vo-xgB"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="baseline" secondItem="QO9-hV-CVG" secondAttribute="baseline" id="0lQ-ZV-Obv"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-13" id="4Ll-pp-NIt"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="M3y-Bg-bXw" secondAttribute="bottom" constant="39" id="8Vi-p8-ITz"/>
+                <constraint firstItem="M3y-Bg-bXw" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="Ezv-vA-Wud"/>
+                <constraint firstAttribute="bottom" secondItem="Fdf-wP-pFp" secondAttribute="bottom" constant="20" symbolic="YES" id="Hhc-eU-Z8Q"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="firstBaseline" secondItem="QO9-hV-CVG" secondAttribute="firstBaseline" id="Jd6-Ql-wa8"/>
+                <constraint firstItem="QO9-hV-CVG" firstAttribute="leading" secondItem="Fdf-wP-pFp" secondAttribute="trailing" id="VlZ-my-1yt"/>
+                <constraint firstItem="QO9-hV-CVG" firstAttribute="width" secondItem="Fdf-wP-pFp" secondAttribute="width" id="az8-rB-q4e"/>
+                <constraint firstItem="M3y-Bg-bXw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="iom-72-oG3"/>
+                <constraint firstAttribute="trailing" secondItem="QO9-hV-CVG" secondAttribute="trailing" constant="-17" id="my3-Qe-0b4"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>

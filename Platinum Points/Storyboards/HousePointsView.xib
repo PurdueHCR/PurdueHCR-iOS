@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,6 +16,7 @@
             <connections>
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="2PX-Vy-skd"/>
                 <outlet property="circleProgress" destination="iU8-eg-TKb" id="fk2-df-Rr7"/>
+                <outlet property="nextRewardLabel" destination="iyi-Ev-gai" id="5is-98-Fws"/>
                 <outlet property="pointsRemainingLabel" destination="qQd-nR-bEr" id="1Ka-vM-9tE"/>
             </connections>
         </placeholder>
@@ -26,6 +28,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iU8-eg-TKb" customClass="KDCircularProgress" customModule="KDCircularProgress">
                     <rect key="frame" x="82" y="80" width="150" height="150"/>
                     <color key="backgroundColor" red="0.85647564052795033" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="iU8-eg-TKb" secondAttribute="height" multiplier="1:1" id="R5J-LJ-sOX"/>
+                    </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="angle">
                             <real key="value" value="259"/>
@@ -35,10 +40,10 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next House Reward" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyi-Ev-gai">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next House Reward" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyi-Ev-gai">
                     <rect key="frame" x="81" y="20" width="153" height="52"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="52" id="jSn-G5-hz5"/>
+                        <constraint firstAttribute="height" constant="52" id="rOe-li-hS1"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
@@ -47,7 +52,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points Remaing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQd-nR-bEr">
                     <rect key="frame" x="16" y="238" width="283" height="42"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="42" id="DtD-G2-DsS"/>
+                        <constraint firstAttribute="height" constant="42" id="iTN-GF-eUU"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
@@ -56,16 +61,16 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="qQd-nR-bEr" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="2Y9-kF-me0"/>
-                <constraint firstItem="qQd-nR-bEr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="9wj-vT-V4y"/>
-                <constraint firstAttribute="bottom" secondItem="qQd-nR-bEr" secondAttribute="bottom" constant="20" symbolic="YES" id="O4j-iL-l04"/>
-                <constraint firstItem="iU8-eg-TKb" firstAttribute="top" secondItem="iyi-Ev-gai" secondAttribute="bottom" constant="8" symbolic="YES" id="Tql-yM-BVF"/>
-                <constraint firstItem="iyi-Ev-gai" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="Xgq-Bc-D37"/>
-                <constraint firstItem="qQd-nR-bEr" firstAttribute="top" secondItem="iU8-eg-TKb" secondAttribute="bottom" constant="8" symbolic="YES" id="cuP-ic-QNP"/>
-                <constraint firstItem="iyi-Ev-gai" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="81" id="i2J-uP-Zrs"/>
-                <constraint firstItem="iU8-eg-TKb" firstAttribute="centerX" secondItem="qQd-nR-bEr" secondAttribute="centerX" id="jcI-HF-ecB"/>
-                <constraint firstItem="iU8-eg-TKb" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="82" id="xzp-CY-Bj3"/>
-                <constraint firstItem="iyi-Ev-gai" firstAttribute="centerX" secondItem="iU8-eg-TKb" secondAttribute="centerX" id="yXZ-KP-2K5"/>
+                <constraint firstItem="iyi-Ev-gai" firstAttribute="centerX" secondItem="iU8-eg-TKb" secondAttribute="centerX" id="5Rz-f3-gKI"/>
+                <constraint firstAttribute="bottom" secondItem="qQd-nR-bEr" secondAttribute="bottom" constant="20" symbolic="YES" id="9Zg-2m-32R"/>
+                <constraint firstItem="qQd-nR-bEr" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="Amx-Rc-Dvm"/>
+                <constraint firstItem="iyi-Ev-gai" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="81" id="BIW-b6-eLk"/>
+                <constraint firstItem="qQd-nR-bEr" firstAttribute="top" secondItem="iU8-eg-TKb" secondAttribute="bottom" constant="8" symbolic="YES" id="HgT-9A-Ysx"/>
+                <constraint firstItem="qQd-nR-bEr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="LiR-wY-7kl"/>
+                <constraint firstItem="iU8-eg-TKb" firstAttribute="top" secondItem="iyi-Ev-gai" secondAttribute="bottom" constant="8" symbolic="YES" id="SSU-SD-tqz"/>
+                <constraint firstItem="iU8-eg-TKb" firstAttribute="centerX" secondItem="qQd-nR-bEr" secondAttribute="centerX" id="TXT-g4-uTR"/>
+                <constraint firstItem="iyi-Ev-gai" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="bPy-tM-1zY"/>
+                <constraint firstItem="iU8-eg-TKb" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="82" id="wxG-Jv-v21"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

@@ -10,11 +10,20 @@ import UIKit
 
 class PointOptionViewController: UITableViewController{
 
+    var refresher: UIRefreshControl?
+    
     var pointSystem = [PointGroup]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        refresher = UIRefreshControl()
+        refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+        tableView.refreshControl = refresher
         // Do any additional setup after loading the view, typically from a nib.
         pointSystem = DataManager.sharedManager.getPointGroups() ?? [PointGroup]()
+        if(pointSystem.count == 0){
+            resfreshData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,7 +37,17 @@ class PointOptionViewController: UITableViewController{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow,
+            indexPathForSelectedRow == indexPath {
+            tableView.deselectRow(at: indexPath, animated: false)
+            return nil
+        }
+        return indexPath
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (pointSystem[section].points.count);
     }
@@ -65,6 +84,18 @@ class PointOptionViewController: UITableViewController{
         let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
         
         nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
+    }
+    
+    @objc func resfreshData(){
+        DataManager.sharedManager.refreshPointGroups(onDone: {(pg:[PointGroup]) in
+            self.pointSystem = pg
+            DispatchQueue.main.async { [weak self] in
+                if(self != nil){
+                    self?.tableView.reloadData()
+                }
+            }
+            self.tableView.refreshControl?.endRefreshing()
+        })
     }
 }
 

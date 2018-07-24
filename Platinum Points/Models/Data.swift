@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PointTypes : CustomStringConvertible {
     var points : [String]? = nil;
@@ -84,4 +85,19 @@ extension PointLog: Equatable {
                 lhs.logID == rhs.logID
     }
 }
+
+class Reward {
+    var requiredValue: Int
+    var rewardName: String
+    var fileName: String
+    var image: UIImage?
+    
+    init(requiredValue:Int, fileName:String, rewardName:String){
+        self.requiredValue = requiredValue
+        self.fileName = fileName
+        self.rewardName = rewardName
+    }
+    
+}
+
 

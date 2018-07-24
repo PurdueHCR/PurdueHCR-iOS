@@ -23,6 +23,7 @@
 		D30FC90E20DF35D900201E74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90C20DF35D900201E74 /* LaunchScreen.storyboard */; };
 		D30FC91920DF35D900201E74 /* Platinum_PointsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC91820DF35D900201E74 /* Platinum_PointsTests.swift */; };
 		D30FC92420DF35D900201E74 /* Platinum_PointsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */; };
+		D33F43AA2106982100D3982D /* AnimatedLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */; };
 		D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */; };
 		D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */; };
 		D3CC77C32103D50B00B88F03 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C22103D50B00B88F03 /* HousePointsView.xib */; };
@@ -81,6 +82,7 @@
 		D30FC91F20DF35D900201E74 /* Platinum PointsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Platinum PointsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platinum_PointsUITests.swift; sourceTree = "<group>"; };
 		D30FC92520DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLoadingViewController.swift; sourceTree = "<group>"; };
 		D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D3CC77C22103D50B00B88F03 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */,
 				D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */,
 				D3CC77CA210428B600B88F03 /* TabBarController.swift */,
+				D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				D3CC77CE21052CEF00B88F03 /* AppUtils.swift in Sources */,
 				D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,
+				D33F43AA2106982100D3982D /* AnimatedLoadingViewController.swift in Sources */,
 				D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */,
 				D3D062C720E82A6500E8B3A3 /* TypeSubmitViewController.swift in Sources */,
 				D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */,
@@ -663,13 +667,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5N596YY333;
+				DEVELOPMENT_TEAM = VWJX3S29DK;
 				INFOPLIST_FILE = "Platinum Points/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "DecodeProgramming.Platinum-Points";
+				PRODUCT_BUNDLE_IDENTIFIER = "DecodeProgramming.HCR-Points";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -682,13 +686,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5N596YY333;
+				DEVELOPMENT_TEAM = VWJX3S29DK;
 				INFOPLIST_FILE = "Platinum Points/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "DecodeProgramming.Platinum-Points";
+				PRODUCT_BUNDLE_IDENTIFIER = "DecodeProgramming.HCR-Points";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

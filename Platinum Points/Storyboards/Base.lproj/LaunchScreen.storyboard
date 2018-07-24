@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,15 +21,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlankHCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CjR-JM-p7e">
-                                <rect key="frame" x="16" y="156" width="343" height="354"/>
+                                <rect key="frame" x="16" y="156" width="343" height="307"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="CjR-JM-p7e" secondAttribute="height" multiplier="343:307" id="0wv-JK-L8D"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="CjR-JM-p7e" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="Dm9-fi-J4l"/>
-                            <constraint firstItem="CjR-JM-p7e" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="JtY-yv-uIp"/>
-                            <constraint firstItem="CjR-JM-p7e" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="Sef-uM-PxT"/>
-                            <constraint firstItem="CjR-JM-p7e" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="136" id="wrq-jm-Prg"/>
+                            <constraint firstItem="CjR-JM-p7e" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="BVW-Zk-wf2"/>
+                            <constraint firstItem="CjR-JM-p7e" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="DVs-ql-ukC"/>
+                            <constraint firstItem="CjR-JM-p7e" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="136" id="Vly-CI-QTE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="CjR-JM-p7e" secondAttribute="bottom" constant="204" id="wp2-IG-rrS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

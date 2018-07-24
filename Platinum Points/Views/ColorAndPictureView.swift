@@ -28,7 +28,11 @@ class ColorAndPictureView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        refresh()
         
+    }
+    
+    func refresh(){
         let houseName = User.get(.house) as! String
         if(houseName == "Platinum"){
             imageView.image = #imageLiteral(resourceName: "Platinum")
