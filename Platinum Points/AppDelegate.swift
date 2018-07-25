@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ])
         
         FirebaseApp.configure()
+        DataManager.sharedManager.refreshHouses(onDone: {(house:[House]) in return})
         // Override point for customization after application launch.
         if Auth.auth().currentUser != nil {
             DataManager.sharedManager.getUserWhenLogginIn(id: (Auth.auth().currentUser?.uid)!, onDone: { (success:Bool) in

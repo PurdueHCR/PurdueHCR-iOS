@@ -34,18 +34,23 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func login(_ sender: Any) {
         guard let email = username.text, let password = password.text else {
-            postErrorNotification(message: "Please enter all information.")
+           self.notify(title: "Failed to Log In", subtitle: "Please enter all information.", style: .danger)
+            return
+        }
+        if(email.isEmpty || password.isEmpty){
+            self.notify(title: "Failed to Log In", subtitle: "Please enter all information.", style: .danger)
             return
         }
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             guard let usr = user, error == nil else {
-                self.postErrorNotification(message: error!.localizedDescription)
+                self.notify(title: "Failed to Log In", subtitle: error!.localizedDescription, style: .danger)
                 return
             }
             //The DataManager will handle setting all the elements in User.properties
             DataManager.sharedManager.getUserWhenLogginIn(id: usr.user.uid, onDone: { (success:Bool) in
                 if(success){
+                    self.notify(title: "Success", subtitle: "Logging in", style: .success)
                     User.save(Auth.auth().currentUser?.uid as Any, as: .id)
                     Cely.changeStatus(to: .loggedIn)
                 }
@@ -77,13 +82,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func postErrorNotification(message:String){
-        let alert = UIAlertController(title: "Error in Sign Up", message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
-        self.present(alert, animated: true)
-    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         moveTextField(textField: textField, up: true)

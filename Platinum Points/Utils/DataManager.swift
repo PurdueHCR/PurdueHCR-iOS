@@ -23,6 +23,7 @@ class DataManager {
     private var _unconfirmedPointLogs: [PointLog]? = nil
     private var _houses: [House]? = nil
     private var _rewards: [Reward]? = nil
+    private var _houseCodes: [HouseCode]? = nil
     
     private init(){}
     
@@ -62,7 +63,7 @@ class DataManager {
     
     func confirmOrDenyPoints(log:PointLog, approved:Bool, onDone:@escaping (_ err:Error?)->Void){
         fbh.approvePoint(log: log, approved: approved, onDone:{[weak self] (_ err :Error?) in
-            if(err == nil){
+            if(err != nil){
                 print("Failed to confirm or deny point")
             }
             else{
@@ -70,6 +71,7 @@ class DataManager {
                     self?._unconfirmedPointLogs!.remove(at: index)
                 }
             }
+            onDone(err)
         })
     }
     
@@ -96,10 +98,16 @@ class DataManager {
     }
     
     func refreshHouses(onDone:@escaping ( _ houses:[House]) ->Void){
-        fbh.refreshHouseInformation(onDone: { (houses:[House]) in
+        print("House refersh")
+        fbh.refreshHouseInformation(onDone: { (houses:[House],codes:[HouseCode]) in
             self._houses = houses
+            self._houseCodes = codes
             onDone(houses)
         })
+    }
+    
+    func getHouseCodes() -> [HouseCode]?{
+        return self._houseCodes
     }
     
     func getHouses() -> [House]?{
@@ -148,8 +156,13 @@ class DataManager {
         print("INITIALIZE")
         let counter = AppUtils.AtomicCounter(identifier: "initializer")
         guard let _ = User.get(.name) else{
+            print("FAILED INIT")
             return;
         }
+        if let id = User.get(.id) as! String?{
+            getUserWhenLogginIn(id: id, onDone: {(done:Bool) in return})
+        }
+        
         refreshPointGroups(onDone: {(onDone:[PointGroup]) in
             counter.increment()
             self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in

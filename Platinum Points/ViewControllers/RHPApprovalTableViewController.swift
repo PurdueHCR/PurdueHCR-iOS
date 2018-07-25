@@ -109,11 +109,14 @@ class RHPApprovalTableViewController: UITableViewController {
     func handlePointApproval(log:PointLog, approve:Bool){
         DataManager.sharedManager.confirmOrDenyPoints(log: log, approved: approve, onDone: { (err: Error?) in
             if(err != nil){
-                print("Failed to handle log")
+                self.notify(title: "Failed", subtitle: "Failed to remove point log.", style: .danger)
                 self.unconfirmedLogs.append(log)
                 DispatchQueue.main.async { [unowned self] in
                     self.tableView.reloadData()
                 }
+            }
+            else{
+                self.notify(title: "Success", subtitle: "Point Handled", style: .success)
             }
         })
     }

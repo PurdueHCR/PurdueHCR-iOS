@@ -6,8 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,19 +18,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlankHCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CjR-JM-p7e">
-                                <rect key="frame" x="16" y="156" width="343" height="307"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="CjR-JM-p7e" secondAttribute="height" multiplier="343:307" id="0wv-JK-L8D"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HCRIcon1024" translatesAutoresizingMaskIntoConstraints="NO" id="ILV-tg-0Ug">
+                                <rect key="frame" x="67" y="213" width="240" height="240"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="CjR-JM-p7e" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="BVW-Zk-wf2"/>
-                            <constraint firstItem="CjR-JM-p7e" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="DVs-ql-ukC"/>
-                            <constraint firstItem="CjR-JM-p7e" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="136" id="Vly-CI-QTE"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="CjR-JM-p7e" secondAttribute="bottom" constant="204" id="wp2-IG-rrS"/>
+                            <constraint firstItem="ILV-tg-0Ug" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="193" id="ZLf-6C-6Dg"/>
+                            <constraint firstItem="ILV-tg-0Ug" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="67" id="dae-XN-C1m"/>
+                            <constraint firstItem="ILV-tg-0Ug" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="fH1-0X-N7p"/>
+                            <constraint firstItem="ILV-tg-0Ug" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="kdN-ma-Rj9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -43,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BlankHCRIcon" width="1351" height="1351"/>
+        <image name="HCRIcon1024" width="1024" height="1024"/>
     </resources>
 </document>

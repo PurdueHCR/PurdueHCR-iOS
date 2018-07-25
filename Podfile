@@ -10,4 +10,5 @@ target 'Platinum Points' do
   pod 'Firebase/Auth'
   pod 'KDCircularProgress'
   pod 'Charts'
+  pod 'NotificationBannerSwift'
 end

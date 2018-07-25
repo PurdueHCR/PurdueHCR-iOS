@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import NotificationBannerSwift
 
 class AppUtils {
     
@@ -46,6 +47,17 @@ class AppUtils {
                 value += 1
             }
         }
+    }
+    
+}
+
+
+
+extension UIViewController {
+    func notify(title:String,subtitle:String, style:BannerStyle){
+        let banner = NotificationBanner(title: title, subtitle: subtitle, style: style)
+        banner.duration = 2
+        banner.show()
     }
     
 }

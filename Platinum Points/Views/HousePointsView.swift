@@ -43,7 +43,8 @@ class HousePointsView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        refresh()
+        
+        rewardImageView = createImageView()
     }
     
     func refresh(){
@@ -51,27 +52,27 @@ class HousePointsView: UIView {
         self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:""))!)
         
         circleProgress.progressColors = [AppUtils.hexStringToUIColor(hex: house.hexColor),UIColor.white]
+        rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from:self.circleProgress)
         let reward = getCurrentReward()
         if(reward != nil){
             nextRewardLabel.text = "Next Reward:\n"+reward!.rewardName
-            rewardImageView = createImageView()
-            rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from:self.circleProgress)
             rewardImageView?.image = reward!.image
             circleProgress.angle = (Double(self.house.totalPoints) / Double(reward!.requiredValue)) * 360.0
             pointsRemainingLabel.text? = "Next Goal: " + self.house.totalPoints.description + "/"+reward!.requiredValue.description
-            addSubview(rewardImageView!)
         }
         else{
             circleProgress.angle = 180.0
             pointsRemainingLabel.text? = "Next Goal: Victory"
         }
+        
+        rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from:self.circleProgress)
+        addSubview(rewardImageView!)
     }
     
     func createImageView() -> UIImageView {
         if(rewardImageView == nil){
             let size = self.circleProgress.frame.size.width * 0.6
-            let corner = self.circleProgress.center
-            return UIImageView(frame: CGRect(x: corner.x , y: corner.y, width: size, height: size))
+            return UIImageView(frame: CGRect(x:0, y: 1000, width: size, height: size))
         }
         else{
             return rewardImageView!

@@ -67,11 +67,11 @@ class PointLog {
     var pointDescription:String;
     var type:PointType;
     var resident:String;
-    var floorCode:String;
+    var floorID:String;
     var logID:String? = nil;
-    init(pointDescription:String, resident:String, type:PointType, floorCode:String){
+    init(pointDescription:String, resident:String, type:PointType, floorID:String){
         self.pointDescription = pointDescription
-        self.floorCode = floorCode
+        self.floorID = floorID
         self.type = type
         self.resident = resident
     }
@@ -98,6 +98,17 @@ class Reward {
         self.rewardName = rewardName
     }
     
+}
+
+class HouseCode {
+    var code:String
+    var house:String
+    var floorID:String
+    init(code:String,house:String, floorID:String){
+        self.code = code
+        self.house = house
+        self.floorID = floorID
+    }
 }
 
 

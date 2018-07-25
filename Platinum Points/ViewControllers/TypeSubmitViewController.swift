@@ -48,16 +48,18 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
             return
         }
         for _ in 0 ..< Int(count) {
-            let pointLog = PointLog(pointDescription: description, resident: User.get(.name) as! String, type: pointType, floorCode: User.get(.floorID) as! String)
+            let pointLog = PointLog(pointDescription: description, resident: User.get(.name) as! String, type: pointType, floorID: User.get(.floorID) as! String)
             DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
                 if(err != nil){
-                    self.postErrorNotification(message: err.debugDescription)
+                    self.notify(title: "Failed to submit", subtitle: err.debugDescription, style: .danger)
                     print("Error in posting: ",err.debugDescription)
                 }
                 else{
                     //post success
                     print("Success")
                     self.navigationController?.popViewController(animated: true)
+                    
+                    self.navigationController?.topViewController?.notify(title: "Success", subtitle: "Your points were recorded!", style: .success)
                 }
             }
         }
@@ -75,13 +77,6 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
         }
     }
 
-    func postErrorNotification(message:String){
-        let alert = UIAlertController(title: "Error in Submit", message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
-        self.present(alert, animated: true)
-    }
 
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         self.descriptionField.resignFirstResponder()

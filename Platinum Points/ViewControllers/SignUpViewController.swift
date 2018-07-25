@@ -12,7 +12,7 @@ import FirebaseAuth
 import Cely
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
-
+    
     @IBOutlet var emailField: UITextField!
     @IBOutlet var nameField: UITextField!
     @IBOutlet var passwordField: UITextField!
@@ -22,9 +22,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
+    var houses:[House]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.sharedManager.refreshHouses(onDone: {(h:[House]) in
+            self.houses = h
+        })
         fortyPercent = self.view.frame.size.height * 0.4
         self.emailField.delegate = self
         self.nameField.delegate = self
@@ -43,28 +47,34 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         
         
-        if( hasErrors(emailOptional: email, passwordOptional: password, verifyPasswordOptional: verifyPassword, nameOptional: name, codeOptional: code)){
-            postErrorNotification(message: "Not All Fields Are Correct. Please verify your information and try again.")
+        if( hasEmptyFields(emailOptional: email, passwordOptional: password, verifyPasswordOptional: verifyPassword, nameOptional: name, codeOptional: code)){
+            self.notify(title: "Failed to Sign Up", subtitle: "Please enter all information.", style: .danger)
+        }
+        else if ( password! != verifyPassword){
+            self.notify(title: "Failed to Sign Up", subtitle: "Please verify your passwords are the same.", style: .danger)
+        }
+        else if ( !isValidEmail(testStr: email!)){
+            self.notify(title: "Failed to Sign Up", subtitle: "Please enter a valid email address.", style: .danger)
         }
         else if(!codeIsValid(code:code!)){
-            postErrorNotification(message: "Code is Invalid. Please try again.")
+            self.notify(title: "Failed to Sign Up", subtitle: "Code is Invalid.", style: .danger)
         }
         else{
             // user is fine to authenticate
             
             Auth.auth().createUser(withEmail: email!, password: password!) { (authResult, error) in
                 guard let user = authResult?.user, error == nil else {
-                    self.postErrorNotification(message:error!.localizedDescription)
+                    self.notify(title: "Failed to Sign Up", subtitle: error!.localizedDescription, style: .danger)
                     return
                 }
-               //they are signed in
+                //they are signed in
                 // find the house that their code matches and go to the database and create their user
                 //
                 User.save(name as Any, as: .name)
                 User.save(user.uid, as: .id)
                 DataManager.sharedManager.createUser(onDone: ({ (err:Error?) in
                     if err != nil {
-                        self.postErrorNotification(message: "Failed to create user. Please try again later.")
+                        self.notify(title: "Failed to Sign Up", subtitle: "Failed to create user.", style: .danger)
                     } else {
                         DataManager.sharedManager.initializeData(finished:{() in return})
                         Cely.changeStatus(to: .loggedIn)
@@ -80,16 +90,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     // code is format [houseIdentifier:roomNumber]
     func codeIsValid(code:String)-> Bool{
-        let roomRegEx = "[A-Z0-9a-z]+:[N,S][2-6][0-9]{3}[a-d]"
-        let roomTest = NSPredicate(format:"SELF MATCHES %@",roomRegEx)
-        if(roomTest.evaluate(with: code)){
-            let codeParts = code.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)
-            let houseID = codeParts[0]
-            //let room = codeParts[1]
-            if(houseID == "9bBnfSE3LW"){
-                User.save("Platinum", as: .house)
-                User.save("4N", as: .floorID)
+        let codes = DataManager.sharedManager.getHouseCodes()!
+        for houseCode in codes {
+            if(code == houseCode.code){
+                User.save(houseCode.house, as: .house)
+                User.save(houseCode.floorID, as: .floorID)
                 User.save("0", as: .permissionLevel)
+                User.save("0", as: .points)
                 return true
             }
         }
@@ -103,42 +110,20 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return emailTest.evaluate(with: testStr)
     }
     
-    func hasErrors(emailOptional:String?, passwordOptional:String?, verifyPasswordOptional:String?, nameOptional:String?, codeOptional:String?) -> Bool{
+    func hasEmptyFields(emailOptional:String?, passwordOptional:String?, verifyPasswordOptional:String?, nameOptional:String?, codeOptional:String?) -> Bool{
         if let email = emailOptional, let password = passwordOptional, let verifyPassword = verifyPasswordOptional, let name = nameOptional, let code = codeOptional {
             
-            if(email.isEmpty || password.isEmpty || verifyPassword.isEmpty ||
-                name.isEmpty || code.isEmpty ){
-                return true
-            }
-            else if( password != verifyPassword){
-                return true
-            }
-            else if( !isValidEmail(testStr: email)){
-                return true
-            }
-            else{
-                return false
-            }
-            
+            return (email == "" || password == "" || verifyPassword == "" || name == "" || code == "" )
         }
-        return true
+        return false
     }
-    
-    func postErrorNotification(message:String){
-        let alert = UIAlertController(title: "Error in Sign Up", message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
-        self.present(alert, animated: true)
-    }
-    
     
     @IBAction func back(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -151,7 +136,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         moveTextField(textField: textField, up: false)
     }
-
+    
     func moveTextField(textField:UITextField, up:Bool){
         if(up && textField.frame.minY > self.fortyPercent){
             let movement = self.fortyPercent - textField.frame.minY
@@ -177,15 +162,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
         return false
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

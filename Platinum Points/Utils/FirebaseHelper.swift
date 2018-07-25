@@ -116,7 +116,7 @@ class FirebaseHelper {
             "Description" : log.pointDescription as Any,
             "PointTypeID" : ( log.type.pointID * -1) as Any,
             "Resident"    : log.resident as Any,
-            FLOOR_ID      : log.floorCode as Any
+            FLOOR_ID      : log.floorID as Any
         ]){ err in
             if ( err == nil){
                 let userID = User.get(.id) as! String
@@ -240,7 +240,7 @@ class FirebaseHelper {
     {
         let house = User.get(.house) as! String
         let docRef = db.collection(self.HOUSE).document(house).collection(self.POINTS)
-        let userFloorCode = User.get(.floorID) as! String
+        let userFloorID = User.get(.floorID) as! String
         
         docRef.whereField("PointTypeID", isLessThan: 0).getDocuments()
             { (querySnapshot, error) in
@@ -250,16 +250,16 @@ class FirebaseHelper {
                 }
                 var pointLogs = [PointLog]()
                 for document in querySnapshot!.documents {
-                    let floorCode = document.data()["FloorID"] as! String
+                    let floorID = document.data()["FloorID"] as! String
                     // The reason I check this here instead of in the query is because Firestore does not support,
                     // at the time of writing, the ability to query the data on more than one field. :(
-                    if(floorCode == userFloorCode){
+                    if(floorID == userFloorID){
                         let id = document.documentID
                         let description = document.data()["Description"] as! String
                         let idType = (document.data()["PointTypeID"] as! Int) * -1
                         let resident = document.data()["Resident"] as! String
                         let pointType = DataManager.sharedManager.getPointType(value: idType)
-                        let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorCode: floorCode)
+                        let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID)
                         pointLog.logID = id
                         pointLogs.append(pointLog)
                     }
@@ -287,10 +287,11 @@ class FirebaseHelper {
         }
     }
     
-    func refreshHouseInformation(onDone:@escaping ( _ houses:[House])->Void){
+    func refreshHouseInformation(onDone:@escaping ( _ houses:[House],_ code:[HouseCode])->Void){
         let houseRef = self.db.collection(self.HOUSE)
         houseRef.getDocuments() { (querySnapshot, err) in
             var houseArray = [House]()
+            var houseKeys = [HouseCode]()
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -299,10 +300,21 @@ class FirebaseHelper {
                     let points = houseDocument.data()[self.TOTAL_POINTS] as! Int
                     let hex = houseDocument.data()["Color"] as! String
                     let id = houseDocument.documentID
+                    
+                    for key in houseDocument.data().keys
+                    {
+                        if(key.contains("Code"))
+                        {
+                            print("Append code: \(key)")
+                            let floorID = key.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)[0]
+                            let houseCode = houseDocument.data()[key] as! String
+                            houseKeys.append(HouseCode(code: houseCode, house: id, floorID:String(floorID)))
+                        }
+                    }
                     houseArray.append(House(id: id, points: points, hexColor:hex))
                 }
                 houseArray.sort(by: {$0.totalPoints > $1.totalPoints})
-                onDone(houseArray)
+                onDone(houseArray, houseKeys)
             }
         }
     }
