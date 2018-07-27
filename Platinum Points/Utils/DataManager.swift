@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import Firebase
 
 
 
@@ -191,6 +191,9 @@ class DataManager {
         return paths[0]
     }
 
+    func getUserRefFromUserID(id:String) -> DocumentReference {
+        return fbh.getDocumentReferenceFromID(id: id)
+    }
 }
 
 

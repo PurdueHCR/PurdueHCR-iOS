@@ -9,22 +9,15 @@
 import UIKit
 
 class PointLogOverviewController: UIViewController {
-    @IBOutlet var residentLabel: UILabel!
-    @IBOutlet var pointTypeDescriptionLabel: UILabel!
-    @IBOutlet var reportTimeStampLabel: UILabel!
-    @IBOutlet var descriptionLabel: UILabel!
-    
     var pointLog: PointLog?
     var index: IndexPath?
+    @IBOutlet var pointDescriptionView: PointDescriptionView!
     var preViewContr: RHPApprovalTableViewController?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        residentLabel.text = pointLog?.resident
-        pointTypeDescriptionLabel.text = pointLog?.type.pointDescription
-        reportTimeStampLabel.text = "Report Time: Noon"
-        descriptionLabel.text = pointLog?.pointDescription
+        pointDescriptionView.setLog(pointLog: pointLog!)
         // Do any additional setup after loading the view.
     }
 

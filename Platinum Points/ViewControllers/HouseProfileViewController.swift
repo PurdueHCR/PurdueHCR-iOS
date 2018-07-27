@@ -29,7 +29,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         scrollView.refreshControl = refresher
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
-        
+        profileView.transitionFunc = segueToProfilePointView
         // Do any additional setup after loading the view, typically from a nib.
     }
     @objc func logOut(_ sender: Any) {
@@ -67,6 +67,10 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func segueToProfilePointView() {
+        self.performSegue(withIdentifier: "My_Points", sender: self)
     }
 
 

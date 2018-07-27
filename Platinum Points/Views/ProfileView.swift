@@ -13,8 +13,11 @@ class ProfileView: UIView {
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var totalPointsLabel: UILabel!
-    @IBOutlet var achievementLabel: UILabel!
+    //@IBOutlet var achievementLabel: UILabel!
+    @IBOutlet var pointsButton: UIButton!
     
+    
+    var transitionFunc: () ->() = {print("NO IMPLEMENTATION")}
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -31,6 +34,8 @@ class ProfileView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        pointsButton.layer.borderWidth = 1.0
+        pointsButton.layer.borderColor = UIColor.lightGray.cgColor
         reloadData()
     }
     
@@ -39,9 +44,13 @@ class ProfileView: UIView {
         totalPointsLabel.text = (User.get(.points) as! Int).description + "\npoints"
         totalPointsLabel.layer.borderWidth = 1.0
         totalPointsLabel.layer.borderColor = UIColor.lightGray.cgColor
-        achievementLabel.text = "You haven't done\n anything yet."
-        achievementLabel.layer.borderWidth = 1.0
-        achievementLabel.layer.borderColor = UIColor.lightGray.cgColor
+        //achievementLabel.text = "You haven't done\n anything yet."
+        //achievementLabel.layer.borderWidth = 1.0
+        //achievementLabel.layer.borderColor = UIColor.lightGray.cgColor
     }
-
+    
+    @IBAction func transition(_ sender: Any) {
+        transitionFunc()
+    }
+    
 }

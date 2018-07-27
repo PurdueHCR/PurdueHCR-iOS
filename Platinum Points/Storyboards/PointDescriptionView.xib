@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PointDescriptionView" customModule="Platinum_Points" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundView" destination="iN0-l3-epB" id="dj1-IW-0bG"/>
+                <outlet property="descriptionLabel" destination="1Oh-90-35P" id="k2L-1L-jPY"/>
+                <outlet property="pointTypeDescriptionLabel" destination="CL9-tJ-bLY" id="Es1-B5-ByT"/>
+                <outlet property="residentLabel" destination="asA-2T-GIU" id="aYZ-W9-HYR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="359" height="220"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resident" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asA-2T-GIU">
+                    <rect key="frame" x="189" y="-7" width="170" height="50"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PointType" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CL9-tJ-bLY">
+                    <rect key="frame" x="189" y="51" width="170" height="50"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Oh-90-35P">
+                    <rect key="frame" x="0.0" y="109" width="359" height="111"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resident:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwd-ny-svE">
+                    <rect key="frame" x="0.0" y="-7" width="170" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="170" id="3aY-0u-qKY"/>
+                        <constraint firstAttribute="height" constant="50" id="i2l-Pe-szz"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PdO-yp-i3W">
+                    <rect key="frame" x="0.0" y="51" width="170" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Nct-wb-dt8"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="1Oh-90-35P" firstAttribute="top" secondItem="PdO-yp-i3W" secondAttribute="bottom" constant="8" symbolic="YES" id="2gr-sn-6c3"/>
+                <constraint firstAttribute="trailing" secondItem="CL9-tJ-bLY" secondAttribute="trailing" id="2h9-iu-BFx"/>
+                <constraint firstItem="uwd-ny-svE" firstAttribute="leading" secondItem="PdO-yp-i3W" secondAttribute="leading" id="5em-mZ-9OS"/>
+                <constraint firstItem="uwd-ny-svE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-7" id="J5e-Nr-Oua"/>
+                <constraint firstItem="uwd-ny-svE" firstAttribute="trailing" secondItem="PdO-yp-i3W" secondAttribute="trailing" id="MTb-lZ-uG0"/>
+                <constraint firstItem="1Oh-90-35P" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Q7t-ms-3Qf"/>
+                <constraint firstItem="asA-2T-GIU" firstAttribute="trailing" secondItem="CL9-tJ-bLY" secondAttribute="trailing" id="VYQ-Ss-kb6"/>
+                <constraint firstItem="asA-2T-GIU" firstAttribute="leading" secondItem="uwd-ny-svE" secondAttribute="trailing" constant="19" id="YMx-km-3NI"/>
+                <constraint firstItem="CL9-tJ-bLY" firstAttribute="trailing" secondItem="1Oh-90-35P" secondAttribute="trailing" id="bp7-Z9-oIb"/>
+                <constraint firstItem="PdO-yp-i3W" firstAttribute="leading" secondItem="1Oh-90-35P" secondAttribute="leading" id="ckW-RY-B7R"/>
+                <constraint firstItem="PdO-yp-i3W" firstAttribute="top" secondItem="uwd-ny-svE" secondAttribute="bottom" constant="8" symbolic="YES" id="h4o-lP-1RI"/>
+                <constraint firstItem="uwd-ny-svE" firstAttribute="baseline" secondItem="asA-2T-GIU" secondAttribute="baseline" id="hR1-o4-gOh"/>
+                <constraint firstItem="PdO-yp-i3W" firstAttribute="firstBaseline" secondItem="CL9-tJ-bLY" secondAttribute="firstBaseline" id="nuI-cd-G6U"/>
+                <constraint firstItem="uwd-ny-svE" firstAttribute="firstBaseline" secondItem="asA-2T-GIU" secondAttribute="firstBaseline" id="oqg-Eg-p6J"/>
+                <constraint firstItem="PdO-yp-i3W" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tTo-Kh-IHL"/>
+                <constraint firstItem="PdO-yp-i3W" firstAttribute="baseline" secondItem="CL9-tJ-bLY" secondAttribute="baseline" id="u0c-pj-7Vy"/>
+                <constraint firstItem="asA-2T-GIU" firstAttribute="leading" secondItem="CL9-tJ-bLY" secondAttribute="leading" id="xAZ-kS-ZOf"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="27.5" y="-172"/>
+        </view>
+    </objects>
+</document>

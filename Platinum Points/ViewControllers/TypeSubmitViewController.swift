@@ -8,6 +8,7 @@
 
 import UIKit
 import ValueStepper
+import Firebase
 
 class TypeSubmitViewController: UIViewController, UITextViewDelegate {
 
@@ -47,8 +48,11 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
             print("PointType not found")
             return
         }
+        let name = User.get(.name) as! String
+        let floor = User.get(.floorID) as! String
+        let residentRef = DataManager.sharedManager.getUserRefFromUserID(id: User.get(.id) as! String)
         for _ in 0 ..< Int(count) {
-            let pointLog = PointLog(pointDescription: description, resident: User.get(.name) as! String, type: pointType, floorID: User.get(.floorID) as! String)
+            let pointLog = PointLog(pointDescription: description, resident: name, type: pointType, floorID: floor, residentRef:residentRef)
             DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
                 if(err != nil){
                     self.notify(title: "Failed to submit", subtitle: err.debugDescription, style: .danger)

@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,9 +13,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileView" customModule="Platinum_Points" customModuleProvider="target">
             <connections>
-                <outlet property="achievementLabel" destination="QO9-hV-CVG" id="YDc-TW-zZe"/>
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="kNo-zV-ZBT"/>
                 <outlet property="nameLabel" destination="M3y-Bg-bXw" id="pi8-or-DeP"/>
+                <outlet property="pointsButton" destination="rTb-bG-3To" id="Kvr-p4-sAe"/>
                 <outlet property="totalPointsLabel" destination="Fdf-wP-pFp" id="7y8-58-xav"/>
             </connections>
         </placeholder>
@@ -26,16 +25,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fdf-wP-pFp">
-                    <rect key="frame" x="-13" y="199" width="315" height="67"/>
+                    <rect key="frame" x="0.0" y="199" width="300" height="67"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="67" id="dO5-Wb-uE8"/>
+                        <constraint firstAttribute="height" constant="67" id="Aan-xn-iEg"/>
+                        <constraint firstAttribute="width" constant="300" id="vT5-C6-X4x"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QO9-hV-CVG">
-                    <rect key="frame" x="302" y="199" width="315" height="67"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -46,19 +40,26 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rTb-bG-3To">
+                    <rect key="frame" x="300" y="199" width="300" height="67"/>
+                    <state key="normal" image="GoldMedal"/>
+                    <connections>
+                        <action selector="transition:" destination="-1" eventType="touchUpInside" id="UAy-lr-iFT"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="M3y-Bg-bXw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="0PA-vo-xgB"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="baseline" secondItem="QO9-hV-CVG" secondAttribute="baseline" id="0lQ-ZV-Obv"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-13" id="4Ll-pp-NIt"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="M3y-Bg-bXw" secondAttribute="bottom" constant="39" id="8Vi-p8-ITz"/>
-                <constraint firstItem="M3y-Bg-bXw" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="Ezv-vA-Wud"/>
-                <constraint firstAttribute="bottom" secondItem="Fdf-wP-pFp" secondAttribute="bottom" constant="20" symbolic="YES" id="Hhc-eU-Z8Q"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="firstBaseline" secondItem="QO9-hV-CVG" secondAttribute="firstBaseline" id="Jd6-Ql-wa8"/>
-                <constraint firstItem="QO9-hV-CVG" firstAttribute="leading" secondItem="Fdf-wP-pFp" secondAttribute="trailing" id="VlZ-my-1yt"/>
-                <constraint firstItem="QO9-hV-CVG" firstAttribute="width" secondItem="Fdf-wP-pFp" secondAttribute="width" id="az8-rB-q4e"/>
-                <constraint firstItem="M3y-Bg-bXw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="iom-72-oG3"/>
-                <constraint firstAttribute="trailing" secondItem="QO9-hV-CVG" secondAttribute="trailing" constant="-17" id="my3-Qe-0b4"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="rTb-bG-3To" secondAttribute="top" id="JGZ-Pt-po8"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="M3y-Bg-bXw" secondAttribute="bottom" constant="39" id="L83-Nu-ycb"/>
+                <constraint firstItem="M3y-Bg-bXw" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="MOR-IS-H5a"/>
+                <constraint firstItem="M3y-Bg-bXw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="XHe-Zh-bTG"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="bottom" secondItem="rTb-bG-3To" secondAttribute="bottom" id="amP-XR-5en"/>
+                <constraint firstItem="rTb-bG-3To" firstAttribute="width" secondItem="Fdf-wP-pFp" secondAttribute="width" id="b75-pO-0Hh"/>
+                <constraint firstAttribute="trailing" secondItem="rTb-bG-3To" secondAttribute="trailing" id="gEw-6i-IwQ"/>
+                <constraint firstItem="rTb-bG-3To" firstAttribute="leading" secondItem="Fdf-wP-pFp" secondAttribute="trailing" id="nTX-3f-Pgg"/>
+                <constraint firstItem="M3y-Bg-bXw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="noQ-fc-4Ur"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wTb-mJ-sw0"/>
+                <constraint firstAttribute="bottom" secondItem="Fdf-wP-pFp" secondAttribute="bottom" constant="20" symbolic="YES" id="yrN-Xi-o9N"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -67,4 +68,7 @@
             <point key="canvasLocation" x="146" y="-137"/>
         </view>
     </objects>
+    <resources>
+        <image name="GoldMedal" width="100" height="100"/>
+    </resources>
 </document>

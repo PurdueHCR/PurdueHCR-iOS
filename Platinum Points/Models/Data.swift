@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class PointTypes : CustomStringConvertible {
     var points : [String]? = nil;
@@ -67,13 +68,15 @@ class PointLog {
     var pointDescription:String;
     var type:PointType;
     var resident:String;
+    var residentRef:DocumentReference
     var floorID:String;
     var logID:String? = nil;
-    init(pointDescription:String, resident:String, type:PointType, floorID:String){
+    init(pointDescription:String, resident:String, type:PointType, floorID:String, residentRef:DocumentReference){
         self.pointDescription = pointDescription
         self.floorID = floorID
         self.type = type
         self.resident = resident
+        self.residentRef = residentRef
     }
 }
 extension PointLog: Equatable {

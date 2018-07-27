@@ -125,6 +125,7 @@ class RHPApprovalTableViewController: UITableViewController {
         
         // Segue to the second view controller
         self.performSegue(withIdentifier: "cell_push", sender: self)
+        
     }
     
     // This function is called before the segue
@@ -132,10 +133,9 @@ class RHPApprovalTableViewController: UITableViewController {
         
         // get a reference to the second view controller
         let nextViewController = segue.destination as! PointLogOverviewController
+        let indexPath = tableView.indexPathForSelectedRow
         
-        let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
-        
-        nextViewController.pointLog = self.unconfirmedLogs[(indexPath?.section)!]
+        nextViewController.pointLog = self.unconfirmedLogs[(indexPath?.row)!]
         nextViewController.index = ( sender as! RHPApprovalTableViewController ).tableView.indexPathForSelectedRow
         nextViewController.preViewContr = self
     }

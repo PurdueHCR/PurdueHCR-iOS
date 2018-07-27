@@ -20,10 +20,12 @@
 		D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */; };
 		D30FC90920DF35D800201E74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90720DF35D800201E74 /* Main.storyboard */; };
 		D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90A20DF35D900201E74 /* Assets.xcassets */; };
-		D30FC90E20DF35D900201E74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90C20DF35D900201E74 /* LaunchScreen.storyboard */; };
 		D30FC91920DF35D900201E74 /* Platinum_PointsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC91820DF35D900201E74 /* Platinum_PointsTests.swift */; };
 		D30FC92420DF35D900201E74 /* Platinum_PointsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */; };
 		D33F43AA2106982100D3982D /* AnimatedLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */; };
+		D33F43AD2108362D00D3982D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D33F43AC2108362D00D3982D /* LaunchScreen.storyboard */; };
+		D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */; };
+		D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F43B0210AA00700D3982D /* PointDescriptionView.swift */; };
 		D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */; };
 		D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */; };
 		D3CC77C32103D50B00B88F03 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C22103D50B00B88F03 /* HousePointsView.xib */; };
@@ -74,7 +76,6 @@
 		D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseProfileViewController.swift; sourceTree = "<group>"; };
 		D30FC90820DF35D800201E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D30FC90A20DF35D900201E74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D30FC90D20DF35D900201E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D30FC90F20DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D30FC91420DF35D900201E74 /* Platinum PointsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Platinum PointsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC91820DF35D900201E74 /* Platinum_PointsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platinum_PointsTests.swift; sourceTree = "<group>"; };
@@ -84,6 +85,9 @@
 		D30FC92520DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLoadingViewController.swift; sourceTree = "<group>"; };
 		D33F43AB2108043300D3982D /* Platinum Points.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Platinum Points.entitlements"; sourceTree = "<group>"; };
+		D33F43AC2108362D00D3982D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PointDescriptionView.xib; sourceTree = "<group>"; };
+		D33F43B0210AA00700D3982D /* PointDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDescriptionView.swift; sourceTree = "<group>"; };
 		D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D3CC77C22103D50B00B88F03 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
@@ -193,12 +197,13 @@
 			isa = PBXGroup;
 			children = (
 				D30FC90720DF35D800201E74 /* Main.storyboard */,
-				D30FC90C20DF35D900201E74 /* LaunchScreen.storyboard */,
 				D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */,
 				D30FBEEA20FC05C7000DD221 /* ColorAndPicture.xib */,
 				D30FBEF020FC0B24000DD221 /* ProfileView.xib */,
 				D3CC77C22103D50B00B88F03 /* HousePointsView.xib */,
 				D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */,
+				D33F43AC2108362D00D3982D /* LaunchScreen.storyboard */,
+				D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -234,8 +239,8 @@
 				D30FC90F20DF35D900201E74 /* Info.plist */,
 				D30FBEE520FC046F000DD221 /* Storyboards */,
 				D30FBEE320FC0457000DD221 /* Resources */,
-				D30FBEE220FC0433000DD221 /* Utils */,
 				D30FBEE120FC0420000DD221 /* Models */,
+				D30FBEE220FC0433000DD221 /* Utils */,
 				D30FBEE020FC0403000DD221 /* ViewControllers */,
 				D3CC77CC210522CC00B88F03 /* Views */,
 			);
@@ -267,6 +272,7 @@
 				D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */,
 				D3CC77C42103D65A00B88F03 /* HousePointsView.swift */,
 				D30FBEEE20FC0B13000DD221 /* ProfileView.swift */,
+				D33F43B0210AA00700D3982D /* PointDescriptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -383,14 +389,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				D30FBEEB20FC05C8000DD221 /* ColorAndPicture.xib in Resources */,
-				D30FC90E20DF35D900201E74 /* LaunchScreen.storyboard in Resources */,
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
 				D3D062C120E8192400E8B3A3 /* platinum-banner.png in Resources */,
+				D33F43AD2108362D00D3982D /* LaunchScreen.storyboard in Resources */,
 				D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */,
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
 				D3CC77C32103D50B00B88F03 /* HousePointsView.xib in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
+				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D30FBEE920FC057D000DD221 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,6 +512,7 @@
 				D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */,
 				D3D062C320E8219C00E8B3A3 /* LogInViewController.swift in Sources */,
 				D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */,
+				D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */,
 				D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,14 +555,6 @@
 				D30FC90820DF35D800201E74 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		D30FC90C20DF35D900201E74 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D30FC90D20DF35D900201E74 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

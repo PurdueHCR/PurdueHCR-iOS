@@ -33,7 +33,8 @@ class FirebaseHelper {
     
     //assume that user is saved in cely
     func createUser(onDone:@escaping (_ err: Error?) -> Void){
-        db.collection("Users").document(User.get(.id) as! String).setData([
+        let userRef = db.collection("Users").document(User.get(.id) as! String)
+        userRef.setData([
             self.NAME: User.get(.name)!,
             self.PERMISSION_LEVEL: User.get(.permissionLevel)!,
             self.HOUSE:User.get(.house)!,
@@ -89,9 +90,9 @@ class FirebaseHelper {
     }
     
     func getUserWhenLogIn(id:String, onDone:@escaping (_ success:Bool)->Void){
-        let docRef = db.collection("Users").document(id)
+        let userRef = db.collection("Users").document(id)
         
-        docRef.getDocument { (document, error) in
+        userRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 User.save(document.data()![self.HOUSE] as Any, as: .house)
                 User.save(document.data()![self.FLOOR_ID] as Any, as: .floorID)
@@ -113,15 +114,15 @@ class FirebaseHelper {
         var ref: DocumentReference? = nil
         // write the document to the HOUSE table and save the reference
         ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: [
-            "Description" : log.pointDescription as Any,
-            "PointTypeID" : ( log.type.pointID * -1) as Any,
-            "Resident"    : log.resident as Any,
+            "Description" : log.pointDescription,
+            "PointTypeID" : ( log.type.pointID * -1),
+            "Resident"    : log.resident,
+            "ResidentRef"  : log.residentRef,
             FLOOR_ID      : log.floorID as Any
         ]){ err in
             if ( err == nil){
-                let userID = User.get(.id) as! String
                 //add a document to the table for the user with the reference to the point
-                self.db.collection(self.USERS).document(userID).collection("Points").document(ref!.documentID).setData(["Point":ref!])
+                log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
                 {err in
                     onDone(err)
                 }
@@ -133,6 +134,7 @@ class FirebaseHelper {
     }
     
     func approvePoint(log:PointLog, approved:Bool, onDone:@escaping (_ err:Error?)->Void){
+        //TODO While User.get(house) will work for now, look at doing this a better way
         let house = User.get(.house) as! String
         var housePointRef: DocumentReference?
         var userPointRef: DocumentReference?
@@ -140,18 +142,16 @@ class FirebaseHelper {
         var userRef:DocumentReference?
         houseRef = self.db.collection(self.HOUSE).document(house)
         housePointRef = houseRef!.collection(self.POINTS).document(log.logID!)
-        userRef = self.db.collection(self.USERS).document(User.get(.id) as! String)
+        userRef = log.residentRef
         userPointRef = userRef!.collection(self.POINTS).document(log.logID!)
         if(approved){
             let value = log.type.pointID
             housePointRef!.updateData(["PointTypeID":value as Any])
-            let houseRef = self.db.collection(self.HOUSE).document(house)
-            let userRef = self.db.collection(self.USERS).document(User.get(.id) as! String)
             
             db.runTransaction({ (transaction, errorPointer) -> Any? in
                 let houseDocument: DocumentSnapshot
                 do {
-                    try houseDocument = transaction.getDocument(houseRef)
+                    try houseDocument = transaction.getDocument(houseRef!)
                 } catch let fetchError as NSError {
                     errorPointer?.pointee = fetchError
                     return nil
@@ -169,7 +169,7 @@ class FirebaseHelper {
                     return nil
                 }
                 let newTotal = oldTotal + log.type.pointValue
-                transaction.updateData(["TotalPoints": newTotal], forDocument: houseRef)
+                transaction.updateData(["TotalPoints": newTotal], forDocument: houseRef!)
                 return nil
             })
             { (object, error) in
@@ -185,7 +185,7 @@ class FirebaseHelper {
             db.runTransaction({ (transaction, errorPointer) -> Any? in
                 let userDocument: DocumentSnapshot
                 do {
-                    try userDocument = transaction.getDocument(userRef)
+                    try userDocument = transaction.getDocument(userRef!)
                 } catch let fetchError as NSError {
                     errorPointer?.pointee = fetchError
                     return nil
@@ -203,7 +203,7 @@ class FirebaseHelper {
                     return nil
                 }
                 let newTotal = oldTotal + log.type.pointValue
-                transaction.updateData(["TotalPoints": newTotal], forDocument: userRef)
+                transaction.updateData(["TotalPoints": newTotal], forDocument: userRef!)
                 return nil
             })
             { (object, error) in
@@ -258,8 +258,13 @@ class FirebaseHelper {
                         let description = document.data()["Description"] as! String
                         let idType = (document.data()["PointTypeID"] as! Int) * -1
                         let resident = document.data()["Resident"] as! String
+                        let residentRefMaybe = document.data()["ResidentRef"]
+                        var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1")
+                        if(residentRefMaybe != nil ){
+                            residentRef = residentRefMaybe as! DocumentReference
+                        }
                         let pointType = DataManager.sharedManager.getPointType(value: idType)
-                        let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID)
+                        let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID, residentRef:residentRef)
                         pointLog.logID = id
                         pointLogs.append(pointLog)
                     }
@@ -352,7 +357,10 @@ class FirebaseHelper {
         }
     }
     
-    
+    func getDocumentReferenceFromID(id:String) -> DocumentReference {
+        return db.collection(self.USERS).document(id)
+        
+    }
     
 }
 

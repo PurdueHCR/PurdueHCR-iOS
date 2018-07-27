@@ -8,6 +8,11 @@
 
 import UIKit
 
+class PointTypeCell: UITableViewCell {
+    @IBOutlet var typeLabel: UILabel!
+    
+}
+
 class PointOptionViewController: UITableViewController{
 
     var refresher: UIRefreshControl?
@@ -27,10 +32,11 @@ class PointOptionViewController: UITableViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        guard let name = User.get(.name) else{
-            return
+        self.title = "Point Options"
+        if let index = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: index, animated: true)
         }
-        self.title = "Welcome " + (name as! String)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,14 +44,9 @@ class PointOptionViewController: UITableViewController{
         // Dispose of any resources that can be recreated.
     }
     
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        
-        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow,
-            indexPathForSelectedRow == indexPath {
-            tableView.deselectRow(at: indexPath, animated: false)
-            return nil
-        }
-        return indexPath
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,8 +54,8 @@ class PointOptionViewController: UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
-        cell.textLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointDescription
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
+        cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointDescription
         
         return(cell)
     }
@@ -62,6 +63,7 @@ class PointOptionViewController: UITableViewController{
     override func numberOfSections(in tableView: UITableView) -> Int {
         return (pointSystem.count)
     }
+
     
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
