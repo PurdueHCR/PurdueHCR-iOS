@@ -1,54 +1,133 @@
 PODS:
+  - BoringSSL (10.0.5):
+    - BoringSSL/Implementation (= 10.0.5)
+    - BoringSSL/Interface (= 10.0.5)
+  - BoringSSL/Implementation (10.0.5):
+    - BoringSSL/Interface (= 10.0.5)
+  - BoringSSL/Interface (10.0.5)
   - Cely (2.0.3):
     - Cely/Core (= 2.0.3)
   - Cely/Core (2.0.3)
-  - Firebase/Core (5.4.0):
+  - Charts (3.1.1):
+    - Charts/Core (= 3.1.1)
+  - Charts/Core (3.1.1)
+  - Firebase/Auth (5.4.1):
+    - Firebase/CoreOnly
+    - FirebaseAuth (= 5.0.2)
+  - Firebase/Core (5.4.1):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.0.1)
-  - Firebase/CoreOnly (5.4.0):
-    - FirebaseCore (= 5.0.5)
-  - Firebase/Database (5.4.0):
+  - Firebase/CoreOnly (5.4.1):
+    - FirebaseCore (= 5.0.6)
+  - Firebase/Firestore (5.4.1):
     - Firebase/CoreOnly
-    - FirebaseDatabase (= 5.0.2)
+    - FirebaseFirestore (= 0.12.6)
+  - Firebase/Storage (5.4.1):
+    - Firebase/CoreOnly
+    - FirebaseStorage (= 3.0.0)
   - FirebaseAnalytics (5.0.1):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseCore (5.0.5):
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseDatabase (5.0.2):
+  - FirebaseAuth (5.0.2):
     - FirebaseCore (~> 5.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseCore (5.0.6):
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseFirestore (0.12.6):
+    - FirebaseCore (~> 5.0)
+    - FirebaseFirestore/abseil-cpp (= 0.12.6)
+    - gRPC-ProtoRPC (~> 1.0)
     - leveldb-library (~> 1.18)
+    - nanopb (~> 0.3.8)
+    - Protobuf (~> 3.1)
+  - FirebaseFirestore/abseil-cpp (0.12.6):
+    - FirebaseCore (~> 5.0)
+    - gRPC-ProtoRPC (~> 1.0)
+    - leveldb-library (~> 1.18)
+    - nanopb (~> 0.3.8)
+    - Protobuf (~> 3.1)
   - FirebaseInstanceID (3.1.1):
     - FirebaseCore (~> 5.0)
+  - FirebaseStorage (3.0.0):
+    - FirebaseCore (~> 5.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/Defines (2.1.4)
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
+  - gRPC (1.13.0):
+    - gRPC-RxLibrary (= 1.13.0)
+    - gRPC/Main (= 1.13.0)
+  - gRPC-Core (1.13.0):
+    - gRPC-Core/Implementation (= 1.13.0)
+    - gRPC-Core/Interface (= 1.13.0)
+  - gRPC-Core/Implementation (1.13.0):
+    - BoringSSL (~> 10.0)
+    - gRPC-Core/Interface (= 1.13.0)
+    - nanopb (~> 0.3)
+  - gRPC-Core/Interface (1.13.0)
+  - gRPC-ProtoRPC (1.13.0):
+    - gRPC-ProtoRPC/Main (= 1.13.0)
+  - gRPC-ProtoRPC/Main (1.13.0):
+    - gRPC (= 1.13.0)
+    - gRPC-RxLibrary (= 1.13.0)
+    - Protobuf (~> 3.0)
+  - gRPC-RxLibrary (1.13.0)
+  - gRPC/Main (1.13.0):
+    - gRPC-Core (= 1.13.0)
+    - gRPC-RxLibrary (= 1.13.0)
+  - GTMSessionFetcher/Core (1.1.15)
+  - KDCircularProgress (1.5.2)
   - leveldb-library (1.20)
+  - MarqueeLabel/Swift (3.1.6)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - NotificationBannerSwift (1.6.3):
+    - MarqueeLabel/Swift
+    - SnapKit (~> 4.0)
+  - Protobuf (3.6.0)
+  - SnapKit (4.0.0)
   - ValueStepper (1.5)
 
 DEPENDENCIES:
   - Cely (from `https://github.com/chaione/Cely`, branch `master`)
+  - Charts
+  - Firebase/Auth
   - Firebase/Core
-  - Firebase/Database
+  - Firebase/Firestore
+  - Firebase/Storage
+  - KDCircularProgress
+  - NotificationBannerSwift
   - ValueStepper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - BoringSSL
+    - Charts
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAuth
     - FirebaseCore
-    - FirebaseDatabase
+    - FirebaseFirestore
     - FirebaseInstanceID
+    - FirebaseStorage
     - GoogleToolboxForMac
+    - gRPC
+    - gRPC-Core
+    - gRPC-ProtoRPC
+    - gRPC-RxLibrary
+    - GTMSessionFetcher
+    - KDCircularProgress
     - leveldb-library
+    - MarqueeLabel
     - nanopb
+    - NotificationBannerSwift
+    - Protobuf
+    - SnapKit
     - ValueStepper
 
 EXTERNAL SOURCES:
@@ -62,17 +141,31 @@ CHECKOUT OPTIONS:
     :git: https://github.com/chaione/Cely
 
 SPEC CHECKSUMS:
+  BoringSSL: cf3f1793eb6e3c445c4d150456341f149c268a35
   Cely: 764f96dfc009b0b725afe801255b2dac54c7bd76
-  Firebase: d66f4f29c23f22d96808d9abc174d81d8eee968f
+  Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
+  Firebase: 355bd535bfdacaa82a7fe8d9784115edefd6fc03
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
-  FirebaseCore: 42b3267233bd21a5abd54117ccc38ca3dd0f8e83
-  FirebaseDatabase: 27be5ac5bc75e0b17537b2bbfada8258addcc8cd
+  FirebaseAuth: 096e457cdd4274412a66c4a35874787e411f5a03
+  FirebaseCore: 4c28e3b9708ba48a765e76515f913a71596eb5dd
+  FirebaseFirestore: d4a3a7787624e612298a320da95935b8dc036c1d
   FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
+  FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  gRPC: 81b990caa01d7c32605d300c2ffd1b5ba0ef9e49
+  gRPC-Core: a56b086a8ef5ced6f6ba5be5bc0a63fca185015a
+  gRPC-ProtoRPC: 842797fbe05dfcf891afb4a5048e5ccf5f06ef86
+  gRPC-RxLibrary: fa6852f98d6ec0b73c0ec2f6406c26943099d501
+  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  KDCircularProgress: 12f677b2deb02409ab48c6cae1898d146b8ad549
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
+  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   ValueStepper: e84d21a2ce62a7975df8b222c7273d6810f7e78c
 
-PODFILE CHECKSUM: c1bf306f966ad9b276f6a13a269499a64c3ab8ed
+PODFILE CHECKSUM: c0635c46554a61a538276d668405539fd4b8442a
 
 COCOAPODS: 1.5.3

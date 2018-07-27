@@ -5,5 +5,10 @@ target 'Platinum Points' do
   pod 'Cely', :git => 'https://github.com/chaione/Cely', :branch => 'master' 
   pod 'ValueStepper'
   pod 'Firebase/Core'
-  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Auth'
+  pod 'KDCircularProgress'
+  pod 'Charts'
+  pod 'NotificationBannerSwift'
 end

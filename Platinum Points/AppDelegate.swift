@@ -15,13 +15,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
-        Cely.setup(with: window!, forModel: User(), requiredProperties: [.token], withOptions: [
+        Cely.setup(with: window!, forModel: User(), requiredProperties: [.id], withOptions: [
             .loginStoryboard: UIStoryboard(name: "LoginStoryboard", bundle: nil)
             ])
+        
+        FirebaseApp.configure()
+        DataManager.sharedManager.refreshHouses(onDone: {(house:[House]) in return})
         // Override point for customization after application launch.
+        if Auth.auth().currentUser != nil {
+            DataManager.sharedManager.getUserWhenLogginIn(id: (Auth.auth().currentUser?.uid)!, onDone: { (success:Bool) in
+                if(success){
+                    User.save(Auth.auth().currentUser?.uid as Any, as: .id)
+                    Cely.changeStatus(to: .loggedIn)
+                }
+                else{
+                    fatalError("Something bad happend that should not have happend. Somehow you have an account without a corresponding entry in user table.")
+                }
+            })
+        }
+        else{
+            Cely.logout()
+        }
         return true
     }
 
