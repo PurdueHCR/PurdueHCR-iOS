@@ -109,26 +109,67 @@ class FirebaseHelper {
     
     // Write the point to the house points log and write the reference to the user
     // put in onDone to handle what happens when it returns
-    func addPointLog(log:PointLog, onDone:@escaping (_ err:Error?)->Void){
-        let house = User.get(.house) as! String// crash here becasue user. hosue is null
+    func addPointLog(log:PointLog, documentID:String = "",preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+        let house = User.get(.house) as! String
         var ref: DocumentReference? = nil
-        // write the document to the HOUSE table and save the reference
-        ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: [
-            "Description" : log.pointDescription,
-            "PointTypeID" : ( log.type.pointID * -1),
-            "Resident"    : log.resident,
-            "ResidentRef"  : log.residentRef,
-            FLOOR_ID      : log.floorID as Any
-        ]){ err in
-            if ( err == nil){
-                //add a document to the table for the user with the reference to the point
-                log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
-                {err in
+        var multiplier = -1
+        if(preApproved){
+            multiplier = 1
+        }
+        if(documentID == "" )
+        {
+            // write the document to the HOUSE table and save the reference
+            ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: [
+                "Description" : log.pointDescription,
+                "PointTypeID" : ( log.type.pointID * multiplier),
+                "Resident"    : log.resident,
+                "ResidentRef"  : log.residentRef,
+                FLOOR_ID      : log.floorID as Any
+            ]){ err in
+                if ( err == nil){
+                    //add a document to the table for the user with the reference to the point
+                    log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
+                    {err in
+                        if(err == nil && preApproved)
+                        {
+                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), onDone: onDone)
+                        }
+                        else{
+                            onDone(err)
+                        }
+                    }
+                }
+                else{
                     onDone(err)
                 }
             }
-            else{
-                onDone(err)
+        }
+        else
+        {
+            ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(documentID)
+            ref!.setData([
+                "Description" : log.pointDescription,
+                "PointTypeID" : ( log.type.pointID * multiplier),
+                "Resident"    : log.resident,
+                "ResidentRef"  : log.residentRef,
+                FLOOR_ID      : log.floorID as Any
+            ]){ err in
+                if ( err == nil){
+                    //add a document to the table for the user with the reference to the point
+                    log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
+                    {err in
+                        if(err == nil && preApproved)
+                        {
+                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), onDone: onDone)
+                        }
+                        else{
+                            onDone(err)
+                        }
+                    }
+                }
+                else{
+                    onDone(err)
+                }
             }
         }
     }
@@ -147,89 +188,20 @@ class FirebaseHelper {
         if(approved){
             let value = log.type.pointID
             housePointRef!.updateData(["PointTypeID":value as Any])
-            
-            db.runTransaction({ (transaction, errorPointer) -> Any? in
-                let houseDocument: DocumentSnapshot
-                do {
-                    try houseDocument = transaction.getDocument(houseRef!)
-                } catch let fetchError as NSError {
-                    errorPointer?.pointee = fetchError
-                    return nil
-                }
-                
-                guard let oldTotal = houseDocument.data()?["TotalPoints"] as? Int else {
-                    let error = NSError(
-                        domain: "AppErrorDomain",
-                        code: -1,
-                        userInfo: [
-                            NSLocalizedDescriptionKey: "Unable to retrieve TotalPoints from snapshot \(houseDocument)"
-                        ]
-                    )
-                    errorPointer?.pointee = error
-                    return nil
-                }
-                let newTotal = oldTotal + log.type.pointValue
-                transaction.updateData(["TotalPoints": newTotal], forDocument: houseRef!)
-                return nil
+            updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, onDone: {(err:Error?) in
+                onDone(err)
             })
-            { (object, error) in
-                if let error = error {
-                    print("Transaction failed: \(error)")
-                    onDone(error)
-                } else {
-                    print("Transaction successfully committed!")
-                    onDone(nil)
-                }
-            }
-            
-            db.runTransaction({ (transaction, errorPointer) -> Any? in
-                let userDocument: DocumentSnapshot
-                do {
-                    try userDocument = transaction.getDocument(userRef!)
-                } catch let fetchError as NSError {
-                    errorPointer?.pointee = fetchError
-                    return nil
-                }
-                
-                guard let oldTotal = userDocument.data()?["TotalPoints"] as? Int else {
-                    let error = NSError(
-                        domain: "AppErrorDomain",
-                        code: -1,
-                        userInfo: [
-                            NSLocalizedDescriptionKey: "Unable to retrieve TotalPoints from snapshot \(userDocument)"
-                        ]
-                    )
-                    errorPointer?.pointee = error
-                    return nil
-                }
-                let newTotal = oldTotal + log.type.pointValue
-                transaction.updateData(["TotalPoints": newTotal], forDocument: userRef!)
-                return nil
-            })
-            { (object, error) in
-                if let error = error {
-                    print("Transaction failed: \(error)")
-                    onDone(error)
-                } else {
-                    print("Transaction successfully committed!")
-                    onDone(nil)
-                }
-            }
-            
         }
         else{
             housePointRef?.delete(){ err in
-                if let err = err {
-                    print("Error removing HousePoint: \(err)")
+                if err != nil {
+                    print("Error removing HousePoint: \(err!)")
+                    onDone(err)
                 } else {
                     print("housePoint successfully removed!")
-                }
-            }
-            userPointRef?.delete(){ err in
-                if let err = err {
-                    print("Error removing userPoint: \(err)")
-                } else {
-                    print("userPoint successfully removed!")
+                    userPointRef?.delete(){ errDeep in
+                        onDone(errDeep)
+                    }
                 }
             }
         }
@@ -360,6 +332,107 @@ class FirebaseHelper {
     func getDocumentReferenceFromID(id:String) -> DocumentReference {
         return db.collection(self.USERS).document(id)
         
+    }
+    
+    func findLinkWithID(id:String, onDone:@escaping (_ link:Link?)->Void){
+        let linkRef = db.collection("Links").document(id)
+        linkRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let descr = document.data()!["Description"] as! String
+                let single = document.data()!["SingleUse"] as! Bool
+                let pointID = document.data()!["PointID"] as! Int
+                let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID)
+                onDone(link)
+            } else {
+                print("Document does not exist")
+                onDone(nil)
+            }
+        }
+    }
+    
+    func updateUserPoints(log:PointLog, userRef:DocumentReference,onDone:@escaping (_ err:Error?)->Void) {
+        db.runTransaction({ (transaction, errorPointer) -> Any? in
+            let userDocument: DocumentSnapshot
+            do {
+                try userDocument = transaction.getDocument(userRef)
+            } catch let fetchError as NSError {
+                errorPointer?.pointee = fetchError
+                return nil
+            }
+            
+            guard let oldTotal = userDocument.data()?["TotalPoints"] as? Int else {
+                let error = NSError(
+                    domain: "AppErrorDomain",
+                    code: -1,
+                    userInfo: [
+                        NSLocalizedDescriptionKey: "Unable to retrieve TotalPoints from snapshot \(userDocument)"
+                    ]
+                )
+                errorPointer?.pointee = error
+                return nil
+            }
+            let newTotal = oldTotal + log.type.pointValue
+            transaction.updateData(["TotalPoints": newTotal], forDocument: userRef)
+            return nil
+        })
+        { (object, error) in
+            if let error = error {
+                print("Transaction failed: \(error)")
+                onDone(error)
+            } else {
+                print("Transaction successfully committed!")
+                onDone(nil)
+            }
+        }
+    }
+    
+    func updateHousePoints(log:PointLog, houseRef:DocumentReference,onDone:@escaping (_ err:Error?)->Void)
+    {
+        db.runTransaction({ (transaction, errorPointer) -> Any? in
+            let houseDocument: DocumentSnapshot
+            do {
+                try houseDocument = transaction.getDocument(houseRef)
+            } catch let fetchError as NSError {
+                errorPointer?.pointee = fetchError
+                return nil
+            }
+            
+            guard let oldTotal = houseDocument.data()?["TotalPoints"] as? Int else {
+                let error = NSError(
+                    domain: "AppErrorDomain",
+                    code: -1,
+                    userInfo: [
+                        NSLocalizedDescriptionKey: "Unable to retrieve TotalPoints from snapshot \(houseDocument)"
+                    ]
+                )
+                errorPointer?.pointee = error
+                return nil
+            }
+            let newTotal = oldTotal + log.type.pointValue
+            transaction.updateData(["TotalPoints": newTotal], forDocument: houseRef)
+            return nil
+        })
+        { (object, error) in
+            if let error = error {
+                print("Transaction failed: \(error)")
+                onDone(error)
+            } else {
+                print("Transaction successfully committed!")
+                onDone(nil)
+            }
+        }
+    }
+    
+    func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference,onDone:@escaping (_ err:Error?)->Void)
+    {
+        updateHousePoints(log: log, houseRef: houseRef, onDone: {(err:Error?)in
+            if(err != nil){
+                onDone(err)
+            }
+            self.updateUserPoints(log: log, userRef: userRef, onDone: {(errDeep:Error?) in
+                onDone(errDeep)
+            })
+        })
     }
     
 }

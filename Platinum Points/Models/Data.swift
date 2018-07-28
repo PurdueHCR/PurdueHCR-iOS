@@ -114,4 +114,17 @@ class HouseCode {
     }
 }
 
+class Link {
+    var id:String
+    var description:String
+    var singleUse:Bool
+    var pointTypeID:Int
+    init(id:String, description:String,singleUse:Bool, pointTypeID:Int){
+        self.id = id
+        self.description = description
+        self.singleUse = singleUse
+        self.pointTypeID = pointTypeID
+    }
+}
+
 

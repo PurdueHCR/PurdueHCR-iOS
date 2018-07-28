@@ -9,6 +9,7 @@
 import UIKit
 import Cely
 import Firebase
+import NotificationBannerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +39,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Cely.logout()
         }
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        print("url \(url)")
+        print("url host :\(url.host!)")
+        print("url path :\(url.path)")
+        
+        
+        guard let urlPath = url.path as String? , let urlHost  = url.host as String? else {
+            
+            let banner = NotificationBanner(title: "Failure", subtitle: "Link is not formatted correctly.", style: .danger)
+            banner.duration = 2
+            banner.show()
+            return false
+        }
+        if(urlHost == "addpoints"){
+            let pathParts = urlPath.split(separator: "/")
+            if(pathParts.count == 1){
+                let linkID = pathParts[0].description.replacingOccurrences(of: "/", with: "")
+                print("LinkID: \(linkID)")
+                DataManager.sharedManager.handlePointLink(id: linkID)
+                return true
+            }
+            else{
+                let banner = NotificationBanner(title: "Failure", subtitle: "Illegal Link.", style: .danger)
+                banner.duration = 2
+                banner.show()
+                return false
+            }
+        }
+        return false
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

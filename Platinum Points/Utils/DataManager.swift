@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
+import NotificationBannerSwift
 
 
 
@@ -194,6 +195,41 @@ class DataManager {
     func getUserRefFromUserID(id:String) -> DocumentReference {
         return fbh.getDocumentReferenceFromID(id: id)
     }
+    
+    func handlePointLink(id:String){
+        fbh.findLinkWithID(id: id, onDone: {(linkOptional:Link?) in
+            guard let link = linkOptional else {
+                let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points.", style: .danger)
+                banner.duration = 2
+                banner.show()
+                return
+            }
+            let pointType = self.getPointType(value: link.pointTypeID)
+            let resident = User.get(.name) as! String
+            let floorID = User.get(.floorID) as! String
+            let ref = self.getUserRefFromUserID(id: User.get(.id) as! String)
+            let log = PointLog(pointDescription: link.description, resident: resident, type: pointType, floorID: floorID, residentRef: ref)
+            var documentID = ""
+            if(link.singleUse){
+                documentID = id
+            }
+            self.fbh.addPointLog(log: log, documentID: documentID, preApproved: true, onDone: {(err:Error?) in
+                if(err == nil){
+                    let banner = NotificationBanner(title: "Success", subtitle: "The point in the link was recorded.", style: .success)
+                    banner.duration = 2
+                    banner.show()
+                    
+                }
+                else{
+                    let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                }
+            })
+            
+        })
+    }
+    
 }
 
 
