@@ -13,7 +13,6 @@ import Firebase
 class TypeSubmitViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet var typeLabel: UILabel!
-    @IBOutlet var countStepper: ValueStepper!
     @IBOutlet var descriptionField: UITextView!
     
     var type:PointType?
@@ -39,11 +38,6 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
             print("Description is empty")
             return
         }
-        let count = countStepper.value
-        if ( count <= 0){
-            print("Count is illegal number")
-            return
-        }
         guard let pointType = type else{
             print("PointType not found")
             return
@@ -51,22 +45,21 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
         let name = User.get(.name) as! String
         let floor = User.get(.floorID) as! String
         let residentRef = DataManager.sharedManager.getUserRefFromUserID(id: User.get(.id) as! String)
-        for _ in 0 ..< Int(count) {
-            let pointLog = PointLog(pointDescription: description, resident: name, type: pointType, floorID: floor, residentRef:residentRef)
-            DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
-                if(err != nil){
-                    self.notify(title: "Failed to submit", subtitle: err.debugDescription, style: .danger)
-                    print("Error in posting: ",err.debugDescription)
-                }
-                else{
-                    //post success
-                    print("Success")
-                    self.navigationController?.popViewController(animated: true)
-                    
-                    self.navigationController?.topViewController?.notify(title: "Success", subtitle: "Your points were recorded!", style: .success)
-                }
+        let pointLog = PointLog(pointDescription: description, resident: name, type: pointType, floorID: floor, residentRef:residentRef)
+        DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
+            if(err != nil){
+                self.notify(title: "Failed to submit", subtitle: err.debugDescription, style: .danger)
+                print("Error in posting: ",err.debugDescription)
+            }
+            else{
+                //post success
+                print("Success")
+                self.navigationController?.popViewController(animated: true)
+                
+                self.navigationController?.topViewController?.notify(title: "Success", subtitle: "Your points were recorded!", style: .success)
             }
         }
+        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

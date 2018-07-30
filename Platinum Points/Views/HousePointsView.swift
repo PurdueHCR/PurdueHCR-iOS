@@ -71,7 +71,7 @@ class HousePointsView: UIView {
     
     func createImageView() -> UIImageView {
         if(rewardImageView == nil){
-            let size = self.circleProgress.frame.size.width * 0.6
+            let size = self.circleProgress.frame.size.width * 0.4
             return UIImageView(frame: CGRect(x:0, y: 1000, width: size, height: size))
         }
         else{

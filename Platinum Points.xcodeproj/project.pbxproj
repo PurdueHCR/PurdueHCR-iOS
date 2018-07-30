@@ -31,7 +31,7 @@
 		D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */; };
 		D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */; };
 		D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */; };
-		D3CC77C32103D50B00B88F03 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C22103D50B00B88F03 /* HousePointsView.xib */; };
+		D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3BC48BA210E9B0900D46088 /* HousePointsView.xib */; };
 		D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C42103D65A00B88F03 /* HousePointsView.swift */; };
 		D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */; };
 		D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */; };
@@ -95,7 +95,7 @@
 		D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorViewController.swift; sourceTree = "<group>"; };
 		D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodeViewController.swift; sourceTree = "<group>"; };
 		D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodesTableViewController.swift; sourceTree = "<group>"; };
-		D3CC77C22103D50B00B88F03 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
+		D3BC48BA210E9B0900D46088 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
 		D3CC77C42103D65A00B88F03 /* HousePointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsView.swift; sourceTree = "<group>"; };
 		D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsCompareView.xib; sourceTree = "<group>"; };
 		D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsCompareView.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 				D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */,
 				D30FBEEA20FC05C7000DD221 /* ColorAndPicture.xib */,
 				D30FBEF020FC0B24000DD221 /* ProfileView.xib */,
-				D3CC77C22103D50B00B88F03 /* HousePointsView.xib */,
+				D3BC48BA210E9B0900D46088 /* HousePointsView.xib */,
 				D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */,
 				D33F43AC2108362D00D3982D /* LaunchScreen.storyboard */,
 				D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */,
@@ -447,10 +447,10 @@
 				D33F43AD2108362D00D3982D /* LaunchScreen.storyboard in Resources */,
 				D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */,
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
-				D3CC77C32103D50B00B88F03 /* HousePointsView.xib in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
+				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
 				D30FBEE920FC057D000DD221 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

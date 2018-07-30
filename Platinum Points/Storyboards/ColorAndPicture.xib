@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="503" height="410"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="platinum-banner.png" translatesAutoresizingMaskIntoConstraints="NO" id="GmT-Rn-dQo">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Copper" translatesAutoresizingMaskIntoConstraints="NO" id="GmT-Rn-dQo">
                     <rect key="frame" x="0.0" y="0.0" width="503" height="410"/>
                 </imageView>
             </subviews>
@@ -38,6 +38,6 @@
         </view>
     </objects>
     <resources>
-        <image name="platinum-banner.png" width="500" height="644"/>
+        <image name="Copper" width="986" height="986"/>
     </resources>
 </document>
