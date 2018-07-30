@@ -28,6 +28,9 @@
 		D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F43B0210AA00700D3982D /* PointDescriptionView.swift */; };
 		D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */; };
 		D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */; };
+		D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */; };
+		D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */; };
+		D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */; };
 		D3CC77C32103D50B00B88F03 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C22103D50B00B88F03 /* HousePointsView.xib */; };
 		D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C42103D65A00B88F03 /* HousePointsView.swift */; };
 		D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */; };
@@ -37,7 +40,6 @@
 		D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062B620E7F73C00E8B3A3 /* DataManager.swift */; };
 		D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062B820E7F75B00E8B3A3 /* Data.swift */; };
 		D3D062BD20E816AB00E8B3A3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062BC20E816AB00E8B3A3 /* User.swift */; };
-		D3D062C120E8192400E8B3A3 /* platinum-banner.png in Resources */ = {isa = PBXBuildFile; fileRef = D3D062C020E8192400E8B3A3 /* platinum-banner.png */; };
 		D3D062C320E8219C00E8B3A3 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062C220E8219C00E8B3A3 /* LogInViewController.swift */; };
 		D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */; };
 		D3D062C720E82A6500E8B3A3 /* TypeSubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */; };
@@ -90,6 +92,9 @@
 		D33F43B0210AA00700D3982D /* PointDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDescriptionView.swift; sourceTree = "<group>"; };
 		D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorViewController.swift; sourceTree = "<group>"; };
+		D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodeViewController.swift; sourceTree = "<group>"; };
+		D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodesTableViewController.swift; sourceTree = "<group>"; };
 		D3CC77C22103D50B00B88F03 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
 		D3CC77C42103D65A00B88F03 /* HousePointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsView.swift; sourceTree = "<group>"; };
 		D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsCompareView.xib; sourceTree = "<group>"; };
@@ -99,7 +104,6 @@
 		D3D062B620E7F73C00E8B3A3 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		D3D062B820E7F75B00E8B3A3 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		D3D062BC20E816AB00E8B3A3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		D3D062C020E8192400E8B3A3 /* platinum-banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "platinum-banner.png"; sourceTree = "<group>"; };
 		D3D062C220E8219C00E8B3A3 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSubmitViewController.swift; sourceTree = "<group>"; };
@@ -152,15 +156,12 @@
 		D30FBEE020FC0403000DD221 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D3D062C220E8219C00E8B3A3 /* LogInViewController.swift */,
-				D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */,
-				D30FC90320DF35D800201E74 /* PointOptionViewController.swift */,
-				D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */,
-				D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */,
-				D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */,
-				D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */,
-				D3CC77CA210428B600B88F03 /* TabBarController.swift */,
-				D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */,
+				D39D4433210E74540030F424 /* PointApprovalViewControllers */,
+				D39D4432210E74460030F424 /* PointCreationViewControllers */,
+				D39D4431210E74320030F424 /* ProfileViewControllers */,
+				D39D4430210E74090030F424 /* UserCreation */,
+				D39D442F210E73FB0030F424 /* FlowControllers */,
+				D39D442E210E73E70030F424 /* QRCodeViewControllers */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -188,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				D30FC90A20DF35D900201E74 /* Assets.xcassets */,
-				D3D062C020E8192400E8B3A3 /* platinum-banner.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -263,6 +263,60 @@
 				D30FC92520DF35D900201E74 /* Info.plist */,
 			);
 			path = "Platinum PointsUITests";
+			sourceTree = "<group>";
+		};
+		D39D442E210E73E70030F424 /* QRCodeViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */,
+				D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */,
+				D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */,
+			);
+			path = QRCodeViewControllers;
+			sourceTree = "<group>";
+		};
+		D39D442F210E73FB0030F424 /* FlowControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */,
+				D3CC77CA210428B600B88F03 /* TabBarController.swift */,
+			);
+			path = FlowControllers;
+			sourceTree = "<group>";
+		};
+		D39D4430210E74090030F424 /* UserCreation */ = {
+			isa = PBXGroup;
+			children = (
+				D3D062C220E8219C00E8B3A3 /* LogInViewController.swift */,
+				D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */,
+			);
+			path = UserCreation;
+			sourceTree = "<group>";
+		};
+		D39D4431210E74320030F424 /* ProfileViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */,
+			);
+			path = ProfileViewControllers;
+			sourceTree = "<group>";
+		};
+		D39D4432210E74460030F424 /* PointCreationViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D30FC90320DF35D800201E74 /* PointOptionViewController.swift */,
+				D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */,
+			);
+			path = PointCreationViewControllers;
+			sourceTree = "<group>";
+		};
+		D39D4433210E74540030F424 /* PointApprovalViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */,
+				D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */,
+			);
+			path = PointApprovalViewControllers;
 			sourceTree = "<group>";
 		};
 		D3CC77CC210522CC00B88F03 /* Views */ = {
@@ -390,7 +444,6 @@
 			files = (
 				D30FBEEB20FC05C8000DD221 /* ColorAndPicture.xib in Resources */,
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
-				D3D062C120E8192400E8B3A3 /* platinum-banner.png in Resources */,
 				D33F43AD2108362D00D3982D /* LaunchScreen.storyboard in Resources */,
 				D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */,
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
@@ -496,13 +549,16 @@
 			files = (
 				D30FBEF3210380F3000DD221 /* PointLogOverviewController.swift in Sources */,
 				D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */,
+				D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */,
 				D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */,
 				D30FBEED20FC0878000DD221 /* ColorAndPictureView.swift in Sources */,
 				D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
 				D3CC77CB210428B600B88F03 /* TabBarController.swift in Sources */,
 				D3D062BD20E816AB00E8B3A3 /* User.swift in Sources */,
+				D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */,
 				D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */,
+				D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */,
 				D3CC77CE21052CEF00B88F03 /* AppUtils.swift in Sources */,
 				D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,

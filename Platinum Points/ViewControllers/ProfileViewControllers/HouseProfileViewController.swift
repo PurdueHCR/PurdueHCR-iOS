@@ -29,7 +29,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         scrollView.refreshControl = refresher
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
-        profileView.transitionFunc = segueToProfilePointView
+        //profileView.transitionFunc = segueToProfilePointView
         // Do any additional setup after loading the view, typically from a nib.
     }
     @objc func logOut(_ sender: Any) {

@@ -21,7 +21,6 @@ class FirebaseHelper {
     let USERS = "Users"
     let TOTAL_POINTS = "TotalPoints"
     let FLOOR_ID = "FloorID"
-
     
     init(){
         db = Firestore.firestore()
@@ -36,7 +35,7 @@ class FirebaseHelper {
         let userRef = db.collection("Users").document(User.get(.id) as! String)
         userRef.setData([
             self.NAME: User.get(.name)!,
-            self.PERMISSION_LEVEL: User.get(.permissionLevel)!,
+            self.PERMISSION_LEVEL: User.get(.permissionLevel)! as! Int,
             self.HOUSE:User.get(.house)!,
             self.FLOOR_ID:User.get(.floorID)!,
             self.TOTAL_POINTS:0
@@ -45,31 +44,8 @@ class FirebaseHelper {
         }
     }
     
-    func sortPointArray(arr:[PointType]) -> [PointGroup]{
-        var pointGroup = [PointGroup]()
-        if(!arr.isEmpty){
-            var value = arr[0].pointValue
-            var pg = PointGroup(val:value)
-            pointGroup.append(pg)
-            pg.add(pt: arr[0])
-            for i in 1..<arr.count {
-                if(arr[i].pointValue == value){
-                    pg.add(pt: arr[i])
-                }
-                else{
-                    value = arr[i].pointValue
-                    pg = PointGroup(val:value)
-                    pointGroup.append(pg)
-                    pg.add(pt: arr[i])
-                }
-            }
-            
-        }
-        return pointGroup
-    }
-    
-    
-    func retrievePointTypes(onDone:@escaping ([PointGroup])->Void) {
+
+    func retrievePointTypes(onDone:@escaping ([PointType])->Void) {
         self.db.collection("PointTypes").getDocuments() { (querySnapshot, err) in
             var pointArray = [PointType]()
             if let err = err {
@@ -84,7 +60,7 @@ class FirebaseHelper {
                     pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id!))
                 }
                 pointArray.sort(by: {$0.pointValue < $1.pointValue})
-                onDone(self.sortPointArray(arr: pointArray))
+                onDone(pointArray)
             }
         }
     }
@@ -97,7 +73,7 @@ class FirebaseHelper {
                 User.save(document.data()![self.HOUSE] as Any, as: .house)
                 User.save(document.data()![self.FLOOR_ID] as Any, as: .floorID)
                 User.save(document.data()![self.NAME] as Any, as: .name)
-                User.save(document.data()![self.PERMISSION_LEVEL] as Any, as: .permissionLevel)
+                User.save((document.data()![self.PERMISSION_LEVEL] as! Int) as Any, as: .permissionLevel)
                 User.save(document.data()![self.TOTAL_POINTS] as Any, as: .points)
                 onDone(true)
             } else {
@@ -146,29 +122,36 @@ class FirebaseHelper {
         }
         else
         {
-            ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(documentID)
-            ref!.setData([
-                "Description" : log.pointDescription,
-                "PointTypeID" : ( log.type.pointID * multiplier),
-                "Resident"    : log.resident,
-                "ResidentRef"  : log.residentRef,
-                FLOOR_ID      : log.floorID as Any
-            ]){ err in
-                if ( err == nil){
-                    //add a document to the table for the user with the reference to the point
-                    log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
-                    {err in
-                        if(err == nil && preApproved)
-                        {
-                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), onDone: onDone)
+            //Adding a point with a specific Document ID
+            ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(log.residentRef.documentID+documentID)
+            ref!.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    onDone(NSError(domain: "Document Exists", code: 0, userInfo: nil))
+                } else {
+                    ref!.setData([
+                        "Description" : log.pointDescription,
+                        "PointTypeID" : ( log.type.pointID * multiplier),
+                        "Resident"    : log.resident,
+                        "ResidentRef"  : log.residentRef,
+                        self.FLOOR_ID      : log.floorID as Any
+                    ]){ err in
+                        if ( err == nil){
+                            //add a document to the table for the user with the reference to the point
+                            log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
+                            {err in
+                                if(err == nil && preApproved)
+                                {
+                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), onDone: onDone)
+                                }
+                                else{
+                                    onDone(err)
+                                }
+                            }
                         }
                         else{
                             onDone(err)
                         }
                     }
-                }
-                else{
-                    onDone(err)
                 }
             }
         }
@@ -178,35 +161,27 @@ class FirebaseHelper {
         //TODO While User.get(house) will work for now, look at doing this a better way
         let house = User.get(.house) as! String
         var housePointRef: DocumentReference?
-        var userPointRef: DocumentReference?
         var houseRef:DocumentReference?
         var userRef:DocumentReference?
         houseRef = self.db.collection(self.HOUSE).document(house)
         housePointRef = houseRef!.collection(self.POINTS).document(log.logID!)
         userRef = log.residentRef
-        userPointRef = userRef!.collection(self.POINTS).document(log.logID!)
-        if(approved){
-            let value = log.type.pointID
-            housePointRef!.updateData(["PointTypeID":value as Any])
-            updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, onDone: {(err:Error?) in
-                onDone(err)
-            })
+        let value = log.type.pointID
+        var description = log.pointDescription
+        if(!approved){
+            description = "DENIED: "+description
         }
-        else{
-            housePointRef?.delete(){ err in
-                if err != nil {
-                    print("Error removing HousePoint: \(err!)")
+        housePointRef!.setData(["PointTypeID":value,"ApprovedBy":User.get(.name) as! String,"ApprovedOn":Timestamp.init(), "Description":description],merge:true){err in
+            if(err == nil && approved){
+                self.updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, onDone: {(err:Error?) in
                     onDone(err)
-                } else {
-                    print("housePoint successfully removed!")
-                    userPointRef?.delete(){ errDeep in
-                        onDone(errDeep)
-                    }
-                }
+                })
+            }
+            else{
+                onDone(err)
             }
         }
     }
-    
     
     func getUnconfirmedPoints(onDone:@escaping ( _ pointLogs:[PointLog])->Void)
     {
@@ -341,7 +316,8 @@ class FirebaseHelper {
                 let descr = document.data()!["Description"] as! String
                 let single = document.data()!["SingleUse"] as! Bool
                 let pointID = document.data()!["PointID"] as! Int
-                let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID)
+                let enabled = document.data()!["Enabled"] as! Bool
+                let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID,enabled:enabled)
                 onDone(link)
             } else {
                 print("Document does not exist")
@@ -433,6 +409,47 @@ class FirebaseHelper {
                 onDone(errDeep)
             })
         })
+    }
+    
+    func createQRCode(link:Link,onDone:@escaping ( _ id:String?) -> Void){
+        let ref = db.collection("Links")
+        var linkID:DocumentReference?
+        linkID = ref.addDocument(data: ["Description":link.description,"PointID":link.pointTypeID,"SingleUse":link.singleUse,"CreatorID":User.get(.id) as! String,"Enabled":link.enabled])
+        {err in
+            if(err == nil){
+                onDone(linkID?.documentID)
+            }
+            else{
+                onDone(nil)
+            }
+        }
+    }
+    
+    func getQRCodeFor(ownerID:String,withCompletion onDone:@escaping ( _ links:[Link]?)->Void){
+        db.collection("Links").whereField("CreatorID", isEqualTo: ownerID).getDocuments()
+            { (querySnapshot, error) in
+                if error != nil {
+                    print("Error getting documenbts: \(String(describing: error))")
+                    onDone(nil)
+                }
+                var links = [Link]()
+                for document in querySnapshot!.documents {
+                    let id = document.documentID
+                    let descr = document.data()["Description"] as! String
+                    let single = document.data()["SingleUse"] as! Bool
+                    let pointID = document.data()["PointID"] as! Int
+                    let enabled = document.data()["Enabled"] as! Bool
+                    let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID,enabled:enabled)
+                    links.append(link)
+                }
+                onDone(links)
+            }
+    }
+    
+    func setLinkActivation(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
+        db.collection("Links").document(link.id).updateData(["Enabled":link.enabled]){err in
+            onDone(err)
+        }
     }
     
 }

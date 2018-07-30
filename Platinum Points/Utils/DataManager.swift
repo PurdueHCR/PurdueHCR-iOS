@@ -19,26 +19,57 @@ class DataManager {
     public static let sharedManager = DataManager()
     private var firstRun = true;
     private let fbh = FirebaseHelper();
-    private var _pointSystem: [PointGroup]? = nil;
-    private var _points: [PointType]? = nil
+    private var _pointGroups: [PointGroup]? = nil;
+    private var _pointTypes: [PointType]? = nil
     private var _unconfirmedPointLogs: [PointLog]? = nil
     private var _houses: [House]? = nil
     private var _rewards: [Reward]? = nil
     private var _houseCodes: [HouseCode]? = nil
+    private var _links: [Link]? = nil
     
     private init(){}
     
     func getPointGroups() -> [PointGroup]?{
-        return self._pointSystem
+        return self._pointGroups
+    }
+    
+    func getPoints() ->[PointType]? {
+        return self._pointTypes
     }
     
     func getPointType(value:Int)->PointType{
-        for pt in self._points!{
+        for pt in self._pointTypes!{
             if(pt.pointID == value){
                 return pt
             }
         }
         return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1) // The famous this should never happen comment
+    }
+    
+    private func sortIntoPointGroupsWithPermission(arr:[PointType]) -> [PointGroup]{
+        var pointGroups = [PointGroup]()
+        if(!arr.isEmpty){
+            var currentValue = 0
+            var pg = PointGroup(val: 0)
+            for i in 0..<arr.count {
+                let pointType = arr[i]
+                if(pointType.residentCanSubmit){
+                    let value = pointType.pointValue
+                    if(value != currentValue){
+                        if(pg.pointValue != 0){
+                            pointGroups.append(pg)
+                        }
+                        currentValue = value
+                        pg = PointGroup(val:value)
+                    }
+                    pg.add(pt: pointType)
+                }
+            }
+            if(pg.pointValue != 0){
+                pointGroups.append(pg)
+            }
+        }
+        return pointGroups
     }
     
     func createUser(onDone:@escaping (_ err:Error?)->Void ){
@@ -50,15 +81,10 @@ class DataManager {
     }
     
     func refreshPointGroups(onDone:@escaping ([PointGroup])-> Void) {
-        fbh.retrievePointTypes(onDone: {[weak self] (pg:[PointGroup]) in
-            if let strongSelf = self {
-                strongSelf._pointSystem = pg
-                strongSelf._points = [PointType]()
-                for group in pg {
-                    strongSelf._points?.append(contentsOf: group.points)
-                }
-            }
-            onDone(pg)
+        fbh.retrievePointTypes(onDone: {(pointTypes:[PointType]) in
+            self._pointTypes = pointTypes
+            self._pointGroups = self.sortIntoPointGroupsWithPermission(arr: pointTypes)
+            onDone(self._pointGroups!)
         })
     }
     
@@ -196,6 +222,10 @@ class DataManager {
         return fbh.getDocumentReferenceFromID(id: id)
     }
     
+    func createQRCode(link:Link, onDone:@escaping(_ id:String?)->Void){
+        fbh.createQRCode(link: link, onDone: onDone)
+    }
+    
     func handlePointLink(id:String){
         fbh.findLinkWithID(id: id, onDone: {(linkOptional:Link?) in
             guard let link = linkOptional else {
@@ -230,6 +260,21 @@ class DataManager {
         })
     }
     
+    func getQRCodeFor(ownerID:String, withRefresh refresh:Bool, withCompletion onDone:@escaping ( _ links:[Link]?)->Void){
+        if(refresh || self._links == nil){
+            fbh.getQRCodeFor(ownerID: ownerID, withCompletion: {(links:[Link]?) in
+                self._links = links
+                onDone(links)
+            })
+        }
+        else{
+            onDone(self._links)
+        }
+    }
+    
+    func setLinkActivation(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
+        fbh.setLinkActivation(link: link, withCompletion: onDone)
+    }
 }
 
 

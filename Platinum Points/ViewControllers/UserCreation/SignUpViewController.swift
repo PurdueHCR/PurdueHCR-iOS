@@ -95,8 +95,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             if(code == houseCode.code){
                 User.save(houseCode.house, as: .house)
                 User.save(houseCode.floorID, as: .floorID)
-                User.save("0", as: .permissionLevel)
-                User.save("0", as: .points)
+                User.save(0 as Any, as: .permissionLevel)
+                User.save(0 as Any, as: .points)
                 return true
             }
         }

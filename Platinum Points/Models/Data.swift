@@ -119,11 +119,20 @@ class Link {
     var description:String
     var singleUse:Bool
     var pointTypeID:Int
-    init(id:String, description:String,singleUse:Bool, pointTypeID:Int){
+    var enabled:Bool
+    init(id:String, description:String,singleUse:Bool, pointTypeID:Int, enabled:Bool){
         self.id = id
         self.description = description
         self.singleUse = singleUse
         self.pointTypeID = pointTypeID
+        self.enabled = enabled
+    }
+    init(description:String, singleUse:Bool, pointTypeID:Int){
+        self.id = ""
+        self.description = description
+        self.singleUse = singleUse
+        self.pointTypeID = pointTypeID
+        self.enabled = false
     }
 }
 
