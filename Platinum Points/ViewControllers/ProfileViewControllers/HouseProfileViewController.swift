@@ -66,7 +66,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     }
 
     @IBAction func reportABugLink(_ sender: Any) {
-        UIApplication.shared.openURL(URL(string: "https://sites.google.com/view/hcr-points/home")!)
+        UIApplication.shared.open(URL(string: "https://sites.google.com/view/hcr-points/home")!, options: [:], completionHandler: nil)
     }
     
     override func didReceiveMemoryWarning() {
