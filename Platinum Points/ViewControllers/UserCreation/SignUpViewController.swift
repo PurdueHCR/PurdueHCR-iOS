@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var verifyPasswordField: UITextField!
     @IBOutlet var codeField: UITextField!
+    @IBOutlet var signUpButton: UIButton!
     
     
     var fortyPercent = CGFloat(0.0)
@@ -35,7 +36,33 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.passwordField.delegate = self
         self.verifyPasswordField.delegate = self
         self.codeField.delegate = self
-        // Do any additional setup after loading the view.
+        
+        emailField.layer.cornerRadius = 5
+        emailField.layer.masksToBounds = true
+        emailField.layer.borderWidth = 1
+        emailField.layer.borderColor = UIColor.black.cgColor
+        nameField.layer.cornerRadius = 5
+        nameField.layer.masksToBounds = true
+        nameField.layer.borderWidth = 1
+        nameField.layer.borderColor = UIColor.black.cgColor
+        passwordField.layer.cornerRadius = 5
+        passwordField.layer.masksToBounds = true
+        passwordField.layer.borderWidth = 1
+        passwordField.layer.borderColor = UIColor.black.cgColor
+        verifyPasswordField.layer.cornerRadius = 5
+        verifyPasswordField.layer.masksToBounds = true
+        verifyPasswordField.layer.borderWidth = 1
+        verifyPasswordField.layer.borderColor = UIColor.black.cgColor
+        codeField.layer.cornerRadius = 5
+        codeField.layer.masksToBounds = true
+        codeField.layer.borderWidth = 1
+        codeField.layer.borderColor = UIColor.black.cgColor
+        signUpButton.layer.cornerRadius = 5
+        signUpButton.layer.masksToBounds = true
+        signUpButton.layer.borderWidth = 1
+        signUpButton.layer.borderColor = UIColor.black.cgColor
+        
+        
     }
     
     @IBAction func submitSignUp(_ sender: Any) {

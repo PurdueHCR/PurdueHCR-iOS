@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,15 +19,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="vdM-SC-GdK">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="vdM-SC-GdK">
                                 <rect key="frame" x="92" y="238" width="191" height="191"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="vdM-SC-GdK" secondAttribute="height" multiplier="1:1" id="IDZ-4Z-g3z"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="vdM-SC-GdK" firstAttribute="top" secondItem="2wN-bM-z0k" secondAttribute="top" constant="218" id="4Ko-rH-WSz"/>
                             <constraint firstItem="vdM-SC-GdK" firstAttribute="centerY" secondItem="Ndk-i0-z6a" secondAttribute="centerY" id="Xfh-fp-h1l"/>
-                            <constraint firstItem="vdM-SC-GdK" firstAttribute="leading" secondItem="2wN-bM-z0k" secondAttribute="leading" constant="92" id="YM0-0G-rTp"/>
+                            <constraint firstItem="vdM-SC-GdK" firstAttribute="leading" secondItem="2wN-bM-z0k" secondAttribute="leading" priority="750" constant="92" id="YM0-0G-rTp"/>
                             <constraint firstItem="vdM-SC-GdK" firstAttribute="centerX" secondItem="Ndk-i0-z6a" secondAttribute="centerX" id="nLN-nD-3rr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2wN-bM-z0k"/>

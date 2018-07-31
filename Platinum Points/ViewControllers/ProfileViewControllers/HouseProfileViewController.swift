@@ -13,6 +13,7 @@ import Cely
 class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet var reportButton: UIButton!
     
     @IBOutlet var colorAndPictureView: ColorAndPictureView!
     @IBOutlet var profileView: ProfileView!
@@ -29,8 +30,9 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         scrollView.refreshControl = refresher
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
-        //profileView.transitionFunc = segueToProfilePointView
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.reportButton.layer.borderColor = UIColor.black.cgColor
+        self.reportButton.layer.borderWidth = 1
     }
     @objc func logOut(_ sender: Any) {
         try? Auth.auth().signOut()
@@ -63,7 +65,10 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
 
-
+    @IBAction func reportABugLink(_ sender: Any) {
+        UIApplication.shared.openURL(URL(string: "https://sites.google.com/view/hcr-points/home")!)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

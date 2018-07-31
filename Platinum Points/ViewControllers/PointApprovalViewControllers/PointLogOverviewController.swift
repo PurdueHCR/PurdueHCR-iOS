@@ -29,13 +29,11 @@ class PointLogOverviewController: UIViewController {
     
     @IBAction func approvePointLog(_ sender: Any) {
         preViewContr?.unconfirmedLogs.remove(at:index!.row)
-        preViewContr?.tableView.deleteRows(at: [index!], with: .automatic)
         preViewContr?.handlePointApproval(log: pointLog!, approve: true)
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func rejectPointLog(_ sender: Any) {
         preViewContr?.unconfirmedLogs.remove(at: index!.row)
-        preViewContr?.tableView.deleteRows(at: [index!], with: .automatic)
         preViewContr?.handlePointApproval(log: pointLog!, approve: false)
         self.navigationController?.popViewController(animated: true)
     }

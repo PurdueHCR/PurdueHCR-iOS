@@ -156,11 +156,11 @@
 		D30FBEE020FC0403000DD221 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D39D4433210E74540030F424 /* PointApprovalViewControllers */,
+				D39D442F210E73FB0030F424 /* FlowControllers */,
+				D39D4430210E74090030F424 /* UserCreation */,
 				D39D4432210E74460030F424 /* PointCreationViewControllers */,
 				D39D4431210E74320030F424 /* ProfileViewControllers */,
-				D39D4430210E74090030F424 /* UserCreation */,
-				D39D442F210E73FB0030F424 /* FlowControllers */,
+				D39D4433210E74540030F424 /* PointApprovalViewControllers */,
 				D39D442E210E73E70030F424 /* QRCodeViewControllers */,
 			);
 			path = ViewControllers;

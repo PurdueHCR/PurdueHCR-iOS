@@ -14,7 +14,7 @@ class ProfileView: UIView {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var totalPointsLabel: UILabel!
     //@IBOutlet var achievementLabel: UILabel!
-    @IBOutlet var pointsButton: UIButton!
+    @IBOutlet var pointsButton: UILabel! // change back to button for the Medals update
     
     
     var transitionFunc: () ->() = {print("NO IMPLEMENTATION")}
@@ -34,6 +34,7 @@ class ProfileView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        pointsButton.text = "Stay tuned for:\n The Medals Update!"
         pointsButton.layer.borderWidth = 1.0
         pointsButton.layer.borderColor = UIColor.lightGray.cgColor
         reloadData()

@@ -52,7 +52,13 @@ class RHPApprovalTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        if unconfirmedLogs.count > 0 {
+            killEmptyMessage()
+            return 1
+        } else {
+            emptyMessage(message: "You don't have any to approve. Good job!")
+            return 0
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,7 +96,15 @@ class RHPApprovalTableViewController: UITableViewController {
             print("Approve button tapped")
             let log = self.unconfirmedLogs.remove(at: index.row)
             self.handlePointApproval(log: log, approve: true)
-            self.tableView.deleteRows(at: [index], with: .automatic)
+            if(self.unconfirmedLogs.count == 0){
+                let indexSet = NSMutableIndexSet()
+                indexSet.add(0)
+                self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+            }
+            else{
+                self.tableView.deleteRows(at: [index], with: .automatic)
+            }
+            
         }
         approve.backgroundColor = .green
         
@@ -98,7 +112,14 @@ class RHPApprovalTableViewController: UITableViewController {
             print("Delete button tapped")
             let log = self.unconfirmedLogs.remove(at: index.row)
             self.handlePointApproval(log: log, approve: false)
-            self.tableView.deleteRows(at: [index], with: .automatic)
+            if(self.unconfirmedLogs.count == 0){
+                let indexSet = NSMutableIndexSet()
+                indexSet.add(0)
+                self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+            }
+            else{
+                self.tableView.deleteRows(at: [index], with: .automatic)
+            }
         }
         delete.backgroundColor = .red
         
@@ -112,6 +133,11 @@ class RHPApprovalTableViewController: UITableViewController {
                 self.notify(title: "Failed", subtitle: "Failed to remove point log.", style: .danger)
                 self.unconfirmedLogs.append(log)
                 DispatchQueue.main.async { [unowned self] in
+                    if(self.unconfirmedLogs.count == 0 && self.tableView.numberOfSections != 0){
+                        let indexSet = NSMutableIndexSet()
+                        indexSet.add(0)
+                        self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+                    }
                     self.tableView.reloadData()
                 }
             }

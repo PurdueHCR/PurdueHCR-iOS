@@ -14,6 +14,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var username: UITextField!
     @IBOutlet var password: UITextField!
+    @IBOutlet var logInButton: UIButton!
     
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
@@ -23,6 +24,19 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         self.username.delegate = self
         self.password.delegate = self
         fortyPercent = self.view.frame.size.height * CGFloat(0.4)
+        username.layer.cornerRadius = 5
+        username.layer.masksToBounds = true
+        username.layer.borderWidth = 1
+        username.layer.borderColor = UIColor.black.cgColor
+        password.layer.cornerRadius = 5
+        password.layer.masksToBounds = true
+        password.layer.borderWidth = 1
+        password.layer.borderColor = UIColor.black.cgColor
+        logInButton.layer.cornerRadius = 5
+        logInButton.layer.masksToBounds = true
+        logInButton.layer.borderWidth = 1
+        logInButton.layer.borderColor = UIColor.black.cgColor
+        
         // Do any additional setup after loading the view.
     }
 
