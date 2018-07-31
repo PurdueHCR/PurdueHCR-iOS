@@ -25,7 +25,7 @@ class DataManager {
     private var _houses: [House]? = nil
     private var _rewards: [Reward]? = nil
     private var _houseCodes: [HouseCode]? = nil
-    private var _links: [Link]? = nil
+    private var _links: LinkList? = nil
     
     private init(){}
     
@@ -258,20 +258,27 @@ class DataManager {
                         
                     }
                     else{
-                        let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
-                        banner.duration = 2
-                        banner.show()
+                        if(err!.localizedDescription == "The operation couldn’t be completed. (Document Exists error 0.)"){
+                            let banner = NotificationBanner(title: "Failure", subtitle: "You have already scanned this code.", style: .danger)
+                            banner.duration = 2
+                            banner.show()
+                        }
+                        else{
+                            let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                            banner.duration = 2
+                            banner.show()
+                        }
                     }
                 })
             }
         })
     }
     
-    func getQRCodeFor(ownerID:String, withRefresh refresh:Bool, withCompletion onDone:@escaping ( _ links:[Link]?)->Void){
+    func getQRCodeFor(ownerID:String, withRefresh refresh:Bool, withCompletion onDone:@escaping ( _ links:LinkList?)->Void){
         if(refresh || self._links == nil){
             fbh.getQRCodeFor(ownerID: ownerID, withCompletion: {(links:[Link]?) in
-                self._links = links
-                onDone(links)
+                self._links = LinkList(links!)
+                onDone(self._links)
             })
         }
         else{
@@ -281,6 +288,9 @@ class DataManager {
     
     func setLinkActivation(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         fbh.setLinkActivation(link: link, withCompletion: onDone)
+    }
+    func setLinkArchived(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
+        fbh.setLinkArchived(link: link, withCompletion: onDone)
     }
 }
 

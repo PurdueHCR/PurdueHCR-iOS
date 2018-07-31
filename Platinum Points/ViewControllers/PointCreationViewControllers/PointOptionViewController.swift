@@ -13,11 +13,14 @@ class PointTypeCell: UITableViewCell {
     
 }
 
-class PointOptionViewController: UITableViewController{
+class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 
     var refresher: UIRefreshControl?
+    let searchController = UISearchController(searchResultsController: nil)
     
     var pointSystem = [PointGroup]()
+    var filteredPoints = [PointType]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         refresher = UIRefreshControl()
@@ -29,6 +32,11 @@ class PointOptionViewController: UITableViewController{
         if(pointSystem.count == 0){
             resfreshData()
         }
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Points"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,23 +58,43 @@ class PointOptionViewController: UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            return filteredPoints.count
+        }
         return (pointSystem[section].points.count);
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
-        cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointDescription
-        
+        if(isFiltering()){
+            cell.typeLabel.text = filteredPoints[indexPath.row].pointDescription
+        }
+        else{
+            cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointDescription
+        }
         return(cell)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
+        if isFiltering() {
+            if(filteredPoints.count > 0){
+                killEmptyMessage()
+                return 1
+            }
+            else {
+                emptyMessage(message: "Could not find points matching that description.")
+                return 0;
+            }
+        }
         return (pointSystem.count)
     }
 
     
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if(isFiltering()){
+            return nil
+        }
         return pointSystem[section].pointValue.description + " Points" ;
     }
     
@@ -84,8 +112,13 @@ class PointOptionViewController: UITableViewController{
         let nextViewController = segue.destination as! TypeSubmitViewController
         
         let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+        if(isFiltering()){
+            nextViewController.type = filteredPoints[(indexPath?.row)!]
+        }
+        else{
+          nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
+        }
         
-        nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
     }
     
     @objc func resfreshData(){
@@ -98,6 +131,23 @@ class PointOptionViewController: UITableViewController{
             }
             self.tableView.refreshControl?.endRefreshing()
         })
+    }
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredPoints = DataManager.sharedManager.getPoints()!.filter({( point : PointType) -> Bool in
+            return point.pointDescription.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
+    }
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
     }
 }
 

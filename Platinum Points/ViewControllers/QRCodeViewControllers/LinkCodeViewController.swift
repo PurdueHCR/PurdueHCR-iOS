@@ -10,10 +10,12 @@ import UIKit
 
 class LinkCodeViewController: UIViewController {
     var link:Link?
-    @IBOutlet var activateButton: UIButton!
     @IBOutlet var qrImageView: UIImageView!
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var qrCodeDescriptionTextView: UITextView!
+    @IBOutlet var activateSwitch: UISwitch!
+    @IBOutlet var archiveSwitch: UISwitch!
+    
     
     var qrImage:CIImage?
     
@@ -21,7 +23,7 @@ class LinkCodeViewController: UIViewController {
         super.viewDidLoad()
         generateQRCode()
         if(link!.enabled){
-            activateButton.setTitle("Deactivate", for: .normal)
+            activateSwitch.setOn(true, animated: false)
         }
         linkDescriptionLabel.text = DataManager.sharedManager.getPointType(value: link!.pointTypeID).pointDescription
         linkDescriptionLabel.layer.borderColor = UIColor.black.cgColor
@@ -30,13 +32,15 @@ class LinkCodeViewController: UIViewController {
         qrCodeDescriptionTextView.isEditable = false
         qrCodeDescriptionTextView.layer.borderWidth = 1
         qrCodeDescriptionTextView.layer.borderColor = UIColor.black.cgColor
-        
+        activateSwitch.setOn(link!.enabled, animated: false)
+        archiveSwitch.setOn(link!.archived, animated: false)
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(back))
         self.navigationItem.leftBarButtonItem = newBackButton
     }
 
     func generateQRCode(){
-        let data = link!.id.data(using:String.Encoding.isoLatin1, allowLossyConversion: false)
+        let linkCode = "hcrpoint://addpoints/"+link!.id
+        let data = linkCode.data(using:String.Encoding.isoLatin1, allowLossyConversion: false)
         let filter = CIFilter(name: "CIQRCodeGenerator")
         filter?.setValue(data, forKey: "inputMessage")
         filter?.setValue("Q", forKey: "inputCorrectionLevel")
@@ -61,22 +65,41 @@ class LinkCodeViewController: UIViewController {
         UIImageWriteToSavedPhotosAlbum(uiimage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil);
     }
     
-    @IBAction func setActivationStatus(_ sender: Any) {
-        self.link!.enabled = !(self.link!.enabled)
+    
+    @IBAction func setActivationStatus(_ sender: UISwitch) {
+        self.link!.enabled = sender.isOn
         DataManager.sharedManager.setLinkActivation(link: self.link!, withCompletion: {(err:Error?) in
             if(err == nil){
                 if(self.link!.enabled){
                     self.notify(title: "Success", subtitle: "QR code is now active", style: .success)
-                    self.activateButton.setTitle("Deactivate", for: .normal)
                 }
                 else{
                     self.notify(title: "Success", subtitle: "QR code was deactivated", style: .success)
-                    self.activateButton.setTitle("Activate", for: .normal)
                 }
             }
             else{
-                self.link!.enabled = !(self.link!.enabled)
+                sender.setOn(!sender.isOn, animated: true)
+                self.link!.enabled = sender.isOn
                 self.notify(title: "Failure", subtitle: "QR code status could not be set.", style: .danger)
+            }
+        })
+    }
+    
+    @IBAction func setArchiveStatus(_ sender: UISwitch) {
+        self.link!.archived = sender.isOn
+        DataManager.sharedManager.setLinkArchived(link: self.link!, withCompletion: {(err:Error?) in
+            if(err == nil){
+                if(self.link!.archived){
+                    self.notify(title: "Success", subtitle: "QR code is now archived.", style: .success)
+                }
+                else{
+                    self.notify(title: "Success", subtitle: "QR code was unarchived.", style: .success)
+                }
+            }
+            else{
+                sender.setOn(!sender.isOn, animated: true)
+                self.link!.archived = sender.isOn
+                self.notify(title: "Failure", subtitle: "QR code could not be archived.", style: .danger)
             }
         })
         

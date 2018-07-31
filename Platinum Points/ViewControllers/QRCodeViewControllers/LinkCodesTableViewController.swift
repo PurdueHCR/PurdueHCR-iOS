@@ -14,18 +14,24 @@ class LinkCell: UITableViewCell {
     
 }
 
-class LinkCodesTableViewController: UITableViewController {
+class LinkCodesTableViewController: UITableViewController, UISearchResultsUpdating {
     
-    var codes = [Link]()
+    
+    var links = LinkList()
+    var filteredLinks = [Link]()
+    let searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
+        
          self.clearsSelectionOnViewWillAppear = true
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search QR Codes"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
         let label = UILabel(frame: CGRect(origin: self.tableView.frame.origin, size: CGSize(width: 200, height: 40)))
         label.text = "No QR Codes to show"
         self.tableView.backgroundView = label
@@ -36,6 +42,26 @@ class LinkCodesTableViewController: UITableViewController {
         getData(refresh: true)
     }
     
+    
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return self.searchController.searchBar.text?.isEmpty ?? true
+    }
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredLinks = links.allLinks.filter({( link : Link) -> Bool in
+            return link.description.lowercased().contains(searchText.lowercased())
+        })
+        
+        tableView.reloadData()
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
 
     @objc func refreshData(){
         getData(refresh: true)
@@ -43,11 +69,11 @@ class LinkCodesTableViewController: UITableViewController {
 
     func getData(refresh:Bool){
         let ownerID = User.get(.id) as! String
-        DataManager.sharedManager.getQRCodeFor(ownerID: ownerID, withRefresh: refresh, withCompletion:{(linksOptional:[Link]?) in
+        DataManager.sharedManager.getQRCodeFor(ownerID: ownerID, withRefresh: refresh, withCompletion:{(linksOptional:LinkList?) in
             guard let links = linksOptional else{
                 return
             }
-            self.codes = links
+            self.links = links
             DispatchQueue.main.async { [unowned self] in
                 self.tableView.reloadData()
             }
@@ -56,6 +82,12 @@ class LinkCodesTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.links.reloadLinks()
+        if(self.links.unarchivedLinks.count == 0 && self.tableView.numberOfSections != 0){
+            let indexSet = NSMutableIndexSet()
+            indexSet.add(0)
+            self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+        }
         self.tableView.reloadData()
     }
     
@@ -69,29 +101,60 @@ class LinkCodesTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        if codes.count > 0 {
-            killEmptyMessage()
-            return 1
-        } else {
-            emptyMessage(message: "You haven't created any QR codes.")
-            return 0
+        if(isFiltering()){
+            if(filteredLinks.count > 0){
+                killEmptyMessage()
+                return 1
+            }
+            else {
+                emptyMessage(message: "No codes found.")
+                return 0
+            }
+        }
+        else{
+            if self.links.unarchivedLinks.count > 0 {
+                killEmptyMessage()
+                return 1
+            } else if self.links.archivedLinks.count > 0{
+                emptyMessage(message: "You don't have any unarchived QR codes.")
+                return 0
+            }
+            else{
+                emptyMessage(message: "You haven't created any QR codes.")
+                return 0
+            }
         }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return codes.count
+        if(isFiltering()){
+            return filteredLinks.count
+        }
+        else{
+            return links.unarchivedLinks.count
+        }
     }
     
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "link_cell", for: indexPath) as! LinkCell
-        cell.descriptionLabel.text = self.codes[indexPath.row].description
-        cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
-        cell.activeView.backgroundColor = UIColor.red
-        if(self.codes[indexPath.row].enabled){
-            cell.activeView.backgroundColor = UIColor.green
+        if(isFiltering()){
+            cell.descriptionLabel.text = self.filteredLinks[indexPath.row].description
+            cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
+            cell.activeView.backgroundColor = UIColor.red
+            if(self.filteredLinks[indexPath.row].enabled){
+                cell.activeView.backgroundColor = UIColor.green
+            }
+        }
+        else {
+            cell.descriptionLabel.text = self.links.unarchivedLinks[indexPath.row].description
+            cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
+            cell.activeView.backgroundColor = UIColor.red
+            if(self.links.unarchivedLinks[indexPath.row].enabled){
+                cell.activeView.backgroundColor = UIColor.green
+            }
         }
         // Configure the cell...
         return cell
@@ -108,7 +171,8 @@ class LinkCodesTableViewController: UITableViewController {
     }
  
     func addLinkToList(link:Link) {
-        self.codes.append(link)
+        self.links.allLinks.append(link)
+        self.links.reloadLinks()
     }
 
     /*
@@ -157,7 +221,12 @@ class LinkCodesTableViewController: UITableViewController {
         let indexPath = tableView.indexPathForSelectedRow
         if(segue.identifier == "QR_Show"){
             let nextViewController = segue.destination as! LinkCodeViewController
-            nextViewController.link = self.codes[indexPath!.row]
+            if(isFiltering()){
+                nextViewController.link = self.filteredLinks[indexPath!.row]
+            }
+            else{
+                nextViewController.link = self.links.unarchivedLinks[indexPath!.row]
+            }
         }
         if(segue.identifier == "QR_Init"){
             //Pass in the array of lists so that when a new code is created it will be appended to this list;

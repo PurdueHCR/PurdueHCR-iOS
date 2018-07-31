@@ -56,7 +56,7 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
                 print("Success")
                 self.navigationController?.popViewController(animated: true)
                 
-                self.navigationController?.topViewController?.notify(title: "Success", subtitle: "Your points were recorded!", style: .success)
+                self.navigationController?.topViewController?.notify(title: "Success", subtitle: "\(pointLog.type.pointValue) points were submitted for approval.", style: .success)
             }
         }
         

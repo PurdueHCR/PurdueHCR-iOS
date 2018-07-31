@@ -120,19 +120,52 @@ class Link {
     var singleUse:Bool
     var pointTypeID:Int
     var enabled:Bool
-    init(id:String, description:String,singleUse:Bool, pointTypeID:Int, enabled:Bool){
+    var archived:Bool
+    //Constructor for code from Database
+    init(id:String, description:String,singleUse:Bool, pointTypeID:Int, enabled:Bool, archived:Bool){
         self.id = id
         self.description = description
         self.singleUse = singleUse
         self.pointTypeID = pointTypeID
         self.enabled = enabled
+        self.archived = archived
     }
+    //Constructor for when the qr code is created
     init(description:String, singleUse:Bool, pointTypeID:Int){
         self.id = ""
         self.description = description
         self.singleUse = singleUse
         self.pointTypeID = pointTypeID
         self.enabled = false
+        self.archived = false
+    }
+}
+
+class LinkList {
+    var unarchivedLinks = [Link]()
+    var archivedLinks = [Link]()
+    var allLinks = [Link]()
+    init( _ links:[Link]){
+        allLinks = links
+        reloadLinks()
+    }
+    convenience init(){
+        self.init([Link]())
+    }
+    func getCombinedLinks() ->[Link]{
+        return allLinks
+    }
+    func reloadLinks(){
+        archivedLinks.removeAll()
+        unarchivedLinks.removeAll()
+        for link in allLinks {
+            if(link.archived){
+                archivedLinks.append(link)
+            }
+            else{
+                unarchivedLinks.append(link)
+            }
+        }
     }
 }
 

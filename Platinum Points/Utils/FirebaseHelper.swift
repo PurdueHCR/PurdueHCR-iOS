@@ -317,7 +317,8 @@ class FirebaseHelper {
                 let single = document.data()!["SingleUse"] as! Bool
                 let pointID = document.data()!["PointID"] as! Int
                 let enabled = document.data()!["Enabled"] as! Bool
-                let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID,enabled:enabled)
+                let archived = document.data()!["Archived"] as! Bool
+                let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID,enabled:enabled,archived:archived)
                 onDone(link)
             } else {
                 print("Document does not exist")
@@ -414,7 +415,13 @@ class FirebaseHelper {
     func createQRCode(link:Link,onDone:@escaping ( _ id:String?) -> Void){
         let ref = db.collection("Links")
         var linkID:DocumentReference?
-        linkID = ref.addDocument(data: ["Description":link.description,"PointID":link.pointTypeID,"SingleUse":link.singleUse,"CreatorID":User.get(.id) as! String,"Enabled":link.enabled])
+        linkID = ref.addDocument(data: [
+            "Description":link.description,
+            "PointID":link.pointTypeID,
+            "SingleUse":link.singleUse,
+            "CreatorID":User.get(.id) as! String,
+            "Enabled":link.enabled,
+            "Archived":link.archived])
         {err in
             if(err == nil){
                 onDone(linkID?.documentID)
@@ -439,7 +446,8 @@ class FirebaseHelper {
                     let single = document.data()["SingleUse"] as! Bool
                     let pointID = document.data()["PointID"] as! Int
                     let enabled = document.data()["Enabled"] as! Bool
-                    let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID,enabled:enabled)
+                    let archived = document.data()["Archived"] as! Bool
+                    let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID, enabled:enabled, archived:archived)
                     links.append(link)
                 }
                 onDone(links)
@@ -448,6 +456,11 @@ class FirebaseHelper {
     
     func setLinkActivation(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         db.collection("Links").document(link.id).updateData(["Enabled":link.enabled]){err in
+            onDone(err)
+        }
+    }
+    func setLinkArchived(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
+        db.collection("Links").document(link.id).updateData(["Archived":link.archived]){err in
             onDone(err)
         }
     }
