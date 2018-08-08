@@ -81,7 +81,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             self.notify(title: "Failed to Sign Up", subtitle: "Please verify your passwords are the same.", style: .danger)
         }
         else if ( !isValidEmail(testStr: email!)){
-            self.notify(title: "Failed to Sign Up", subtitle: "Please enter a valid email address.", style: .danger)
+            self.notify(title: "Failed to Sign Up", subtitle: "Please enter a valid Purdue email address.", style: .danger)
         }
         else if(!codeIsValid(code:code!)){
             self.notify(title: "Failed to Sign Up", subtitle: "Code is Invalid.", style: .danger)
@@ -131,7 +131,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func isValidEmail(testStr:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@purdue.edu"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: testStr)

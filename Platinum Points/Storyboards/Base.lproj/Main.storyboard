@@ -88,16 +88,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEg-H9-uae">
-                                <rect key="frame" x="16" y="64" width="343" height="45"/>
+                                <rect key="frame" x="16" y="64" width="343" height="69"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="ITC-7d-ENp"/>
+                                    <constraint firstAttribute="height" constant="69" id="O39-RF-aNy"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Tell us about what you did!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RPj-cs-EF1">
-                                <rect key="frame" x="16" y="117" width="343" height="190"/>
+                                <rect key="frame" x="16" y="141" width="343" height="190"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -108,13 +108,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="RPj-cs-EF1" firstAttribute="top" secondItem="GEg-H9-uae" secondAttribute="bottom" constant="8" symbolic="YES" id="8nf-zK-SRO"/>
-                            <constraint firstItem="GEg-H9-uae" firstAttribute="trailing" secondItem="Jad-vw-Zfi" secondAttribute="trailingMargin" id="UC7-BY-7wU"/>
-                            <constraint firstItem="GEg-H9-uae" firstAttribute="top" secondItem="8rf-c3-hh0" secondAttribute="top" id="dkH-Zw-8QD"/>
-                            <constraint firstItem="GEg-H9-uae" firstAttribute="trailing" secondItem="RPj-cs-EF1" secondAttribute="trailing" id="jKQ-mm-m58"/>
-                            <constraint firstItem="GEg-H9-uae" firstAttribute="leading" secondItem="RPj-cs-EF1" secondAttribute="leading" id="pcj-MO-E3X"/>
-                            <constraint firstItem="GEg-H9-uae" firstAttribute="leading" secondItem="Jad-vw-Zfi" secondAttribute="leadingMargin" id="pxy-Me-gEh"/>
-                            <constraint firstItem="8rf-c3-hh0" firstAttribute="bottom" secondItem="RPj-cs-EF1" secondAttribute="bottom" constant="311" id="z9k-dd-unJ"/>
+                            <constraint firstItem="GEg-H9-uae" firstAttribute="top" secondItem="8rf-c3-hh0" secondAttribute="top" id="9Cn-is-gC7"/>
+                            <constraint firstItem="8rf-c3-hh0" firstAttribute="bottom" secondItem="RPj-cs-EF1" secondAttribute="bottom" constant="287" id="Ado-OH-gDY"/>
+                            <constraint firstItem="GEg-H9-uae" firstAttribute="leading" secondItem="Jad-vw-Zfi" secondAttribute="leadingMargin" id="F0W-Wq-iju"/>
+                            <constraint firstItem="GEg-H9-uae" firstAttribute="leading" secondItem="RPj-cs-EF1" secondAttribute="leading" id="TW4-cE-K7k"/>
+                            <constraint firstItem="RPj-cs-EF1" firstAttribute="top" secondItem="GEg-H9-uae" secondAttribute="bottom" constant="8" symbolic="YES" id="vwd-9x-Att"/>
+                            <constraint firstItem="GEg-H9-uae" firstAttribute="trailing" secondItem="Jad-vw-Zfi" secondAttribute="trailingMargin" id="wER-zc-j6U"/>
+                            <constraint firstItem="GEg-H9-uae" firstAttribute="trailing" secondItem="RPj-cs-EF1" secondAttribute="trailing" id="wuB-JI-RJg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8rf-c3-hh0"/>
                     </view>
@@ -609,6 +609,7 @@
                                             <rect key="frame" x="343" y="13" width="16" height="16"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstAttribute="width" constant="16" id="KU6-rq-wEj"/>
                                                 <constraint firstAttribute="width" secondItem="BoI-y0-wZ9" secondAttribute="height" multiplier="1:1" id="iNQ-JM-ccl"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
@@ -624,11 +625,10 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="BoI-y0-wZ9" firstAttribute="centerY" secondItem="EoG-c0-UKb" secondAttribute="centerY" id="7VM-0V-OMd"/>
-                                        <constraint firstItem="BoI-y0-wZ9" firstAttribute="leading" secondItem="OqH-9s-625" secondAttribute="trailing" constant="25" id="9oK-UU-dUa"/>
                                         <constraint firstItem="OqH-9s-625" firstAttribute="top" secondItem="EoG-c0-UKb" secondAttribute="topMargin" id="BaQ-xD-XJk"/>
                                         <constraint firstItem="OqH-9s-625" firstAttribute="leading" secondItem="EoG-c0-UKb" secondAttribute="leadingMargin" id="Bie-Si-mdz"/>
                                         <constraint firstItem="OqH-9s-625" firstAttribute="bottom" secondItem="EoG-c0-UKb" secondAttribute="bottomMargin" id="Bys-xG-Mip"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="BoI-y0-wZ9" secondAttribute="bottom" constant="4" id="UZ0-TN-p4b"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="BoI-y0-wZ9" secondAttribute="bottom" priority="750" constant="4" id="UZ0-TN-p4b"/>
                                         <constraint firstItem="BoI-y0-wZ9" firstAttribute="trailing" secondItem="EoG-c0-UKb" secondAttribute="trailingMargin" id="wfX-xc-bOK"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -681,6 +681,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WqP-Dc-lu1">
                                         <rect key="frame" x="74" y="54" width="226" height="226"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" secondItem="WqP-Dc-lu1" secondAttribute="height" multiplier="1:1" id="8v1-H3-GoT"/>
                                             <constraint firstAttribute="height" constant="226" id="Q6T-G4-2kp"/>
                                         </constraints>
                                     </imageView>
@@ -800,6 +801,6 @@
         <image name="list" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="U6F-7Q-I0m"/>
+        <segue reference="Xk0-ey-6rA"/>
     </inferredMetricsTieBreakers>
 </document>

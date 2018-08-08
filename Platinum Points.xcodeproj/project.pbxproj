@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		CAD413D8FEBCA2B82AC82444 /* Pods_Platinum_Points.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA6F3DC308283CE27E4D34 /* Pods_Platinum_Points.framework */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
-		D30FBEE920FC057D000DD221 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEE820FC057D000DD221 /* GoogleService-Info.plist */; };
 		D30FBEEB20FC05C8000DD221 /* ColorAndPicture.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEEA20FC05C7000DD221 /* ColorAndPicture.xib */; };
 		D30FBEED20FC0878000DD221 /* ColorAndPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEC20FC0878000DD221 /* ColorAndPictureView.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
@@ -32,6 +31,7 @@
 		D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */; };
 		D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */; };
 		D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3BC48BA210E9B0900D46088 /* HousePointsView.xib */; };
+		D3BC48BD2115543E00D46088 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3BC48BC2115543E00D46088 /* GoogleService-Info.plist */; };
 		D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C42103D65A00B88F03 /* HousePointsView.swift */; };
 		D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */; };
 		D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */; };
@@ -66,7 +66,6 @@
 		2D8E9E68CBCDEABF5F7177E3 /* Pods-Platinum Points.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Platinum Points.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points.debug.xcconfig"; sourceTree = "<group>"; };
 		614DAB94E9078A278BDB559C /* Pods-Platinum Points.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Platinum Points.release.xcconfig"; path = "Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points.release.xcconfig"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
-		D30FBEE820FC057D000DD221 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D30FBEEA20FC05C7000DD221 /* ColorAndPicture.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorAndPicture.xib; sourceTree = "<group>"; };
 		D30FBEEC20FC0878000DD221 /* ColorAndPictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAndPictureView.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -96,6 +95,7 @@
 		D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodeViewController.swift; sourceTree = "<group>"; };
 		D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodesTableViewController.swift; sourceTree = "<group>"; };
 		D3BC48BA210E9B0900D46088 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
+		D3BC48BC2115543E00D46088 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3CC77C42103D65A00B88F03 /* HousePointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsView.swift; sourceTree = "<group>"; };
 		D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsCompareView.xib; sourceTree = "<group>"; };
 		D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsCompareView.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 			children = (
 				D33F43AB2108043300D3982D /* Platinum Points.entitlements */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
-				D30FBEE820FC057D000DD221 /* GoogleService-Info.plist */,
+				D3BC48BC2115543E00D46088 /* GoogleService-Info.plist */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
 				D30FBEE520FC046F000DD221 /* Storyboards */,
 				D30FBEE320FC0457000DD221 /* Resources */,
@@ -451,7 +451,7 @@
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
-				D30FBEE920FC057D000DD221 /* GoogleService-Info.plist in Resources */,
+				D3BC48BD2115543E00D46088 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -100,6 +100,7 @@ class FirebaseHelper {
                 "PointTypeID" : ( log.type.pointID * multiplier),
                 "Resident"    : log.resident,
                 "ResidentRef"  : log.residentRef,
+                "ResidentReportTime" : Timestamp.init(),
                 FLOOR_ID      : log.floorID as Any
             ]){ err in
                 if ( err == nil){

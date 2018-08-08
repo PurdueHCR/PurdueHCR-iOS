@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>104211707384-inrlhsgfg3bqvga77trqeibopigjot0t.apps.googleusercontent.com</string>
+	<string>104211707384-836vtfq2356laeh11rja7nuapd33oao9.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.104211707384-inrlhsgfg3bqvga77trqeibopigjot0t</string>
+	<string>com.googleusercontent.apps.104211707384-836vtfq2356laeh11rja7nuapd33oao9</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCUQV1s-8KAfA1Wmz7LyKu62Je0bvp4Zfs</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>DecodeProgramming.Platinum-Points</string>
+	<string>DecodeProgramming.HCRPoint</string>
 	<key>PROJECT_ID</key>
 	<string>hcr-points</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:104211707384:ios:bdf2c306c215c8bd</string>
+	<string>1:104211707384:ios:1b2fe954b5c7db9e</string>
 	<key>DATABASE_URL</key>
 	<string>https://hcr-points.firebaseio.com</string>
 </dict>
