@@ -25,7 +25,7 @@ class HousePointsView: UIView {
     override init(frame: CGRect){
         var houses = DataManager.sharedManager.getHouses()!
         self.rewards = DataManager.sharedManager.getRewards()!
-        self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:""))!)
+        self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
         super.init(frame: frame)
         commonInit()
     }
@@ -33,7 +33,7 @@ class HousePointsView: UIView {
     required init(coder aDecoder: NSCoder){
         var houses = DataManager.sharedManager.getHouses()!
         self.rewards = DataManager.sharedManager.getRewards()!
-        self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0, hexColor:""))!)
+        self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0, hexColor:"",numberOfResidents: 0))!)
         super.init(coder: aDecoder)!
         commonInit()
     }
@@ -49,7 +49,7 @@ class HousePointsView: UIView {
     
     func refresh(){
         var houses = DataManager.sharedManager.getHouses()!
-        self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:""))!)
+        self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
         
         circleProgress.progressColors = [AppUtils.hexStringToUIColor(hex: house.hexColor),UIColor.white]
         rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from:self.circleProgress)
@@ -61,6 +61,8 @@ class HousePointsView: UIView {
             pointsRemainingLabel.text? = "Next Goal: " + self.house.totalPoints.description + "/"+reward!.requiredValue.description
         }
         else{
+            nextRewardLabel.text = "Next Reward:\n Eternal Glory"
+            rewardImageView?.image = nil
             circleProgress.angle = 180.0
             pointsRemainingLabel.text? = "Next Goal: Victory"
         }
