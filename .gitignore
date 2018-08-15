@@ -53,7 +53,7 @@ playground.xcworkspace
 
 
 # Google service plist
-**.GoogleService-Info.plist
+*.GoogleService-Info.plist
 
 # Random project files
 *.pbxproj
