@@ -53,18 +53,13 @@ class FirebaseHelper {
             } else {
                 for pointDocument in querySnapshot!.documents
                 {
-                    let id = Int(pointDocument.documentID)!
-                    //Points with IDs greater than 1000 are just for REA/REC
-                    if(id > 1000){
-                        return;
-                    }
                     let description = pointDocument.data()["Description"] as! String
                     let residentSubmit = pointDocument.data()["ResidentsCanSubmit"] as! Bool
                     let value = pointDocument.data()["Value"] as! Int
-                    pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id))
+                    let id = Int(pointDocument.documentID)
+                    pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id!))
                 }
                 pointArray.sort(by: {$0.pointValue < $1.pointValue})
-                pointArray.sort(by: {$0.pointID < $1.pointID})
                 onDone(pointArray)
             }
         }
@@ -206,46 +201,20 @@ class FirebaseHelper {
                     let floorID = document.data()["FloorID"] as! String
                     // The reason I check this here instead of in the query is because Firestore does not support,
                     // at the time of writing, the ability to query the data on more than one field. :(
-                    if(userFloorID == "6N" || userFloorID == "6S"){
-                        var otherCode = "6N"
-                        if(userFloorID == "6N"){
-                            otherCode = "6S"
+                    if(floorID == userFloorID){
+                        let id = document.documentID
+                        let description = document.data()["Description"] as! String
+                        let idType = (document.data()["PointTypeID"] as! Int) * -1
+                        let resident = document.data()["Resident"] as! String
+                        let residentRefMaybe = document.data()["ResidentRef"]
+                        var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1")
+                        if(residentRefMaybe != nil ){
+                            residentRef = residentRefMaybe as! DocumentReference
                         }
-                        if(floorID != otherCode){
-                            let id = document.documentID
-                            let description = document.data()["Description"] as! String
-                            let idType = (document.data()["PointTypeID"] as! Int) * -1
-                            var resident = document.data()["Resident"] as! String
-                            if(floorID == "Shreve"){
-                                resident = "(Shreve) "+resident
-                            }
-                            let residentRefMaybe = document.data()["ResidentRef"]
-                            var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1")
-                            if(residentRefMaybe != nil ){
-                                residentRef = residentRefMaybe as! DocumentReference
-                            }
-                            let pointType = DataManager.sharedManager.getPointType(value: idType)
-                            let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID, residentRef:residentRef)
-                            pointLog.logID = id
-                            pointLogs.append(pointLog)
-                        }
-                    }
-                    else{
-                        if(floorID == userFloorID){
-                            let id = document.documentID
-                            let description = document.data()["Description"] as! String
-                            let idType = (document.data()["PointTypeID"] as! Int) * -1
-                            let resident = document.data()["Resident"] as! String
-                            let residentRefMaybe = document.data()["ResidentRef"]
-                            var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1")
-                            if(residentRefMaybe != nil ){
-                                residentRef = residentRefMaybe as! DocumentReference
-                            }
-                            let pointType = DataManager.sharedManager.getPointType(value: idType)
-                            let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID, residentRef:residentRef)
-                            pointLog.logID = id
-                            pointLogs.append(pointLog)
-                        }
+                        let pointType = DataManager.sharedManager.getPointType(value: idType)
+                        let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID, residentRef:residentRef)
+                        pointLog.logID = id
+                        pointLogs.append(pointLog)
                     }
                 }
                 onDone(pointLogs)
@@ -283,7 +252,6 @@ class FirebaseHelper {
                 {
                     let points = houseDocument.data()[self.TOTAL_POINTS] as! Int
                     let hex = houseDocument.data()["Color"] as! String
-                    let numberOfResidents = houseDocument.data()["NumberOfResidents"] as! Int
                     let id = houseDocument.documentID
                     
                     for key in houseDocument.data().keys
@@ -296,7 +264,7 @@ class FirebaseHelper {
                             houseKeys.append(HouseCode(code: houseCode, house: id, floorID:String(floorID)))
                         }
                     }
-                    houseArray.append(House(id: id, points: points, hexColor:hex, numberOfResidents:numberOfResidents))
+                    houseArray.append(House(id: id, points: points, hexColor:hex))
                 }
                 houseArray.sort(by: {$0.totalPoints > $1.totalPoints})
                 onDone(houseArray, houseKeys)

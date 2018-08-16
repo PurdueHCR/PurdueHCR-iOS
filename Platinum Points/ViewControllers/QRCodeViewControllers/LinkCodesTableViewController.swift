@@ -83,7 +83,7 @@ class LinkCodesTableViewController: UITableViewController, UISearchResultsUpdati
     
     override func viewWillAppear(_ animated: Bool) {
         self.links.reloadLinks()
-        if(self.links.unarchivedLinks.count == 0 && self.tableView.numberOfSections != 0 && self.searchController.searchBar.text == ""){
+        if(self.links.unarchivedLinks.count == 0 && self.tableView.numberOfSections != 0){
             let indexSet = NSMutableIndexSet()
             indexSet.add(0)
             self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)

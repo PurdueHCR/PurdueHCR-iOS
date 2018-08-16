@@ -31,9 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Cely.changeStatus(to: .loggedIn)
                 }
                 else{
-                    try! Auth.auth().signOut()
-                    Cely.changeStatus(to: .loggedOut)
-                    UIViewController().notify(title: "Failure", subtitle: "Could not find data with account.", style: .danger)
+                    fatalError("Something bad happend that should not have happend. Somehow you have an account without a corresponding entry in user table.")
                 }
             })
         }

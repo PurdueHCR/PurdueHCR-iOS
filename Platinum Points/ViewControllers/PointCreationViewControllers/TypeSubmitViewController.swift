@@ -35,35 +35,28 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func submit(_ sender: Any) {
         guard let description = descriptionField.text, !description.isEmpty else{
-            notify(title: "Failure", subtitle: "Please enter a description", style: .danger)
+            print("Description is empty")
             return
         }
         guard let pointType = type else{
-            notify(title: "Failure", subtitle: "Please reselect your point type", style: .danger)
-            return
-        }
-        if(description == "Tell us about what you did!"){
-            notify(title: "Failure", subtitle: "Please tell us more about what you did!", style: .danger)
+            print("PointType not found")
             return
         }
         let name = User.get(.name) as! String
-        let preApproved = ((User.get(.permissionLevel) as! Int) == 1 )
         let floor = User.get(.floorID) as! String
         let residentRef = DataManager.sharedManager.getUserRefFromUserID(id: User.get(.id) as! String)
         let pointLog = PointLog(pointDescription: description, resident: name, type: pointType, floorID: floor, residentRef:residentRef)
-        DataManager.sharedManager.writePoints(log: pointLog, preApproved: preApproved) { (err:Error?) in
+        DataManager.sharedManager.writePoints(log: pointLog) { (err:Error?) in
             if(err != nil){
                 self.notify(title: "Failed to submit", subtitle: err.debugDescription, style: .danger)
                 print("Error in posting: ",err.debugDescription)
             }
             else{
+                //post success
+                print("Success")
                 self.navigationController?.popViewController(animated: true)
-                if(preApproved){
-                    self.notify(title: "Way to Go RHP", subtitle: "Congrats, \(pointLog.type.pointValue) points submitted.", style: .success)
-                }
-                else{
-                    self.notify(title: "Success", subtitle: "\(pointLog.type.pointValue) points were submitted for approval.", style: .success)
-                }
+                
+                self.navigationController?.topViewController?.notify(title: "Success", subtitle: "\(pointLog.type.pointValue) points were submitted for approval.", style: .success)
             }
         }
         

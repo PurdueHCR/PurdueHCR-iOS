@@ -26,6 +26,8 @@ class LinkCodeViewController: UIViewController {
             activateSwitch.setOn(true, animated: false)
         }
         linkDescriptionLabel.text = DataManager.sharedManager.getPointType(value: link!.pointTypeID).pointDescription
+        linkDescriptionLabel.layer.borderColor = UIColor.black.cgColor
+        linkDescriptionLabel.layer.borderWidth = 1
         qrCodeDescriptionTextView.text = link!.description
         qrCodeDescriptionTextView.isEditable = false
         qrCodeDescriptionTextView.layer.borderWidth = 1
@@ -38,11 +40,10 @@ class LinkCodeViewController: UIViewController {
 
     func generateQRCode(){
         let linkCode = "hcrpoint://addpoints/"+link!.id
-        print(linkCode)
         let data = linkCode.data(using:String.Encoding.isoLatin1, allowLossyConversion: false)
         let filter = CIFilter(name: "CIQRCodeGenerator")
         filter?.setValue(data, forKey: "inputMessage")
-        filter?.setValue("H", forKey: "inputCorrectionLevel")
+        filter?.setValue("Q", forKey: "inputCorrectionLevel")
         qrImage = filter?.outputImage
         let scaleX = qrImageView.frame.size.width / qrImage!.extent.size.width
         let scaleY = qrImageView.frame.size.height / qrImage!.extent.size.height

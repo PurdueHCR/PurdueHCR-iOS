@@ -37,12 +37,10 @@ class House {
     var houseID: String
     var totalPoints: Int
     var hexColor: String
-    var numberOfResidents: Int
-    init(id:String, points:Int,hexColor:String, numberOfResidents:Int ){
+    init(id:String, points:Int,hexColor:String ){
         self.houseID = id
         self.totalPoints = points
         self.hexColor = hexColor
-        self.numberOfResidents = numberOfResidents
     }
 }
 extension House:Equatable {
