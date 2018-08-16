@@ -29,8 +29,9 @@ xcuserdata/
 *.dSYM
 
 ## Playgrounds
-timeline.xctimeline
-playground.xcworkspace
+#timeline.xctimeline
+#playground.xcworkspace
+
 
 # Swift Package Manager
 #
@@ -50,10 +51,5 @@ playground.xcworkspace
 #
 # Add this line if you want to avoid checking in source code from the Xcode workspace
 # *.xcworkspace
-
-
-# Google service plist
 *GoogleService-Info.plist
 
-# Random project files
-*.pbxproj
