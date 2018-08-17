@@ -71,21 +71,21 @@
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointLogOverviewController.swift; sourceTree = "<group>"; };
-		D30FC8FE20DF35D800201E74 /* Platinum Points.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Platinum Points.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D30FC8FE20DF35D800201E74 /* PurdueHCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PurdueHCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC90120DF35D800201E74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D30FC90320DF35D800201E74 /* PointOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOptionViewController.swift; sourceTree = "<group>"; };
 		D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseProfileViewController.swift; sourceTree = "<group>"; };
 		D30FC90820DF35D800201E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D30FC90A20DF35D900201E74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D30FC90F20DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D30FC91420DF35D900201E74 /* Platinum PointsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Platinum PointsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D30FC91420DF35D900201E74 /* PurdueHCRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PurdueHCRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC91820DF35D900201E74 /* Platinum_PointsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platinum_PointsTests.swift; sourceTree = "<group>"; };
 		D30FC91A20DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D30FC91F20DF35D900201E74 /* Platinum PointsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Platinum PointsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D30FC91F20DF35D900201E74 /* PurdueHCRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PurdueHCRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platinum_PointsUITests.swift; sourceTree = "<group>"; };
 		D30FC92520DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLoadingViewController.swift; sourceTree = "<group>"; };
-		D33F43AB2108043300D3982D /* Platinum Points.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Platinum Points.entitlements"; sourceTree = "<group>"; };
+		D33F43AB2108043300D3982D /* PurdueHCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCR.entitlements; sourceTree = "<group>"; };
 		D33F43AC2108362D00D3982D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PointDescriptionView.xib; sourceTree = "<group>"; };
 		D33F43B0210AA00700D3982D /* PointDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDescriptionView.swift; sourceTree = "<group>"; };
@@ -211,10 +211,10 @@
 		D30FC8F520DF35D700201E74 = {
 			isa = PBXGroup;
 			children = (
-				D30FC90020DF35D800201E74 /* Platinum Points */,
-				D30FC91720DF35D900201E74 /* Platinum PointsTests */,
+				D30FC90020DF35D800201E74 /* PurdueHCR */,
+				D30FC91720DF35D900201E74 /* PurdueHCRTests */,
 				D30FC8FF20DF35D800201E74 /* Products */,
-				D30FC92220DF35D900201E74 /* Platinum PointsUITests */,
+				D30FC92220DF35D900201E74 /* PurdueHCRUITests */,
 				4BDE08ABB5123F87B9AE7A78 /* Pods */,
 				1FEF3EC75CED09292AAA60A9 /* Frameworks */,
 			);
@@ -223,17 +223,17 @@
 		D30FC8FF20DF35D800201E74 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D30FC8FE20DF35D800201E74 /* Platinum Points.app */,
-				D30FC91420DF35D900201E74 /* Platinum PointsTests.xctest */,
-				D30FC91F20DF35D900201E74 /* Platinum PointsUITests.xctest */,
+				D30FC8FE20DF35D800201E74 /* PurdueHCR.app */,
+				D30FC91420DF35D900201E74 /* PurdueHCRTests.xctest */,
+				D30FC91F20DF35D900201E74 /* PurdueHCRUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D30FC90020DF35D800201E74 /* Platinum Points */ = {
+		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				D33F43AB2108043300D3982D /* Platinum Points.entitlements */,
+				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D3BC48BC2115543E00D46088 /* GoogleService-Info.plist */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
@@ -244,25 +244,25 @@
 				D30FBEE020FC0403000DD221 /* ViewControllers */,
 				D3CC77CC210522CC00B88F03 /* Views */,
 			);
-			path = "Platinum Points";
+			path = PurdueHCR;
 			sourceTree = "<group>";
 		};
-		D30FC91720DF35D900201E74 /* Platinum PointsTests */ = {
+		D30FC91720DF35D900201E74 /* PurdueHCRTests */ = {
 			isa = PBXGroup;
 			children = (
 				D30FC91820DF35D900201E74 /* Platinum_PointsTests.swift */,
 				D30FC91A20DF35D900201E74 /* Info.plist */,
 			);
-			path = "Platinum PointsTests";
+			path = PurdueHCRTests;
 			sourceTree = "<group>";
 		};
-		D30FC92220DF35D900201E74 /* Platinum PointsUITests */ = {
+		D30FC92220DF35D900201E74 /* PurdueHCRUITests */ = {
 			isa = PBXGroup;
 			children = (
 				D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */,
 				D30FC92520DF35D900201E74 /* Info.plist */,
 			);
-			path = "Platinum PointsUITests";
+			path = PurdueHCRUITests;
 			sourceTree = "<group>";
 		};
 		D39D442E210E73E70030F424 /* QRCodeViewControllers */ = {
@@ -334,9 +334,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D30FC8FD20DF35D800201E74 /* Platinum Points */ = {
+		D30FC8FD20DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D30FC92820DF35D900201E74 /* Build configuration list for PBXNativeTarget "Platinum Points" */;
+			buildConfigurationList = D30FC92820DF35D900201E74 /* Build configuration list for PBXNativeTarget "PurdueHCR" */;
 			buildPhases = (
 				A5C898E10175517DDFBCD7DA /* [CP] Check Pods Manifest.lock */,
 				D30FC8FA20DF35D800201E74 /* Sources */,
@@ -348,14 +348,14 @@
 			);
 			dependencies = (
 			);
-			name = "Platinum Points";
+			name = PurdueHCR;
 			productName = "Platinum Points";
-			productReference = D30FC8FE20DF35D800201E74 /* Platinum Points.app */;
+			productReference = D30FC8FE20DF35D800201E74 /* PurdueHCR.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D30FC91320DF35D900201E74 /* Platinum PointsTests */ = {
+		D30FC91320DF35D900201E74 /* PurdueHCRTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D30FC92B20DF35D900201E74 /* Build configuration list for PBXNativeTarget "Platinum PointsTests" */;
+			buildConfigurationList = D30FC92B20DF35D900201E74 /* Build configuration list for PBXNativeTarget "PurdueHCRTests" */;
 			buildPhases = (
 				D30FC91020DF35D900201E74 /* Sources */,
 				D30FC91120DF35D900201E74 /* Frameworks */,
@@ -366,14 +366,14 @@
 			dependencies = (
 				D30FC91620DF35D900201E74 /* PBXTargetDependency */,
 			);
-			name = "Platinum PointsTests";
+			name = PurdueHCRTests;
 			productName = "Platinum PointsTests";
-			productReference = D30FC91420DF35D900201E74 /* Platinum PointsTests.xctest */;
+			productReference = D30FC91420DF35D900201E74 /* PurdueHCRTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D30FC91E20DF35D900201E74 /* Platinum PointsUITests */ = {
+		D30FC91E20DF35D900201E74 /* PurdueHCRUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D30FC92E20DF35D900201E74 /* Build configuration list for PBXNativeTarget "Platinum PointsUITests" */;
+			buildConfigurationList = D30FC92E20DF35D900201E74 /* Build configuration list for PBXNativeTarget "PurdueHCRUITests" */;
 			buildPhases = (
 				D30FC91B20DF35D900201E74 /* Sources */,
 				D30FC91C20DF35D900201E74 /* Frameworks */,
@@ -384,9 +384,9 @@
 			dependencies = (
 				D30FC92120DF35D900201E74 /* PBXTargetDependency */,
 			);
-			name = "Platinum PointsUITests";
+			name = PurdueHCRUITests;
 			productName = "Platinum PointsUITests";
-			productReference = D30FC91F20DF35D900201E74 /* Platinum PointsUITests.xctest */;
+			productReference = D30FC91F20DF35D900201E74 /* PurdueHCRUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -417,7 +417,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D30FC8F920DF35D700201E74 /* Build configuration list for PBXProject "Platinum Points" */;
+			buildConfigurationList = D30FC8F920DF35D700201E74 /* Build configuration list for PBXProject "PurdueHCR" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -430,9 +430,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D30FC8FD20DF35D800201E74 /* Platinum Points */,
-				D30FC91320DF35D900201E74 /* Platinum PointsTests */,
-				D30FC91E20DF35D900201E74 /* Platinum PointsUITests */,
+				D30FC8FD20DF35D800201E74 /* PurdueHCR */,
+				D30FC91320DF35D900201E74 /* PurdueHCRTests */,
+				D30FC91E20DF35D900201E74 /* PurdueHCRUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -594,12 +594,12 @@
 /* Begin PBXTargetDependency section */
 		D30FC91620DF35D900201E74 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D30FC8FD20DF35D800201E74 /* Platinum Points */;
+			target = D30FC8FD20DF35D800201E74 /* PurdueHCR */;
 			targetProxy = D30FC91520DF35D900201E74 /* PBXContainerItemProxy */;
 		};
 		D30FC92120DF35D900201E74 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D30FC8FD20DF35D800201E74 /* Platinum Points */;
+			target = D30FC8FD20DF35D800201E74 /* PurdueHCR */;
 			targetProxy = D30FC92020DF35D900201E74 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -735,10 +735,10 @@
 			baseConfigurationReference = 2D8E9E68CBCDEABF5F7177E3 /* Pods-Platinum Points.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Platinum Points/Platinum Points.entitlements";
+				CODE_SIGN_ENTITLEMENTS = PurdueHCR/PurdueHCR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5N596YY333;
-				INFOPLIST_FILE = "Platinum Points/Info.plist";
+				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -755,10 +755,10 @@
 			baseConfigurationReference = 614DAB94E9078A278BDB559C /* Pods-Platinum Points.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Platinum Points/Platinum Points.entitlements";
+				CODE_SIGN_ENTITLEMENTS = PurdueHCR/PurdueHCR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5N596YY333;
-				INFOPLIST_FILE = "Platinum Points/Info.plist";
+				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -787,7 +787,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Platinum Points.app/Platinum Points";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PurdueHCR.app/PurdueHCR";
 			};
 			name = Debug;
 		};
@@ -808,7 +808,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Platinum Points.app/Platinum Points";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PurdueHCR.app/PurdueHCR";
 			};
 			name = Release;
 		};
@@ -855,7 +855,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D30FC8F920DF35D700201E74 /* Build configuration list for PBXProject "Platinum Points" */ = {
+		D30FC8F920DF35D700201E74 /* Build configuration list for PBXProject "PurdueHCR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D30FC92620DF35D900201E74 /* Debug */,
@@ -864,7 +864,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D30FC92820DF35D900201E74 /* Build configuration list for PBXNativeTarget "Platinum Points" */ = {
+		D30FC92820DF35D900201E74 /* Build configuration list for PBXNativeTarget "PurdueHCR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D30FC92920DF35D900201E74 /* Debug */,
@@ -873,7 +873,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D30FC92B20DF35D900201E74 /* Build configuration list for PBXNativeTarget "Platinum PointsTests" */ = {
+		D30FC92B20DF35D900201E74 /* Build configuration list for PBXNativeTarget "PurdueHCRTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D30FC92C20DF35D900201E74 /* Debug */,
@@ -882,7 +882,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D30FC92E20DF35D900201E74 /* Build configuration list for PBXNativeTarget "Platinum PointsUITests" */ = {
+		D30FC92E20DF35D900201E74 /* Build configuration list for PBXNativeTarget "PurdueHCRUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D30FC92F20DF35D900201E74 /* Debug */,

@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Platinum Points.xcodeproj">
+      location = "group:/Users/brian/Documents/School/RHP Files/App/HCR-Points-IOS/HCR-Points-IOS/PurdueHCR.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
