@@ -24,12 +24,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
     var houses:[House]?
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         DataManager.sharedManager.refreshHouses(onDone: {(h:[House]) in
             self.houses = h
         })
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(activityIndicator)
+        
         fortyPercent = self.view.frame.size.height * 0.4
         self.emailField.delegate = self
         self.nameField.delegate = self
@@ -66,6 +73,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func submitSignUp(_ sender: Any) {
+        self.signUpButton.isEnabled = false
+        self.activityIndicator.startAnimating()
         let email = emailField.text
         let password = passwordField.text
         let verifyPassword = verifyPasswordField.text
@@ -76,15 +85,28 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         if( hasEmptyFields(emailOptional: email, passwordOptional: password, verifyPasswordOptional: verifyPassword, nameOptional: name, codeOptional: code)){
             self.notify(title: "Failed to Sign Up", subtitle: "Please enter all information.", style: .danger)
+            self.signUpButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
         }
         else if ( password! != verifyPassword){
             self.notify(title: "Failed to Sign Up", subtitle: "Please verify your passwords are the same.", style: .danger)
+            self.signUpButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
+        }
+        else if ( name?.split(separator: " ").count != 2){
+            self.notify(title: "Failed to Sign Up", subtitle: "Please enter your preferred first and last name.", style: .danger)
+            self.signUpButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
         }
         else if ( !isValidEmail(testStr: email!)){
             self.notify(title: "Failed to Sign Up", subtitle: "Please enter a valid Purdue email address.", style: .danger)
+            self.signUpButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
         }
         else if(!codeIsValid(code:code!)){
             self.notify(title: "Failed to Sign Up", subtitle: "Code is Invalid.", style: .danger)
+            self.signUpButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
         }
         else{
             // user is fine to authenticate
@@ -92,6 +114,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             Auth.auth().createUser(withEmail: email!, password: password!) { (authResult, error) in
                 guard let user = authResult?.user, error == nil else {
                     self.notify(title: "Failed to Sign Up", subtitle: error!.localizedDescription, style: .danger)
+                    self.signUpButton.isEnabled = true
+                    self.activityIndicator.stopAnimating()
                     return
                 }
                 //they are signed in
@@ -102,9 +126,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 DataManager.sharedManager.createUser(onDone: ({ (err:Error?) in
                     if err != nil {
                         self.notify(title: "Failed to Sign Up", subtitle: "Failed to create user.", style: .danger)
+                        self.signUpButton.isEnabled = true
+                        self.activityIndicator.stopAnimating()
+                        try! Auth.auth().signOut()
                     } else {
                         DataManager.sharedManager.initializeData(finished:{() in return})
                         Cely.changeStatus(to: .loggedIn)
+                        self.activityIndicator.stopAnimating()
                         
                     }
                 }))

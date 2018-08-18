@@ -12,6 +12,10 @@ import NotificationBannerSwift
 
 class AppUtils {
     
+    static func getColorForThisHouse(house:String) -> UIColor {
+        return AppUtils.hexStringToUIColor(hex: "5AC0C7")
+    }
+    
     static func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         

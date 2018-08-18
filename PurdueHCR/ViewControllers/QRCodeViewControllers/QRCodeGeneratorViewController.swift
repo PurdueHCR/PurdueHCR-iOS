@@ -66,6 +66,13 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         }
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        if(textView.text.suffix(1) == "\n"){
+            textView.text = textView.text.dropLast().description
+            textView.resignFirstResponder()
+        }
+    }
+    
     
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         self.descriptionTextView.resignFirstResponder()

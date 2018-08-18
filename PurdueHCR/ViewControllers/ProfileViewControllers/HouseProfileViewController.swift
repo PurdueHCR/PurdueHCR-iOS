@@ -15,7 +15,6 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet var reportButton: UIButton!
     
-    @IBOutlet var colorAndPictureView: ColorAndPictureView!
     @IBOutlet var profileView: ProfileView!
     @IBOutlet var housePointsView: HousePointsView!
     @IBOutlet var housePointsCompareView: HousePointsCompareView!
@@ -32,7 +31,32 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
         
         self.reportButton.layer.borderColor = UIColor.black.cgColor
-        self.reportButton.layer.borderWidth = 1
+        self.reportButton.layer.borderWidth = 3
+        self.reportButton.layer.shadowColor = UIColor.black.cgColor
+        self.reportButton.layer.shadowOpacity = 1
+        self.reportButton.layer.shadowOffset = CGSize.zero
+        self.reportButton.layer.shadowRadius = 5
+        
+        self.profileView.layer.borderColor = UIColor.black.cgColor
+        self.profileView.layer.borderWidth = 3
+        self.profileView.layer.shadowColor = UIColor.black.cgColor
+        self.profileView.layer.shadowOpacity = 1
+        self.profileView.layer.shadowOffset = CGSize.zero
+        self.profileView.layer.shadowRadius = 5
+        
+        self.housePointsView.layer.borderColor = UIColor.black.cgColor
+        self.housePointsView.layer.borderWidth = 3
+        self.housePointsView.layer.shadowColor = UIColor.black.cgColor
+        self.housePointsView.layer.shadowOpacity = 1
+        self.housePointsView.layer.shadowOffset = CGSize.zero
+        self.housePointsView.layer.shadowRadius = 5
+        
+        self.housePointsCompareView.layer.borderColor = UIColor.black.cgColor
+        self.housePointsCompareView.layer.borderWidth = 3
+        self.housePointsCompareView.layer.shadowColor = UIColor.black.cgColor
+        self.housePointsCompareView.layer.shadowOpacity = 1
+        self.housePointsCompareView.layer.shadowOffset = CGSize.zero
+        self.housePointsCompareView.layer.shadowRadius = 5
     }
     @objc func logOut(_ sender: Any) {
         try? Auth.auth().signOut()
@@ -48,7 +72,6 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         refreshCount = 0
         DataManager.sharedManager.refreshUser(onDone: {(err:Error?) in
             self.profileView.reloadData()
-            self.colorAndPictureView.refresh()
             self.handleRefresher()
         })
         DataManager.sharedManager.refreshHouses(onDone: {(hs:[House]) in
