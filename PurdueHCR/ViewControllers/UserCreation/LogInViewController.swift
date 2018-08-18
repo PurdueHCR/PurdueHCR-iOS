@@ -18,9 +18,17 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(activityIndicator)
+        
+        
         self.username.delegate = self
         self.password.delegate = self
         fortyPercent = self.view.frame.size.height * CGFloat(0.4)
@@ -47,18 +55,26 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
 
     @IBAction func login(_ sender: Any) {
+        self.logInButton.isEnabled = false
+        self.activityIndicator.startAnimating()
         guard let email = username.text, let password = password.text else {
            self.notify(title: "Failed to Log In", subtitle: "Please enter all information.", style: .danger)
+            self.logInButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
             return
         }
         if(email.isEmpty || password.isEmpty){
             self.notify(title: "Failed to Log In", subtitle: "Please enter all information.", style: .danger)
+            self.logInButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
             return
         }
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             guard let usr = user, error == nil else {
                 self.notify(title: "Failed to Log In", subtitle: error!.localizedDescription, style: .danger)
+                self.logInButton.isEnabled = true
+                self.activityIndicator.stopAnimating()
                 return
             }
             //The DataManager will handle setting all the elements in User.properties
@@ -67,9 +83,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                     self.notify(title: "Success", subtitle: "Logging in", style: .success)
                     User.save(Auth.auth().currentUser?.uid as Any, as: .id)
                     Cely.changeStatus(to: .loggedIn)
+                    self.activityIndicator.stopAnimating()
                 }
                 else{
-                    fatalError("Something bad happend that should not have happend. Somehow you have an account without a corresponding entry in user table.")
+                    self.logInButton.isEnabled = true
+                    self.activityIndicator.stopAnimating()
+                    try! Auth.auth().signOut()
+                    self.notify(title: "Error", subtitle: "Could not find user information. Please create a new account.", style: .danger)
+                    return
                 }
             })
         }

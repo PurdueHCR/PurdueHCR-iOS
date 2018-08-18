@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -16,13 +15,13 @@
         <!--Point Options-->
         <scene sceneID="b52-vA-Cao">
             <objects>
-                <tableViewController id="3rs-dr-kdx" customClass="PointOptionViewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="3rs-dr-kdx" customClass="PointOptionViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wUR-4V-BQH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="L39-GQ-TFp" customClass="PointTypeCell" customModule="Platinum_Points" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="L39-GQ-TFp" customClass="PointTypeCell" customModule="PurdueHCR" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L39-GQ-TFp" id="XQY-sy-n4t">
@@ -82,7 +81,7 @@
         <!--Submit Points-->
         <scene sceneID="Cbk-dH-mjb">
             <objects>
-                <viewController id="ng8-pP-MMw" customClass="TypeSubmitViewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ng8-pP-MMw" customClass="TypeSubmitViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jad-vw-Zfi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -137,7 +136,7 @@
         <!--Point Overview-->
         <scene sceneID="UZO-jx-hmj">
             <objects>
-                <viewController title="Point Overview" id="AHF-Vf-m6y" customClass="PointLogOverviewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Point Overview" id="AHF-Vf-m6y" customClass="PointLogOverviewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TOk-kC-e3q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -178,7 +177,7 @@
                                             <action selector="approvePointLog:" destination="AHF-Vf-m6y" eventType="touchUpInside" id="Oh7-vM-LKg"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G0W-f0-xT0" customClass="PointDescriptionView" customModule="Platinum_Points" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G0W-f0-xT0" customClass="PointDescriptionView" customModule="PurdueHCR" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="359" height="227"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -239,45 +238,40 @@
         <!--Point Overview-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController title="Point Overview" id="8rJ-Kc-sve" customClass="HouseProfileViewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Point Overview" id="8rJ-Kc-sve" customClass="HouseProfileViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1297"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1260"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yws-Mt-HdN">
-                                <rect key="frame" x="0.0" y="64" width="375" height="1184"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="1147"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHf-8u-dwG" customClass="ColorAndPictureView" customModule="Platinum_Points" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="196"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8a5-YT-Rh8" customClass="ProfileView" customModule="PurdueHCR" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="8" width="359" height="350"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="196" id="ihK-lE-yQS"/>
+                                            <constraint firstAttribute="height" constant="350" id="x1l-rd-HzX"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8a5-YT-Rh8" customClass="ProfileView" customModule="Platinum_Points" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="204" width="375" height="219"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZh-be-tFW" customClass="HousePointsView" customModule="PurdueHCR" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="366" width="359" height="361"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="219" id="IXY-46-OJ3"/>
+                                            <constraint firstAttribute="height" constant="361" id="CGR-5R-Zjb"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZh-be-tFW" customClass="HousePointsView" customModule="Platinum_Points" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="431" width="375" height="378"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCU-Xv-Hec" customClass="HousePointsCompareView" customModule="PurdueHCR" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="735" width="359" height="359"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="378" id="wAn-NC-SYD"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCU-Xv-Hec" customClass="HousePointsCompareView" customModule="Platinum_Points" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="817" width="375" height="334"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="334" id="FVH-TX-0PO"/>
+                                            <constraint firstAttribute="height" constant="359" id="VRJ-Jw-khg"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fe-N4-sd9">
-                                        <rect key="frame" x="-6" y="1159" width="388" height="25"/>
+                                        <rect key="frame" x="8" y="1102" width="359" height="25"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="fAa-zu-CmY"/>
+                                            <constraint firstAttribute="height" constant="25" id="3Db-6c-Azg"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <state key="normal" title="Report a Bug"/>
@@ -287,23 +281,20 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="RHf-8u-dwG" firstAttribute="centerX" secondItem="Yws-Mt-HdN" secondAttribute="centerX" id="0xk-pu-TNd"/>
-                                    <constraint firstItem="LZh-be-tFW" firstAttribute="top" secondItem="8a5-YT-Rh8" secondAttribute="bottom" constant="8" symbolic="YES" id="1Mv-J3-0xs"/>
-                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="leading" secondItem="LZh-be-tFW" secondAttribute="leading" id="2FN-zV-O3q"/>
-                                    <constraint firstItem="9fe-N4-sd9" firstAttribute="top" secondItem="jCU-Xv-Hec" secondAttribute="bottom" constant="8" symbolic="YES" id="2de-YW-OH5"/>
-                                    <constraint firstAttribute="trailing" secondItem="RHf-8u-dwG" secondAttribute="trailing" id="3oG-rT-SQU"/>
-                                    <constraint firstItem="jCU-Xv-Hec" firstAttribute="centerX" secondItem="9fe-N4-sd9" secondAttribute="centerX" id="77V-6c-xFo"/>
-                                    <constraint firstAttribute="bottom" secondItem="9fe-N4-sd9" secondAttribute="bottom" id="85g-YX-7iV"/>
-                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="trailing" secondItem="LZh-be-tFW" secondAttribute="trailing" id="APe-nB-RX7"/>
-                                    <constraint firstItem="LZh-be-tFW" firstAttribute="leading" secondItem="jCU-Xv-Hec" secondAttribute="leading" id="Dzw-LY-64T"/>
-                                    <constraint firstItem="jCU-Xv-Hec" firstAttribute="top" secondItem="LZh-be-tFW" secondAttribute="bottom" constant="8" symbolic="YES" id="Gvg-hM-0pV"/>
-                                    <constraint firstItem="9fe-N4-sd9" firstAttribute="leading" secondItem="Yws-Mt-HdN" secondAttribute="leadingMargin" constant="-14" id="YEk-Ap-Mti"/>
-                                    <constraint firstItem="RHf-8u-dwG" firstAttribute="top" secondItem="Yws-Mt-HdN" secondAttribute="top" id="bPQ-gZ-54L"/>
-                                    <constraint firstItem="LZh-be-tFW" firstAttribute="trailing" secondItem="jCU-Xv-Hec" secondAttribute="trailing" id="eR5-w2-XHl"/>
-                                    <constraint firstItem="RHf-8u-dwG" firstAttribute="leading" secondItem="8a5-YT-Rh8" secondAttribute="leading" id="maA-Va-lPv"/>
-                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="top" secondItem="RHf-8u-dwG" secondAttribute="bottom" constant="8" symbolic="YES" id="p0I-43-7IK"/>
-                                    <constraint firstItem="RHf-8u-dwG" firstAttribute="trailing" secondItem="8a5-YT-Rh8" secondAttribute="trailing" id="wmV-6O-aKy"/>
-                                    <constraint firstItem="RHf-8u-dwG" firstAttribute="leading" secondItem="Yws-Mt-HdN" secondAttribute="leading" id="zgd-U4-sLz"/>
+                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="trailing" secondItem="LZh-be-tFW" secondAttribute="trailing" id="4O3-7h-h5q"/>
+                                    <constraint firstItem="9fe-N4-sd9" firstAttribute="top" secondItem="jCU-Xv-Hec" secondAttribute="bottom" constant="8" symbolic="YES" id="9Lx-72-yoL"/>
+                                    <constraint firstItem="jCU-Xv-Hec" firstAttribute="leading" secondItem="9fe-N4-sd9" secondAttribute="leading" id="M9w-up-F8e"/>
+                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="leading" secondItem="LZh-be-tFW" secondAttribute="leading" id="OPI-WB-gdl"/>
+                                    <constraint firstItem="LZh-be-tFW" firstAttribute="top" secondItem="8a5-YT-Rh8" secondAttribute="bottom" constant="8" symbolic="YES" id="SKh-fp-e0H"/>
+                                    <constraint firstItem="jCU-Xv-Hec" firstAttribute="trailing" secondItem="9fe-N4-sd9" secondAttribute="trailing" id="Uxd-PH-Olv"/>
+                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="leading" secondItem="Yws-Mt-HdN" secondAttribute="leadingMargin" id="VRm-3W-MYY"/>
+                                    <constraint firstItem="LZh-be-tFW" firstAttribute="leading" secondItem="jCU-Xv-Hec" secondAttribute="leading" id="VXO-Pp-8ei"/>
+                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="trailing" secondItem="Yws-Mt-HdN" secondAttribute="trailingMargin" id="dDE-v7-vik"/>
+                                    <constraint firstItem="jCU-Xv-Hec" firstAttribute="top" secondItem="LZh-be-tFW" secondAttribute="bottom" constant="8" symbolic="YES" id="h1L-Wc-Duf"/>
+                                    <constraint firstItem="LZh-be-tFW" firstAttribute="trailing" secondItem="jCU-Xv-Hec" secondAttribute="trailing" id="k92-pg-zyd"/>
+                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="centerX" secondItem="Yws-Mt-HdN" secondAttribute="centerX" id="vB7-4l-fDA"/>
+                                    <constraint firstItem="8a5-YT-Rh8" firstAttribute="top" secondItem="Yws-Mt-HdN" secondAttribute="topMargin" id="x1k-YY-vWr"/>
+                                    <constraint firstAttribute="bottom" secondItem="9fe-N4-sd9" secondAttribute="bottom" constant="20" id="zFs-SB-1B1"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="8rJ-Kc-sve" id="bFO-Ez-Xvz"/>
@@ -312,10 +303,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Yws-Mt-HdN" firstAttribute="bottom" secondItem="O1u-W8-tvY" secondAttribute="bottom" id="1lq-pK-XHC"/>
-                            <constraint firstItem="Yws-Mt-HdN" firstAttribute="top" secondItem="O1u-W8-tvY" secondAttribute="top" id="hKa-1P-oeN"/>
-                            <constraint firstItem="Yws-Mt-HdN" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="peD-Ce-OAa"/>
-                            <constraint firstAttribute="trailing" secondItem="Yws-Mt-HdN" secondAttribute="trailing" id="zrn-oC-5fs"/>
+                            <constraint firstAttribute="trailing" secondItem="Yws-Mt-HdN" secondAttribute="trailing" id="4sK-s4-kgn"/>
+                            <constraint firstItem="Yws-Mt-HdN" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="W1J-OV-6rD"/>
+                            <constraint firstItem="Yws-Mt-HdN" firstAttribute="bottom" secondItem="O1u-W8-tvY" secondAttribute="bottom" id="aBQ-1Z-ySJ"/>
+                            <constraint firstItem="Yws-Mt-HdN" firstAttribute="top" secondItem="O1u-W8-tvY" secondAttribute="top" id="ed9-oN-Nw5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
@@ -323,9 +314,8 @@
                     <navigationItem key="navigationItem" title="Your Points" id="JMQ-Qz-Lid">
                         <barButtonItem key="rightBarButtonItem" title="Sign Out" id="ePb-PL-0Jw"/>
                     </navigationItem>
-                    <size key="freeformSize" width="375" height="1297"/>
+                    <size key="freeformSize" width="375" height="1260"/>
                     <connections>
-                        <outlet property="colorAndPictureView" destination="RHf-8u-dwG" id="Bt5-9n-1Ex"/>
                         <outlet property="housePointsCompareView" destination="jCU-Xv-Hec" id="XMM-uW-ypP"/>
                         <outlet property="housePointsView" destination="LZh-be-tFW" id="HLb-du-3PK"/>
                         <outlet property="profileView" destination="8a5-YT-Rh8" id="uMJ-MJ-xry"/>
@@ -340,7 +330,7 @@
         <!--Animated Loading View Controller-->
         <scene sceneID="QTP-XN-zz6">
             <objects>
-                <viewController id="0p3-Is-rZU" customClass="AnimatedLoadingViewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="0p3-Is-rZU" customClass="AnimatedLoadingViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JYw-7r-eBW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -383,7 +373,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="TabBarController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="TabBarController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -401,13 +391,13 @@
         <!--Approvals-->
         <scene sceneID="EgI-Pe-IVP">
             <objects>
-                <tableViewController id="ktD-oW-0Ef" customClass="RHPApprovalTableViewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="ktD-oW-0Ef" customClass="RHPApprovalTableViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="H66-yR-K3U">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="107" id="FCG-GV-Q67" customClass="ApprovalCell" customModule="Platinum_Points" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="107" id="FCG-GV-Q67" customClass="ApprovalCell" customModule="PurdueHCR" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="107"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FCG-GV-Q67" id="uSQ-a5-gbm">
@@ -494,7 +484,7 @@
         <!--Code Generator View Controller-->
         <scene sceneID="YTf-nr-rG1">
             <objects>
-                <viewController id="uT1-jM-ICD" customClass="QRCodeGeneratorViewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="uT1-jM-ICD" customClass="QRCodeGeneratorViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IJg-bG-gIQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -545,7 +535,7 @@
                                     <constraint firstAttribute="height" constant="128" id="lhG-9Y-9xX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -583,13 +573,13 @@
         <!--Your Codes-->
         <scene sceneID="3GF-vV-cc8">
             <objects>
-                <tableViewController id="dPq-C8-HeU" customClass="LinkCodesTableViewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="dPq-C8-HeU" customClass="LinkCodesTableViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="FnZ-oB-b7h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="link_cell" id="jcr-nr-pgR" customClass="LinkCell" customModule="Platinum_Points" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="link_cell" id="jcr-nr-pgR" customClass="LinkCell" customModule="PurdueHCR" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jcr-nr-pgR" id="EoG-c0-UKb">
@@ -661,7 +651,7 @@
         <!--QR Code-->
         <scene sceneID="lQ1-hz-ZZZ">
             <objects>
-                <viewController title="QR Code" id="0uf-tv-AZs" customClass="LinkCodeViewController" customModule="Platinum_Points" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="QR Code" id="0uf-tv-AZs" customClass="LinkCodeViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cc2-ho-wSM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -800,6 +790,6 @@
         <image name="list" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Xk0-ey-6rA"/>
+        <segue reference="U6F-7Q-I0m"/>
     </inferredMetricsTieBreakers>
 </document>
