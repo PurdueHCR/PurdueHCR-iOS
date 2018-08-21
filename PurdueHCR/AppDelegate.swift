@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Platinum Points
+//  Purdue HCR
 //
 //  Created by Brian Johncox on 6/23/18.
 //  Copyright © 2018 DecodeProgramming. All rights reserved.
@@ -17,13 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        // Cely handles the creation of the log in/ sign up page. If the user is not logged in, it will create a new page and handle the login
         Cely.setup(with: window!, forModel: User(), requiredProperties: [.id], withOptions: [
             .loginStoryboard: UIStoryboard(name: "LoginStoryboard", bundle: nil)
             ])
         
+        //set up the project to connect with firebase and fetch the information on the houses so the login page has the information availible.
         FirebaseApp.configure()
         DataManager.sharedManager.refreshHouses(onDone: {(house:[House]) in return})
-        // Override point for customization after application launch.
+        
+        //Handle the user being logged in or not.
         if Auth.auth().currentUser != nil {
             DataManager.sharedManager.getUserWhenLogginIn(id: (Auth.auth().currentUser?.uid)!, onDone: { (success:Bool) in
                 if(success){
@@ -31,40 +35,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Cely.changeStatus(to: .loggedIn)
                 }
                 else{
-                    try! Auth.auth().signOut()
-                    Cely.changeStatus(to: .loggedOut)
-                    UIViewController().notify(title: "Failure", subtitle: "Could not find data with account.", style: .danger)
+                    try! Auth.auth().signOut() // Sign out from firebase
+                    Cely.logout()
+                    UIViewController().notify(title: "Failure", subtitle: "Could not find data with account.", style: .danger) //Create drop down message
                 }
             })
         }
         else{
-            Cely.logout()
+            Cely.logout() // Log out from Cely. This will display log in screen.
         }
         return true
     }
     
+    // This method will handle the case where a URI is sent to the app from a link or a QR code
+    // the format is hcrpoint://addpoints/<linkId>
+    // Returns true if this app can handle this link
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print("url \(url)")
-        print("url host :\(url.host!)")
-        print("url path :\(url.path)")
-        
         
         guard let urlPath = url.path as String? , let urlHost  = url.host as String? else {
-            
+            // Displays message when there is an issue with the uri link
             let banner = NotificationBanner(title: "Failure", subtitle: "Link is not formatted correctly.", style: .danger)
             banner.duration = 2
             banner.show()
             return false
         }
+        
+        // handles the link
         if(urlHost == "addpoints"){
+            //this makes sure it has the format /<linkId>
             let pathParts = urlPath.split(separator: "/")
             if(pathParts.count == 1){
                 let linkID = pathParts[0].description.replacingOccurrences(of: "/", with: "")
-                print("LinkID: \(linkID)")
                 DataManager.sharedManager.handlePointLink(id: linkID)
                 return true
             }
             else{
+                // Issue with the link, so cause error
                 let banner = NotificationBanner(title: "Failure", subtitle: "Illegal Link.", style: .danger)
                 banner.duration = 2
                 banner.show()

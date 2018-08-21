@@ -1,22 +1,14 @@
-//
-//  Data.swift
-//  Platinum Points
+
 //
 //  Created by Brian Johncox on 6/30/18.
 //  Copyright © 2018 DecodeProgramming. All rights reserved.
+//
+//  This file contains all of the models for the app. 
 //
 
 import Foundation
 import UIKit
 import Firebase
-
-class PointTypes : CustomStringConvertible {
-    var points : [String]? = nil;
-    var pointValue: String? = nil;
-    var description: String {
-        return "Point Value: "+pointValue! + ", Contains: "+points!.description
-    }
-}
 
 class PointType {
     var pointValue:Int

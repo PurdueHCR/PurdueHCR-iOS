@@ -1,9 +1,11 @@
 //
 //  User.swift
-//  Platinum Points
+//  Purdue HCR
 //
 //  Created by Brian Johncox on 6/30/18.
 //  Copyright © 2018 DecodeProgramming. All rights reserved.
+//
+//  This file contains the model and controller for handling the user information
 //
 
 import Foundation

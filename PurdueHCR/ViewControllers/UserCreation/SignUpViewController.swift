@@ -24,6 +24,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
     var houses:[House]?
+    
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {

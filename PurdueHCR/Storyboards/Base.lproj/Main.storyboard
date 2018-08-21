@@ -126,6 +126,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="descriptionField" destination="RPj-cs-EF1" id="N7E-sU-yxf"/>
+                        <outlet property="submitButton" destination="ALK-mC-0WS" id="tBL-q8-m5K"/>
                         <outlet property="typeLabel" destination="GEg-H9-uae" id="Kk8-zP-oSb"/>
                     </connections>
                 </viewController>
@@ -211,7 +212,9 @@
                         <viewLayoutGuide key="safeArea" id="1A8-as-bhf"/>
                     </view>
                     <connections>
+                        <outlet property="approveButton" destination="BQI-wO-AX4" id="z5f-lF-T3S"/>
                         <outlet property="pointDescriptionView" destination="G0W-f0-xT0" id="eBS-4Z-mXA"/>
+                        <outlet property="rejectButton" destination="QC4-SK-uh2" id="lg3-VT-17N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wui-ZP-1WC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -561,6 +564,7 @@
                     <navigationItem key="navigationItem" id="d5d-7Y-08E"/>
                     <connections>
                         <outlet property="descriptionTextView" destination="4Wi-eA-njT" id="ORk-gs-ZPz"/>
+                        <outlet property="generateButton" destination="WYf-HD-2ze" id="cYK-me-dql"/>
                         <outlet property="multiUseSwitch" destination="2x7-gw-m8Q" id="a0s-AT-9FN"/>
                         <outlet property="pickerView" destination="z6A-Q6-1tW" id="nJb-2I-RHz"/>
                         <segue destination="0uf-tv-AZs" kind="show" identifier="QR_Generate" id="U6F-7Q-I0m"/>
@@ -778,6 +782,7 @@
                         <outlet property="linkDescriptionLabel" destination="U3n-iW-1ST" id="8uq-10-7bq"/>
                         <outlet property="qrCodeDescriptionTextView" destination="tVN-BH-VNC" id="DXz-LI-Jdx"/>
                         <outlet property="qrImageView" destination="WqP-Dc-lu1" id="n5O-yN-3FQ"/>
+                        <outlet property="saveToPhotosButton" destination="WQB-No-Mdw" id="jz7-wo-GpM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tjm-VK-umn" userLabel="First Responder" sceneMemberID="firstResponder"/>

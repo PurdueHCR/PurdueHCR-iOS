@@ -9,6 +9,11 @@
 import UIKit
 
 class PointLogOverviewController: UIViewController {
+    
+    @IBOutlet var approveButton: UIButton!
+    @IBOutlet var rejectButton: UIButton!
+    
+    
     var pointLog: PointLog?
     var index: IndexPath?
     @IBOutlet var pointDescriptionView: PointDescriptionView!
@@ -28,11 +33,13 @@ class PointLogOverviewController: UIViewController {
     }
     
     @IBAction func approvePointLog(_ sender: Any) {
+        approveButton.isEnabled = false
         preViewContr?.unconfirmedLogs.remove(at:index!.row)
         preViewContr?.handlePointApproval(log: pointLog!, approve: true)
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func rejectPointLog(_ sender: Any) {
+        rejectButton.isEnabled = false
         preViewContr?.unconfirmedLogs.remove(at: index!.row)
         preViewContr?.handlePointApproval(log: pointLog!, approve: false)
         self.navigationController?.popViewController(animated: true)

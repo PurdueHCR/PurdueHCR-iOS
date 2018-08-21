@@ -13,6 +13,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var multiUseSwitch: UISwitch!
     @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var generateButton: UIButton!
     
     var appendMethod:((_ link:Link)->Void)?
     let pointTypes = DataManager.sharedManager.getPoints()!
@@ -78,14 +79,17 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         self.descriptionTextView.resignFirstResponder()
     }
     @IBAction func generateQRCodes(_ sender: Any) {
+        self.generateButton.isEnabled = false;
         if(descriptionTextView.text == "" || descriptionTextView.text == "Enter point description here."){
             notify(title: "Failed to create QR Code", subtitle: "Please enter a description of your event.", style: .danger)
+            self.generateButton.isEnabled = true;
         }
         else {
             let link = Link(description: descriptionTextView.text, singleUse: !(multiUseSwitch.isOn), pointTypeID: selectedPoint.pointID)
             DataManager.sharedManager.createQRCode(link: link, onDone: {(id:String?) in
                 guard let linkID = id else{
                     self.notify(title: "Failure", subtitle: "Could not create QR Code", style: .danger)
+                    self.generateButton.isEnabled = true;
                     return
                 }
                 link.id = linkID
