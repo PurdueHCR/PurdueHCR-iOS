@@ -14,6 +14,7 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet var typeLabel: UILabel!
     @IBOutlet var descriptionField: UITextView!
+    @IBOutlet var submitButton: UIBarButtonItem!
     
     var type:PointType?
     var user:User?
@@ -34,16 +35,20 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func submit(_ sender: Any) {
+        submitButton.isEnabled = false;
         guard let description = descriptionField.text, !description.isEmpty else{
             notify(title: "Failure", subtitle: "Please enter a description", style: .danger)
+            submitButton.isEnabled = true;
             return
         }
         guard let pointType = type else{
             notify(title: "Failure", subtitle: "Please reselect your point type", style: .danger)
+            submitButton.isEnabled = true;
             return
         }
         if(description == "Tell us about what you did!"){
             notify(title: "Failure", subtitle: "Please tell us more about what you did!", style: .danger)
+            submitButton.isEnabled = true;
             return
         }
         let name = User.get(.name) as! String
@@ -55,6 +60,8 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
             if(err != nil){
                 self.notify(title: "Failed to submit", subtitle: err.debugDescription, style: .danger)
                 print("Error in posting: ",err.debugDescription)
+                self.submitButton.isEnabled = true;
+                return
             }
             else{
                 self.navigationController?.popViewController(animated: true)

@@ -15,6 +15,7 @@ class LinkCodeViewController: UIViewController {
     @IBOutlet var qrCodeDescriptionTextView: UITextView!
     @IBOutlet var activateSwitch: UISwitch!
     @IBOutlet var archiveSwitch: UISwitch!
+    @IBOutlet var saveToPhotosButton: UIButton!
     
     
     var qrImage:CIImage?
@@ -57,6 +58,7 @@ class LinkCodeViewController: UIViewController {
     }
     
     @IBAction func saveToCameraRoll(_ sender: Any) {
+        saveToPhotosButton.isEnabled = false
         let context = CIContext(options: [kCIContextUseSoftwareRenderer:true])
         let cgimg = context.createCGImage(qrImage!, from: qrImage!.extent)
         let uiimage = UIImage(cgImage: cgimg!)
@@ -112,6 +114,7 @@ class LinkCodeViewController: UIViewController {
         } else {
             self.notify(title: "Success", subtitle: "Saved to Camera Roll.", style: .success)
         }
+        saveToPhotosButton.isEnabled = true
     }
     
     @objc func back(sender: UIBarButtonItem) {
