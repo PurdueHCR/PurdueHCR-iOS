@@ -11,6 +11,8 @@ import UIKit
 class ApprovalCell: UITableViewCell {
     @IBOutlet var reasonLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
+    
     
 }
 
@@ -72,6 +74,7 @@ class RHPApprovalTableViewController: UITableViewController {
         
         cell.reasonLabel?.text = unconfirmedLogs[indexPath.row].type.pointDescription
         cell.nameLabel?.text = unconfirmedLogs[indexPath.row].resident
+        cell.descriptionLabel?.text = unconfirmedLogs[indexPath.row].pointDescription
 
         return cell
     }
@@ -90,59 +93,90 @@ class RHPApprovalTableViewController: UITableViewController {
     }
 
     
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        let approve = UITableViewRowAction(style: .normal, title: "Approve") { action, index in
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             print("Approve button tapped")
-            let log = self.unconfirmedLogs.remove(at: index.row)
+            let log = self.unconfirmedLogs.remove(at: indexPath.row)
             self.handlePointApproval(log: log, approve: true)
             if(self.unconfirmedLogs.count == 0){
                 let indexSet = NSMutableIndexSet()
                 indexSet.add(0)
                 self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+                success(true)
             }
             else{
-                self.tableView.deleteRows(at: [index], with: .automatic)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                success(true)
             }
             
-        }
-        approve.backgroundColor = .green
-        
-        let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
+        })
+        approveAction.backgroundColor = .green
+        approveAction.title = "Approve"
+        return UISwipeActionsConfiguration(actions: [approveAction])
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             print("Delete button tapped")
-            let log = self.unconfirmedLogs.remove(at: index.row)
+            let log = self.unconfirmedLogs.remove(at: indexPath.row)
             self.handlePointApproval(log: log, approve: false)
             if(self.unconfirmedLogs.count == 0){
                 let indexSet = NSMutableIndexSet()
                 indexSet.add(0)
                 self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+                success(true)
             }
             else{
-                self.tableView.deleteRows(at: [index], with: .automatic)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                success(true)
             }
-        }
-        delete.backgroundColor = .red
-        
-        return [approve, delete]
+        })
+        rejectAction.backgroundColor = .red
+        rejectAction.title = "Reject"
+        return UISwipeActionsConfiguration(actions: [rejectAction])
     }
     
     
     func handlePointApproval(log:PointLog, approve:Bool){
         DataManager.sharedManager.confirmOrDenyPoints(log: log, approved: approve, onDone: { (err: Error?) in
-            if(err != nil){
-                self.notify(title: "Failed", subtitle: "Failed to remove point log.", style: .danger)
-                self.unconfirmedLogs.append(log)
-                DispatchQueue.main.async { [unowned self] in
-                    if(self.unconfirmedLogs.count == 0 && self.tableView.numberOfSections != 0){
-                        let indexSet = NSMutableIndexSet()
-                        indexSet.add(0)
-                        self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+            if let error = err {
+                if(error.localizedDescription == "The operation couldn’t be completed. (Document has already been approved error 1.)"){
+                    self.notify(title: "WARNING: POINT ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
+                    DispatchQueue.main.async {
+                        self.resfreshData()
                     }
-                    self.tableView.reloadData()
+                    return
                 }
+                else if( error.localizedDescription == "The operation couldn’t be completed. (Document does not exist error 2.)"){
+                    self.notify(title: "Failure", subtitle: "Document no longer exists.", style: .danger)
+                    DispatchQueue.main.async {
+                        self.resfreshData()
+                    }
+                    return
+                }
+                else{
+                    self.notify(title: "Failed", subtitle: "Failed to remove point log.", style: .danger)
+                    self.unconfirmedLogs.append(log)
+                    DispatchQueue.main.async { [unowned self] in
+                        if(self.unconfirmedLogs.count == 0 && self.tableView.numberOfSections != 0){
+                            let indexSet = NSMutableIndexSet()
+                            indexSet.add(0)
+                            self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+                        }
+                        self.tableView.reloadData()
+                    }
+                }
+                
             }
             else{
-                self.notify(title: "Success", subtitle: "Point Handled", style: .success)
+                if(approve){
+                    self.notify(title: "Success", subtitle: "Point approved", style: .success)
+                }
+                else{
+                    self.notify(title: "Success", subtitle: "Point rejected", style: .success)
+                }
+                self.resfreshData()
             }
         })
     }

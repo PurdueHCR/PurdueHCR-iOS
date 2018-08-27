@@ -14,7 +14,7 @@ class MyValueFormatter: IValueFormatter {
     
     
     func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
-        return value.description
+        return value.rounded(toPlaces: 2).description
     }
     
     
@@ -49,11 +49,11 @@ class HousePointsCompareView: UIView {
     
     func refreshDataSet(){
         houses = DataManager.sharedManager.getHouses()!
-        let fourthplace = BarChartDataSet(values: [BarChartDataEntry(x: 1, y: Double(houses[3].totalPoints) / Double(houses[3].numberOfResidents))], label: houses[3].houseID)
-        let secondPlace = BarChartDataSet(values: [BarChartDataEntry(x: 2, y: Double(houses[1].totalPoints) / Double(houses[1].numberOfResidents))], label: houses[1].houseID)
-        let firstPlace = BarChartDataSet(values: [BarChartDataEntry(x: 3, y: Double(houses[0].totalPoints ) / Double(houses[0].numberOfResidents))], label: houses[0].houseID)
-        let thirdPlace = BarChartDataSet(values: [BarChartDataEntry(x: 4, y: Double(houses[2].totalPoints ) / Double(houses[2].numberOfResidents))], label: houses[2].houseID)
-        let fifthPlace = BarChartDataSet(values: [BarChartDataEntry(x: 5, y: Double(houses[4].totalPoints ) / Double(houses[4].numberOfResidents))], label: houses[4].houseID)
+        let fourthplace = BarChartDataSet(values: [BarChartDataEntry(x: 1, y: houses[3].pointsPerResident)], label: houses[3].houseID)
+        let secondPlace = BarChartDataSet(values: [BarChartDataEntry(x: 2, y: houses[1].pointsPerResident)], label: houses[1].houseID)
+        let firstPlace = BarChartDataSet(values: [BarChartDataEntry(x: 3, y: houses[0].pointsPerResident)], label: houses[0].houseID)
+        let thirdPlace = BarChartDataSet(values: [BarChartDataEntry(x: 4, y: houses[2].pointsPerResident)], label: houses[2].houseID)
+        let fifthPlace = BarChartDataSet(values: [BarChartDataEntry(x: 5, y: houses[4].pointsPerResident)], label: houses[4].houseID)
         
         fourthplace.setColor(AppUtils.hexStringToUIColor(hex:houses[3].hexColor))
         secondPlace.setColor(AppUtils.hexStringToUIColor(hex:houses[1].hexColor))

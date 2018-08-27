@@ -132,7 +132,7 @@ class FirebaseHelper {
             ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(log.residentRef.documentID+documentID)
             ref!.getDocument { (document, error) in
                 if let document = document, document.exists {
-                    onDone(NSError(domain: "Document Exists", code: 0, userInfo: nil))
+                    onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
                 } else {
                     ref!.setData([
                         "Description" : log.pointDescription,
@@ -177,16 +177,36 @@ class FirebaseHelper {
         if(!approved){
             description = "DENIED: "+description
         }
-        housePointRef!.setData(["PointTypeID":value,"ApprovedBy":User.get(.name) as! String,"ApprovedOn":Timestamp.init(), "Description":description],merge:true){err in
-            if(err == nil && approved){
-                self.updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, onDone: {(err:Error?) in
-                    onDone(err)
-                })
-            }
-            else{
-                onDone(err)
+        //TODO: yes this is not entirely thread safe. If some future developer would be so kind as to make this more robust, this would be great
+        //Note: The race conditions only happens with Firebase rn, so if in the future we switch to a different database solution, this may no longer be an issue
+        housePointRef!.getDocument { (document, error) in
+            //make sure that the document exists
+            if let document = document, document.exists {
+                //Make sure that no one has laready approved it.
+                if((document.data()!["ApprovedBy"] as! String?) != nil){
+                    // someone has already approved it :(
+                    onDone(NSError(domain: "Document has already been approved", code: 1, userInfo: nil))
+                    
+                }
+                else{
+                    //It has not been approved yet, you are good to go
+                    housePointRef!.setData(["PointTypeID":value,"ApprovedBy":User.get(.name) as! String,"ApprovedOn":Timestamp.init(), "Description":description],merge:true){err in
+                        if(err == nil && approved){
+                            self.updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, onDone: {(err:Error?) in
+                                onDone(err)
+                            })
+                        }
+                        else{
+                            onDone(err)
+                        }
+                    }
+                }
+            } else {
+                onDone(NSError(domain: "Document does not exist", code: 2, userInfo: nil))
             }
         }
+        
+        
     }
     
     func getUnconfirmedPoints(onDone:@escaping ( _ pointLogs:[PointLog])->Void)
@@ -298,7 +318,7 @@ class FirebaseHelper {
                     }
                     houseArray.append(House(id: id, points: points, hexColor:hex, numberOfResidents:numberOfResidents))
                 }
-                houseArray.sort(by: {$0.totalPoints > $1.totalPoints})
+                houseArray.sort(by: {$0.pointsPerResident > $1.pointsPerResident})
                 onDone(houseArray, houseKeys)
             }
         }

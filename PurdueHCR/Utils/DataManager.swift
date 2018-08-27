@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 import NotificationBannerSwift
+import Cely
 
 
 
@@ -228,49 +229,69 @@ class DataManager {
     
     func handlePointLink(id:String){
         fbh.findLinkWithID(id: id, onDone: {(linkOptional:Link?) in
-            guard let link = linkOptional else {
-                let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points.", style: .danger)
-                banner.duration = 2
-                banner.show()
-                return
+            let group = DispatchGroup()
+            group.enter()
+            
+            DispatchQueue.global().async {
+                while(!DataManager.sharedManager.isInitialized()){}
+                group.leave()
             }
-            if(!link.enabled){
-                let banner = NotificationBanner(title: "Failure: Code is not enabled.", subtitle: "Talk to owner to change status.", style: .danger)
-                banner.duration = 2
-                banner.show()
-                return
-            }
-            else{
-                let pointType = self.getPointType(value: link.pointTypeID)
-                let resident = User.get(.name) as! String
-                let floorID = User.get(.floorID) as! String
-                let ref = self.getUserRefFromUserID(id: User.get(.id) as! String)
-                let log = PointLog(pointDescription: link.description, resident: resident, type: pointType, floorID: floorID, residentRef: ref)
-                var documentID = ""
-                if(link.singleUse){
-                    documentID = id
-                }
-                self.fbh.addPointLog(log: log, documentID: documentID, preApproved: true, onDone: {(err:Error?) in
-                    if(err == nil){
-                        let banner = NotificationBanner(title: "Success", subtitle: "The point in the link was recorded.", style: .success)
+            group.notify(queue: .main) {
+                guard let link = linkOptional else {
+                    DispatchQueue.main.async {
+                        let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points.", style: .danger)
                         banner.duration = 2
                         banner.show()
-                        
                     }
-                    else{
-                        if(err!.localizedDescription == "The operation couldn’t be completed. (Document Exists error 0.)"){
-                            let banner = NotificationBanner(title: "Failure", subtitle: "You have already scanned this code.", style: .danger)
-                            banner.duration = 2
-                            banner.show()
+                    return
+                }
+                if(!link.enabled){
+                    DispatchQueue.main.async {
+                        let banner = NotificationBanner(title: "Failure: Code is not enabled.", subtitle: "Talk to owner to change status.", style: .danger)
+                        banner.duration = 2
+                        banner.show()
+                    }
+                    return
+                }
+                else{
+                    let pointType = self.getPointType(value: link.pointTypeID)
+                    let resident = User.get(.name) as! String
+                    let floorID = User.get(.floorID) as! String
+                    let ref = self.getUserRefFromUserID(id: User.get(.id) as! String)
+                    let log = PointLog(pointDescription: link.description, resident: resident, type: pointType, floorID: floorID, residentRef: ref)
+                    var documentID = ""
+                    if(link.singleUse){
+                        documentID = id
+                    }
+                    self.fbh.addPointLog(log: log, documentID: documentID, preApproved: true, onDone: {(err:Error?) in
+                        if(err == nil){
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                            
                         }
                         else{
-                            let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
-                            banner.duration = 2
-                            banner.show()
+                            if(err!.localizedDescription == "The operation couldn’t be completed. (Document Exists error 0.)"){
+                                DispatchQueue.main.async {
+                                    let banner = NotificationBanner(title: "Failure", subtitle: "You have already scanned this code.", style: .danger)
+                                    banner.duration = 2
+                                    banner.show()
+                                }
+                            }
+                            else{
+                                DispatchQueue.main.async {
+                                    let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                                    banner.duration = 2
+                                    banner.show()
+                                }
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
+            
         })
     }
     
@@ -291,6 +312,12 @@ class DataManager {
     }
     func setLinkArchived(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         fbh.setLinkArchived(link: link, withCompletion: onDone)
+    }
+
+    //Used for handling link to make sure all necessairy information is there
+    func isInitialized() -> Bool {
+        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil
+        
     }
 }
 
