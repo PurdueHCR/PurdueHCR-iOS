@@ -142,7 +142,7 @@ class RHPApprovalTableViewController: UITableViewController {
         DataManager.sharedManager.confirmOrDenyPoints(log: log, approved: approve, onDone: { (err: Error?) in
             if let error = err {
                 if(error.localizedDescription == "The operation couldn’t be completed. (Document has already been approved error 1.)"){
-                    self.notify(title: "WARNING: POINT ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
+                    self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
                     DispatchQueue.main.async {
                         self.resfreshData()
                     }

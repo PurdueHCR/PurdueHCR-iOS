@@ -69,7 +69,7 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
                     self.notify(title: "Way to Go RHP", subtitle: "Congrats, \(pointLog.type.pointValue) points submitted.", style: .success)
                 }
                 else{
-                    self.notify(title: "Success", subtitle: "\(pointLog.type.pointValue) points were submitted for approval.", style: .success)
+                    self.notify(title: "Submitted for approval!", subtitle: pointLog.pointDescription, style: .success)
                 }
             }
         }
