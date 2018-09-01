@@ -13,7 +13,6 @@ class AnimatedLoadingViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     
     let images = [#imageLiteral(resourceName: "Platinum"),#imageLiteral(resourceName: "Copper"),#imageLiteral(resourceName: "Titanium"),#imageLiteral(resourceName: "Silver"),#imageLiteral(resourceName: "Palladium")]
-    var i = Int(arc4random_uniform(5))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +22,16 @@ class AnimatedLoadingViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if(NewLaunch.newLaunch.isFirstLaunch){
+            createNewLaunchAlert()
+        }
+        else{
+            finishLoadinng()
+        }
+        
+    }
+    
+    func finishLoadinng(){
         DataManager.sharedManager.initializeData(finished: {() in
             self.performSegue(withIdentifier: "doneWithInit", sender: nil)
         })
@@ -34,8 +43,24 @@ class AnimatedLoadingViewController: UIViewController {
     }
     
     func setImage() {
+        let i = Int(arc4random_uniform(5))
         let toImage = images[i]
         self.imageView.image = toImage
+    }
+    
+    //This will be for showing announcements
+    func createNewLaunchAlert(){
+        let alert = UIAlertController(title: "Are you interested in joining Development Committee?", message: "Development Committee is looking for software developers, marketers, and designers to help with the future of Purdue HCR. If you are interested in helping, checkout our Discord channel!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Take me to the Discord", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            UIApplication.shared.open(URL(string: "https://discord.gg/jptXrYG")!, options: [:], completionHandler: nil)
+            self.finishLoadinng()
+        }))
+        alert.addAction(UIAlertAction(title: "No thanks", style: UIAlertActionStyle.default, handler: {(action)in
+            alert.dismiss(animated: true, completion: self.finishLoadinng)
+            self.finishLoadinng()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
 

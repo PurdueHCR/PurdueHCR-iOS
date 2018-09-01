@@ -93,3 +93,33 @@ extension UITableViewController {
     }
 }
 
+
+// Class to verify when the app is launched for the first time.
+final class NewLaunch {
+    
+    public static let newLaunch = NewLaunch(userDefaults: .standard, key: "com.purdueHCR.IsNewLaunch")
+    
+    let wasLaunchedBefore: Bool
+    let setWasLaunchedBefore: ((Bool) -> ())
+    
+    var isFirstLaunch: Bool {
+        return !wasLaunchedBefore
+    }
+    
+    init(getWasLaunchedBefore: () -> Bool,
+         setWasLaunchedBefore: @escaping (Bool) -> ()) {
+        self.setWasLaunchedBefore = setWasLaunchedBefore
+        let wasLaunchedBefore = getWasLaunchedBefore()
+        self.wasLaunchedBefore = wasLaunchedBefore
+        if !wasLaunchedBefore {
+            setWasLaunchedBefore(true)
+        }
+    }
+    
+    convenience init(userDefaults: UserDefaults, key: String) {
+        self.init(getWasLaunchedBefore: { userDefaults.bool(forKey: key) },
+                  setWasLaunchedBefore: { userDefaults.set($0, forKey: key) })
+    }
+    
+}
+

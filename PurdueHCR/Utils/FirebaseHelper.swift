@@ -63,8 +63,15 @@ class FirebaseHelper {
                     let value = pointDocument.data()["Value"] as! Int
                     pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id))
                 }
-                pointArray.sort(by: {$0.pointValue < $1.pointValue})
-                pointArray.sort(by: {$0.pointID < $1.pointID})
+                pointArray.sort(by: {
+                    if($0.pointValue == $1.pointValue){
+                        return $0.pointID < $1.pointID
+                    }
+                    else{
+                        return $0.pointValue < $1.pointValue
+                    }
+                    
+                })
                 onDone(pointArray)
             }
         }

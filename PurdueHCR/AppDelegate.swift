@@ -17,11 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         // Cely handles the creation of the log in/ sign up page. If the user is not logged in, it will create a new page and handle the login
-        Cely.setup(with: window!, forModel: User(), requiredProperties: [.id], withOptions: [
-            .loginStoryboard: UIStoryboard(name: "LoginStoryboard", bundle: nil)
-            ])
         
         //set up the project to connect with firebase and fetch the information on the houses so the login page has the information availible.
         FirebaseApp.configure()
@@ -29,10 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Handle the user being logged in or not.
         if Auth.auth().currentUser != nil {
+            Cely.changeStatus(to: .loggedIn)
             DataManager.sharedManager.getUserWhenLogginIn(id: (Auth.auth().currentUser?.uid)!, onDone: { (success:Bool) in
                 if(success){
                     User.save(Auth.auth().currentUser?.uid as Any, as: .id)
-                    Cely.changeStatus(to: .loggedIn)
                 }
                 else{
                     try! Auth.auth().signOut() // Sign out from firebase
@@ -40,9 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     UIViewController().notify(title: "Failure", subtitle: "Could not find data with account.", style: .danger) //Create drop down message
                 }
             })
+            Cely.setup(with: window!, forModel: User(), requiredProperties: [.id], withOptions: [
+                .loginStoryboard: UIStoryboard(name: "LoginStoryboard", bundle: nil)
+                ])
         }
         else{
-            Cely.logout() // Log out from Cely. This will display log in screen.
+            Cely.setup(with: window!, forModel: User(), requiredProperties: [.id], withOptions: [
+                .loginStoryboard: UIStoryboard(name: "LoginStoryboard", bundle: nil)
+                ])
         }
         return true
     }
@@ -100,6 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
     }
 
 

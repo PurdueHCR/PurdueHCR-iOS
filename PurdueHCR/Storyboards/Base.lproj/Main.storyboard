@@ -12,7 +12,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Point Options-->
+        <!--Submit Points-->
         <scene sceneID="b52-vA-Cao">
             <objects>
                 <tableViewController id="3rs-dr-kdx" customClass="PointOptionViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,7 +52,7 @@
                             <outlet property="delegate" destination="3rs-dr-kdx" id="aTg-AD-5mB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Point Options" id="Fbu-Zg-afo"/>
+                    <navigationItem key="navigationItem" title="Submit Points" id="Fbu-Zg-afo"/>
                     <connections>
                         <segue destination="ng8-pP-MMw" kind="show" identifier="cell_push" id="Q0V-7Y-oh2"/>
                     </connections>
@@ -78,7 +78,7 @@
             </objects>
             <point key="canvasLocation" x="-874" y="-1052"/>
         </scene>
-        <!--Submit Points-->
+        <!--Create Submission-->
         <scene sceneID="Cbk-dH-mjb">
             <objects>
                 <viewController id="ng8-pP-MMw" customClass="TypeSubmitViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
@@ -87,17 +87,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEg-H9-uae">
-                                <rect key="frame" x="16" y="64" width="343" height="69"/>
+                                <rect key="frame" x="16" y="64" width="343" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="69" id="O39-RF-aNy"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="O39-RF-aNy"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Tell us about what you did!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RPj-cs-EF1">
-                                <rect key="frame" x="16" y="141" width="343" height="190"/>
+                                <rect key="frame" x="16" y="108" width="343" height="190"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="190" id="bJf-Ua-22j"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
@@ -108,7 +111,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="GEg-H9-uae" firstAttribute="top" secondItem="8rf-c3-hh0" secondAttribute="top" id="9Cn-is-gC7"/>
-                            <constraint firstItem="8rf-c3-hh0" firstAttribute="bottom" secondItem="RPj-cs-EF1" secondAttribute="bottom" constant="287" id="Ado-OH-gDY"/>
                             <constraint firstItem="GEg-H9-uae" firstAttribute="leading" secondItem="Jad-vw-Zfi" secondAttribute="leadingMargin" id="F0W-Wq-iju"/>
                             <constraint firstItem="GEg-H9-uae" firstAttribute="leading" secondItem="RPj-cs-EF1" secondAttribute="leading" id="TW4-cE-K7k"/>
                             <constraint firstItem="RPj-cs-EF1" firstAttribute="top" secondItem="GEg-H9-uae" secondAttribute="bottom" constant="8" symbolic="YES" id="vwd-9x-Att"/>
@@ -117,8 +119,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8rf-c3-hh0"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Submit Points" id="HWX-70-zjk">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="ALK-mC-0WS">
+                    <navigationItem key="navigationItem" title="Create Submission" id="HWX-70-zjk">
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="ALK-mC-0WS">
                             <connections>
                                 <action selector="submit:" destination="ng8-pP-MMw" id="6r3-m3-8vg"/>
                             </connections>
