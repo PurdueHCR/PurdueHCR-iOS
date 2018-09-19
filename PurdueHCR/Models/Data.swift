@@ -30,13 +30,11 @@ class House {
     var totalPoints: Int
     var hexColor: String
     var numberOfResidents: Int
-    var pointsPerResident: Double
     init(id:String, points:Int,hexColor:String, numberOfResidents:Int ){
         self.houseID = id
         self.totalPoints = points
         self.hexColor = hexColor
         self.numberOfResidents = numberOfResidents
-        self.pointsPerResident = (Double(self.totalPoints)/Double(numberOfResidents)).rounded(toPlaces: 2)
     }
 }
 extension House:Equatable {

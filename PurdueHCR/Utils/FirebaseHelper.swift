@@ -325,7 +325,7 @@ class FirebaseHelper {
                     }
                     houseArray.append(House(id: id, points: points, hexColor:hex, numberOfResidents:numberOfResidents))
                 }
-                houseArray.sort(by: {$0.pointsPerResident > $1.pointsPerResident})
+                houseArray.sort(by: {$0.totalPoints > $1.totalPoints})
                 onDone(houseArray, houseKeys)
             }
         }
