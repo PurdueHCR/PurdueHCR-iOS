@@ -236,11 +236,11 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				D3355C90214A25BF0037556C /* ViewXIB */,
 				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
 				D39DA55121266BF600FF46E9 /* GoogleService-Info.plist */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
+				D3355C90214A25BF0037556C /* ViewXIB */,
 				D30FBEE520FC046F000DD221 /* Storyboards */,
 				D30FBEE320FC0457000DD221 /* Resources */,
 				D30FBEE120FC0420000DD221 /* Models */,
