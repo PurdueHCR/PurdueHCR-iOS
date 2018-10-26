@@ -32,22 +32,22 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         
         self.reportButton.layer.borderColor = UIColor.black.cgColor
         self.reportButton.layer.borderWidth = 3
-        self.reportButton.layer.shadowColor = UIColor.black.cgColor
-        self.reportButton.layer.shadowOpacity = 1
+        self.reportButton.layer.shadowColor = UIColor.darkGray.cgColor
+        self.reportButton.layer.shadowOpacity = 0.5
         self.reportButton.layer.shadowOffset = CGSize.zero
         self.reportButton.layer.shadowRadius = 5
         
         self.profileView.layer.borderColor = UIColor.black.cgColor
         self.profileView.layer.borderWidth = 3
-        self.profileView.layer.shadowColor = UIColor.black.cgColor
-        self.profileView.layer.shadowOpacity = 1
+        self.profileView.layer.shadowColor = UIColor.darkGray.cgColor
+        self.profileView.layer.shadowOpacity = 0.5
         self.profileView.layer.shadowOffset = CGSize.zero
         self.profileView.layer.shadowRadius = 5
         
         self.housePointsView.layer.borderColor = UIColor.black.cgColor
         self.housePointsView.layer.borderWidth = 3
-        self.housePointsView.layer.shadowColor = UIColor.black.cgColor
-        self.housePointsView.layer.shadowOpacity = 1
+        self.housePointsView.layer.shadowColor = UIColor.darkGray.cgColor
+        self.housePointsView.layer.shadowOpacity = 0.5
         self.housePointsView.layer.shadowOffset = CGSize.zero
         self.housePointsView.layer.shadowRadius = 5
         

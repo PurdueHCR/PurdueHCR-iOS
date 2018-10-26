@@ -73,6 +73,7 @@ class HousePointsCompareView: UIView {
         chart.data = data
         chart.drawGridBackgroundEnabled = false
         chart.xAxis.drawLabelsEnabled = false
+		chart.rightAxis.enabled = false
         chart.leftAxis.axisMinimum = 0.0
         chart.rightAxis.axisMinimum = 0.0
         chart.isUserInteractionEnabled = false

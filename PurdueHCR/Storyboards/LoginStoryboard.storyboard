@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="16W-bW-AKg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="16W-bW-AKg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,8 +19,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rR0-AF-a2o">
-                                <rect key="frame" x="16" y="335" width="343" height="50"/>
-                                <color key="backgroundColor" red="0.76078431369999999" green="0.5568627451" blue="0.054901960780000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="16" y="427" width="343" height="50"/>
+                                <color key="backgroundColor" red="0.78280645608901978" green="0.69638699293136597" blue="0.51950424909591675" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hhe-LT-vBi"/>
                                 </constraints>
@@ -39,29 +38,35 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W4d-ka-VCi">
-                                <rect key="frame" x="16" y="219" width="343" height="50"/>
+                                <rect key="frame" x="16" y="311" width="343" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="6ZE-TP-k9l"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="leftSpacer">
                                         <real key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                        <integer key="value" value="160"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextTextField:" destination="16W-bW-AKg" eventType="editingDidEnd" id="ngt-Is-rt1"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vQo-Oe-EGD">
-                                <rect key="frame" x="16" y="277" width="343" height="50"/>
+                                <rect key="frame" x="16" y="369" width="343" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="JSp-lM-Aic"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="leftSpacer">
                                         <real key="value" value="8"/>
@@ -70,16 +75,22 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                        <integer key="value" value="160"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="done:" destination="16W-bW-AKg" eventType="editingDidEnd" id="b5I-Ht-eMs"/>
+                                </connections>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="27G-ic-2Pg">
-                                <rect key="frame" x="92" y="20" width="191" height="191"/>
+                                <rect key="frame" x="92" y="70" width="191" height="191"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="27G-ic-2Pg" secondAttribute="height" multiplier="1:1" id="PNC-Fa-VBN"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSz-Aw-gQg">
-                                <rect key="frame" x="16" y="393" width="343" height="50"/>
+                                <rect key="frame" x="16" y="485" width="343" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="876-vI-9d6"/>
                                 </constraints>
@@ -91,18 +102,27 @@
                                     <segue destination="ilj-Rk-Dkf" kind="show" id="xvY-Eb-rlU"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purdue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEh-GJ-3zl">
+                                <rect key="frame" x="50" y="20" width="275" height="51"/>
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="50"/>
+                                <color key="textColor" red="0.78280645609999999" green="0.69638699289999995" blue="0.51950424910000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="27G-ic-2Pg" firstAttribute="centerX" secondItem="W4d-ka-VCi" secondAttribute="centerX" id="2GO-4L-l6P"/>
-                            <constraint firstItem="W4d-ka-VCi" firstAttribute="top" secondItem="27G-ic-2Pg" secondAttribute="bottom" constant="8" symbolic="YES" id="2g0-qP-ps5"/>
+                            <constraint firstItem="Y4m-Ob-gK0" firstAttribute="trailing" secondItem="wEh-GJ-3zl" secondAttribute="trailing" constant="50" id="2NC-fn-BCR"/>
+                            <constraint firstItem="W4d-ka-VCi" firstAttribute="top" secondItem="27G-ic-2Pg" secondAttribute="bottom" constant="50" id="2g0-qP-ps5"/>
                             <constraint firstItem="27G-ic-2Pg" firstAttribute="leading" secondItem="Y4m-Ob-gK0" secondAttribute="leading" constant="92" id="4z4-Me-yE0"/>
                             <constraint firstItem="vQo-Oe-EGD" firstAttribute="trailing" secondItem="rR0-AF-a2o" secondAttribute="trailing" id="7sN-va-dJu"/>
-                            <constraint firstItem="27G-ic-2Pg" firstAttribute="top" secondItem="Y4m-Ob-gK0" secondAttribute="top" id="Fg1-W1-wcS"/>
+                            <constraint firstItem="wEh-GJ-3zl" firstAttribute="leading" secondItem="Y4m-Ob-gK0" secondAttribute="leading" constant="50" id="CcM-Lq-aP3"/>
+                            <constraint firstItem="27G-ic-2Pg" firstAttribute="top" secondItem="Y4m-Ob-gK0" secondAttribute="top" constant="50" id="Fg1-W1-wcS"/>
                             <constraint firstItem="JSz-Aw-gQg" firstAttribute="top" secondItem="rR0-AF-a2o" secondAttribute="bottom" constant="8" id="K2U-Kc-iyd"/>
                             <constraint firstItem="vQo-Oe-EGD" firstAttribute="leading" secondItem="rR0-AF-a2o" secondAttribute="leading" id="OqS-oC-wiv"/>
                             <constraint firstItem="W4d-ka-VCi" firstAttribute="leading" secondItem="44J-6R-AeO" secondAttribute="leadingMargin" id="erY-4P-dyA"/>
                             <constraint firstItem="vQo-Oe-EGD" firstAttribute="top" secondItem="W4d-ka-VCi" secondAttribute="bottom" constant="8" symbolic="YES" id="gP9-2I-3hp"/>
+                            <constraint firstItem="wEh-GJ-3zl" firstAttribute="top" secondItem="Y4m-Ob-gK0" secondAttribute="top" id="htW-Gx-ihJ"/>
                             <constraint firstItem="JSz-Aw-gQg" firstAttribute="top" secondItem="rR0-AF-a2o" secondAttribute="bottom" constant="8" symbolic="YES" id="lPQ-7l-f7p"/>
                             <constraint firstItem="rR0-AF-a2o" firstAttribute="top" secondItem="vQo-Oe-EGD" secondAttribute="bottom" constant="8" symbolic="YES" id="lvL-nE-pBt"/>
                             <constraint firstItem="W4d-ka-VCi" firstAttribute="leading" secondItem="vQo-Oe-EGD" secondAttribute="leading" id="u2l-Uo-Zaq"/>
@@ -117,6 +137,7 @@
                     <connections>
                         <outlet property="logInButton" destination="rR0-AF-a2o" id="sLw-a2-fuA"/>
                         <outlet property="password" destination="vQo-Oe-EGD" id="9Mp-yp-9DV"/>
+                        <outlet property="purdueLabel" destination="wEh-GJ-3zl" id="iHw-A0-wQL"/>
                         <outlet property="username" destination="W4d-ka-VCi" id="NLf-in-PKT"/>
                     </connections>
                 </viewController>

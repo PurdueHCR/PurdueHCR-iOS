@@ -60,7 +60,7 @@ class ProfileView: UIView {
         else if(houseName == "Titanium"){
             houseLogoImageView.image = #imageLiteral(resourceName: "Titanium")
         }
-        nameLabel.text = User.get(.name) as! String + "\nWelcome"
+        nameLabel.text = "Welcome\n" + (User.get(.name) as! String)
         totalPointsLabel.text = (User.get(.points) as! Int).description + "\npoints"
         
     }

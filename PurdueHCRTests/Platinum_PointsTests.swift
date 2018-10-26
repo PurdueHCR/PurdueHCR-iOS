@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Platinum_Points
+@testable import Pods_Platinum_Points
 
 class Platinum_PointsTests: XCTestCase {
     
