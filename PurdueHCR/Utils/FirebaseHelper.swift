@@ -82,11 +82,18 @@ class FirebaseHelper {
         
         userRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                User.save(document.data()![self.HOUSE] as Any, as: .house)
-                User.save(document.data()![self.FLOOR_ID] as Any, as: .floorID)
+                let permissionLevel = document.data()![self.PERMISSION_LEVEL] as! Int
+                User.save(permissionLevel as Any, as: .permissionLevel)
                 User.save(document.data()![self.NAME] as Any, as: .name)
-                User.save((document.data()![self.PERMISSION_LEVEL] as! Int) as Any, as: .permissionLevel)
-                User.save(document.data()![self.TOTAL_POINTS] as Any, as: .points)
+                if(permissionLevel == 2){ // check if REA/REC
+                    
+                }
+                else{
+                    User.save(document.data()![self.HOUSE] as Any, as: .house)
+                    User.save(document.data()![self.FLOOR_ID] as Any, as: .floorID)
+                    //User.save((document.data()![self.PERMISSION_LEVEL] as! Int) as Any, as: .permissionLevel)
+                    User.save(document.data()![self.TOTAL_POINTS] as Any, as: .points)
+                }
                 onDone(true)
             } else {
                 print("Document does not exist")
@@ -519,9 +526,43 @@ class FirebaseHelper {
             onDone(err)
         }
     }
+    
     func setLinkArchived(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         db.collection("Links").document(link.id).updateData(["Archived":link.archived]){err in
             onDone(err)
+        }
+    }
+    
+    func getAllPointLogsForHouse(house:String, onDone:@escaping (([PointLog]) -> Void)){
+        let docRef = db.collection(self.HOUSE).document(house).collection(self.POINTS)
+        
+        docRef.getDocuments()
+            { (querySnapshot, error) in
+                if error != nil {
+                    print("Error getting documenbts: \(String(describing: error))")
+                    return
+                }
+                var pointLogs = [PointLog]()
+                for document in querySnapshot!.documents {
+                    let floorID = document.data()["FloorID"] as! String
+                    let id = document.documentID
+                    let description = document.data()["Description"] as! String
+                    let idType = (document.data()["PointTypeID"] as! Int) * -1
+                    var resident = document.data()["Resident"] as! String
+                    if(floorID == "Shreve"){
+                        resident = "(Shreve) "+resident
+                    }
+                    let residentRefMaybe = document.data()["ResidentRef"]
+                    var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1")
+                    if(residentRefMaybe != nil ){
+                        residentRef = residentRefMaybe as! DocumentReference
+                    }
+                    let pointType = DataManager.sharedManager.getPointType(value: idType)
+                    let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID, residentRef:residentRef)
+                    pointLog.logID = id
+                    pointLogs.append(pointLog)
+                }
+                onDone(pointLogs)
         }
     }
     

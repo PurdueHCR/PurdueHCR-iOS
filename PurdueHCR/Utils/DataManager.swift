@@ -310,8 +310,13 @@ class DataManager {
     func setLinkActivation(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         fbh.setLinkActivation(link: link, withCompletion: onDone)
     }
+    
     func setLinkArchived(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         fbh.setLinkArchived(link: link, withCompletion: onDone)
+    }
+    
+    func getAllPointLogsForHouse(house:String, onDone:@escaping (([PointLog]) -> Void)){
+        fbh.getAllPointLogsForHouse(house: house, onDone: onDone)
     }
 
     //Used for handling link to make sure all necessairy information is there
