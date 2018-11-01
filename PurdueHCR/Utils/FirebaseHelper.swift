@@ -44,7 +44,6 @@ class FirebaseHelper {
         }
     }
     
-
     func retrievePointTypes(onDone:@escaping ([PointType])->Void) {
         self.db.collection("PointTypes").getDocuments() { (querySnapshot, err) in
             var pointArray = [PointType]()
@@ -54,14 +53,11 @@ class FirebaseHelper {
                 for pointDocument in querySnapshot!.documents
                 {
                     let id = Int(pointDocument.documentID)!
-                    //Points with IDs greater than 1000 are just for REA/REC
-                    if(id > 1000){
-                        return;
-                    }
                     let description = pointDocument.data()["Description"] as! String
                     let residentSubmit = pointDocument.data()["ResidentsCanSubmit"] as! Bool
                     let value = pointDocument.data()["Value"] as! Int
-                    pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id))
+                    let permissionLevel = pointDocument.data()["PermissionLevel"] as! Int
+                    pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id, permissionLevel: permissionLevel))
                 }
                 pointArray.sort(by: {
                     if($0.pointValue == $1.pointValue){
@@ -563,6 +559,45 @@ class FirebaseHelper {
                     pointLogs.append(pointLog)
                 }
                 onDone(pointLogs)
+        }
+    }
+    
+    func addPointType(pointType:PointType, onDone:@escaping (_ err:Error?)-> Void){
+        let highestId = DataManager.sharedManager.getPoints()!.count + 1 // This has the potential for a race condition but oh well
+        //Adding a point with a specific Document ID
+        let ref = self.db.collection("PointTypes").document(highestId.description)
+        ref.getDocument { (document, error) in
+            if let document = document, document.exists {
+                onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
+            } else {
+                ref.setData([
+                    "Description" : pointType.pointDescription,
+                    "PermissionLevel" : pointType.permissionLevel,
+                    "ResidentsCanSubmit"    : pointType.residentCanSubmit,
+                    "Value"  : pointType.pointValue
+                ]){ err in
+                    onDone(err)
+                }
+            }
+        }
+    }
+    
+    func updatePointType(pointType:PointType, onDone:@escaping (_ err:Error?)-> Void){
+        //Adding a point with a specific Document ID
+        let ref = self.db.collection("PointTypes").document(pointType.pointID.description)
+        ref.getDocument { (document, error) in
+            if let document = document, document.exists {
+                ref.setData([
+                    "Description" : pointType.pointDescription,
+                    "PermissionLevel" : pointType.permissionLevel,
+                    "ResidentsCanSubmit"    : pointType.residentCanSubmit,
+                    "Value"  : pointType.pointValue
+                ]){ err in
+                    onDone(err)
+                }
+            } else {
+                onDone(NSError(domain: "Document does not exist", code: 1, userInfo: nil))
+            }
         }
     }
     

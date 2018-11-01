@@ -38,13 +38,14 @@ class DataManager {
         return self._pointTypes
     }
     
+    
     func getPointType(value:Int)->PointType{
         for pt in self._pointTypes!{
             if(pt.pointID == value){
                 return pt
             }
         }
-        return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1) // The famous this should never happen comment
+        return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1, permissionLevel: 3) // The famous this should never happen comment
     }
     
     private func sortIntoPointGroupsWithPermission(arr:[PointType]) -> [PointGroup]{
@@ -188,30 +189,43 @@ class DataManager {
             return;
         }
         if let id = User.get(.id) as! String?{
-            getUserWhenLogginIn(id: id, onDone: {(done:Bool) in return})
+            getUserWhenLogginIn(id: id, onDone: {(done:Bool) in
+                self.refreshPointGroups(onDone: {(onDone:[PointGroup]) in
+                    counter.increment()
+                    if((User.get(.permissionLevel) as! Int) == 1){
+                        //Check if user is an RHP
+                        self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in
+                            counter.increment()
+                            if(counter.value == 4){
+                                finished();
+                            }
+                        })
+                    }
+                    else{
+                        counter.increment()
+                        if(counter.value == 4){
+                            finished();
+                        }
+                    }
+                    
+                })
+                self.refreshHouses(onDone:{(onDone:[House]) in
+                    counter.increment()
+                    if(counter.value == 4){
+                        finished();
+                    }
+                })
+                self.refreshRewards(onDone: {(rewards:[Reward]) in
+                    counter.increment()
+                    if(counter.value == 4){
+                        finished();
+                    }
+                })
+                
+            })
         }
         
-        refreshPointGroups(onDone: {(onDone:[PointGroup]) in
-            counter.increment()
-            self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in
-                counter.increment()
-                if(counter.value == 4){
-                    finished();
-                }
-            } )
-        })
-        refreshHouses(onDone:{(onDone:[House]) in
-            counter.increment()
-            if(counter.value == 4){
-                finished();
-            }
-        })
-        refreshRewards(onDone: {(rewards:[Reward]) in
-            counter.increment()
-            if(counter.value == 4){
-                finished();
-            }
-        })
+        
     }
     
     func getDocumentsDirectory() -> URL {
@@ -318,10 +332,18 @@ class DataManager {
     func getAllPointLogsForHouse(house:String, onDone:@escaping (([PointLog]) -> Void)){
         fbh.getAllPointLogsForHouse(house: house, onDone: onDone)
     }
+    
+    func createPointType(pointType:PointType, onDone:@escaping ((_ err:Error?) ->Void)){
+        fbh.addPointType(pointType: pointType, onDone: onDone)
+    }
+    
+    func updatePointType(pointType:PointType, onDone:@escaping ((_ err:Error?) ->Void)){
+        fbh.updatePointType(pointType: pointType, onDone: onDone)
+    }
 
     //Used for handling link to make sure all necessairy information is there
     func isInitialized() -> Bool {
-        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.name) != nil && User.get(.floorID) != nil
+        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.name) != nil && User.get(.permissionLevel) != nil
         
     }
 }

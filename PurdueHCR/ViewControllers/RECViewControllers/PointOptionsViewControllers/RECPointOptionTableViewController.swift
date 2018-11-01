@@ -19,6 +19,10 @@ class RECPointOptionTableViewController: PointOptionViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.resfreshData()
+    }
 
 
 
@@ -67,20 +71,27 @@ class RECPointOptionTableViewController: PointOptionViewController {
     }
     */
 
-    // method to run when table view cell is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Segue to the second view controller
-        print("Selection")
+        self.performSegue(withIdentifier: "SelectPointType", sender: self)
     }
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // This function is called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        print("Segue")
+        if(segue.identifier == "SelectPointType"){
+            // get a reference to the second view controller
+            let nextViewController = segue.destination as! RECPointCreationTableViewController
+            
+            let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+            //        if(isFiltering()){
+            //            nextViewController.type = filteredPoints[(indexPath?.row)!]
+            //        }
+            //        else{
+            //            nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
+            //        }
+            nextViewController.type = pointSystem[indexPath!.section].points[indexPath!.row]
+        }
     }
     
 

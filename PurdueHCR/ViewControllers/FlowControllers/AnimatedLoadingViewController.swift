@@ -25,9 +25,7 @@ class AnimatedLoadingViewController: UIViewController {
         if(NewLaunch.newLaunch.isFirstLaunch){
             createNewLaunchAlert()
         }
-        else{
             finishLoadinng()
-        }
         
     }
     

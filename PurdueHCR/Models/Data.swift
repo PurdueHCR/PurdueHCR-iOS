@@ -15,12 +15,14 @@ class PointType {
     var pointDescription:String
     var residentCanSubmit:Bool
     var pointID:Int
+    var permissionLevel:Int // If permission level is negative, it will be negative
     
-    init(pv:Int,pd:String,rcs:Bool,pid:Int){
+    init(pv:Int,pd:String,rcs:Bool,pid:Int, permissionLevel:Int){
         self.pointValue = pv
         self.pointDescription = pd
         self.residentCanSubmit = rcs
         self.pointID = pid
+        self.permissionLevel = permissionLevel
     }
 
 }
