@@ -28,9 +28,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         self.view.addSubview(activityIndicator)
-        
-		purdueLabel.shadowColor = UIColor.black
-		purdueLabel.shadowOffset = CGSize.init(width: 1, height: 1)
 		
         self.username.delegate = self
         self.password.delegate = self
