@@ -226,6 +226,38 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Status" id="pKt-yB-jD9">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PermissionCell" rowHeight="53" id="Rpl-iD-len">
+                                        <rect key="frame" x="0.0" y="443" width="375" height="53"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rpl-iD-len" id="FBk-A2-6PZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enabled" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRW-BJ-2mv">
+                                                    <rect key="frame" x="16" y="11" width="288" height="31"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWp-jK-QxU">
+                                                    <rect key="frame" x="312" y="11" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hRW-BJ-2mv" firstAttribute="bottom" secondItem="GWp-jK-QxU" secondAttribute="bottom" id="20k-3y-TkZ"/>
+                                                <constraint firstItem="hRW-BJ-2mv" firstAttribute="top" secondItem="GWp-jK-QxU" secondAttribute="top" id="3v3-Cx-WKF"/>
+                                                <constraint firstItem="GWp-jK-QxU" firstAttribute="leading" secondItem="hRW-BJ-2mv" secondAttribute="trailing" constant="8" symbolic="YES" id="c5z-Oj-UWK"/>
+                                                <constraint firstItem="hRW-BJ-2mv" firstAttribute="top" secondItem="FBk-A2-6PZ" secondAttribute="topMargin" id="eai-ia-8bH"/>
+                                                <constraint firstItem="hRW-BJ-2mv" firstAttribute="bottom" secondItem="FBk-A2-6PZ" secondAttribute="bottomMargin" id="gTH-in-tPa"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="GWp-jK-QxU" secondAttribute="trailing" constant="-2" id="oZA-rF-iy9"/>
+                                                <constraint firstItem="hRW-BJ-2mv" firstAttribute="leading" secondItem="FBk-A2-6PZ" secondAttribute="leadingMargin" id="zlF-Vd-fbM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="KST-5O-9Pk" id="8pW-es-PrJ"/>
@@ -234,6 +266,7 @@
                     </tableView>
                     <connections>
                         <outlet property="descriptionsTextView" destination="Gcn-Uz-VAE" id="zKn-nn-Mcu"/>
+                        <outlet property="enabledSwitch" destination="GWp-jK-QxU" id="ifO-EA-d04"/>
                         <outlet property="permissionLabel" destination="vw9-aT-lQA" id="QQz-YR-g3x"/>
                         <outlet property="permissionSlider" destination="F9L-Wk-FSF" id="iU4-xv-3kL"/>
                         <outlet property="pointsField" destination="tyh-4M-dUO" id="FY6-dy-1Xc"/>

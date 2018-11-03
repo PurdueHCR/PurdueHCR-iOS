@@ -20,7 +20,6 @@ class DataManager {
     public static let sharedManager = DataManager()
     private var firstRun = true;
     private let fbh = FirebaseHelper();
-    private var _pointGroups: [PointGroup]? = nil;
     private var _pointTypes: [PointType]? = nil
     private var _unconfirmedPointLogs: [PointLog]? = nil
     private var _houses: [House]? = nil
@@ -30,9 +29,7 @@ class DataManager {
     
     private init(){}
     
-    func getPointGroups() -> [PointGroup]?{
-        return self._pointGroups
-    }
+
     
     func getPoints() ->[PointType]? {
         return self._pointTypes
@@ -48,31 +45,7 @@ class DataManager {
         return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1, permissionLevel: 3) // The famous this should never happen comment
     }
     
-    private func sortIntoPointGroupsWithPermission(arr:[PointType]) -> [PointGroup]{
-        var pointGroups = [PointGroup]()
-        if(!arr.isEmpty){
-            var currentValue = 0
-            var pg = PointGroup(val: 0)
-            for i in 0..<arr.count {
-                let pointType = arr[i]
-                if(pointType.residentCanSubmit){
-                    let value = pointType.pointValue
-                    if(value != currentValue){
-                        if(pg.pointValue != 0){
-                            pointGroups.append(pg)
-                        }
-                        currentValue = value
-                        pg = PointGroup(val:value)
-                    }
-                    pg.add(pt: pointType)
-                }
-            }
-            if(pg.pointValue != 0){
-                pointGroups.append(pg)
-            }
-        }
-        return pointGroups
-    }
+
     
     func createUser(onDone:@escaping (_ err:Error?)->Void ){
         fbh.createUser(onDone: onDone)
@@ -82,11 +55,10 @@ class DataManager {
         fbh.getUserWhenLogIn(id: id, onDone: onDone)
     }
     
-    func refreshPointGroups(onDone:@escaping ([PointGroup])-> Void) {
+    func refreshPointTypes(onDone:@escaping ([PointType])-> Void) {
         fbh.retrievePointTypes(onDone: {(pointTypes:[PointType]) in
             self._pointTypes = pointTypes
-            self._pointGroups = self.sortIntoPointGroupsWithPermission(arr: pointTypes)
-            onDone(self._pointGroups!)
+            onDone(self._pointTypes!)
         })
     }
     
@@ -190,7 +162,7 @@ class DataManager {
         }
         if let id = User.get(.id) as! String?{
             getUserWhenLogginIn(id: id, onDone: {(done:Bool) in
-                self.refreshPointGroups(onDone: {(onDone:[PointGroup]) in
+                self.refreshPointTypes(onDone: {(onDone:[PointType]) in
                     counter.increment()
                     if((User.get(.permissionLevel) as! Int) == 1){
                         //Check if user is an RHP

@@ -28,7 +28,6 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
         tableView.refreshControl = refresher
         // Do any additional setup after loading the view, typically from a nib.
-        pointSystem = DataManager.sharedManager.getPointGroups() ?? [PointGroup]()
         if(pointSystem.count == 0){
             resfreshData()
         }
@@ -44,6 +43,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         if let index = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: index, animated: true)
         }
+        resfreshData()
 
     }
 
@@ -122,8 +122,8 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     @objc func resfreshData(){
-        DataManager.sharedManager.refreshPointGroups(onDone: {(pg:[PointGroup]) in
-            self.pointSystem = pg
+        DataManager.sharedManager.refreshPointTypes(onDone: {(types:[PointType]) in
+            self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: types)
             DispatchQueue.main.async { [weak self] in
                 if(self != nil){
                     self?.tableView.reloadData()
@@ -132,6 +132,15 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             self.tableView.refreshControl?.endRefreshing()
         })
     }
+    
+//    func filter(pg:[PointGroup]) -> [PointGroup]{
+//        var pointGroups = [PointGroup]()
+//        for group in pg{
+//            var pointGroup = PointGroup(val: group.pointValue)
+//
+//        }
+//    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
@@ -148,6 +157,36 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    private func sortIntoPointGroupsWithPermission(arr:[PointType]) -> [PointGroup]{
+        var pointGroups = [PointGroup]()
+        if(!arr.isEmpty){
+            var currentValue = 0
+            var pg = PointGroup(val: 0)
+            for i in 0..<arr.count {
+                let pointType = arr[i]
+                if(checkPermission(pointType: pointType)){
+                    let value = pointType.pointValue
+                    if(value != currentValue){
+                        if(pg.pointValue != 0){
+                            pointGroups.append(pg)
+                        }
+                        currentValue = value
+                        pg = PointGroup(val:value)
+                    }
+                    pg.add(pt: pointType)
+                }
+            }
+            if(pg.pointValue != 0){
+                pointGroups.append(pg)
+            }
+        }
+        return pointGroups
+    }
+    
+    func checkPermission(pointType:PointType)->Bool {
+        return pointType.residentCanSubmit
     }
 }
 

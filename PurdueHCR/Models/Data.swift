@@ -15,7 +15,7 @@ class PointType {
     var pointDescription:String
     var residentCanSubmit:Bool
     var pointID:Int
-    var permissionLevel:Int // If permission level is negative, it will be negative
+    var permissionLevel:Int
     
     init(pv:Int,pd:String,rcs:Bool,pid:Int, permissionLevel:Int){
         self.pointValue = pv
@@ -23,6 +23,10 @@ class PointType {
         self.residentCanSubmit = rcs
         self.pointID = pid
         self.permissionLevel = permissionLevel
+    }
+    
+    func isEnabled() -> Bool {
+        return self.permissionLevel > 0
     }
 
 }

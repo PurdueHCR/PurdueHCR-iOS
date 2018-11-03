@@ -16,13 +16,15 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     @IBOutlet var generateButton: UIButton!
     
     var appendMethod:((_ link:Link)->Void)?
-    let pointTypes = DataManager.sharedManager.getPoints()!
+    var pointTypes = [PointType]()
     var selectedPoint = DataManager.sharedManager.getPoints()![0]
     var link:Link?
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        pointTypes = filter(points: DataManager.sharedManager.getPoints()!)
+        pickerView.reloadAllComponents()
         descriptionTextView.layer.borderColor = UIColor.black.cgColor
         descriptionTextView.layer.borderWidth = 1
         descriptionTextView.delegate = self
@@ -109,5 +111,20 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         
     }
     
+    func filter(points:[PointType]) -> [PointType] {
+        var types = [PointType]()
+        let permissionLevel = User.get(.permissionLevel) as! Int
+        for point in points {
+            if( permissionLevel == 2 || (point.isEnabled() && checkPermission(typePermission: point.permissionLevel, userPermission: permissionLevel))){
+                //REA/REC so they get them all
+                types.append(point)
+            }
+        }
+        return types
+    }
+    
+    private func checkPermission(typePermission:Int, userPermission:Int) ->Bool {
+        return ((userPermission == 1 && typePermission != 1) || (userPermission == 3 && typePermission == 3))
+    }
 
 }
