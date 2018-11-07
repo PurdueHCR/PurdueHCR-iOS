@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Cely
 
 class SettingsPage: UIViewController {
 
@@ -39,6 +41,11 @@ class SettingsPage: UIViewController {
 		let noAction = UIAlertAction.init(title: "No", style: .default) { (action) in
 		}
 		let yesAction = UIAlertAction.init(title: "Yes", style: .default) { (action) in
+			
+			try? Auth.auth().signOut()
+			Cely.logout()
+			
+			
 		}
 		
 		alert.addAction(yesAction)
