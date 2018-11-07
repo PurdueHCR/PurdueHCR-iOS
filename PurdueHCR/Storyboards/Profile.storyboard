@@ -131,8 +131,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="54" translatesAutoresizingMaskIntoConstraints="NO" id="wp8-5c-gie">
-                                <rect key="frame" x="20" y="115" width="335" height="310"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="54" translatesAutoresizingMaskIntoConstraints="NO" id="wp8-5c-gie">
+                                <rect key="frame" x="20" y="84" width="335" height="310"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6C-I4-8Fq">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="128"/>
@@ -150,9 +150,21 @@
                                             <constraint firstAttribute="trailing" secondItem="ZkP-0h-tUu" secondAttribute="trailing" constant="20" id="rER-dW-R4c"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ciy-pb-8Ae">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ciy-pb-8Ae">
                                         <rect key="frame" x="0.0" y="182" width="335" height="128"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J96-K7-NfD">
+                                                <rect key="frame" x="20" y="20" width="295" height="88"/>
+                                                <state key="normal" title="Forgot Password"/>
+                                            </button>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="J96-K7-NfD" firstAttribute="top" secondItem="ciy-pb-8Ae" secondAttribute="top" constant="20" id="3vJ-5f-Y9k"/>
+                                            <constraint firstItem="J96-K7-NfD" firstAttribute="leading" secondItem="ciy-pb-8Ae" secondAttribute="leading" constant="20" id="cAI-tw-UgL"/>
+                                            <constraint firstAttribute="trailing" secondItem="J96-K7-NfD" secondAttribute="trailing" constant="20" id="u6v-sB-JpX"/>
+                                            <constraint firstAttribute="bottom" secondItem="J96-K7-NfD" secondAttribute="bottom" constant="20" id="yVL-Q9-Tit"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
