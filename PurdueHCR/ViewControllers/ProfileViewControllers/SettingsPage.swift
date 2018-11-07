@@ -10,13 +10,35 @@ import UIKit
 
 class SettingsPage: UIViewController {
 
-    override func viewDidLoad() {
+	@IBOutlet weak var logOutButton: UIButton!
+	@IBOutlet weak var forgotPasswordButton: UIButton!
+	@IBOutlet weak var logOutView: UIView!
+	@IBOutlet weak var forgotPasswordView: UIView!
+	
+	override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+		logOutView.layer.cornerRadius = 10
+		forgotPasswordView.layer.cornerRadius = 10
+		
     }
     
-
+	@IBAction func logOut(_ sender: Any) {
+	
+		let alert = UIAlertController.init(title: "Log out?", message: "Are you sure you want to log out?", preferredStyle: .alert)
+		
+		let noAction = UIAlertAction.init(title: "No", style: .default) { (action) in
+		}
+		let yesAction = UIAlertAction.init(title: "Yes", style: .default) { (action) in
+		}
+		
+		alert.addAction(yesAction)
+		alert.addAction(noAction)
+		
+		self.present(alert, animated: true)
+		
+	}
+	
     /*
     // MARK: - Navigation
 
