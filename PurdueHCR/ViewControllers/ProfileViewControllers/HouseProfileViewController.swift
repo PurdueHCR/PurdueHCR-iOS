@@ -28,7 +28,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         scrollView.refreshControl = refresher
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
         
         self.reportButton.layer.borderColor = UIColor.black.cgColor
         self.reportButton.layer.borderWidth = 3
@@ -58,11 +58,11 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         self.housePointsCompareView.layer.shadowOffset = CGSize.zero
         self.housePointsCompareView.layer.shadowRadius = 5
     }
-    @objc func logOut(_ sender: Any) {
-        try? Auth.auth().signOut()
-        Cely.logout()
-    }
-    
+//    @objc func logOut(_ sender: Any) {
+//        try? Auth.auth().signOut()
+//        Cely.logout()
+//    }
+	
     
     override func viewDidAppear(_ animated: Bool) {
         refreshData()
