@@ -61,8 +61,11 @@ class ProfileView: UIView {
         else if(houseName == "Titanium"){
             houseLogoImageView.image = #imageLiteral(resourceName: "Titanium")
         }
-        nameLabel.text = "Welcome\n" + (User.get(.name) as! String)
+        nameLabel.text = (User.get(.name) as! String)
         totalPointsLabel.text = (User.get(.points) as! Int).description + " points"
+//		houseLogoImageView.layer.borderWidth = 2
+//		houseLogoImageView.layer.borderColor = UIColor.black.cgColor
+//		houseLogoImageView.layer.cornerRadius = 10
         
     }
     

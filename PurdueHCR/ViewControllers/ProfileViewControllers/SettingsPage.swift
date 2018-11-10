@@ -14,15 +14,22 @@ class SettingsPage: UIViewController {
 
 	@IBOutlet weak var logOutButton: UIButton!
 	@IBOutlet weak var logOutView: UIView!
+	@IBOutlet weak var reportButton: UIButton!
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
 
-		logOutView.layer.cornerRadius = 10
-		logOutView.layer.shadowColor = UIColor.darkGray.cgColor
-		logOutView.layer.shadowOffset = CGSize.zero
-		logOutView.layer.shadowRadius = 5
-		logOutView.layer.shadowOpacity = 0.5
+		self.logOutView.layer.cornerRadius = 10
+		self.logOutView.layer.shadowColor = UIColor.darkGray.cgColor
+		self.logOutView.layer.shadowOffset = CGSize.zero
+		self.logOutView.layer.shadowRadius = 5
+		self.logOutView.layer.shadowOpacity = 0.5
+		
+		self.reportButton.layer.shadowColor = UIColor.darkGray.cgColor
+		self.reportButton.layer.shadowOpacity = 0.5
+		self.reportButton.layer.shadowOffset = CGSize.zero
+		self.reportButton.layer.shadowRadius = 5
+		self.reportButton.layer.cornerRadius = 10
 		
     }
     
@@ -46,7 +53,11 @@ class SettingsPage: UIViewController {
 		self.present(alert, animated: true)
 		
 	}
-
+	
+	@IBAction func report(_ sender: Any) {
+		UIApplication.shared.open(URL(string: "https://sites.google.com/view/hcr-points/home")!, options: [:], completionHandler: nil)
+	}
+	
 	
 	/*
     // MARK: - Navigation

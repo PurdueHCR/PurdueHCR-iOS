@@ -52,6 +52,7 @@ class HousePointsView: UIView {
         self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
         
         circleProgress.progressColors = [AppUtils.hexStringToUIColor(hex: house.hexColor),UIColor.white]
+		circleProgress.glowMode = KDCircularProgressGlowMode.noGlow
         rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from:self.circleProgress)
         let reward = getCurrentReward()
         if(reward != nil){

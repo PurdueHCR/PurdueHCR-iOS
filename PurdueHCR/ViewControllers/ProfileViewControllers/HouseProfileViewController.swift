@@ -13,7 +13,6 @@ import Cely
 class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet var reportButton: UIButton!
     
     @IBOutlet var profileView: ProfileView!
 	@IBOutlet weak var housePointsCompareView: HousePointsCompareView!
@@ -30,10 +29,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         scrollView.refreshControl = refresher
 //        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
 		
-        self.reportButton.layer.shadowColor = UIColor.darkGray.cgColor
-        self.reportButton.layer.shadowOpacity = 0.5
-        self.reportButton.layer.shadowOffset = CGSize.zero
-        self.reportButton.layer.shadowRadius = 5
+        
 		
         self.profileView.layer.shadowColor = UIColor.darkGray.cgColor
         self.profileView.layer.shadowOpacity = 0.5
@@ -78,10 +74,6 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         if(refreshCount == 2){
             self.refresher?.endRefreshing()
         }
-    }
-
-    @IBAction func reportABugLink(_ sender: Any) {
-        UIApplication.shared.open(URL(string: "https://sites.google.com/view/hcr-points/home")!, options: [:], completionHandler: nil)
     }
     
     override func didReceiveMemoryWarning() {
