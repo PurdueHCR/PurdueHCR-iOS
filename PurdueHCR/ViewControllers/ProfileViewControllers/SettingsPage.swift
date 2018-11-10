@@ -42,8 +42,8 @@ class SettingsPage: UIViewController {
 		}
 		let yesAction = UIAlertAction.init(title: "Yes", style: .default) { (action) in
 			
-			try? Auth.auth().signOut()
-			Cely.logout()
+//			try? Auth.auth().signOut()
+//			Cely.logout()
 			
 			
 		}

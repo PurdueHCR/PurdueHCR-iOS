@@ -15,8 +15,8 @@ class ProfileView: UIView {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var totalPointsLabel: UILabel!
     //@IBOutlet var achievementLabel: UILabel!
-    @IBOutlet var pointsButton: UILabel! // change back to button for the Medals update
-    
+//    @IBOutlet var pointsButton: UILabel! // change back to button for the Medals update
+	
     
     var transitionFunc: () ->() = {print("NO IMPLEMENTATION")}
     
@@ -35,11 +35,12 @@ class ProfileView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        pointsButton.text = "Stay tuned for:\n The Medals Update!"
-        pointsButton.layer.borderWidth = 2.0
-        pointsButton.layer.borderColor = UIColor.black.cgColor
-        totalPointsLabel.layer.borderWidth = 2.0
-        totalPointsLabel.layer.borderColor = UIColor.black.cgColor
+//        pointsButton.text = "Stay tuned for:\n The Medals Update!"
+//        pointsButton.layer.borderWidth = 2.0
+//        pointsButton.layer.borderColor = UIColor.black.cgColor
+//        totalPointsLabel.layer.borderWidth = 0
+//        totalPointsLabel.layer.borderColor = UIColor.black.cgColor
+//		houseLogoImageView.frame(forAlignmentRect: CGRect.init(x: -100, y: 0, width: 25, height: 25))
         reloadData()
     }
     
@@ -61,7 +62,7 @@ class ProfileView: UIView {
             houseLogoImageView.image = #imageLiteral(resourceName: "Titanium")
         }
         nameLabel.text = "Welcome\n" + (User.get(.name) as! String)
-        totalPointsLabel.text = (User.get(.points) as! Int).description + "\npoints"
+        totalPointsLabel.text = (User.get(.points) as! Int).description + " points"
         
     }
     
