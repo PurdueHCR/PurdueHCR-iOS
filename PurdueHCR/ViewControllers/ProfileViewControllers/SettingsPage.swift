@@ -19,7 +19,7 @@ class SettingsPage: UIViewController {
         super.viewDidLoad()
 
 		logOutView.layer.cornerRadius = 10
-		logOutView.layer.shadowColor = UIColor.black.cgColor
+		logOutView.layer.shadowColor = UIColor.darkGray.cgColor
 		logOutView.layer.shadowOffset = CGSize.zero
 		logOutView.layer.shadowRadius = 5
 		logOutView.layer.shadowOpacity = 0.5

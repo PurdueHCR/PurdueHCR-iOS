@@ -23,7 +23,7 @@ class AnimatedLoadingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if(NewLaunch.newLaunch.isFirstLaunch){
-            createNewLaunchAlert()
+            //createNewLaunchAlert()
         }
         else{
             finishLoadinng()

@@ -18,12 +18,13 @@ class TabBarController: UITabBarController {
         let p = permission as! Int
         var viewControllers : [UIViewController] = []
         if (p == 0){
-            viewControllers.append(linkPointSubmissionViewController())
-            viewControllers.append(linkProfileViewController())
+			viewControllers.append(linkProfileViewController())
+			viewControllers.append(linkPointSubmissionViewController())
+			
         }
         else if( p == 1){
-            viewControllers.append(linkPointSubmissionViewController())
-            viewControllers.append(linkProfileViewController())
+			viewControllers.append(linkProfileViewController())
+			viewControllers.append(linkPointSubmissionViewController())
             viewControllers.append(linkPointApprovalViewController())
             viewControllers.append(linkQRCodeViewController())
         }
