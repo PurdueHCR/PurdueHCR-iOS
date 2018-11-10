@@ -122,35 +122,41 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="171.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rg6-sa-4Ww">
-                                                    <rect key="frame" x="112" y="11" width="150" height="150"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rg6-sa-4Ww">
+                                                    <rect key="frame" x="112.5" y="11" width="150" height="150"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="rg6-sa-4Ww" secondAttribute="height" multiplier="1:1" id="sjL-em-oO8"/>
+                                                    </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7W-IG-hNK">
-                                                    <rect key="frame" x="112" y="11" width="150" height="150"/>
-                                                    <state key="normal" title="Tap to add image"/>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rg6-sa-4Ww" firstAttribute="centerX" secondItem="XCd-dj-Xfj" secondAttribute="centerX" id="Cdp-im-HAe"/>
+                                                <constraint firstItem="rg6-sa-4Ww" firstAttribute="top" secondItem="XCd-dj-Xfj" secondAttribute="topMargin" id="dtt-Sk-xCt"/>
+                                                <constraint firstItem="rg6-sa-4Ww" firstAttribute="bottom" secondItem="XCd-dj-Xfj" secondAttribute="bottomMargin" id="xLO-2c-9tv"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="64" id="zcq-Bc-63D">
+                                        <rect key="frame" x="0.0" y="200" width="375" height="64"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zcq-Bc-63D" id="euR-UY-CFd">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7W-IG-hNK">
+                                                    <rect key="frame" x="16" y="11" width="343" height="42"/>
+                                                    <state key="normal" title="Tap to modify image"/>
                                                     <connections>
                                                         <action selector="addImage:" destination="Nzt-3P-eBW" eventType="touchUpInside" id="iyt-Xw-eIw"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="top" secondItem="rg6-sa-4Ww" secondAttribute="top" id="9l8-Bh-l7F"/>
-                                                <constraint firstItem="rg6-sa-4Ww" firstAttribute="bottom" secondItem="B7W-IG-hNK" secondAttribute="bottom" id="FUd-WA-mIE"/>
-                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="centerX" secondItem="XCd-dj-Xfj" secondAttribute="centerX" id="HbS-YW-j6I"/>
-                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="leading" secondItem="rg6-sa-4Ww" secondAttribute="leading" id="Po1-22-OoM"/>
-                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="trailing" secondItem="rg6-sa-4Ww" secondAttribute="trailing" id="QqW-Ev-L6e"/>
-                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="bottom" secondItem="XCd-dj-Xfj" secondAttribute="bottomMargin" id="gXb-r7-yCg"/>
-                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="leading" secondItem="XCd-dj-Xfj" secondAttribute="leadingMargin" constant="96" id="kP0-9b-Iyc"/>
-                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="top" secondItem="XCd-dj-Xfj" secondAttribute="topMargin" id="rf3-Xs-emi"/>
+                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="top" secondItem="euR-UY-CFd" secondAttribute="topMargin" id="0Zs-qg-OGe"/>
+                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="leading" secondItem="euR-UY-CFd" secondAttribute="leadingMargin" id="h6x-JY-uw6"/>
+                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="bottom" secondItem="euR-UY-CFd" secondAttribute="bottomMargin" id="q0j-ar-9aT"/>
+                                                <constraint firstItem="B7W-IG-hNK" firstAttribute="trailing" secondItem="euR-UY-CFd" secondAttribute="trailingMargin" id="uCg-CS-iLR"/>
                                             </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="172" id="zcq-Bc-63D">
-                                        <rect key="frame" x="0.0" y="200" width="375" height="172"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zcq-Bc-63D" id="euR-UY-CFd">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="171.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -158,7 +164,7 @@
                             <tableViewSection headerTitle="Name" id="uBb-b6-icL">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ValueCell" rowHeight="53" id="3qF-Ou-8Fq">
-                                        <rect key="frame" x="0.0" y="400" width="375" height="53"/>
+                                        <rect key="frame" x="0.0" y="292" width="375" height="53"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3qF-Ou-8Fq" id="ISM-bC-VAh">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="52.5"/>
@@ -184,7 +190,7 @@
                             <tableViewSection headerTitle="Point Value" id="VzG-Hf-9AP">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ValueCell" rowHeight="52" id="K19-8f-gI7">
-                                        <rect key="frame" x="0.0" y="481" width="375" height="52"/>
+                                        <rect key="frame" x="0.0" y="373" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K19-8f-gI7" id="Kil-kd-hnZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>

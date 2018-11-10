@@ -346,6 +346,33 @@ class DataManager {
             }
         }
     }
+    
+    func createReward(reward:Reward, image:UIImage, onDone:@escaping(_ err:Error?) ->Void){
+        fbh.uploadImageWithFilename(filename: reward.fileName, img: image) { (err) in
+            if(err == nil){
+                self.fbh.createReward(reward: reward, onDone: { (error) in
+                    onDone(error)
+                })
+            }
+            else{
+                onDone(err)
+            }
+        }
+    }
+    
+    func deleteReward(reward:Reward, onDone:@escaping (_ err:Error?) -> Void ){
+        fbh.deletePictureWithFilename(filename: reward.fileName) { (error) in
+            if(error == nil){
+                self.fbh.deleteReward(reward: reward, onDone: { (err) in
+                    onDone(err)
+                })
+            }
+            else{
+                onDone(error)
+            }
+        }
+    }
+    
 
     //Used for handling link to make sure all necessairy information is there
     func isInitialized() -> Bool {

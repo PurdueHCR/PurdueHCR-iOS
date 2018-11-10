@@ -65,19 +65,19 @@ class TabBarController: UITabBarController {
     
     func linkRECHouseViewController() -> UIViewController {
         let recHouseViewController = UIStoryboard(name: "RECHouse", bundle: nil).instantiateViewController(withIdentifier: "HouseOverview") as! UINavigationController
-        recHouseViewController.tabBarItem = UITabBarItem(title: "Houses", image: #imageLiteral(resourceName: "check"), selectedImage: #imageLiteral(resourceName: "check"))
+        recHouseViewController.tabBarItem = UITabBarItem(title: "Houses", image: #imageLiteral(resourceName: "Competition"), selectedImage: #imageLiteral(resourceName: "Competition"))
         return recHouseViewController
     }
     
     func linkRECPointOptionsViewController() -> UIViewController {
         let pointOptionsViewController = UIStoryboard(name: "RECPointOptions", bundle: nil).instantiateViewController(withIdentifier: "PointOptions") as! UINavigationController
-        pointOptionsViewController.tabBarItem = UITabBarItem(title: "Points", image: nil, selectedImage: nil)
+        pointOptionsViewController.tabBarItem = UITabBarItem(title: "Points", image: #imageLiteral(resourceName: "list"), selectedImage: #imageLiteral(resourceName: "list"))
         return pointOptionsViewController
     }
     
     func linkRECRewardsViewController() -> UIViewController {
         let rewardsViewController = UIStoryboard(name: "RECRewards", bundle: nil).instantiateViewController(withIdentifier: "Rewards") as! UINavigationController
-        rewardsViewController.tabBarItem = UITabBarItem(title: "Rewards", image: nil, selectedImage: nil)
+        rewardsViewController.tabBarItem = UITabBarItem(title: "Rewards", image: #imageLiteral(resourceName: "RewardIcon"), selectedImage: #imageLiteral(resourceName: "RewardIcon"))
         return rewardsViewController
     }
     

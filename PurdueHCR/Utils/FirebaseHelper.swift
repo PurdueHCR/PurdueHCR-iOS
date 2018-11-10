@@ -355,8 +355,8 @@ class FirebaseHelper {
     
     func retrievePictureFromFilename(filename:String,onDone:@escaping ( _ image:UIImage) ->Void ){
         let pathReference = storage.reference(withPath: filename)
-        // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        // Download in memory with a maximum allowed size of 100MB (100 * 1024 * 1024 bytes)
+        pathReference.getData(maxSize: 20 * 1024 * 1024) { data, error in
             if let error = error {
                 // Uh-oh, an error occurred!
                 print(error.localizedDescription)
@@ -635,5 +635,52 @@ class FirebaseHelper {
         }
     }
     
+    func deleteReward(reward:Reward, onDone:@escaping (_ err:Error?) -> Void){
+        var ref: DocumentReference? = nil
+        ref = self.db.collection("Rewards").document(reward.rewardName)
+        ref!.delete { (error) in
+            onDone(error)
+        }
+    }
+    
+    func deletePictureWithFilename(filename:String,onDone:@escaping ( _ err:Error?) ->Void ){
+        let pathReference = storage.reference(withPath: filename)
+        pathReference.delete { (error) in
+            onDone(error)
+        }
+    }
+    
+    func uploadImageWithFilename(filename:String,img:UIImage, onDone:@escaping (_ err:Error?)->Void){
+        let ref = self.storage.reference().child(filename)
+        let data = UIImagePNGRepresentation(img)!
+        print("DATA SIZE: ",data.count)
+        if(data.count > 20 * 1024 * 1024){
+            onDone(NSError(domain: "Image is too large", code: 1, userInfo: nil))
+        }
+        else{
+            ref.putData(data, metadata: nil) { (storage, error) in
+                onDone(error)
+            }
+        }
+        
+    }
+    
+    func createReward(reward:Reward, onDone:@escaping (_ err:Error?)->Void){
+        var ref: DocumentReference? = nil
+        ref = self.db.collection("Rewards").document(reward.rewardName)
+        ref!.getDocument { (document, error) in
+            if let document = document, document.exists {
+                onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
+            } else {
+                ref!.setData([
+                    "FileName" : reward.fileName,
+                    "RequiredValue" : reward.requiredValue
+                ]){ err in
+                    onDone(err)
+                }
+            }
+        }
+    }
+
 }
 
