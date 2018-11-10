@@ -543,13 +543,13 @@ class FirebaseHelper {
                     let floorID = document.data()["FloorID"] as! String
                     let id = document.documentID
                     let description = document.data()["Description"] as! String
-                    let idType = (document.data()["PointTypeID"] as! Int) * -1
+                    let idType = (document.data()["PointTypeID"] as! Int)
                     var resident = document.data()["Resident"] as! String
                     if(floorID == "Shreve"){
                         resident = "(Shreve) "+resident
                     }
                     let residentRefMaybe = document.data()["ResidentRef"]
-                    var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1")
+                    var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1") // Hard code a ref for when a code doesnt have one. (IE points were Given by REC to no specific user)
                     if(residentRefMaybe != nil ){
                         residentRef = residentRefMaybe as! DocumentReference
                     }

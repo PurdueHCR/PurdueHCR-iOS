@@ -21,6 +21,8 @@ class HouseTableViewController: UITableViewController {
     var logCount = [LogCount]()
     var refresher: UIRefreshControl?
     
+    var activityIndicator = UIActivityIndicatorView()
+    
     //I am really sorry to whoever works on this after me.
     //I was in a rush and could not think of a way to do this dynamically
     var floorIds = [String]()
@@ -37,6 +39,13 @@ class HouseTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = houseName!
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = .gray
+        view.addSubview(activityIndicator)
+        
+        
         refresher = UIRefreshControl()
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(refresh), for: .valueChanged)
@@ -88,9 +97,11 @@ class HouseTableViewController: UITableViewController {
 
     
     func resfreshData(){
+        activityIndicator.startAnimating()
         DataManager.sharedManager.getAllPointLogsForHouse(house: self.houseName!) { (logs) in
             guard let pointTypes = DataManager.sharedManager.getPoints() else{
                 self.notify(title: "Failure", subtitle: "Could not load points.", style: .danger)
+                self.activityIndicator.stopAnimating()
                 return
             }
             var countOfLogs = [LogCount]()
@@ -112,6 +123,7 @@ class HouseTableViewController: UITableViewController {
                     self?.tableView.reloadData()
                 }
             }
+            self.activityIndicator.stopAnimating()
             self.tableView.refreshControl?.endRefreshing()
         }
     }
