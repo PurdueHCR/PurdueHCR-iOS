@@ -103,6 +103,11 @@ class FirebaseHelper {
     func addPointLog(log:PointLog, documentID:String = "",preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         let house = User.get(.house) as! String
         var ref: DocumentReference? = nil
+        if(!log.type.isEnabled()){
+            onDone(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
+            return
+        }
+        
         var multiplier = -1
         if(preApproved){
             multiplier = 1

@@ -262,7 +262,8 @@ class DataManager {
                     if(link.singleUse){
                         documentID = id
                     }
-                    self.fbh.addPointLog(log: log, documentID: documentID, preApproved: true, onDone: {(err:Error?) in
+                    //NOTE: preApproved is now changed to SingleUseCodes only
+                    self.fbh.addPointLog(log: log, documentID: documentID, preApproved: link.singleUse, onDone: {(err:Error?) in
                         if(err == nil){
                             DispatchQueue.main.async {
                                 let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
