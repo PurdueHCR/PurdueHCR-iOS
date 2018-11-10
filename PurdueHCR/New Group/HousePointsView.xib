@@ -33,7 +33,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v5u-AQ-oix" customClass="KDCircularProgress" customModule="KDCircularProgress">
-                    <rect key="frame" x="60" y="70" width="255" height="262"/>
+                    <rect key="frame" x="65" y="65" width="245" height="267"/>
                     <color key="backgroundColor" red="0.85647564050000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="startAngle">
@@ -53,13 +53,13 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="v5u-AQ-oix" secondAttribute="trailing" constant="60" id="Ehe-Qw-abG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="v5u-AQ-oix" secondAttribute="trailing" constant="65" id="Ehe-Qw-abG"/>
                 <constraint firstAttribute="bottom" secondItem="4JU-e9-e5w" secondAttribute="bottom" constant="10" id="Ndx-jj-dbU"/>
-                <constraint firstItem="v5u-AQ-oix" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="Uy5-4Q-L7r"/>
+                <constraint firstItem="v5u-AQ-oix" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="65" id="Uy5-4Q-L7r"/>
                 <constraint firstItem="RFA-op-kf3" firstAttribute="leading" secondItem="4JU-e9-e5w" secondAttribute="leading" id="i2M-Lj-1VD"/>
                 <constraint firstItem="v5u-AQ-oix" firstAttribute="centerX" secondItem="4JU-e9-e5w" secondAttribute="centerX" id="iRe-6l-nyf"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="RFA-op-kf3" secondAttribute="trailing" constant="20" id="iZd-Ya-haF"/>
-                <constraint firstItem="v5u-AQ-oix" firstAttribute="top" secondItem="RFA-op-kf3" secondAttribute="bottom" constant="10" id="jaU-zt-cJ6"/>
+                <constraint firstItem="v5u-AQ-oix" firstAttribute="top" secondItem="RFA-op-kf3" secondAttribute="bottom" constant="5" id="jaU-zt-cJ6"/>
                 <constraint firstItem="4JU-e9-e5w" firstAttribute="top" secondItem="v5u-AQ-oix" secondAttribute="bottom" constant="10" id="mEK-JO-WaC"/>
                 <constraint firstItem="RFA-op-kf3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="w5g-dx-c8E"/>
                 <constraint firstItem="RFA-op-kf3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="yhD-5r-8FG"/>
