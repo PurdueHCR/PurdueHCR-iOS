@@ -1,4 +1,5 @@
 PODS:
+  - AZDropdownMenu (1.1.3)
   - BoringSSL (10.0.5):
     - BoringSSL/Implementation (= 10.0.5)
     - BoringSSL/Interface (= 10.0.5)
@@ -94,6 +95,7 @@ PODS:
   - ValueStepper (1.5)
 
 DEPENDENCIES:
+  - AZDropdownMenu
   - Cely (from `https://github.com/chaione/Cely`, branch `master`)
   - Charts
   - Firebase/Auth
@@ -106,6 +108,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AZDropdownMenu
     - BoringSSL
     - Charts
     - Firebase
@@ -141,6 +144,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/chaione/Cely
 
 SPEC CHECKSUMS:
+  AZDropdownMenu: 5aa9d598d0c8aa36ca51a7302e79b98d544d5554
   BoringSSL: cf3f1793eb6e3c445c4d150456341f149c268a35
   Cely: 764f96dfc009b0b725afe801255b2dac54c7bd76
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
@@ -166,6 +170,6 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   ValueStepper: e84d21a2ce62a7975df8b222c7273d6810f7e78c
 
-PODFILE CHECKSUM: c0635c46554a61a538276d668405539fd4b8442a
+PODFILE CHECKSUM: 2ce5f1de5c6759e1bad724cd8a5609cefd568dfe
 
 COCOAPODS: 1.5.3

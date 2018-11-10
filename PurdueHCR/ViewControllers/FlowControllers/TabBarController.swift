@@ -35,7 +35,6 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkQRCodeViewController())
             viewControllers.append(linkRECPointOptionsViewController())
             viewControllers.append(linkRECRewardsViewController())
-            viewControllers.append(linkRECResidentsViewController())
         }
         // Do any additional setup after loading the view.
         self.setViewControllers(viewControllers, animated: false)
@@ -82,11 +81,6 @@ class TabBarController: UITabBarController {
         return rewardsViewController
     }
     
-    func linkRECResidentsViewController() -> UIViewController {
-        let residentsViewController = UIStoryboard(name: "RECResidents", bundle: nil).instantiateViewController(withIdentifier: "Residents") as! UINavigationController
-        residentsViewController.tabBarItem = UITabBarItem(title: "Residents", image: nil, selectedImage: nil)
-        return residentsViewController
-    }
     
 //    override func viewWillAppear(_ animated: Bool) {
 //        if(NewLaunch.newLaunch.isFirstLaunch){

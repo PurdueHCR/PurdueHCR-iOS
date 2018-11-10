@@ -182,10 +182,23 @@ class DataManager {
                     
                 })
                 self.refreshHouses(onDone:{(onDone:[House]) in
-                    counter.increment()
-                    if(counter.value == 4){
-                        finished();
+                    // Check if user is an REC, in which case you need to get the top scorers
+                    if((User.get(.permissionLevel) as! Int) == 2){
+                        self.getHouseScorers {
+                            counter.increment()
+                            if(counter.value == 4){
+                                finished();
+                            }
+                        }
                     }
+                    //User is not REC, so they do not need house Scorers (yet)
+                    else{
+                        counter.increment()
+                        if(counter.value == 4){
+                            finished();
+                        }
+                    }
+                    
                 })
                 self.refreshRewards(onDone: {(rewards:[Reward]) in
                     counter.increment()
@@ -311,6 +324,27 @@ class DataManager {
     
     func updatePointType(pointType:PointType, onDone:@escaping ((_ err:Error?) ->Void)){
         fbh.updatePointType(pointType: pointType, onDone: onDone)
+    }
+    
+    func getTopScorersForHouse(house:House, onDone:@escaping () -> Void){
+        fbh.getTopScorersForHouse(house: house.houseID, onDone: {
+            models in
+            house.topScoreUsers = models
+            onDone()
+        })
+    }
+    
+    func getHouseScorers(onDone:@escaping ()->Void){
+        //This must be called after the houses are initialized
+        let counter = AppUtils.AtomicCounter.init(identifier: "TopScorersCounter")
+        for house in self._houses!{
+            getTopScorersForHouse(house: house) {
+                counter.increment()
+                if(counter.value == 5){
+                    onDone()
+                }
+            }
+        }
     }
 
     //Used for handling link to make sure all necessairy information is there

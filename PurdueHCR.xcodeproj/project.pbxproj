@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		678FE069C279D4B51B1DF138 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFF5BCDFE277450BB4DFC9B /* Pods_PurdueHCR.framework */; };
 		CAD413D8FEBCA2B82AC82444 /* Pods_Platinum_Points.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA6F3DC308283CE27E4D34 /* Pods_Platinum_Points.framework */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
@@ -24,8 +25,9 @@
 		D3183DA72186DF18007A1309 /* HouseCompetitionOverviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3183DA62186DF18007A1309 /* HouseCompetitionOverviewTableViewController.swift */; };
 		D3183DAC2186E02B007A1309 /* RECPointOptions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3183DAB2186E02B007A1309 /* RECPointOptions.storyboard */; };
 		D3183DAE2186E037007A1309 /* RECRewards.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3183DAD2186E037007A1309 /* RECRewards.storyboard */; };
-		D3183DB02186E044007A1309 /* RECResidents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3183DAF2186E044007A1309 /* RECResidents.storyboard */; };
 		D3183DB22186E8FF007A1309 /* RECPointOptionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3183DB12186E8FF007A1309 /* RECPointOptionTableViewController.swift */; };
+		D323C0F12192200300CA839C /* RECRewardsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D323C0F02192200300CA839C /* RECRewardsTableViewController.swift */; };
+		D323C0F32192201200CA839C /* RECRewardCreationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D323C0F22192201200CA839C /* RECRewardCreationTableViewController.swift */; };
 		D3355C8D214A253D0037556C /* PointSubmission.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C8C214A253D0037556C /* PointSubmission.storyboard */; };
 		D3355C8F214A25B10037556C /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C8E214A25B10037556C /* Profile.storyboard */; };
 		D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C92214A267E0037556C /* PointApproval.storyboard */; };
@@ -73,7 +75,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D10F2F53C6C458C6F644800 /* Pods-PurdueHCR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.debug.xcconfig"; sourceTree = "<group>"; };
 		2D8E9E68CBCDEABF5F7177E3 /* Pods-Platinum Points.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Platinum Points.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points.debug.xcconfig"; sourceTree = "<group>"; };
+		3FC375F14F95F68114040693 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
+		4BFF5BCDFE277450BB4DFC9B /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		614DAB94E9078A278BDB559C /* Pods-Platinum Points.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Platinum Points.release.xcconfig"; path = "Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points.release.xcconfig"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -97,8 +102,9 @@
 		D3183DA62186DF18007A1309 /* HouseCompetitionOverviewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseCompetitionOverviewTableViewController.swift; sourceTree = "<group>"; };
 		D3183DAB2186E02B007A1309 /* RECPointOptions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RECPointOptions.storyboard; sourceTree = "<group>"; };
 		D3183DAD2186E037007A1309 /* RECRewards.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RECRewards.storyboard; sourceTree = "<group>"; };
-		D3183DAF2186E044007A1309 /* RECResidents.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RECResidents.storyboard; sourceTree = "<group>"; };
 		D3183DB12186E8FF007A1309 /* RECPointOptionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RECPointOptionTableViewController.swift; sourceTree = "<group>"; };
+		D323C0F02192200300CA839C /* RECRewardsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RECRewardsTableViewController.swift; sourceTree = "<group>"; };
+		D323C0F22192201200CA839C /* RECRewardCreationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RECRewardCreationTableViewController.swift; sourceTree = "<group>"; };
 		D3355C8C214A253D0037556C /* PointSubmission.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PointSubmission.storyboard; sourceTree = "<group>"; };
 		D3355C8E214A25B10037556C /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		D3355C92214A267E0037556C /* PointApproval.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PointApproval.storyboard; sourceTree = "<group>"; };
@@ -136,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAD413D8FEBCA2B82AC82444 /* Pods_Platinum_Points.framework in Frameworks */,
+				678FE069C279D4B51B1DF138 /* Pods_PurdueHCR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				FABA6F3DC308283CE27E4D34 /* Pods_Platinum_Points.framework */,
+				4BFF5BCDFE277450BB4DFC9B /* Pods_PurdueHCR.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -169,6 +177,8 @@
 			children = (
 				2D8E9E68CBCDEABF5F7177E3 /* Pods-Platinum Points.debug.xcconfig */,
 				614DAB94E9078A278BDB559C /* Pods-Platinum Points.release.xcconfig */,
+				2D10F2F53C6C458C6F644800 /* Pods-PurdueHCR.debug.xcconfig */,
+				3FC375F14F95F68114040693 /* Pods-PurdueHCR.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -292,7 +302,6 @@
 				D3183DA32186DED7007A1309 /* HouseViewControllers */,
 				D3183DA82186DF51007A1309 /* PointOptionsViewControllers */,
 				D3183DA92186DF62007A1309 /* RewardsViewControllers */,
-				D3183DAA2186DF78007A1309 /* ResidentsViewControllers */,
 			);
 			path = RECViewControllers;
 			sourceTree = "<group>";
@@ -321,16 +330,10 @@
 			isa = PBXGroup;
 			children = (
 				D3183DAD2186E037007A1309 /* RECRewards.storyboard */,
+				D323C0F02192200300CA839C /* RECRewardsTableViewController.swift */,
+				D323C0F22192201200CA839C /* RECRewardCreationTableViewController.swift */,
 			);
 			path = RewardsViewControllers;
-			sourceTree = "<group>";
-		};
-		D3183DAA2186DF78007A1309 /* ResidentsViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				D3183DAF2186E044007A1309 /* RECResidents.storyboard */,
-			);
-			path = ResidentsViewControllers;
 			sourceTree = "<group>";
 		};
 		D3355C90214A25BF0037556C /* ViewXIB */ = {
@@ -532,7 +535,6 @@
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
-				D3183DB02186E044007A1309 /* RECResidents.storyboard in Resources */,
 				D39DA55221266BF600FF46E9 /* GoogleService-Info.plist in Resources */,
 				D3183D9F2186D3D2007A1309 /* RECHouse.storyboard in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
@@ -564,7 +566,8 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AZDropdownMenu/AZDropdownMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/Cely/Cely.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
@@ -585,6 +588,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZDropdownMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cely.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
@@ -605,7 +609,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Platinum Points/Pods-Platinum Points-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A5C898E10175517DDFBCD7DA /* [CP] Check Pods Manifest.lock */ = {
@@ -619,7 +623,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Platinum Points-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PurdueHCR-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -647,6 +651,7 @@
 				D3CC77CE21052CEF00B88F03 /* AppUtils.swift in Sources */,
 				D3183DA52186DEFF007A1309 /* HouseTableViewController.swift in Sources */,
 				D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */,
+				D323C0F12192200300CA839C /* RECRewardsTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,
 				D33F43AA2106982100D3982D /* AnimatedLoadingViewController.swift in Sources */,
 				D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */,
@@ -656,6 +661,7 @@
 				D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */,
 				D3D062C320E8219C00E8B3A3 /* LogInViewController.swift in Sources */,
 				D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */,
+				D323C0F32192201200CA839C /* RECRewardCreationTableViewController.swift in Sources */,
 				D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */,
 				D3183DB22186E8FF007A1309 /* RECPointOptionTableViewController.swift in Sources */,
 				D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */,
@@ -821,7 +827,7 @@
 		};
 		D30FC92920DF35D900201E74 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8E9E68CBCDEABF5F7177E3 /* Pods-Platinum Points.debug.xcconfig */;
+			baseConfigurationReference = 2D10F2F53C6C458C6F644800 /* Pods-PurdueHCR.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PurdueHCR/PurdueHCR.entitlements;
@@ -842,7 +848,7 @@
 		};
 		D30FC92A20DF35D900201E74 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 614DAB94E9078A278BDB559C /* Pods-Platinum Points.release.xcconfig */;
+			baseConfigurationReference = 3FC375F14F95F68114040693 /* Pods-PurdueHCR.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PurdueHCR/PurdueHCR.entitlements;

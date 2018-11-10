@@ -601,5 +601,39 @@ class FirebaseHelper {
         }
     }
     
+    func getTopScorersForHouse(house:String, onDone:@escaping ([UserModel]) -> Void){
+        let collectionRef = db.collection(self.USERS)
+        collectionRef.whereField("House", isEqualTo: house).getDocuments { (querySnapshot, error) in
+            if error != nil {
+                print("Error getting documents For House: \(String(describing: error))")
+                return
+            }
+            var users = [UserModel]()
+            for document in querySnapshot!.documents{
+                let name = document.data()["Name"] as! String
+                let points = document.data()["TotalPoints"] as! Int
+                let model = UserModel(name: name, points: points)
+                if(users.count < 5){
+                    users.append(model)
+                    users.sort(by: { (um, um2) -> Bool in
+                        return um.totalPoints > um2.totalPoints
+                    })
+                }
+                else{
+                    for i in 0..<5{
+                        if(users[i].totalPoints < model.totalPoints){
+                            users.insert(model, at: i)
+                            users.remove(at: 5)
+                            break;
+                        }
+                    }
+                }
+                
+                
+            }
+            onDone(users)
+        }
+    }
+    
 }
 

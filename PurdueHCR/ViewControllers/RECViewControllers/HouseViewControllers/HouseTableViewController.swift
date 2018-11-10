@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import AZDropdownMenu
 
 class LogCountCell :UITableViewCell{
     @IBOutlet var nameLabel: UILabel!
@@ -21,7 +21,17 @@ class HouseTableViewController: UITableViewController {
     var logCount = [LogCount]()
     var refresher: UIRefreshControl?
     
-    
+    //I am really sorry to whoever works on this after me.
+    //I was in a rush and could not think of a way to do this dynamically
+    var floorIds = [String]()
+    let codes = ["Copper":["2S","2N"],"Palladium":["3S","3N"],"Platinum":["4S","4N"],"Silver":["5S","5N"],"Titanium":["6S","6N","Shreve"]]
+    var dropDownOptions = [String]()
+    var menu:AZDropdownMenu?
+//    let COPPER_CODES = ["2S","2N"]
+//    let PALLADIUM_CODES = ["3S","3N"]
+//    let PLATINUM_CODES = ["4S","4N"]
+//    let SILVER_CODES = ["5S","5N"]
+//    let TITANIUM_CODES = ["6S","6N","Shreve"]
     
 
     override func viewDidLoad() {
@@ -29,10 +39,24 @@ class HouseTableViewController: UITableViewController {
         navigationItem.title = houseName!
         refresher = UIRefreshControl()
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+        refresher?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refresher
         resfreshData()
         self.tableView.allowsSelection = false
+        floorIds = codes[houseName!] ?? [String]()
+        dropDownOptions = floorIds
+        dropDownOptions.append("Total")
+        menu = AZDropdownMenu(titles: dropDownOptions)
+        menu!.cellTapHandler = {(indexPath: IndexPath) -> Void in
+            if(self.dropDownOptions[indexPath.row] == "Total"){
+                self.floorIds = self.codes[self.houseName!] ?? [String]()
+            }
+            else{
+                self.floorIds = [self.dropDownOptions[indexPath.row]]
+            }
+            self.resfreshData()
+        }
+        
     }
 
     // MARK: - Table view data source
@@ -56,12 +80,14 @@ class HouseTableViewController: UITableViewController {
     }
     
 
-
+    @objc func refresh(){
+        self.tableView.refreshControl?.beginRefreshing()
+        resfreshData()
+    }
 
 
     
-    @objc func resfreshData(){
-        self.tableView.refreshControl?.beginRefreshing()
+    func resfreshData(){
         DataManager.sharedManager.getAllPointLogsForHouse(house: self.houseName!) { (logs) in
             guard let pointTypes = DataManager.sharedManager.getPoints() else{
                 self.notify(title: "Failure", subtitle: "Could not load points.", style: .danger)
@@ -75,7 +101,9 @@ class HouseTableViewController: UITableViewController {
                 return a.typeId < b.typeId
             })
             for log in logs{
-                countOfLogs[abs(log.type.pointID)-1].incrementCount()
+                if(self.floorIds.contains(log.floorID)){
+                    countOfLogs[abs(log.type.pointID)-1].incrementCount()
+                }
             }
             
             self.logCount = countOfLogs
@@ -87,6 +115,16 @@ class HouseTableViewController: UITableViewController {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
+    
+    @IBAction func showDropdown(_ sender: Any) {
+        if (self.menu?.isDescendant(of: self.view) == true) {
+            self.menu?.hideMenu()
+        } else {
+            self.menu?.showMenuFromView(self.view)
+        }
+    }
+    
+    
 
 }
 
