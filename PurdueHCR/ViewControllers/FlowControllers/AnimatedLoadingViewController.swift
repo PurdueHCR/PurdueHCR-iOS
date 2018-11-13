@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Cely
 
 class AnimatedLoadingViewController: UIViewController {
 
@@ -22,11 +23,15 @@ class AnimatedLoadingViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if(NewLaunch.newLaunch.isFirstLaunch){
-            //createNewLaunchAlert()
+        if(Cely.currentLoginStatus() == .loggedIn){
+            if(NewLaunch.newLaunch.isFirstLaunch){
+                //createNewLaunchAlert()
+            }
+            finishLoadinng()
+
         }
         else{
-            finishLoadinng()
+            self.dismiss(animated: false, completion: nil)
         }
         
     }
