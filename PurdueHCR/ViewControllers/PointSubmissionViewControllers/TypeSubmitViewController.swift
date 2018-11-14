@@ -103,7 +103,15 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
         }
     }
 
-
+	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+		let currentText = descriptionField.text ?? ""
+		guard let stringRange = Range(range, in: currentText) else { return false }
+		
+		let changedText = currentText.replacingCharacters(in: stringRange, with: text)
+		
+		return changedText.count <= 240
+	}
+	
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         self.descriptionField.resignFirstResponder()
     }

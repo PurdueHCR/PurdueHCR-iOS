@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0p3-Is-rZU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0p3-Is-rZU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,6 +30,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="j8K-2A-WkV">
+                                <rect key="frame" x="20" y="449" width="335" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -40,8 +42,11 @@
                             <constraint firstItem="UU7-Vb-8Wc" firstAttribute="leading" secondItem="JYw-7r-eBW" secondAttribute="leadingMargin" id="QxM-g4-JHJ"/>
                             <constraint firstItem="WUo-sG-Abw" firstAttribute="leading" secondItem="oTi-77-cX2" secondAttribute="leading" priority="750" constant="92" id="WU3-dB-vln"/>
                             <constraint firstItem="oTi-77-cX2" firstAttribute="bottom" secondItem="WUo-sG-Abw" secondAttribute="bottom" constant="238" id="eOC-qg-69f"/>
+                            <constraint firstItem="j8K-2A-WkV" firstAttribute="top" secondItem="WUo-sG-Abw" secondAttribute="bottom" constant="20" id="ekr-yT-vxm"/>
                             <constraint firstItem="UU7-Vb-8Wc" firstAttribute="trailing" secondItem="JYw-7r-eBW" secondAttribute="trailingMargin" id="iqt-Hm-rcb"/>
+                            <constraint firstItem="oTi-77-cX2" firstAttribute="trailing" secondItem="j8K-2A-WkV" secondAttribute="trailing" constant="20" id="r4H-r5-3eH"/>
                             <constraint firstItem="UU7-Vb-8Wc" firstAttribute="centerX" secondItem="WUo-sG-Abw" secondAttribute="centerX" id="tog-65-wMm"/>
+                            <constraint firstItem="j8K-2A-WkV" firstAttribute="leading" secondItem="oTi-77-cX2" secondAttribute="leading" constant="20" id="zy0-7f-v85"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oTi-77-cX2"/>
                     </view>

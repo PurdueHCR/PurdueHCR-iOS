@@ -26,6 +26,7 @@ class TabBarController: UITabBarController {
             //RHP Controllers
             viewControllers.append(linkPointSubmissionViewController())
             viewControllers.append(linkProfileViewController())
+
             viewControllers.append(linkPointApprovalViewController())
             viewControllers.append(linkQRCodeViewController())
         }
