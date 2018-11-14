@@ -16,9 +16,6 @@ class MyValueFormatter: IValueFormatter {
     func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
         return Int(value).description
     }
-    
-    
-    
 
 }
 
@@ -60,7 +57,7 @@ class HousePointsCompareView: UIView {
         firstPlace.setColor(AppUtils.hexStringToUIColor(hex:houses[0].hexColor))
         thirdPlace.setColor(AppUtils.hexStringToUIColor(hex:houses[2].hexColor))
         fifthPlace.setColor(AppUtils.hexStringToUIColor(hex:houses[4].hexColor))
-        
+		
         firstPlace.valueFormatter = MyValueFormatter()
         secondPlace.valueFormatter = MyValueFormatter()
         thirdPlace.valueFormatter = MyValueFormatter()
@@ -73,6 +70,10 @@ class HousePointsCompareView: UIView {
         chart.data = data
         chart.drawGridBackgroundEnabled = false
         chart.xAxis.drawLabelsEnabled = false
+		chart.rightAxis.enabled = false
+		chart.rightAxis.enabled = false
+		chart.leftAxis.enabled = false
+		chart.xAxis.enabled = false
         chart.leftAxis.axisMinimum = 0.0
         chart.rightAxis.axisMinimum = 0.0
         chart.isUserInteractionEnabled = false

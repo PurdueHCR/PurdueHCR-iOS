@@ -143,16 +143,16 @@ class RHPApprovalTableViewController: UITableViewController {
             if let error = err {
                 if(error.localizedDescription == "The operation couldn’t be completed. (Document has already been approved error 1.)"){
                     self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
-                    DispatchQueue.main.async {
-                        self.resfreshData()
-                    }
+//                    DispatchQueue.main.async {
+//                        self.resfreshData()
+//                    }
                     return
                 }
                 else if( error.localizedDescription == "The operation couldn’t be completed. (Document does not exist error 2.)"){
                     self.notify(title: "Failure", subtitle: "Document no longer exists.", style: .danger)
-                    DispatchQueue.main.async {
-                        self.resfreshData()
-                    }
+//                    DispatchQueue.main.async {
+//                        self.resfreshData()
+//                    }
                     return
                 }
                 else{

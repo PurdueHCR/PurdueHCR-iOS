@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,53 +23,50 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="392"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="House Points" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFA-op-kf3">
-                    <rect key="frame" x="16" y="20" width="343" height="47"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="47" id="7ql-nV-JSc"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Goal" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4JU-e9-e5w">
-                    <rect key="frame" x="16" y="333" width="343" height="39"/>
+                    <rect key="frame" x="20" y="342" width="335" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="39" id="yHd-dH-0g0"/>
+                        <constraint firstAttribute="height" constant="40" id="yHd-dH-0g0"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v5u-AQ-oix" customClass="KDCircularProgress" customModule="KDCircularProgress">
-                    <rect key="frame" x="62" y="75" width="250" height="250"/>
+                    <rect key="frame" x="65" y="65" width="245" height="267"/>
                     <color key="backgroundColor" red="0.85647564050000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="v5u-AQ-oix" secondAttribute="height" multiplier="1:1" id="WCp-O8-eAs"/>
-                    </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="startAngle">
                             <real key="value" value="-90"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="House Points" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFA-op-kf3">
+                    <rect key="frame" x="20" y="10" width="335" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="7ql-nV-JSc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="RFA-op-kf3" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="KvO-zW-R0o"/>
-                <constraint firstAttribute="bottom" secondItem="4JU-e9-e5w" secondAttribute="bottom" constant="20" symbolic="YES" id="Ndx-jj-dbU"/>
-                <constraint firstItem="RFA-op-kf3" firstAttribute="trailing" secondItem="4JU-e9-e5w" secondAttribute="trailing" id="SE1-ZZ-luV"/>
-                <constraint firstItem="RFA-op-kf3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="UAb-M8-PQH"/>
-                <constraint firstItem="v5u-AQ-oix" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="62" id="Y0J-Bu-8Ht"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="v5u-AQ-oix" secondAttribute="trailing" constant="65" id="Ehe-Qw-abG"/>
+                <constraint firstAttribute="bottom" secondItem="4JU-e9-e5w" secondAttribute="bottom" constant="10" id="Ndx-jj-dbU"/>
+                <constraint firstItem="v5u-AQ-oix" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="65" id="Uy5-4Q-L7r"/>
                 <constraint firstItem="RFA-op-kf3" firstAttribute="leading" secondItem="4JU-e9-e5w" secondAttribute="leading" id="i2M-Lj-1VD"/>
                 <constraint firstItem="v5u-AQ-oix" firstAttribute="centerX" secondItem="4JU-e9-e5w" secondAttribute="centerX" id="iRe-6l-nyf"/>
-                <constraint firstItem="v5u-AQ-oix" firstAttribute="top" secondItem="RFA-op-kf3" secondAttribute="bottom" constant="8" symbolic="YES" id="jaU-zt-cJ6"/>
-                <constraint firstItem="4JU-e9-e5w" firstAttribute="top" secondItem="v5u-AQ-oix" secondAttribute="bottom" constant="8" symbolic="YES" id="mEK-JO-WaC"/>
-                <constraint firstItem="RFA-op-kf3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="yhD-5r-8FG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="RFA-op-kf3" secondAttribute="trailing" constant="20" id="iZd-Ya-haF"/>
+                <constraint firstItem="v5u-AQ-oix" firstAttribute="top" secondItem="RFA-op-kf3" secondAttribute="bottom" constant="5" id="jaU-zt-cJ6"/>
+                <constraint firstItem="4JU-e9-e5w" firstAttribute="top" secondItem="v5u-AQ-oix" secondAttribute="bottom" constant="10" id="mEK-JO-WaC"/>
+                <constraint firstItem="RFA-op-kf3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="w5g-dx-c8E"/>
+                <constraint firstItem="RFA-op-kf3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="yhD-5r-8FG"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="33.5" y="-84"/>
+            <point key="canvasLocation" x="32.799999999999997" y="-84.557721139430285"/>
         </view>
     </objects>
 </document>
