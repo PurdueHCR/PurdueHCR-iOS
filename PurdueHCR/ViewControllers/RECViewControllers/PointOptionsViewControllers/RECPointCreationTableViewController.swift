@@ -39,7 +39,7 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
             residentsCanSubmitSwitch.isOn = type!.residentCanSubmit
             setPermissionLevel(value: abs(type!.permissionLevel))
             permissionSlider.value = Float(abs(type!.permissionLevel))
-            enabledSwitch.isOn = (type!.permissionLevel > 0)
+            enabledSwitch.isOn = type!.isEnabled
             pointsField.text = type!.pointValue.description
             
         }
@@ -66,12 +66,10 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
             return
         }
         let residentsCanSubmit = residentsCanSubmitSwitch.isOn
-        var permissionLevel = Int(permissionSlider.value)
-        if(!enabledSwitch.isOn){
-            permissionLevel *= -1
-        }
+        let permissionLevel = Int(permissionSlider.value)
+        let isEnabled = enabledSwitch.isOn
         
-        let newType = PointType(pv: pointValue, pd: description, rcs: residentsCanSubmit, pid: 0, permissionLevel: permissionLevel)
+        let newType = PointType(pv: pointValue, pd: description, rcs: residentsCanSubmit, pid: 0, permissionLevel: permissionLevel, isEnabled:isEnabled)
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         DataManager.sharedManager.createPointType(pointType: newType) { (error) in
             if(error == nil){
@@ -95,15 +93,14 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
             return
         }
         let residentsCanSubmit = residentsCanSubmitSwitch.isOn
-        var permissionLevel = Int(permissionSlider.value)
-        if(!enabledSwitch.isOn){
-            permissionLevel *= -1
-        }
+        let permissionLevel = Int(permissionSlider.value)
+        let isEnabled = enabledSwitch.isOn
         
         type!.permissionLevel = permissionLevel
         type!.residentCanSubmit = residentsCanSubmit
         type!.pointValue = pointValue
         type!.pointDescription = description
+        type!.isEnabled = isEnabled
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         DataManager.sharedManager.updatePointType(pointType: type!) { (error) in
             if(error == nil){

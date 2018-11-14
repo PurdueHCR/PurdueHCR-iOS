@@ -57,7 +57,8 @@ class FirebaseHelper {
                     let residentSubmit = pointDocument.data()["ResidentsCanSubmit"] as! Bool
                     let value = pointDocument.data()["Value"] as! Int
                     let permissionLevel = pointDocument.data()["PermissionLevel"] as! Int
-                    pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id, permissionLevel: permissionLevel))
+                    let isEnabled = pointDocument.data()["Enabled"] as! Bool
+                    pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id, permissionLevel: permissionLevel, isEnabled:isEnabled))
                 }
                 pointArray.sort(by: {
                     if($0.pointValue == $1.pointValue){
@@ -103,7 +104,7 @@ class FirebaseHelper {
     func addPointLog(log:PointLog, documentID:String = "",preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         let house = User.get(.house) as! String
         var ref: DocumentReference? = nil
-        if(!log.type.isEnabled()){
+        if(!log.type.isEnabled){
             onDone(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
             return
         }
@@ -579,7 +580,8 @@ class FirebaseHelper {
                     "Description" : pointType.pointDescription,
                     "PermissionLevel" : pointType.permissionLevel,
                     "ResidentsCanSubmit"    : pointType.residentCanSubmit,
-                    "Value"  : pointType.pointValue
+                    "Value"  : pointType.pointValue,
+                    "Enabled" : pointType.isEnabled
                 ]){ err in
                     onDone(err)
                 }
@@ -596,7 +598,8 @@ class FirebaseHelper {
                     "Description" : pointType.pointDescription,
                     "PermissionLevel" : pointType.permissionLevel,
                     "ResidentsCanSubmit"    : pointType.residentCanSubmit,
-                    "Value"  : pointType.pointValue
+                    "Value"  : pointType.pointValue,
+                    "Enabled" : pointType.isEnabled
                 ]){ err in
                     onDone(err)
                 }
