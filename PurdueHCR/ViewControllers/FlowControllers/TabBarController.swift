@@ -18,15 +18,24 @@ class TabBarController: UITabBarController {
         let p = permission as! Int
         var viewControllers : [UIViewController] = []
         if (p == 0){
-			viewControllers.append(linkProfileViewController())
-			viewControllers.append(linkPointSubmissionViewController())
-			
+            //Resident Controllers
+            viewControllers.append(linkPointSubmissionViewController())
+            viewControllers.append(linkProfileViewController())
         }
         else if( p == 1){
-			viewControllers.append(linkProfileViewController())
-			viewControllers.append(linkPointSubmissionViewController())
+            //RHP Controllers
+            viewControllers.append(linkPointSubmissionViewController())
+            viewControllers.append(linkProfileViewController())
+
             viewControllers.append(linkPointApprovalViewController())
             viewControllers.append(linkQRCodeViewController())
+        }
+        else if( p == 2){
+            //REA/REC Controllers
+            viewControllers.append(linkRECHouseViewController())
+            viewControllers.append(linkQRCodeViewController())
+            viewControllers.append(linkRECPointOptionsViewController())
+            viewControllers.append(linkRECRewardsViewController())
         }
         // Do any additional setup after loading the view.
         self.setViewControllers(viewControllers, animated: false)
@@ -54,6 +63,25 @@ class TabBarController: UITabBarController {
         qrCodeViewController.tabBarItem = UITabBarItem(title: "QR", image: #imageLiteral(resourceName: "QRCode"), selectedImage: #imageLiteral(resourceName: "QRCode"))
         return qrCodeViewController
     }
+    
+    func linkRECHouseViewController() -> UIViewController {
+        let recHouseViewController = UIStoryboard(name: "RECHouse", bundle: nil).instantiateViewController(withIdentifier: "HouseOverview") as! UINavigationController
+        recHouseViewController.tabBarItem = UITabBarItem(title: "Houses", image: #imageLiteral(resourceName: "Competition"), selectedImage: #imageLiteral(resourceName: "Competition"))
+        return recHouseViewController
+    }
+    
+    func linkRECPointOptionsViewController() -> UIViewController {
+        let pointOptionsViewController = UIStoryboard(name: "RECPointOptions", bundle: nil).instantiateViewController(withIdentifier: "PointOptions") as! UINavigationController
+        pointOptionsViewController.tabBarItem = UITabBarItem(title: "Points", image: #imageLiteral(resourceName: "list"), selectedImage: #imageLiteral(resourceName: "list"))
+        return pointOptionsViewController
+    }
+    
+    func linkRECRewardsViewController() -> UIViewController {
+        let rewardsViewController = UIStoryboard(name: "RECRewards", bundle: nil).instantiateViewController(withIdentifier: "Rewards") as! UINavigationController
+        rewardsViewController.tabBarItem = UITabBarItem(title: "Rewards", image: #imageLiteral(resourceName: "RewardIcon"), selectedImage: #imageLiteral(resourceName: "RewardIcon"))
+        return rewardsViewController
+    }
+    
     
 //    override func viewWillAppear(_ animated: Bool) {
 //        if(NewLaunch.newLaunch.isFirstLaunch){

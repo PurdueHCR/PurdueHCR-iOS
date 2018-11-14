@@ -51,6 +51,16 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
             submitButton.isEnabled = true;
             return
         }
+        submitPointLog(pointType: pointType, descriptions: description)
+    }
+    
+    
+    /// Submit Point Log to DataHandler. 
+    ///
+    /// - Parameters:
+    ///   - pointType: Point Type to have a log created of
+    ///   - descriptions: String text describing what the residents did
+    func submitPointLog(pointType:PointType, descriptions:String){
         let name = User.get(.name) as! String
         let preApproved = ((User.get(.permissionLevel) as! Int) == 1 )
         let floor = User.get(.floorID) as! String
@@ -58,8 +68,14 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
         let pointLog = PointLog(pointDescription: description, resident: name, type: pointType, floorID: floor, residentRef:residentRef)
         DataManager.sharedManager.writePoints(log: pointLog, preApproved: preApproved) { (err:Error?) in
             if(err != nil){
-                self.notify(title: "Failed to submit", subtitle: err.debugDescription, style: .danger)
-                print("Error in posting: ",err.debugDescription)
+                if(err!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+                    self.notify(title: "Failed to submit", subtitle: "Point Type is no longer enabled.", style: .danger)
+                }
+                else{
+                    self.notify(title: "Failed to submit", subtitle: "Database Error.", style: .danger)
+                    print("Error in posting: ",err!.localizedDescription)
+                }
+                
                 self.submitButton.isEnabled = true;
                 return
             }
@@ -73,7 +89,6 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
                 }
             }
         }
-        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

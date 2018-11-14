@@ -44,7 +44,6 @@ class FirebaseHelper {
         }
     }
     
-
     func retrievePointTypes(onDone:@escaping ([PointType])->Void) {
         self.db.collection("PointTypes").getDocuments() { (querySnapshot, err) in
             var pointArray = [PointType]()
@@ -54,14 +53,12 @@ class FirebaseHelper {
                 for pointDocument in querySnapshot!.documents
                 {
                     let id = Int(pointDocument.documentID)!
-                    //Points with IDs greater than 1000 are just for REA/REC
-                    if(id > 1000){
-                        return;
-                    }
                     let description = pointDocument.data()["Description"] as! String
                     let residentSubmit = pointDocument.data()["ResidentsCanSubmit"] as! Bool
                     let value = pointDocument.data()["Value"] as! Int
-                    pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id))
+                    let permissionLevel = pointDocument.data()["PermissionLevel"] as! Int
+                    let isEnabled = pointDocument.data()["Enabled"] as! Bool
+                    pointArray.append(PointType(pv: value, pd: description , rcs: residentSubmit, pid: id, permissionLevel: permissionLevel, isEnabled:isEnabled))
                 }
                 pointArray.sort(by: {
                     if($0.pointValue == $1.pointValue){
@@ -82,11 +79,18 @@ class FirebaseHelper {
         
         userRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                User.save(document.data()![self.HOUSE] as Any, as: .house)
-                User.save(document.data()![self.FLOOR_ID] as Any, as: .floorID)
+                let permissionLevel = document.data()![self.PERMISSION_LEVEL] as! Int
+                User.save(permissionLevel as Any, as: .permissionLevel)
                 User.save(document.data()![self.NAME] as Any, as: .name)
-                User.save((document.data()![self.PERMISSION_LEVEL] as! Int) as Any, as: .permissionLevel)
-                User.save(document.data()![self.TOTAL_POINTS] as Any, as: .points)
+                if(permissionLevel == 2){ // check if REA/REC
+                    
+                }
+                else{
+                    User.save(document.data()![self.HOUSE] as Any, as: .house)
+                    User.save(document.data()![self.FLOOR_ID] as Any, as: .floorID)
+                    //User.save((document.data()![self.PERMISSION_LEVEL] as! Int) as Any, as: .permissionLevel)
+                    User.save(document.data()![self.TOTAL_POINTS] as Any, as: .points)
+                }
                 onDone(true)
             } else {
                 print("Document does not exist")
@@ -95,11 +99,24 @@ class FirebaseHelper {
         }
     }
     
-    // Write the point to the house points log and write the reference to the user
-    // put in onDone to handle what happens when it returns
-    func addPointLog(log:PointLog, documentID:String = "",preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void){
-        let house = User.get(.house) as! String
+
+    /// Adds Point Log submission to the Database
+    ///
+    /// - Parameters:
+    ///   - log: Point Log that is to be added to the database
+    ///   - documentID: specified id for Point Log in the database (Used for Single Use Qr codes)
+    ///   - preApproved: Boolean that denotes whether the Log can skip RHP approval or not.
+    ///   - house: If the house is different than the saved house for the user (Used for REC Awarding points)
+    ///   - isRECGrantingAward: Boolean to denote that this point is being added by the RHP
+    ///   - onDone: Closure function the be called once the code hits an error or finishs. err is nil if no errors are found.
+    func addPointLog(log:PointLog, documentID:String = "",preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         var ref: DocumentReference? = nil
+        //If point type is disabled and it is not an REC granting an award, warn that it is disabled
+        if(!log.type.isEnabled && !isRECGrantingAward){
+            onDone(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
+            return
+        }
+        
         var multiplier = -1
         if(preApproved){
             multiplier = 1
@@ -121,7 +138,7 @@ class FirebaseHelper {
                     {err in
                         if(err == nil && preApproved)
                         {
-                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), onDone: onDone)
+                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, onDone: onDone)
                         }
                         else{
                             onDone(err)
@@ -154,7 +171,7 @@ class FirebaseHelper {
                             {err in
                                 if(err == nil && preApproved)
                                 {
-                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), onDone: onDone)
+                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, onDone: onDone)
                                 }
                                 else{
                                     onDone(err)
@@ -352,8 +369,8 @@ class FirebaseHelper {
     
     func retrievePictureFromFilename(filename:String,onDone:@escaping ( _ image:UIImage) ->Void ){
         let pathReference = storage.reference(withPath: filename)
-        // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        // Download in memory with a maximum allowed size of 100MB (100 * 1024 * 1024 bytes)
+        pathReference.getData(maxSize: 20 * 1024 * 1024) { data, error in
             if let error = error {
                 // Uh-oh, an error occurred!
                 print(error.localizedDescription)
@@ -460,15 +477,30 @@ class FirebaseHelper {
         }
     }
     
-    func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference,onDone:@escaping (_ err:Error?)->Void)
+    /// Handles the updating of the house points for House and User in firebase
+    /// Note this will need to be changed when we switch to API and MySQL database
+    ///
+    /// - Parameters:
+    ///   - log: Point Log that contains points to be given to House and Resident
+    ///   - userRef: Reference to the User in Firebase that needs to be awarded points
+    ///   - houseRef: Reference to the house that will be given the points
+    ///   - isRECGrantingAward: Boolean (defaults to false) true if REC is giving award to entire house
+    ///   - onDone: Closure function to be called on completion. Err is nil if no errors are thrown.
+    func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference, isRECGrantingAward:Bool = false, onDone:@escaping (_ err:Error?)->Void)
     {
         updateHousePoints(log: log, houseRef: houseRef, onDone: {(err:Error?)in
             if(err != nil){
                 onDone(err)
             }
-            self.updateUserPoints(log: log, userRef: userRef, onDone: {(errDeep:Error?) in
-                onDone(errDeep)
-            })
+            //If REC is giving award to House, dont give the points to a specific user
+            else if(!isRECGrantingAward){
+                self.updateUserPoints(log: log, userRef: userRef, onDone: {(errDeep:Error?) in
+                    onDone(errDeep)
+                })
+            }
+            else{
+                onDone(nil)
+            }
         })
     }
     
@@ -519,11 +551,167 @@ class FirebaseHelper {
             onDone(err)
         }
     }
+    
     func setLinkArchived(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         db.collection("Links").document(link.id).updateData(["Archived":link.archived]){err in
             onDone(err)
         }
     }
     
+    func getAllPointLogsForHouse(house:String, onDone:@escaping (([PointLog]) -> Void)){
+        let docRef = db.collection(self.HOUSE).document(house).collection(self.POINTS)
+        
+        docRef.getDocuments()
+            { (querySnapshot, error) in
+                if error != nil {
+                    print("Error getting documenbts: \(String(describing: error))")
+                    return
+                }
+                var pointLogs = [PointLog]()
+                for document in querySnapshot!.documents {
+                    let floorID = document.data()["FloorID"] as! String
+                    let id = document.documentID
+                    let description = document.data()["Description"] as! String
+                    let idType = (document.data()["PointTypeID"] as! Int)
+                    var resident = document.data()["Resident"] as! String
+                    if(floorID == "Shreve"){
+                        resident = "(Shreve) "+resident
+                    }
+                    let residentRefMaybe = document.data()["ResidentRef"]
+                    var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1") // Hard code a ref for when a code doesnt have one. (IE points were Given by REC to no specific user)
+                    if(residentRefMaybe != nil ){
+                        residentRef = residentRefMaybe as! DocumentReference
+                    }
+                    let pointType = DataManager.sharedManager.getPointType(value: idType)
+                    let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID, residentRef:residentRef)
+                    pointLog.logID = id
+                    pointLogs.append(pointLog)
+                }
+                onDone(pointLogs)
+        }
+    }
+    
+    func addPointType(pointType:PointType, onDone:@escaping (_ err:Error?)-> Void){
+        let highestId = DataManager.sharedManager.getPoints()!.count + 1 // This has the potential for a race condition but oh well
+        //Adding a point with a specific Document ID
+        let ref = self.db.collection("PointTypes").document(highestId.description)
+        ref.getDocument { (document, error) in
+            if let document = document, document.exists {
+                onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
+            } else {
+                ref.setData([
+                    "Description" : pointType.pointDescription,
+                    "PermissionLevel" : pointType.permissionLevel,
+                    "ResidentsCanSubmit"    : pointType.residentCanSubmit,
+                    "Value"  : pointType.pointValue,
+                    "Enabled" : pointType.isEnabled
+                ]){ err in
+                    onDone(err)
+                }
+            }
+        }
+    }
+    
+    func updatePointType(pointType:PointType, onDone:@escaping (_ err:Error?)-> Void){
+        //Adding a point with a specific Document ID
+        let ref = self.db.collection("PointTypes").document(pointType.pointID.description)
+        ref.getDocument { (document, error) in
+            if let document = document, document.exists {
+                ref.setData([
+                    "Description" : pointType.pointDescription,
+                    "PermissionLevel" : pointType.permissionLevel,
+                    "ResidentsCanSubmit"    : pointType.residentCanSubmit,
+                    "Value"  : pointType.pointValue,
+                    "Enabled" : pointType.isEnabled
+                ]){ err in
+                    onDone(err)
+                }
+            } else {
+                onDone(NSError(domain: "Document does not exist", code: 1, userInfo: nil))
+            }
+        }
+    }
+    
+    func getTopScorersForHouse(house:String, onDone:@escaping ([UserModel]) -> Void){
+        let collectionRef = db.collection(self.USERS)
+        collectionRef.whereField("House", isEqualTo: house).getDocuments { (querySnapshot, error) in
+            if error != nil {
+                print("Error getting documents For House: \(String(describing: error))")
+                return
+            }
+            var users = [UserModel]()
+            for document in querySnapshot!.documents{
+                let name = document.data()["Name"] as! String
+                let points = document.data()["TotalPoints"] as! Int
+                let model = UserModel(name: name, points: points)
+                if(users.count < 5){
+                    users.append(model)
+                    users.sort(by: { (um, um2) -> Bool in
+                        return um.totalPoints > um2.totalPoints
+                    })
+                }
+                else{
+                    for i in 0..<5{
+                        if(users[i].totalPoints < model.totalPoints){
+                            users.insert(model, at: i)
+                            users.remove(at: 5)
+                            break;
+                        }
+                    }
+                }
+                
+                
+            }
+            onDone(users)
+        }
+    }
+    
+    func deleteReward(reward:Reward, onDone:@escaping (_ err:Error?) -> Void){
+        var ref: DocumentReference? = nil
+        ref = self.db.collection("Rewards").document(reward.rewardName)
+        ref!.delete { (error) in
+            onDone(error)
+        }
+    }
+    
+    func deletePictureWithFilename(filename:String,onDone:@escaping ( _ err:Error?) ->Void ){
+        let pathReference = storage.reference(withPath: filename)
+        pathReference.delete { (error) in
+            onDone(error)
+        }
+    }
+    
+    func uploadImageWithFilename(filename:String,img:UIImage, onDone:@escaping (_ err:Error?)->Void){
+        let ref = self.storage.reference().child(filename)
+        let data = UIImagePNGRepresentation(img)!
+        print("DATA SIZE: ",data.count)
+        if(data.count > 20 * 1024 * 1024){
+            onDone(NSError(domain: "Image is too large", code: 1, userInfo: nil))
+        }
+        else{
+            ref.putData(data, metadata: nil) { (storage, error) in
+                onDone(error)
+            }
+        }
+        
+    }
+    
+    func createReward(reward:Reward, onDone:@escaping (_ err:Error?)->Void){
+        var ref: DocumentReference? = nil
+        ref = self.db.collection("Rewards").document(reward.rewardName)
+        ref!.getDocument { (document, error) in
+            if let document = document, document.exists {
+                onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
+            } else {
+                ref!.setData([
+                    "FileName" : reward.fileName,
+                    "RequiredValue" : reward.requiredValue
+                ]){ err in
+                    onDone(err)
+                }
+            }
+        }
+    }
+
 }
 

@@ -20,7 +20,6 @@ class DataManager {
     public static let sharedManager = DataManager()
     private var firstRun = true;
     private let fbh = FirebaseHelper();
-    private var _pointGroups: [PointGroup]? = nil;
     private var _pointTypes: [PointType]? = nil
     private var _unconfirmedPointLogs: [PointLog]? = nil
     private var _houses: [House]? = nil
@@ -30,13 +29,12 @@ class DataManager {
     
     private init(){}
     
-    func getPointGroups() -> [PointGroup]?{
-        return self._pointGroups
-    }
+
     
     func getPoints() ->[PointType]? {
         return self._pointTypes
     }
+    
     
     func getPointType(value:Int)->PointType{
         for pt in self._pointTypes!{
@@ -44,34 +42,10 @@ class DataManager {
                 return pt
             }
         }
-        return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1) // The famous this should never happen comment
+        return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1, permissionLevel: 3, isEnabled:false) // The famous this should never happen comment
     }
     
-    private func sortIntoPointGroupsWithPermission(arr:[PointType]) -> [PointGroup]{
-        var pointGroups = [PointGroup]()
-        if(!arr.isEmpty){
-            var currentValue = 0
-            var pg = PointGroup(val: 0)
-            for i in 0..<arr.count {
-                let pointType = arr[i]
-                if(pointType.residentCanSubmit){
-                    let value = pointType.pointValue
-                    if(value != currentValue){
-                        if(pg.pointValue != 0){
-                            pointGroups.append(pg)
-                        }
-                        currentValue = value
-                        pg = PointGroup(val:value)
-                    }
-                    pg.add(pt: pointType)
-                }
-            }
-            if(pg.pointValue != 0){
-                pointGroups.append(pg)
-            }
-        }
-        return pointGroups
-    }
+
     
     func createUser(onDone:@escaping (_ err:Error?)->Void ){
         fbh.createUser(onDone: onDone)
@@ -81,11 +55,10 @@ class DataManager {
         fbh.getUserWhenLogIn(id: id, onDone: onDone)
     }
     
-    func refreshPointGroups(onDone:@escaping ([PointGroup])-> Void) {
+    func refreshPointTypes(onDone:@escaping ([PointType])-> Void) {
         fbh.retrievePointTypes(onDone: {(pointTypes:[PointType]) in
             self._pointTypes = pointTypes
-            self._pointGroups = self.sortIntoPointGroupsWithPermission(arr: pointTypes)
-            onDone(self._pointGroups!)
+            onDone(self._pointTypes!)
         })
     }
     
@@ -103,9 +76,29 @@ class DataManager {
         })
     }
     
+    
+    /// Add Point Log to the database
+    ///
+    /// - Parameters:
+    ///   - log: PointLog that was submitted
+    ///   - preApproved: Boolean that denotes whether the Log can skip RHP approval or not.
+    ///   - onDone: Closure function the be called once the code hits an error or finish. err is nil if no errors are found.
     func writePoints(log:PointLog, preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         // take in a point log, write it to house then write the ref to the user
         fbh.addPointLog(log: log, preApproved:preApproved, onDone: onDone)
+    }
+    
+    /// Add Award from REA/REC
+    ///
+    /// - Parameters:
+    ///   - log: Log to be awarded to the hosue
+    ///   - house: House that will be given the award
+    ///   - onDone: Closure function the be called once the code hits an error or finish. err is nil if no errors are found.
+    func awardPointsToHouseFromREC(log:PointLog, house:House, onDone:@escaping (_ err:Error?)->Void){
+        // This is to seperate the awards from the real earnings from the individual floors in the house
+        log.floorID = "Award"
+
+        fbh.addPointLog(log: log, preApproved: true, house: house.houseID, isRECGrantingAward: true, onDone: onDone)
     }
     
     func getUnconfirmedPointLogs()->[PointLog]?{
@@ -188,30 +181,56 @@ class DataManager {
             return;
         }
         if let id = User.get(.id) as! String?{
-            getUserWhenLogginIn(id: id, onDone: {(done:Bool) in return})
+            getUserWhenLogginIn(id: id, onDone: {(done:Bool) in
+                self.refreshPointTypes(onDone: {(onDone:[PointType]) in
+                    counter.increment()
+                    if((User.get(.permissionLevel) as! Int) == 1){
+                        //Check if user is an RHP
+                        self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in
+                            counter.increment()
+                            if(counter.value == 4){
+                                finished();
+                            }
+                        })
+                    }
+                    else{
+                        counter.increment()
+                        if(counter.value == 4){
+                            finished();
+                        }
+                    }
+                    
+                })
+                self.refreshHouses(onDone:{(onDone:[House]) in
+                    // Check if user is an REC, in which case you need to get the top scorers
+                    if((User.get(.permissionLevel) as! Int) == 2){
+                        self.getHouseScorers {
+                            counter.increment()
+                            if(counter.value == 4){
+                                finished();
+                            }
+                        }
+                    }
+                    //User is not REC, so they do not need house Scorers (yet)
+                    else{
+                        counter.increment()
+                        if(counter.value == 4){
+                            finished();
+                        }
+                    }
+                    
+                })
+                self.refreshRewards(onDone: {(rewards:[Reward]) in
+                    counter.increment()
+                    if(counter.value == 4){
+                        finished();
+                    }
+                })
+                
+            })
         }
         
-        refreshPointGroups(onDone: {(onDone:[PointGroup]) in
-            counter.increment()
-            self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in
-                counter.increment()
-                if(counter.value == 4){
-                    finished();
-                }
-            } )
-        })
-        refreshHouses(onDone:{(onDone:[House]) in
-            counter.increment()
-            if(counter.value == 4){
-                finished();
-            }
-        })
-        refreshRewards(onDone: {(rewards:[Reward]) in
-            counter.increment()
-            if(counter.value == 4){
-                finished();
-            }
-        })
+        
     }
     
     func getDocumentsDirectory() -> URL {
@@ -228,6 +247,17 @@ class DataManager {
     }
     
     func handlePointLink(id:String){
+        //Make sure that the user submitting a QR point is a Resident or an RHP
+        let userLevel = User.get(.permissionLevel) as! Int
+        if(userLevel != 0 && userLevel != 1){
+            DispatchQueue.main.async {
+                let banner = NotificationBanner(title: "Failure", subtitle: "Only residents can submit points.", style: .danger)
+                banner.duration = 2
+                banner.show()
+            }
+            return
+        }
+        
         fbh.findLinkWithID(id: id, onDone: {(linkOptional:Link?) in
             let group = DispatchGroup()
             group.enter()
@@ -263,7 +293,8 @@ class DataManager {
                     if(link.singleUse){
                         documentID = id
                     }
-                    self.fbh.addPointLog(log: log, documentID: documentID, preApproved: true, onDone: {(err:Error?) in
+                    //NOTE: preApproved is now changed to SingleUseCodes only
+                    self.fbh.addPointLog(log: log, documentID: documentID, preApproved: link.singleUse, onDone: {(err:Error?) in
                         if(err == nil){
                             DispatchQueue.main.async {
                                 let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
@@ -310,13 +341,74 @@ class DataManager {
     func setLinkActivation(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         fbh.setLinkActivation(link: link, withCompletion: onDone)
     }
+    
     func setLinkArchived(link:Link, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
         fbh.setLinkArchived(link: link, withCompletion: onDone)
     }
+    
+    func getAllPointLogsForHouse(house:String, onDone:@escaping (([PointLog]) -> Void)){
+        fbh.getAllPointLogsForHouse(house: house, onDone: onDone)
+    }
+    
+    func createPointType(pointType:PointType, onDone:@escaping ((_ err:Error?) ->Void)){
+        fbh.addPointType(pointType: pointType, onDone: onDone)
+    }
+    
+    func updatePointType(pointType:PointType, onDone:@escaping ((_ err:Error?) ->Void)){
+        fbh.updatePointType(pointType: pointType, onDone: onDone)
+    }
+    
+    func getTopScorersForHouse(house:House, onDone:@escaping () -> Void){
+        fbh.getTopScorersForHouse(house: house.houseID, onDone: {
+            models in
+            house.topScoreUsers = models
+            onDone()
+        })
+    }
+    
+    func getHouseScorers(onDone:@escaping ()->Void){
+        //This must be called after the houses are initialized
+        let counter = AppUtils.AtomicCounter.init(identifier: "TopScorersCounter")
+        for house in self._houses!{
+            getTopScorersForHouse(house: house) {
+                counter.increment()
+                if(counter.value == 5){
+                    onDone()
+                }
+            }
+        }
+    }
+    
+    func createReward(reward:Reward, image:UIImage, onDone:@escaping(_ err:Error?) ->Void){
+        fbh.uploadImageWithFilename(filename: reward.fileName, img: image) { (err) in
+            if(err == nil){
+                self.fbh.createReward(reward: reward, onDone: { (error) in
+                    onDone(error)
+                })
+            }
+            else{
+                onDone(err)
+            }
+        }
+    }
+    
+    func deleteReward(reward:Reward, onDone:@escaping (_ err:Error?) -> Void ){
+        fbh.deletePictureWithFilename(filename: reward.fileName) { (error) in
+            if(error == nil){
+                self.fbh.deleteReward(reward: reward, onDone: { (err) in
+                    onDone(err)
+                })
+            }
+            else{
+                onDone(error)
+            }
+        }
+    }
+    
 
     //Used for handling link to make sure all necessairy information is there
     func isInitialized() -> Bool {
-        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.name) != nil && User.get(.floorID) != nil
+        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.name) != nil && User.get(.permissionLevel) != nil
         
     }
 }

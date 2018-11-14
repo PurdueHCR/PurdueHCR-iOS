@@ -16,13 +16,15 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     @IBOutlet var generateButton: UIButton!
     
     var appendMethod:((_ link:Link)->Void)?
-    let pointTypes = DataManager.sharedManager.getPoints()!
+    var pointTypes = [PointType]()
     var selectedPoint = DataManager.sharedManager.getPoints()![0]
     var link:Link?
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        pointTypes = filter(points: DataManager.sharedManager.getPoints()!)
+        pickerView.reloadAllComponents()
         descriptionTextView.layer.borderColor = UIColor.black.cgColor
         descriptionTextView.layer.borderWidth = 1
         descriptionTextView.delegate = self
@@ -109,5 +111,29 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         
     }
     
+    func filter(points:[PointType]) -> [PointType] {
+        var types = [PointType]()
+        let permissionLevel = User.get(.permissionLevel) as! Int
+        for point in points {
+            // Permission Level 2 is REA/REC, then check if point is enabled, then check RHP/FHP permission
+            if( permissionLevel == 2 || (point.isEnabled && checkPermission(typePermission: point.permissionLevel, userPermission: permissionLevel))){
+                types.append(point)
+            }
+        }
+        return types
+    }
+    //Check permission Level when USER is not REA/REC
+    private func checkPermission(typePermission:Int, userPermission:Int) ->Bool {
+        return ((userPermission == 1 && typePermission != 1) || (userPermission == 3 && typePermission == 3))
+    }
 
+    @IBAction func switchChanged(_ sender: UISwitch) {
+        if(sender.isOn){
+            let alert = UIAlertController(title: "Multi-Scan Enabled", message: "If you allow residents to scan this code multiple times, each submission will be sent for RHP approval before points are awarded.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
 }

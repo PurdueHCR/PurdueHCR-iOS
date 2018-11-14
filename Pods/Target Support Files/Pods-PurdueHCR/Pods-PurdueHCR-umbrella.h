@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_Platinum_PointsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Platinum_PointsVersionString[];
+FOUNDATION_EXPORT double Pods_PurdueHCRVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_PurdueHCRVersionString[];
 

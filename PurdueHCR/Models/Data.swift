@@ -15,12 +15,16 @@ class PointType {
     var pointDescription:String
     var residentCanSubmit:Bool
     var pointID:Int
+    var permissionLevel:Int
+    var isEnabled:Bool
     
-    init(pv:Int,pd:String,rcs:Bool,pid:Int){
+    init(pv:Int,pd:String,rcs:Bool,pid:Int, permissionLevel:Int, isEnabled:Bool){
         self.pointValue = pv
         self.pointDescription = pd
         self.residentCanSubmit = rcs
         self.pointID = pid
+        self.permissionLevel = permissionLevel
+        self.isEnabled = isEnabled
     }
 
 }
@@ -30,12 +34,15 @@ class House {
     var totalPoints: Int
     var hexColor: String
     var numberOfResidents: Int
+    var topScoreUsers : [UserModel]?
     init(id:String, points:Int,hexColor:String, numberOfResidents:Int ){
         self.houseID = id
         self.totalPoints = points
         self.hexColor = hexColor
         self.numberOfResidents = numberOfResidents
     }
+    
+    
 }
 extension House:Equatable {
     static func == (lhs: House, rhs: House) -> Bool {
@@ -73,6 +80,7 @@ class PointLog {
         self.residentRef = residentRef
     }
 }
+
 extension PointLog: Equatable {
     static func == (lhs: PointLog, rhs: PointLog) -> Bool {
         return
@@ -163,4 +171,13 @@ class LinkList {
     }
 }
 
+class UserModel {
+    var userName:String
+    var totalPoints:Int
+    
+    init(name:String, points:Int) {
+        self.userName = name
+        self.totalPoints = points
+    }
+}
 
