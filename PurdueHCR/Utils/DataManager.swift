@@ -76,9 +76,29 @@ class DataManager {
         })
     }
     
+    
+    /// Add Point Log to the database
+    ///
+    /// - Parameters:
+    ///   - log: PointLog that was submitted
+    ///   - preApproved: Boolean that denotes whether the Log can skip RHP approval or not.
+    ///   - onDone: Closure function the be called once the code hits an error or finish. err is nil if no errors are found.
     func writePoints(log:PointLog, preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         // take in a point log, write it to house then write the ref to the user
         fbh.addPointLog(log: log, preApproved:preApproved, onDone: onDone)
+    }
+    
+    /// Add Award from REA/REC
+    ///
+    /// - Parameters:
+    ///   - log: Log to be awarded to the hosue
+    ///   - house: House that will be given the award
+    ///   - onDone: Closure function the be called once the code hits an error or finish. err is nil if no errors are found.
+    func awardPointsToHouseFromREC(log:PointLog, house:House, onDone:@escaping (_ err:Error?)->Void){
+        // This is to seperate the awards from the real earnings from the individual floors in the house
+        log.floorID = "Award"
+
+        fbh.addPointLog(log: log, preApproved: true, house: house.houseID, isRECGrantingAward: true, onDone: onDone)
     }
     
     func getUnconfirmedPointLogs()->[PointLog]?{

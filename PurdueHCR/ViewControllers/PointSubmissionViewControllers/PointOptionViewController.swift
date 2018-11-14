@@ -186,7 +186,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     func checkPermission(pointType:PointType)->Bool {
-        return pointType.residentCanSubmit && pointType.isEnabled()
+        return pointType.residentCanSubmit && pointType.isEnabled
     }
 }
 

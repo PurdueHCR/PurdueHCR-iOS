@@ -99,12 +99,20 @@ class FirebaseHelper {
         }
     }
     
-    // Write the point to the house points log and write the reference to the user
-    // put in onDone to handle what happens when it returns
-    func addPointLog(log:PointLog, documentID:String = "",preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void){
-        let house = User.get(.house) as! String
+
+    /// Adds Point Log submission to the Database
+    ///
+    /// - Parameters:
+    ///   - log: Point Log that is to be added to the database
+    ///   - documentID: specified id for Point Log in the database (Used for Single Use Qr codes)
+    ///   - preApproved: Boolean that denotes whether the Log can skip RHP approval or not.
+    ///   - house: If the house is different than the saved house for the user (Used for REC Awarding points)
+    ///   - isRECGrantingAward: Boolean to denote that this point is being added by the RHP
+    ///   - onDone: Closure function the be called once the code hits an error or finishs. err is nil if no errors are found.
+    func addPointLog(log:PointLog, documentID:String = "",preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         var ref: DocumentReference? = nil
-        if(!log.type.isEnabled){
+        //If point type is disabled and it is not an REC granting an award, warn that it is disabled
+        if(!log.type.isEnabled && !isRECGrantingAward){
             onDone(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
             return
         }
@@ -130,7 +138,7 @@ class FirebaseHelper {
                     {err in
                         if(err == nil && preApproved)
                         {
-                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), onDone: onDone)
+                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, onDone: onDone)
                         }
                         else{
                             onDone(err)
@@ -163,7 +171,7 @@ class FirebaseHelper {
                             {err in
                                 if(err == nil && preApproved)
                                 {
-                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), onDone: onDone)
+                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, onDone: onDone)
                                 }
                                 else{
                                     onDone(err)
@@ -469,15 +477,30 @@ class FirebaseHelper {
         }
     }
     
-    func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference,onDone:@escaping (_ err:Error?)->Void)
+    /// Handles the updating of the house points for House and User in firebase
+    /// Note this will need to be changed when we switch to API and MySQL database
+    ///
+    /// - Parameters:
+    ///   - log: Point Log that contains points to be given to House and Resident
+    ///   - userRef: Reference to the User in Firebase that needs to be awarded points
+    ///   - houseRef: Reference to the house that will be given the points
+    ///   - isRECGrantingAward: Boolean (defaults to false) true if REC is giving award to entire house
+    ///   - onDone: Closure function to be called on completion. Err is nil if no errors are thrown.
+    func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference, isRECGrantingAward:Bool = false, onDone:@escaping (_ err:Error?)->Void)
     {
         updateHousePoints(log: log, houseRef: houseRef, onDone: {(err:Error?)in
             if(err != nil){
                 onDone(err)
             }
-            self.updateUserPoints(log: log, userRef: userRef, onDone: {(errDeep:Error?) in
-                onDone(errDeep)
-            })
+            //If REC is giving award to House, dont give the points to a specific user
+            else if(!isRECGrantingAward){
+                self.updateUserPoints(log: log, userRef: userRef, onDone: {(errDeep:Error?) in
+                    onDone(errDeep)
+                })
+            }
+            else{
+                onDone(nil)
+            }
         })
     }
     

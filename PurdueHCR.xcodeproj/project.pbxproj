@@ -36,6 +36,8 @@
 		D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */; };
 		D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F43B0210AA00700D3982D /* PointDescriptionView.swift */; };
 		D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */; };
+		D357063B219CB2E10062430E /* GrantAwardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D357063A219CB2E10062430E /* GrantAwardTableViewController.swift */; };
+		D357063D219CB4760062430E /* SubmitGrantedAwardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D357063C219CB4760062430E /* SubmitGrantedAwardViewController.swift */; };
 		D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */; };
 		D38ACF2F21897085000E0539 /* RECPointCreationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38ACF2E21897085000E0539 /* RECPointCreationTableViewController.swift */; };
 		D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */; };
@@ -112,6 +114,8 @@
 		D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PointDescriptionView.xib; sourceTree = "<group>"; };
 		D33F43B0210AA00700D3982D /* PointDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDescriptionView.swift; sourceTree = "<group>"; };
 		D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		D357063A219CB2E10062430E /* GrantAwardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrantAwardTableViewController.swift; sourceTree = "<group>"; };
+		D357063C219CB4760062430E /* SubmitGrantedAwardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitGrantedAwardViewController.swift; sourceTree = "<group>"; };
 		D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D38ACF2E21897085000E0539 /* RECPointCreationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RECPointCreationTableViewController.swift; sourceTree = "<group>"; };
 		D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +308,8 @@
 				D3183D9E2186D3D2007A1309 /* RECHouse.storyboard */,
 				D3183DA62186DF18007A1309 /* HouseCompetitionOverviewTableViewController.swift */,
 				D3183DA42186DEFF007A1309 /* HouseTableViewController.swift */,
+				D357063A219CB2E10062430E /* GrantAwardTableViewController.swift */,
+				D357063C219CB4760062430E /* SubmitGrantedAwardViewController.swift */,
 			);
 			path = HouseViewControllers;
 			sourceTree = "<group>";
@@ -645,6 +651,7 @@
 				D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */,
 				D323C0F12192200300CA839C /* RECRewardsTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,
+				D357063D219CB4760062430E /* SubmitGrantedAwardViewController.swift in Sources */,
 				D33F43AA2106982100D3982D /* AnimatedLoadingViewController.swift in Sources */,
 				D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */,
 				D3183DA72186DF18007A1309 /* HouseCompetitionOverviewTableViewController.swift in Sources */,
@@ -652,6 +659,7 @@
 				D3D062C720E82A6500E8B3A3 /* TypeSubmitViewController.swift in Sources */,
 				D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */,
 				D3D062C320E8219C00E8B3A3 /* LogInViewController.swift in Sources */,
+				D357063B219CB2E10062430E /* GrantAwardTableViewController.swift in Sources */,
 				D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */,
 				D323C0F32192201200CA839C /* RECRewardCreationTableViewController.swift in Sources */,
 				D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 
 class HouseCompetitionOverviewTableViewController: UITableViewController {
 
+    @IBOutlet var houseGraph: HousePointsCompareView!
     
     let houses = ["Copper","Palladium","Platinum","Silver","Titanium"]
     @IBOutlet var houseSelectionControl: UISegmentedControl!
@@ -24,10 +25,15 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
     @IBOutlet var fifthPlaceLabel: UILabel!
     @IBOutlet var fifthPointsLabel: UILabel!
     
+     var refresher: UIRefreshControl?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        refresher = UIRefreshControl()
+        refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refresher
         setPlaceLabels(house: getHouseWithName(name: "Copper")!)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -78,10 +84,15 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
     
     // This function is called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        // get a reference to the second view controller
-        let nextViewController = segue.destination as! HouseTableViewController
-        nextViewController.houseName = self.houses[houseSelectionControl.selectedSegmentIndex]
+        if(segue.identifier == "show_point_breakdown"){
+            // get a reference to the second view controller
+            let nextViewController = segue.destination as! HouseTableViewController
+            nextViewController.houseName = self.houses[houseSelectionControl.selectedSegmentIndex]
+        }
+        else if( segue.identifier == "show_give_award"){
+            let nextViewController = segue.destination as! GrantAwardTableViewController
+            nextViewController.house = self.getHouseWithName(name: self.houses[houseSelectionControl.selectedSegmentIndex])
+        }
         
     }
     
@@ -94,4 +105,17 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         return nil
     }
 
+    
+    @objc func refreshData(){
+        DataManager.sharedManager.refreshHouses(onDone: {(hs:[House]) in
+            self.houseGraph.refreshDataSet()
+            DataManager.sharedManager.getHouseScorers {
+                self.selectHouse(self.houseSelectionControl)
+                self.refreshControl?.endRefreshing()
+            }
+            
+        })
+    }
+
+    
 }
