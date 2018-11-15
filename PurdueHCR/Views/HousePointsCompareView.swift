@@ -66,21 +66,36 @@ class HousePointsCompareView: UIView {
         
         
         let data = BarChartData(dataSets: [fourthplace,secondPlace,firstPlace,thirdPlace,fifthPlace])
-
-        chart.data = data
-        chart.drawGridBackgroundEnabled = false
-        chart.xAxis.drawLabelsEnabled = false
+        
+        
+        chart.rightAxis.enabled = false
+        chart.rightAxis.drawLabelsEnabled = false
+        chart.rightAxis.drawGridLinesEnabled = false
+        chart.rightAxis.drawZeroLineEnabled = false
+        chart.rightAxis.axisMinimum = 0.0
+        
         chart.leftAxis.axisMinimum = 0.0
         chart.leftAxis.enabled = false
-        chart.rightAxis.enabled = false
+        chart.leftAxis.drawLabelsEnabled = false
+        chart.leftAxis.drawGridLinesEnabled = false
+        chart.leftAxis.drawZeroLineEnabled = false
+        
         chart.xAxis.enabled = false
+        chart.xAxis.drawLabelsEnabled = false
+        
+        
+        chart.drawBordersEnabled = false
         chart.chartDescription?.enabled = false
-        chart.setScaleEnabled(false)
+        chart.setScaleEnabled(false);
         chart.isUserInteractionEnabled = false
         chart.drawBordersEnabled = false
         chart.noDataText = "Loading House Points..."
         chart.legend.horizontalAlignment = Legend.HorizontalAlignment.center
         chart.autoScaleMinMaxEnabled = false
+        chart.drawGridBackgroundEnabled = false
+        
+        
+        
         
         chart.data = data
 
