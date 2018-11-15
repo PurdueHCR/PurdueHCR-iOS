@@ -813,7 +813,11 @@ static void set_write_state(grpc_chttp2_transport* t,
                                  write_state_name(st), reason));
   t->write_state = st;
   if (st == GRPC_CHTTP2_WRITE_STATE_IDLE) {
-    GRPC_CLOSURE_LIST_SCHED(&t->run_after_write);
+    grpc_chttp2_stream* s;
+    while (grpc_chttp2_list_pop_waiting_for_write_stream(t, &s)) {
+      GRPC_CLOSURE_LIST_SCHED(&s->run_after_write);
+      GRPC_CHTTP2_STREAM_UNREF(s, "chttp2:write_closure_sched");
+    }
     if (t->close_transport_on_writes_finished != nullptr) {
       grpc_error* err = t->close_transport_on_writes_finished;
       t->close_transport_on_writes_finished = nullptr;
@@ -1149,12 +1153,10 @@ static void maybe_start_some_streams(grpc_chttp2_transport* t) {
   }
 }
 
-/* Flag that this closure barrier wants stats to be updated before finishing */
-#define CLOSURE_BARRIER_STATS_BIT (1 << 0)
 /* Flag that this closure barrier may be covering a write in a pollset, and so
    we should not complete this closure until we can prove that the write got
    scheduled */
-#define CLOSURE_BARRIER_MAY_COVER_WRITE (1 << 1)
+#define CLOSURE_BARRIER_MAY_COVER_WRITE (1 << 0)
 /* First bit of the reference count, stored in the high order bits (with the low
    bits being used for flags defined above) */
 #define CLOSURE_BARRIER_FIRST_REF_BIT (1 << 16)
@@ -1206,15 +1208,14 @@ void grpc_chttp2_complete_closure_step(grpc_chttp2_transport* t,
         grpc_error_add_child(closure->error_data.error, error);
   }
   if (closure->next_data.scratch < CLOSURE_BARRIER_FIRST_REF_BIT) {
-    if (closure->next_data.scratch & CLOSURE_BARRIER_STATS_BIT) {
-      grpc_transport_move_stats(&s->stats, s->collecting_stats);
-      s->collecting_stats = nullptr;
-    }
-    if ((t->write_state == GRPC_CHTTP2_WRITE_STATE_IDLE) ||
+    if (s->seen_error || (t->write_state == GRPC_CHTTP2_WRITE_STATE_IDLE) ||
         !(closure->next_data.scratch & CLOSURE_BARRIER_MAY_COVER_WRITE)) {
       GRPC_CLOSURE_RUN(closure, closure->error_data.error);
     } else {
-      grpc_closure_list_append(&t->run_after_write, closure,
+      if (grpc_chttp2_list_add_waiting_for_write_stream(t, s)) {
+        GRPC_CHTTP2_STREAM_REF(s, "chttp2:pending_write_closure");
+      }
+      grpc_closure_list_append(&s->run_after_write, closure,
                                closure->error_data.error);
     }
   }
@@ -1351,21 +1352,20 @@ static void perform_stream_op_locked(void* stream_op,
   }
 
   grpc_closure* on_complete = op->on_complete;
+  // TODO(roth): This is a hack needed because we use data inside of the
+  // closure itself to do the barrier calculation (i.e., to ensure that
+  // we don't schedule the closure until all ops in the batch have been
+  // completed).  This can go away once we move to a new C++ closure API
+  // that provides the ability to create a barrier closure.
   if (on_complete == nullptr) {
-    on_complete =
-        GRPC_CLOSURE_CREATE(do_nothing, nullptr, grpc_schedule_on_exec_ctx);
+    on_complete = GRPC_CLOSURE_INIT(&op->handler_private.closure, do_nothing,
+                                    nullptr, grpc_schedule_on_exec_ctx);
   }
 
   /* use final_data as a barrier until enqueue time; the inital counter is
      dropped at the end of this function */
   on_complete->next_data.scratch = CLOSURE_BARRIER_FIRST_REF_BIT;
   on_complete->error_data.error = GRPC_ERROR_NONE;
-
-  if (op->collect_stats) {
-    GPR_ASSERT(s->collecting_stats == nullptr);
-    s->collecting_stats = op_payload->collect_stats.collect_stats;
-    on_complete->next_data.scratch |= CLOSURE_BARRIER_STATS_BIT;
-  }
 
   if (op->cancel_stream) {
     GRPC_STATS_INC_HTTP2_OP_CANCEL();
@@ -1600,8 +1600,11 @@ static void perform_stream_op_locked(void* stream_op,
 
   if (op->recv_trailing_metadata) {
     GRPC_STATS_INC_HTTP2_OP_RECV_TRAILING_METADATA();
+    GPR_ASSERT(s->collecting_stats == nullptr);
+    s->collecting_stats = op_payload->recv_trailing_metadata.collect_stats;
     GPR_ASSERT(s->recv_trailing_metadata_finished == nullptr);
-    s->recv_trailing_metadata_finished = add_closure_barrier(on_complete);
+    s->recv_trailing_metadata_finished =
+        op_payload->recv_trailing_metadata.recv_trailing_metadata_ready;
     s->recv_trailing_metadata =
         op_payload->recv_trailing_metadata.recv_trailing_metadata;
     s->final_metadata_requested = true;
@@ -1960,11 +1963,12 @@ void grpc_chttp2_maybe_complete_recv_trailing_metadata(grpc_chttp2_transport* t,
     }
     if (s->read_closed && s->frame_storage.length == 0 && !pending_data &&
         s->recv_trailing_metadata_finished != nullptr) {
+      grpc_transport_move_stats(&s->stats, s->collecting_stats);
+      s->collecting_stats = nullptr;
       grpc_chttp2_incoming_metadata_buffer_publish(&s->metadata_buffer[1],
                                                    s->recv_trailing_metadata);
-      grpc_chttp2_complete_closure_step(
-          t, s, &s->recv_trailing_metadata_finished, GRPC_ERROR_NONE,
-          "recv_trailing_metadata_finished");
+      null_then_run_closure(&s->recv_trailing_metadata_finished,
+                            GRPC_ERROR_NONE);
     }
   }
 }
@@ -2012,6 +2016,10 @@ static void remove_stream(grpc_chttp2_transport* t, uint32_t id,
 
 void grpc_chttp2_cancel_stream(grpc_chttp2_transport* t, grpc_chttp2_stream* s,
                                grpc_error* due_to_error) {
+  GRPC_CLOSURE_LIST_SCHED(&s->run_after_write);
+  if (grpc_chttp2_list_remove_waiting_for_write_stream(t, s)) {
+    GRPC_CHTTP2_STREAM_UNREF(s, "chttp2:pending_write_closure");
+  }
   if (!t->is_client && !s->sent_trailing_metadata &&
       grpc_error_has_clear_grpc_status(due_to_error)) {
     close_from_api(t, s, due_to_error);
@@ -2666,6 +2674,9 @@ static void init_keepalive_ping_locked(void* arg, grpc_error* error) {
 
 static void start_keepalive_ping_locked(void* arg, grpc_error* error) {
   grpc_chttp2_transport* t = static_cast<grpc_chttp2_transport*>(arg);
+  if (error != GRPC_ERROR_NONE) {
+    return;
+  }
   GRPC_CHTTP2_REF_TRANSPORT(t, "keepalive watchdog");
   grpc_timer_init(&t->keepalive_watchdog_timer,
                   grpc_core::ExecCtx::Get()->Now() + t->keepalive_timeout,

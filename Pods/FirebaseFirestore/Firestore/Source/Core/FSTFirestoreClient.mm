@@ -31,12 +31,10 @@
 #import "Firestore/Source/Core/FSTSyncEngine.h"
 #import "Firestore/Source/Core/FSTTransaction.h"
 #import "Firestore/Source/Core/FSTView.h"
-#import "Firestore/Source/Local/FSTEagerGarbageCollector.h"
 #import "Firestore/Source/Local/FSTLevelDB.h"
 #import "Firestore/Source/Local/FSTLocalSerializer.h"
 #import "Firestore/Source/Local/FSTLocalStore.h"
 #import "Firestore/Source/Local/FSTMemoryPersistence.h"
-#import "Firestore/Source/Local/FSTNoOpGarbageCollector.h"
 #import "Firestore/Source/Model/FSTDocument.h"
 #import "Firestore/Source/Model/FSTDocumentSet.h"
 #import "Firestore/Source/Remote/FSTDatastore.h"
@@ -58,7 +56,9 @@ using firebase::firestore::auth::User;
 using firebase::firestore::core::DatabaseInfo;
 using firebase::firestore::model::DatabaseId;
 using firebase::firestore::model::DocumentKeySet;
-
+using firebase::firestore::model::OnlineState;
+using firebase::firestore::util::Path;
+using firebase::firestore::util::Status;
 using firebase::firestore::util::internal::Executor;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -128,11 +128,12 @@ NS_ASSUME_NONNULL_BEGIN
     _workerDispatchQueue = workerDispatchQueue;
 
     auto userPromise = std::make_shared<std::promise<User>>();
+    bool initialized = false;
 
-    __weak typeof(self) weakSelf = self;
-    auto userChangeListener = [initialized = false, userPromise, weakSelf,
-                               workerDispatchQueue](User user) mutable {
-      typeof(self) strongSelf = weakSelf;
+    __weak __typeof__(self) weakSelf = self;
+    auto credentialChangeListener = [initialized, userPromise, weakSelf,
+                                     workerDispatchQueue](User user) mutable {
+      __typeof__(self) strongSelf = weakSelf;
       if (!strongSelf) return;
 
       if (!initialized) {
@@ -140,14 +141,14 @@ NS_ASSUME_NONNULL_BEGIN
         userPromise->set_value(user);
       } else {
         [workerDispatchQueue dispatchAsync:^{
-          [strongSelf userDidChange:user];
+          [strongSelf credentialDidChangeWithUser:user];
         }];
       }
     };
 
-    _credentialsProvider->SetUserChangeListener(userChangeListener);
+    _credentialsProvider->SetCredentialChangeListener(credentialChangeListener);
 
-    // Defer initialization until we get the current user from the userChangeListener. This is
+    // Defer initialization until we get the current user from the credentialChangeListener. This is
     // guaranteed to be synchronously dispatched onto our worker queue, so we will be initialized
     // before any subsequently queued work runs.
     [_workerDispatchQueue dispatchAsync:^{
@@ -161,42 +162,36 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initializeWithUser:(const User &)user usePersistence:(BOOL)usePersistence {
   // Do all of our initialization on our own dispatch queue.
   [self.workerDispatchQueue verifyIsCurrentQueue];
+  LOG_DEBUG("Initializing. Current user: %s", user.uid());
 
   // Note: The initialization work must all be synchronous (we can't dispatch more work) since
   // external write/listen operations could get queued to run before that subsequent work
   // completes.
-  id<FSTGarbageCollector> garbageCollector;
   if (usePersistence) {
-    // TODO(http://b/33384523): For now we just disable garbage collection when persistence is
-    // enabled.
-    garbageCollector = [[FSTNoOpGarbageCollector alloc] init];
-
-    NSString *dir = [FSTLevelDB storageDirectoryForDatabaseInfo:*self.databaseInfo
-                                             documentsDirectory:[FSTLevelDB documentsDirectory]];
+    Path dir = [FSTLevelDB storageDirectoryForDatabaseInfo:*self.databaseInfo
+                                        documentsDirectory:[FSTLevelDB documentsDirectory]];
 
     FSTSerializerBeta *remoteSerializer =
         [[FSTSerializerBeta alloc] initWithDatabaseID:&self.databaseInfo->database_id()];
     FSTLocalSerializer *serializer =
         [[FSTLocalSerializer alloc] initWithRemoteSerializer:remoteSerializer];
 
-    _persistence = [[FSTLevelDB alloc] initWithDirectory:dir serializer:serializer];
+    _persistence = [[FSTLevelDB alloc] initWithDirectory:std::move(dir) serializer:serializer];
   } else {
-    garbageCollector = [[FSTEagerGarbageCollector alloc] init];
-    _persistence = [FSTMemoryPersistence persistence];
+    _persistence = [FSTMemoryPersistence persistenceWithEagerGC];
   }
 
-  NSError *error;
-  if (![_persistence start:&error]) {
+  Status status = [_persistence start];
+  if (!status.ok()) {
     // If local storage fails to start then just throw up our hands: the error is unrecoverable.
     // There's nothing an end-user can do and nearly all failures indicate the developer is doing
     // something grossly wrong so we should stop them cold in their tracks with a failure they
     // can't ignore.
-    [NSException raise:NSInternalInconsistencyException format:@"Failed to open DB: %@", error];
+    [NSException raise:NSInternalInconsistencyException
+                format:@"Failed to open DB: %s", status.ToString().c_str()];
   }
 
-  _localStore = [[FSTLocalStore alloc] initWithPersistence:_persistence
-                                          garbageCollector:garbageCollector
-                                               initialUser:user];
+  _localStore = [[FSTLocalStore alloc] initWithPersistence:_persistence initialUser:user];
 
   FSTDatastore *datastore = [FSTDatastore datastoreWithDatabase:self.databaseInfo
                                             workerDispatchQueue:self.workerDispatchQueue
@@ -223,14 +218,14 @@ NS_ASSUME_NONNULL_BEGIN
   [_remoteStore start];
 }
 
-- (void)userDidChange:(const User &)user {
+- (void)credentialDidChangeWithUser:(const User &)user {
   [self.workerDispatchQueue verifyIsCurrentQueue];
 
-  LOG_DEBUG("User Changed: %s", user.uid());
-  [self.syncEngine userDidChange:user];
+  LOG_DEBUG("Credential Changed. Current user: %s", user.uid());
+  [self.syncEngine credentialDidChangeWithUser:user];
 }
 
-- (void)applyChangedOnlineState:(FSTOnlineState)onlineState {
+- (void)applyChangedOnlineState:(OnlineState)onlineState {
   [self.syncEngine applyChangedOnlineState:onlineState];
   [self.eventManager applyChangedOnlineState:onlineState];
 }
@@ -255,7 +250,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)shutdownWithCompletion:(nullable FSTVoidErrorBlock)completion {
   [self.workerDispatchQueue dispatchAsync:^{
-    self->_credentialsProvider->SetUserChangeListener(nullptr);
+    self->_credentialsProvider->SetCredentialChangeListener(nullptr);
 
     [self.remoteStore shutdown];
     [self.persistence shutdown];
@@ -290,23 +285,29 @@ NS_ASSUME_NONNULL_BEGIN
                                             NSError *_Nullable error))completion {
   [self.workerDispatchQueue dispatchAsync:^{
     FSTMaybeDocument *maybeDoc = [self.localStore readDocument:doc.key];
+    FIRDocumentSnapshot *_Nullable result = nil;
+    NSError *_Nullable error = nil;
     if (maybeDoc) {
-      completion([FIRDocumentSnapshot snapshotWithFirestore:doc.firestore
-                                                documentKey:doc.key
-                                                   document:(FSTDocument *)maybeDoc
-                                                  fromCache:YES],
-                 nil);
+      FSTDocument *_Nullable document =
+          ([maybeDoc isKindOfClass:[FSTDocument class]]) ? (FSTDocument *)maybeDoc : nil;
+      result = [FIRDocumentSnapshot snapshotWithFirestore:doc.firestore
+                                              documentKey:doc.key
+                                                 document:document
+                                                fromCache:YES];
     } else {
-      completion(nil,
-                 [NSError errorWithDomain:FIRFirestoreErrorDomain
-                                     code:FIRFirestoreErrorCodeUnavailable
-                                 userInfo:@{
-                                   NSLocalizedDescriptionKey :
-                                       @"Failed to get document from cache. (However, this "
-                                       @"document may exist on the server. Run again without "
-                                       @"setting source to FIRFirestoreSourceCache to attempt to "
-                                       @"retrieve the document from the server.)",
-                                 }]);
+      error = [NSError errorWithDomain:FIRFirestoreErrorDomain
+                                  code:FIRFirestoreErrorCodeUnavailable
+                              userInfo:@{
+                                NSLocalizedDescriptionKey :
+                                    @"Failed to get document from cache. (However, this document "
+                                    @"may exist on the server. Run again without setting source to "
+                                    @"FIRFirestoreSourceCache to attempt to retrieve the document "
+                                    @"from the server.)",
+                              }];
+    }
+
+    if (completion) {
+      self->_userExecutor->Execute([=] { completion(result, error); });
     }
   }];
 }
@@ -328,11 +329,14 @@ NS_ASSUME_NONNULL_BEGIN
         [FIRSnapshotMetadata snapshotMetadataWithPendingWrites:snapshot.hasPendingWrites
                                                      fromCache:snapshot.fromCache];
 
-    completion([FIRQuerySnapshot snapshotWithFirestore:query.firestore
-                                         originalQuery:query.query
-                                              snapshot:snapshot
-                                              metadata:metadata],
-               nil);
+    FIRQuerySnapshot *result = [FIRQuerySnapshot snapshotWithFirestore:query.firestore
+                                                         originalQuery:query.query
+                                                              snapshot:snapshot
+                                                              metadata:metadata];
+
+    if (completion) {
+      self->_userExecutor->Execute([=] { completion(result, nil); });
+    }
   }];
 }
 

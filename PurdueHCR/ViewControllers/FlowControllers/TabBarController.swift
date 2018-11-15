@@ -19,14 +19,13 @@ class TabBarController: UITabBarController {
         var viewControllers : [UIViewController] = []
         if (p == 0){
             //Resident Controllers
-            viewControllers.append(linkPointSubmissionViewController())
             viewControllers.append(linkProfileViewController())
+            viewControllers.append(linkPointSubmissionViewController())
         }
         else if( p == 1){
             //RHP Controllers
-            viewControllers.append(linkPointSubmissionViewController())
             viewControllers.append(linkProfileViewController())
-
+            viewControllers.append(linkPointSubmissionViewController())
             viewControllers.append(linkPointApprovalViewController())
             viewControllers.append(linkQRCodeViewController())
         }

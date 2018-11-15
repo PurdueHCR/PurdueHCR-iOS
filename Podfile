@@ -2,7 +2,7 @@ platform :ios, '11.0'
 use_frameworks!
 
 target 'PurdueHCR' do
-  pod 'Cely', :git => 'https://github.com/chaione/Cely', :branch => 'master' 
+  pod 'Cely'
   pod 'ValueStepper'
   pod 'Firebase/Core'
   pod 'Firebase/Storage'

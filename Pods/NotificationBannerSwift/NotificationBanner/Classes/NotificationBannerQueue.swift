@@ -1,7 +1,7 @@
 /*
  
  The MIT License (MIT)
- Copyright (c) 2017 Dalton Hinterscher
+ Copyright (c) 2017-2018 Dalton Hinterscher
  
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -18,11 +18,13 @@
 
 import UIKit
 
-public enum QueuePosition {
+@objc
+public enum QueuePosition: Int {
     case back
     case front
 }
 
+@objcMembers
 open class NotificationBannerQueue: NSObject {
     
     /// The default instance of the NotificationBannerQueue
@@ -61,6 +63,17 @@ open class NotificationBannerQueue: NSObject {
             banners.insert(banner, at: 0)
         }
         
+    }
+    
+    /**
+        Removes a banner from the queue
+        -parameter banner: A notification banner to remove from the queue.
+     */
+    func removeBanner(_ banner: BaseNotificationBanner) {
+        
+        if let index = banners.firstIndex(of: banner) {
+            banners.remove(at: index)
+        }
     }
     
     /**

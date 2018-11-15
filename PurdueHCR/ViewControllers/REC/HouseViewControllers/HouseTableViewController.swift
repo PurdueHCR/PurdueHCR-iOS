@@ -42,7 +42,7 @@ class HouseTableViewController: UITableViewController {
         
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = .gray
+        activityIndicator.style = .gray
         view.addSubview(activityIndicator)
         
         

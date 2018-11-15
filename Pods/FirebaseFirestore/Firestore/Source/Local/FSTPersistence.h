@@ -16,17 +16,21 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Firestore/Source/Core/FSTTypes.h"
-
 #include "Firestore/core/src/firebase/firestore/auth/user.h"
+#include "Firestore/core/src/firebase/firestore/model/document_key.h"
+#include "Firestore/core/src/firebase/firestore/model/types.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
+#include "Firestore/core/src/firebase/firestore/util/status.h"
 
 @class FSTDocumentKey;
+@class FSTQueryData;
+@class FSTReferenceSet;
 @protocol FSTMutationQueue;
 @protocol FSTQueryCache;
-@class FSTQueryData;
+@protocol FSTReferenceDelegate;
 @protocol FSTRemoteDocumentCache;
-@class FSTReferenceSet;
+
+struct FSTTransactionRunner;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,17 +64,14 @@ NS_ASSUME_NONNULL_BEGIN
  * FSTPersistence. The cost is that the FSTLocalStore needs to be slightly careful about the order
  * of its reads and writes in order to avoid relying on being able to read back uncommitted writes.
  */
-struct FSTTransactionRunner;
-@protocol FSTReferenceDelegate;
 @protocol FSTPersistence <NSObject>
 
 /**
  * Starts persistent storage, opening the database or similar.
  *
- * @param error An error object that will be populated if startup fails.
- * @return YES if persistent storage started successfully, NO otherwise.
+ * @return A Status object that will be populated with an error message if startup fails.
  */
-- (BOOL)start:(NSError **)error;
+- (firebase::firestore::util::Status)start;
 
 /** Releases any resources held during eager shutdown. */
 - (void)shutdown;
@@ -97,7 +98,10 @@ struct FSTTransactionRunner;
  * This property provides access to hooks around the document reference lifecycle. It is initially
  * nullable while being implemented, but the goal is to eventually have it be non-nil.
  */
-@property(nonatomic, readonly, strong) _Nullable id<FSTReferenceDelegate> referenceDelegate;
+@property(nonatomic, readonly, strong) id<FSTReferenceDelegate> referenceDelegate;
+
+@property(nonatomic, readonly)
+    firebase::firestore::model::ListenSequenceNumber currentSequenceNumber;
 
 @end
 
@@ -134,24 +138,27 @@ struct FSTTransactionRunner;
 - (void)removeTarget:(FSTQueryData *)queryData;
 
 /**
- * Notify the delegate that the given document was added to the given target.
+ * Notify the delegate that the given document was added to a target.
  */
-- (void)addReference:(FSTDocumentKey *)key target:(FSTTargetID)targetID;
+- (void)addReference:(const firebase::firestore::model::DocumentKey &)key;
 
 /**
- * Notify the delegate that the given document was removed from the given target.
+ * Notify the delegate that the given document was removed from a target.
  */
-- (void)removeReference:(FSTDocumentKey *)key target:(FSTTargetID)targetID;
+- (void)removeReference:(const firebase::firestore::model::DocumentKey &)key;
 
 /**
  * Notify the delegate that a document is no longer being mutated by the user.
  */
-- (void)removeMutationReference:(FSTDocumentKey *)key;
+- (void)removeMutationReference:(const firebase::firestore::model::DocumentKey &)key;
 
 /**
  * Notify the delegate that a limbo document was updated.
  */
-- (void)limboDocumentUpdated:(FSTDocumentKey *)key;
+- (void)limboDocumentUpdated:(const firebase::firestore::model::DocumentKey &)key;
+
+@property(nonatomic, readonly)
+    firebase::firestore::model::ListenSequenceNumber currentSequenceNumber;
 
 @end
 

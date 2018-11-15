@@ -89,7 +89,7 @@ class RHPApprovalTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 
     
@@ -176,7 +176,7 @@ class RHPApprovalTableViewController: UITableViewController {
                 else{
                     self.notify(title: "Success", subtitle: "Point rejected", style: .success)
                 }
-                self.resfreshData()
+                //self.resfreshData()
             }
         })
     }

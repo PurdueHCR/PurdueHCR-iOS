@@ -32,13 +32,24 @@ namespace util {
 // outlive the operation, but it *cannot* outlive the executor that created it.
 class DelayedOperation {
  public:
+  // Creates an empty `DelayedOperation` not associated with any actual
+  // operation. Calling `Cancel` on it is a no-op.
   DelayedOperation() {
+  }
+
+  // Returns whether this `DelayedOperation` is associated with an actual
+  // operation.
+  explicit operator bool() const {
+    return static_cast<bool>(cancel_func_);
   }
 
   // If the operation has not been run yet, cancels the operation. Otherwise,
   // this function is a no-op.
   void Cancel() {
-    cancel_func_();
+    if (cancel_func_) {
+      cancel_func_();
+      cancel_func_ = {};
+    }
   }
 
   // Internal use only.

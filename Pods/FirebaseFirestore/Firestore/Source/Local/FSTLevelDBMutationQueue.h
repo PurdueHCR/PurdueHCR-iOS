@@ -21,11 +21,11 @@
 #import "Firestore/Source/Local/FSTMutationQueue.h"
 
 #include "Firestore/core/src/firebase/firestore/auth/user.h"
+#include "Firestore/core/src/firebase/firestore/model/types.h"
 #include "leveldb/db.h"
 
 @class FSTLevelDB;
 @class FSTLocalSerializer;
-@protocol FSTGarbageCollector;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,9 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FSTLevelDBMutationQueue : NSObject <FSTMutationQueue>
 
 - (instancetype)init __attribute__((unavailable("Use a static constructor")));
-
-/** The garbage collector to notify about potential garbage keys. */
-@property(nonatomic, weak, readwrite, nullable) id<FSTGarbageCollector> garbageCollector;
 
 /**
  * Creates a new mutation queue for the given user, in the given LevelDB.
@@ -51,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Returns one larger than the largest batch ID that has been stored. If there are no mutations
  * returns 0. Note that batch IDs are global.
  */
-+ (FSTBatchID)loadNextBatchIDFromDB:(leveldb::DB *)db;
++ (firebase::firestore::model::BatchId)loadNextBatchIDFromDB:(leveldb::DB *)db;
 
 @end
 

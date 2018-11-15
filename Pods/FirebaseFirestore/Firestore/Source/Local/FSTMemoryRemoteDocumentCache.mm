@@ -16,15 +16,32 @@
 
 #import "Firestore/Source/Local/FSTMemoryRemoteDocumentCache.h"
 
+#import <Protobuf/GPBProtocolBuffers.h>
+#import "Firestore/Protos/objc/firestore/local/MaybeDocument.pbobjc.h"
 #import "Firestore/Source/Core/FSTQuery.h"
+#import "Firestore/Source/Local/FSTMemoryPersistence.h"
 #import "Firestore/Source/Model/FSTDocument.h"
 #import "Firestore/Source/Model/FSTDocumentDictionary.h"
 
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 
 using firebase::firestore::model::DocumentKey;
+using firebase::firestore::model::ListenSequenceNumber;
 
 NS_ASSUME_NONNULL_BEGIN
+
+/**
+ * Returns an estimate of the number of bytes used to store the given
+ * document key in memory. This is only an estimate and includes the size
+ * of the segments of the path, but not any object overhead or path separators.
+ */
+static size_t FSTDocumentKeyByteSize(FSTDocumentKey *key) {
+  size_t count = 0;
+  for (const auto &segment : key.path) {
+    count += segment.size();
+  }
+  return count;
+}
 
 @interface FSTMemoryRemoteDocumentCache ()
 
@@ -76,6 +93,31 @@ NS_ASSUME_NONNULL_BEGIN
   }
 
   return result;
+}
+
+- (std::vector<DocumentKey>)removeOrphanedDocuments:
+                                (FSTMemoryLRUReferenceDelegate *)referenceDelegate
+                              throughSequenceNumber:(ListenSequenceNumber)upperBound {
+  std::vector<DocumentKey> removed;
+  FSTMaybeDocumentDictionary *updatedDocs = self.docs;
+  for (FSTDocumentKey *docKey in [self.docs keyEnumerator]) {
+    if (![referenceDelegate isPinnedAtSequenceNumber:upperBound document:docKey]) {
+      updatedDocs = [updatedDocs dictionaryByRemovingObjectForKey:docKey];
+      removed.push_back(DocumentKey{docKey});
+    }
+  }
+  self.docs = updatedDocs;
+  return removed;
+}
+
+- (size_t)byteSizeWithSerializer:(FSTLocalSerializer *)serializer {
+  __block size_t count = 0;
+  [self.docs
+      enumerateKeysAndObjectsUsingBlock:^(FSTDocumentKey *key, FSTMaybeDocument *doc, BOOL *stop) {
+        count += FSTDocumentKeyByteSize(key);
+        count += [[[serializer encodedMaybeDocument:doc] data] length];
+      }];
+  return count;
 }
 
 @end

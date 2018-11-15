@@ -35,7 +35,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
         self.view.addSubview(activityIndicator)
         
         fortyPercent = self.view.frame.size.height * 0.4
@@ -189,7 +189,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         moveTextField(textField: textField, up: true)
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         moveTextField(textField: textField, up: false)
     }
     

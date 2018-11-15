@@ -20,12 +20,12 @@
 
 #import "Firestore/Source/Local/FSTQueryCache.h"
 #include "Firestore/core/src/firebase/firestore/local/leveldb_transaction.h"
+#include "Firestore/core/src/firebase/firestore/model/types.h"
 #include "leveldb/db.h"
 
 @class FSTLevelDB;
 @class FSTLocalSerializer;
 @class FSTPBTargetGlobal;
-@protocol FSTGarbageCollector;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,9 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
-/** The garbage collector to notify about potential garbage keys. */
-@property(nonatomic, weak, readwrite, nullable) id<FSTGarbageCollector> garbageCollector;
-
 /**
  * Creates a new query cache in the given LevelDB.
  *
@@ -56,6 +53,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (instancetype)initWithDB:(FSTLevelDB *)db
                 serializer:(FSTLocalSerializer *)serializer NS_DESIGNATED_INITIALIZER;
+
+/** Starts the query cache up. */
+- (void)start;
+
+- (void)enumerateOrphanedDocumentsUsingBlock:
+    (void (^)(const firebase::firestore::model::DocumentKey &docKey,
+              firebase::firestore::model::ListenSequenceNumber sequenceNumber,
+              BOOL *stop))block;
 
 @end
 

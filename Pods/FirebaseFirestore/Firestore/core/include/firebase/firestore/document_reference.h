@@ -14,16 +14,10 @@
  * limitations under the License.
  */
 
-// TODO(rsgowman): This file isn't intended to be used just yet. It's just an
-// outline of what the API might eventually look like. Most of this was
-// shamelessly stolen and modified from RTDB's header file, melded with the
-// (java) firestore api.
-
 #ifndef FIRESTORE_CORE_INCLUDE_FIREBASE_FIRESTORE_DOCUMENT_REFERENCE_H_
 #define FIRESTORE_CORE_INCLUDE_FIREBASE_FIRESTORE_DOCUMENT_REFERENCE_H_
 
 #include <string>
-#include <unordered_map>
 
 #if defined(FIREBASE_USE_STD_FUNCTION)
 #include <functional>
@@ -37,11 +31,14 @@
 #include "firebase/firestore/firestore.h"
 #include "firebase/firestore/firestore_errors.h"
 #include "firebase/firestore/listener_registration.h"
+#include "firebase/firestore/map_field_value.h"
+#include "firebase/firestore/metadata_changes.h"
 #include "firebase/firestore/set_options.h"
+#include "firebase/firestore/source.h"
 #include "firebase/future.h"
 
 // TODO(rsgowman): Note that RTDB uses:
-//   #if defined(FIREBASE_USE_MOVE_OPERATORS) || defined(DOXYGEN
+//   #if defined(FIREBASE_USE_MOVE_OPERATORS) || defined(DOXYGEN)
 // to protect move operators from older compilers. But all our supported
 // compilers support this, so we've skipped the #if guard. This TODO comment is
 // here so we don't forget to mention this during the API review, and should be
@@ -50,16 +47,12 @@
 namespace firebase {
 namespace firestore {
 
+class CollectionReference;
 class DocumentReferenceInternal;
+class DocumentSnapshot;
+class FieldValue;
 class Firestore;
 class FirestoreInternal;
-
-// TODO(rsgowman): move this into the FieldValue header
-#ifdef STLPORT
-using MapFieldValue = std::tr1::unordered_map<std::string, FieldValue>;
-#else
-using MapFieldValue = std::unordered_map<std::string, FieldValue>;
-#endif
 
 /**
  * A DocumentReference refers to a document location in a Firestore database and
@@ -77,11 +70,6 @@ using MapFieldValue = std::unordered_map<std::string, FieldValue>;
  */
 class DocumentReference {
  public:
-  enum class MetadataChanges {
-    kExclude,
-    kInclude,
-  };
-
   /**
    * @brief Default constructor. This creates an invalid DocumentReference.
    * Attempting to perform any operations on this reference will fail (and cause
@@ -157,14 +145,14 @@ class DocumentReference {
    * @returns String id of this document location, which will remain valid in
    * memory until the DocumentReference itself goes away.
    */
-  virtual const char* id() const;
+  virtual const char* document_id() const;
 
   /**
    * @brief Returns the string id of this document location.
    *
    * @returns String id of this document location.
    */
-  virtual std::string id_string() const;
+  virtual std::string document_id_string() const;
 
   /**
    * @brief Returns the path of this document (relative to the root of the
@@ -189,7 +177,7 @@ class DocumentReference {
    * @brief Returns a CollectionReference to the collection that contains this
    * document.
    */
-  virtual CollectionReference get_parent() const;
+  virtual CollectionReference parent() const;
 
   /**
    * @brief Returns a CollectionReference instance that refers to the
@@ -223,6 +211,43 @@ class DocumentReference {
   virtual Future<DocumentSnapshot> Get() const;
 
   /**
+   * @brief Reads the document referenced by this DocumentReference.
+   *
+   * By default, Get() attempts to provide up-to-date data when possible by
+   * waiting for data from the server, but it may return cached data or fail if
+   * you are offline and the server cannot be reached. This behavior can be
+   * altered via the {@link Source} parameter.
+   *
+   * @param[in] source A value to configure the get behavior.
+   *
+   * @return A Future that will be resolved with the contents of the Document at
+   * this DocumentReference.
+   */
+  virtual Future<DocumentSnapshot> Get(Source source) const;
+
+  /**
+   * @brief Gets the result of the most recent call to either of the Get()
+   * methods.
+   *
+   * @return The result of last call to Get() or an invalid Future, if there is
+   * no such call.
+   */
+  // TODO(zxu123): raise this in Firebase API discussion for the naming concern.
+  virtual Future<DocumentSnapshot> GetLastResult() const;
+
+  /**
+   * @brief Writes to the document referred to by this DocumentReference.
+   *
+   * If the document does not yet exist, it will be created. If you pass
+   * SetOptions, the provided data can be merged into an existing document.
+   *
+   * @param[in] data A map of the fields and values for the document.
+   *
+   * @return A Future that will be resolved when the write finishes.
+   */
+  virtual Future<void> Set(const MapFieldValue& data);
+
+  /**
    * @brief Writes to the document referred to by this DocumentReference.
    *
    * If the document does not yet exist, it will be created. If you pass
@@ -234,7 +259,17 @@ class DocumentReference {
    * @return A Future that will be resolved when the write finishes.
    */
   virtual Future<void> Set(const MapFieldValue& data,
-                           const SetOptions& options = SetOptions());
+                           const SetOptions& options);
+
+  /**
+   * @brief Gets the result of the most recent call to either of the Set()
+   * methods.
+   *
+   * @return The result of last call to Set() or an invalid Future, if there is
+   * no such call.
+   */
+  // TODO(zxu123): raise this in Firebase API discussion for the naming concern.
+  virtual Future<void> SetLastResult() const;
 
   /**
    * @brief Updates fields in the document referred to by this
@@ -250,11 +285,44 @@ class DocumentReference {
   virtual Future<void> Update(const MapFieldValue& data);
 
   /**
+   * @brief Gets the result of the most recent call to Update().
+   *
+   * @return The result of last call to Update() or an invalid Future, if there
+   * is no such call.
+   */
+  // TODO(zxu123): raise this in Firebase API discussion for the naming concern.
+  virtual Future<void> UpdateLastResult() const;
+
+  /**
    * @brief Removes the document referred to by this DocumentReference.
    *
-   * @return A Task that will be resolved when the delete completes.
+   * @return A Future that will be resolved when the delete completes.
    */
   virtual Future<void> Delete();
+
+  /**
+   * @brief Gets the result of the most recent call to Delete().
+   *
+   * @return The result of last call to Delete() or an invalid Future, if there
+   * is no such call.
+   */
+  // TODO(zxu123): raise this in Firebase API discussion for the naming concern.
+  virtual Future<void> DeleteLastResult() const;
+
+  /**
+   * @brief Starts listening to the document referenced by this
+   * DocumentReference.
+   *
+   * @param[in] listener The event listener that will be called with the
+   * snapshots, which must remain in memory until you remove the listener from
+   * this DocumentReference. (Ownership is not transferred; you are responsible
+   * for making sure that listener is valid as long as this DocumentReference is
+   * valid and the listener is registered.)
+   *
+   * @return A registration object that can be used to remove the listener.
+   */
+  virtual ListenerRegistration AddSnapshotListener(
+      EventListener<DocumentSnapshot>* listener);
 
   /**
    * @brief Starts listening to the document referenced by this
@@ -273,7 +341,7 @@ class DocumentReference {
    */
   virtual ListenerRegistration AddSnapshotListener(
       EventListener<DocumentSnapshot>* listener,
-      MetadataChanges metadata_changes = MetadataChanges::kExclude);
+      MetadataChanges metadata_changes);
 
 #if defined(FIREBASE_USE_STD_FUNCTION) || defined(DOXYGEN)
   /**
@@ -281,7 +349,22 @@ class DocumentReference {
    * DocumentReference.
    *
    * @param[in] callback function or lambda to call. When this function is
-   * called, exactly one of the parameters will be non-null.
+   * called, snapshot value is valid if and only if error is Error::Ok.
+   *
+   * @return A registration object that can be used to remove the listener.
+   *
+   * @note This method is not available when using STLPort on Android, as
+   * std::function is not supported on STLPort.
+   */
+  virtual ListenerRegistration AddSnapshotListener(
+      std::function<void(const DocumentSnapshot&, Error)> callback);
+
+  /**
+   * @brief Starts listening to the document referenced by this
+   * DocumentReference.
+   *
+   * @param[in] callback function or lambda to call. When this function is
+   * called, snapshot value is valid if and only if error is Error::Ok.
    * @param[in] metadata_changes Indicates whether metadata-only changes (i.e.
    * only DocumentSnapshot.getMetadata() changed) should trigger snapshot
    * events.
@@ -292,15 +375,20 @@ class DocumentReference {
    * std::function is not supported on STLPort.
    */
   virtual ListenerRegistration AddSnapshotListener(
-      std::function<void(const DocumentSnapshot*, const Error*)> callback,
-      MetadataChanges metadata_changes = MetadataChanges::kExclude);
+      std::function<void(const DocumentSnapshot&, Error)> callback,
+      MetadataChanges metadata_changes);
 #endif  // defined(FIREBASE_USE_STD_FUNCTION) || defined(DOXYGEN)
 
  protected:
   explicit DocumentReference(DocumentReferenceInternal* internal);
 
  private:
+  friend class CollectionReferenceInternal;
+  friend class DocumentSnapshotInternal;
+  friend class FieldValueInternal;
   friend class FirestoreInternal;
+  friend class TransactionInternal;
+  friend class WriteBatchInternal;
 
   // TODO(zxu123): investigate possibility to use std::unique_ptr or
   // firebase::UniquePtr.

@@ -142,11 +142,11 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
     
     func setPermissionLevel(value:Int){
         let recString = NSMutableAttributedString(string: "REA/RECs")
-        recString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12) ]))
+        recString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12) ]))
         let rhpString = NSMutableAttributedString(string: "REA/REC/RHPs")
-        rhpString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12) ]))
+        rhpString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12) ]))
         let facultyString = NSMutableAttributedString(string: "REA/REC/RHP/Faculty")
-        facultyString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12) ]))
+        facultyString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12) ]))
         if(value == 1){
             permissionLabel.attributedText = recString
         }

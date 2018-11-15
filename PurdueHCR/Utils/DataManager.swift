@@ -165,7 +165,7 @@ class DataManager {
             onDone(UIImage(contentsOfFile: imagePath.absoluteString)!)
         }else{
             fbh.retrievePictureFromFilename(filename: filename, onDone: {(image:UIImage) in
-                if let data = UIImagePNGRepresentation(image) {
+                if let data = image.pngData() {
                     try? data.write(to: imagePath)
                 }
                 onDone(image)
@@ -259,6 +259,23 @@ class DataManager {
         }
         
         fbh.findLinkWithID(id: id, onDone: {(linkOptional:Link?) in
+            guard let link = linkOptional else {
+                DispatchQueue.main.async {
+                    let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points.", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                }
+                return
+            }
+            
+            if(!link.enabled){
+                DispatchQueue.main.async {
+                    let banner = NotificationBanner(title: "Failure: Code is not enabled.", subtitle: "Talk to owner to change status.", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                }
+                return
+            }
             let group = DispatchGroup()
             group.enter()
             
@@ -267,60 +284,52 @@ class DataManager {
                 group.leave()
             }
             group.notify(queue: .main) {
-                guard let link = linkOptional else {
-                    DispatchQueue.main.async {
-                        let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points.", style: .danger)
-                        banner.duration = 2
-                        banner.show()
-                    }
-                    return
+                
+                
+                let pointType = self.getPointType(value: link.pointTypeID)
+                let resident = User.get(.name) as! String
+                let floorID = User.get(.floorID) as! String
+                let ref = self.getUserRefFromUserID(id: User.get(.id) as! String)
+                let log = PointLog(pointDescription: link.description, resident: resident, type: pointType, floorID: floorID, residentRef: ref)
+                var documentID = ""
+                if(link.singleUse){
+                    documentID = id
                 }
-                if(!link.enabled){
-                    DispatchQueue.main.async {
-                        let banner = NotificationBanner(title: "Failure: Code is not enabled.", subtitle: "Talk to owner to change status.", style: .danger)
-                        banner.duration = 2
-                        banner.show()
+                //NOTE: preApproved is now changed to SingleUseCodes || RHP
+                self.fbh.addPointLog(log: log, documentID: documentID, preApproved: (link.singleUse || (User.get(.permissionLevel) as! Int) == 1) , onDone: {(err:Error?) in
+                    if(err == nil){
+                        DispatchQueue.main.async {
+                            let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
+                            banner.duration = 2
+                            banner.show()
+                        }
+                        
                     }
-                    return
-                }
-                else{
-                    let pointType = self.getPointType(value: link.pointTypeID)
-                    let resident = User.get(.name) as! String
-                    let floorID = User.get(.floorID) as! String
-                    let ref = self.getUserRefFromUserID(id: User.get(.id) as! String)
-                    let log = PointLog(pointDescription: link.description, resident: resident, type: pointType, floorID: floorID, residentRef: ref)
-                    var documentID = ""
-                    if(link.singleUse){
-                        documentID = id
-                    }
-                    //NOTE: preApproved is now changed to SingleUseCodes only
-                    self.fbh.addPointLog(log: log, documentID: documentID, preApproved: link.singleUse, onDone: {(err:Error?) in
-                        if(err == nil){
+                    else{
+                        if(err!.localizedDescription == "The operation couldn’t be completed. (Document Exists error 1.)"){
                             DispatchQueue.main.async {
-                                let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
+                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "You have already scanned this code.", style: .danger)
                                 banner.duration = 2
                                 banner.show()
                             }
-                            
+                        }
+                        else if (err!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "This type of point is disabled for now.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
                         }
                         else{
-                            if(err!.localizedDescription == "The operation couldn’t be completed. (Document Exists error 0.)"){
-                                DispatchQueue.main.async {
-                                    let banner = NotificationBanner(title: "Failure", subtitle: "You have already scanned this code.", style: .danger)
-                                    banner.duration = 2
-                                    banner.show()
-                                }
-                            }
-                            else{
-                                DispatchQueue.main.async {
-                                    let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
-                                    banner.duration = 2
-                                    banner.show()
-                                }
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
                             }
                         }
-                    })
-                }
+                    }
+                })
+                
             }
             
         })

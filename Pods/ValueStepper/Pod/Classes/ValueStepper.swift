@@ -123,7 +123,7 @@ private enum Button: Int {
     
     /// Decrease button positioned on the left of the stepper.
     internal lazy var decreaseButton: UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
+        let button = UIButton(type: UIButton.ButtonType.custom)
         button.tag = Button.decrease.rawValue
         button.backgroundColor = backgroundButtonColor
         return button
@@ -131,7 +131,7 @@ private enum Button: Int {
     
     /// Increase button positioned on the right of the stepper.
     internal lazy var increaseButton: UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
+        let button = UIButton(type: UIButton.ButtonType.custom)
         button.backgroundColor = UIColor.clear
         button.tag = Button.increase.rawValue
         return button

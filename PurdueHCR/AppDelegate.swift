@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Cely handles the creation of the log in/ sign up page. If the user is not logged in, it will create a new page and handle the login
         
         //set up the project to connect with firebase and fetch the information on the houses so the login page has the information availible.
@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // This method will handle the case where a URI is sent to the app from a link or a QR code
     // the format is hcrpoint://addpoints/<linkId>
     // Returns true if this app can handle this link
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
         guard let urlPath = url.path as String? , let urlHost  = url.host as String? else {
             // Displays message when there is an issue with the uri link

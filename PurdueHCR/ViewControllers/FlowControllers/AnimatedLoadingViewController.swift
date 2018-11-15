@@ -56,12 +56,12 @@ class AnimatedLoadingViewController: UIViewController {
     //This will be for showing announcements
     func createNewLaunchAlert(){
         let alert = UIAlertController(title: "Are you interested in joining Development Committee?", message: "Development Committee is looking for software developers, marketers, and designers to help with the future of Purdue HCR. If you are interested in helping, checkout our Discord channel!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Take me to the Discord", style: UIAlertActionStyle.default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Take me to the Discord", style: UIAlertAction.Style.default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
-            UIApplication.shared.open(URL(string: "https://discord.gg/jptXrYG")!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(string: "https://discord.gg/jptXrYG")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             self.finishLoadinng()
         }))
-        alert.addAction(UIAlertAction(title: "No thanks", style: UIAlertActionStyle.default, handler: {(action)in
+        alert.addAction(UIAlertAction(title: "No thanks", style: UIAlertAction.Style.default, handler: {(action)in
             alert.dismiss(animated: true, completion: self.finishLoadinng)
             self.finishLoadinng()
         }))
@@ -79,4 +79,9 @@ class AnimatedLoadingViewController: UIViewController {
     }
     */
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

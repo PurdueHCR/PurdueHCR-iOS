@@ -16,10 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Firestore/Source/Core/FSTTypes.h"
-#import "Firestore/Source/Local/FSTGarbageCollector.h"
-
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
+#include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
+#include "Firestore/core/src/firebase/firestore/model/types.h"
 
 @class FSTMutation;
 @class FSTMutationBatch;
@@ -31,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FSTMutationQueue
 
 /** A queue of mutations to apply to the remote store. */
-@protocol FSTMutationQueue <NSObject, FSTGarbageSource>
+@protocol FSTMutationQueue <NSObject>
 
 /**
  * Starts the mutation queue, performing any initial reads that might be required to establish
@@ -47,18 +46,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isEmpty;
 
 /**
- * Returns the next FSTBatchID that will be assigned to a new mutation batch.
+ * Returns the next BatchId that will be assigned to a new mutation batch.
  *
  * Callers generally don't care about this value except to test that the mutation queue is
  * properly maintaining the invariant that highestAcknowledgedBatchID is less than nextBatchID.
  */
-- (FSTBatchID)nextBatchID;
+- (firebase::firestore::model::BatchId)nextBatchID;
 
 /**
  * Returns the highest batchID that has been acknowledged. If no batches have been acknowledged
  * or if there are no batches in the queue this can return kFSTBatchIDUnknown.
  */
-- (FSTBatchID)highestAcknowledgedBatchID;
+- (firebase::firestore::model::BatchId)highestAcknowledgedBatchID;
 
 /** Acknowledges the given batch. */
 - (void)acknowledgeBatch:(FSTMutationBatch *)batch streamToken:(nullable NSData *)streamToken;
@@ -74,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
                                           mutations:(NSArray<FSTMutation *> *)mutations;
 
 /** Loads the mutation batch with the given batchID. */
-- (nullable FSTMutationBatch *)lookupMutationBatch:(FSTBatchID)batchID;
+- (nullable FSTMutationBatch *)lookupMutationBatch:(firebase::firestore::model::BatchId)batchID;
 
 /**
  * Gets the first unacknowledged mutation batch after the passed in batchId in the mutation queue
@@ -85,7 +84,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return the next mutation or nil if there wasn't one.
  */
-- (nullable FSTMutationBatch *)nextMutationBatchAfterBatchID:(FSTBatchID)batchID;
+- (nullable FSTMutationBatch *)nextMutationBatchAfterBatchID:
+    (firebase::firestore::model::BatchId)batchID;
 
 /** Gets all mutation batches in the mutation queue. */
 // TODO(mikelehen): PERF: Current consumer only needs mutated keys; if we can provide that
@@ -104,7 +104,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 // TODO(mcg): This should really return NSEnumerator and the caller should be adjusted to only
 // loop through these once.
-- (NSArray<FSTMutationBatch *> *)allMutationBatchesThroughBatchID:(FSTBatchID)batchID;
+- (NSArray<FSTMutationBatch *> *)allMutationBatchesThroughBatchID:
+    (firebase::firestore::model::BatchId)batchID;
 
 /**
  * Finds all mutation batches that could @em possibly affect the given document key. Not all
@@ -115,9 +116,20 @@ NS_ASSUME_NONNULL_BEGIN
  * don't contain the document key at all if it's convenient.
  */
 // TODO(mcg): This should really return an NSEnumerator
-// also for b/32992024, all backing stores should really index by document key
 - (NSArray<FSTMutationBatch *> *)allMutationBatchesAffectingDocumentKey:
     (const firebase::firestore::model::DocumentKey &)documentKey;
+
+/**
+ * Finds all mutation batches that could @em possibly affect the given document keys. Not all
+ * mutations in a batch will necessarily affect each key, so when looping through the batches you'll
+ * need to check that the mutation itself matches the key.
+ *
+ * Note that because of this requirement implementations are free to return mutation batches that
+ * don't contain any of the given document keys at all if it's convenient.
+ */
+// TODO(mcg): This should really return an NSEnumerator
+- (NSArray<FSTMutationBatch *> *)allMutationBatchesAffectingDocumentKeys:
+    (const firebase::firestore::model::DocumentKeySet &)documentKeys;
 
 /**
  * Finds all mutation batches that could affect the results for the given query. Not all

@@ -26,7 +26,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
         self.view.addSubview(activityIndicator)
 		
         self.username.delegate = self
@@ -187,7 +187,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         moveTextField(textField: textField, up: true)
     }
 
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         moveTextField(textField: textField, up: false)
     }
 

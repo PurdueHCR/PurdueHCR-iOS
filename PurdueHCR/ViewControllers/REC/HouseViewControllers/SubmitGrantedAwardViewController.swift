@@ -16,10 +16,10 @@ class SubmitGrantedAwardViewController: TypeSubmitViewController {
     /// - Parameters:
     ///   - pointType: Type to be submitted
     ///   - descriptions: Description given by the REA/REC for reason why they were granting them the points
-    override func submitPointLog(pointType: PointType, descriptions: String) {
+    override func submitPointLog(pointType: PointType, logDescription: String) {
         let name = User.get(.name) as! String
         let recRef = DataManager.sharedManager.getUserRefFromUserID(id: User.get(.id) as! String)
-        let log = PointLog(pointDescription: description, resident:name , type: pointType, floorID: "Award", residentRef: recRef)
+        let log = PointLog(pointDescription: logDescription, resident:name , type: pointType, floorID: "Award", residentRef: recRef)
         DataManager.sharedManager.awardPointsToHouseFromREC(log: log, house: house!) { (error) in
             if(error != nil){
                 if(error!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){

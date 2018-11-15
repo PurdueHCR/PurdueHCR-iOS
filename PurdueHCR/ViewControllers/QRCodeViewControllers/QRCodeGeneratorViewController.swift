@@ -129,7 +129,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
 
     @IBAction func switchChanged(_ sender: UISwitch) {
         if(sender.isOn){
-            let alert = UIAlertController(title: "Multi-Scan Enabled", message: "If you allow residents to scan this code multiple times, each submission will be sent for RHP approval before points are awarded.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Multi-Scan Enabled", message: "If you allow residents to scan this code multiple times, each submission will be sent for RHP approval before points are awarded.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }

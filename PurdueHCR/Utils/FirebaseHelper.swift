@@ -683,7 +683,7 @@ class FirebaseHelper {
     
     func uploadImageWithFilename(filename:String,img:UIImage, onDone:@escaping (_ err:Error?)->Void){
         let ref = self.storage.reference().child(filename)
-        let data = UIImagePNGRepresentation(img)!
+        let data = img.pngData()!
         print("DATA SIZE: ",data.count)
         if(data.count > 20 * 1024 * 1024){
             onDone(NSError(domain: "Image is too large", code: 1, userInfo: nil))
