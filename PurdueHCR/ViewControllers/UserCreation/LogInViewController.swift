@@ -114,7 +114,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		let alertController = UIAlertController(title: "Password Recovery", message: "Please enter your email address", preferredStyle: .alert)
 		let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
 			
-			if loginTextField?.text != "" {
+			if loginTextField?.text == "" {
 				Auth.auth().sendPasswordReset(withEmail: ("email@email.com")) { (error) in
 					if (error == nil) {
 						

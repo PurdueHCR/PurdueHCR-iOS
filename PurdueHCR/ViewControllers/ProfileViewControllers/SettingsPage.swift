@@ -19,7 +19,7 @@ class SettingsPage: UIViewController {
 	override func viewDidLoad() {
         super.viewDidLoad()
 
-		self.logOutView.layer.cornerRadius = 10
+		self.logOutView.layer.cornerRadius = 0
 		self.logOutView.layer.shadowColor = UIColor.darkGray.cgColor
 		self.logOutView.layer.shadowOffset = CGSize.zero
 		self.logOutView.layer.shadowRadius = 5
@@ -29,7 +29,7 @@ class SettingsPage: UIViewController {
 		self.reportButton.layer.shadowOpacity = 0.5
 		self.reportButton.layer.shadowOffset = CGSize.zero
 		self.reportButton.layer.shadowRadius = 5
-		self.reportButton.layer.cornerRadius = 10
+		self.reportButton.layer.cornerRadius = 0
 		
     }
     
