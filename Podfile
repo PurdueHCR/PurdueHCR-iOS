@@ -12,4 +12,6 @@ target 'PurdueHCR' do
   pod 'Charts'
   pod 'NotificationBannerSwift'
   pod 'AZDropdownMenu'
+  pod 'PopupWindow'
+  pod 'AZDialogView'
 end

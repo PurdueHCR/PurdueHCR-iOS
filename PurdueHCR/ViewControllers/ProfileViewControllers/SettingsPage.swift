@@ -31,6 +31,8 @@ class SettingsPage: UIViewController {
 		self.reportButton.layer.shadowRadius = 5
 		self.reportButton.layer.cornerRadius = 0
 		
+		self.navigationItem.title = "Settings"
+		
     }
     
 	@IBAction func logOut(_ sender: Any) {
@@ -47,8 +49,8 @@ class SettingsPage: UIViewController {
 			
 		}
 		
-		alert.addAction(yesAction)
 		alert.addAction(noAction)
+		alert.addAction(yesAction)
 		
 		self.present(alert, animated: true)
 		

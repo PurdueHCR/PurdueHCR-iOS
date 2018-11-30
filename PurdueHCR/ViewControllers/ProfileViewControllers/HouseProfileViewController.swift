@@ -9,11 +9,13 @@
 import UIKit
 import FirebaseAuth
 import Cely
+import PopupWindow
+import AZDialogView
 
 class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
-    
+	@IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet var profileView: ProfileView!
 	@IBOutlet weak var housePointsCompareView: HousePointsCompareView!
 	@IBOutlet weak var housePointsView: HousePointsView!
@@ -29,8 +31,6 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         scrollView.refreshControl = refresher
 //        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
 		
-        
-		
         self.profileView.layer.shadowColor = UIColor.darkGray.cgColor
         self.profileView.layer.shadowOpacity = 0.5
         self.profileView.layer.shadowOffset = CGSize.zero
@@ -45,17 +45,17 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         self.housePointsCompareView.layer.shadowOpacity = 0.5
         self.housePointsCompareView.layer.shadowOffset = CGSize.zero
         self.housePointsCompareView.layer.shadowRadius = 5
+		
     }
 //    @objc func logOut(_ sender: Any) {
 //        try? Auth.auth().signOut()
 //        Cely.changeStatus(to: .loggedOut)
 //    }
 	
-    
-    override func viewDidAppear(_ animated: Bool) {
-        refreshData()
-    }
-    
+	override func viewWillAppear(_ animated: Bool) {
+		refreshData()
+	}
+	
     @objc func refreshData(){
         refreshCount = 0
         DataManager.sharedManager.refreshUser(onDone: {(err:Error?) in
@@ -84,7 +84,13 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     func segueToProfilePointView() {
         self.performSegue(withIdentifier: "My_Points", sender: self)
     }
-
+	
+	@IBAction func showSettings(_ sender: Any) {
+//		let dialog = AZDialogViewController(title: "Settings", message: "hello")
+//		dialog.cancelEnabled = true
+//		dialog.show(in: self)
+		
+	}
 
 }
 

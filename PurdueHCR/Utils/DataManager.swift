@@ -418,7 +418,7 @@ class DataManager {
     //Used for handling link to make sure all necessairy information is there
     func isInitialized() -> Bool {
         return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.name) != nil && User.get(.permissionLevel) != nil
-        
+		
     }
 }
 

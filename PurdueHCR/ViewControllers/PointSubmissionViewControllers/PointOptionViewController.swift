@@ -85,8 +85,16 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
                 emptyMessage(message: "Could not find points matching that description.")
                 return 0;
             }
-        }
-        return (pointSystem.count)
+		} else {
+			if pointSystem.count > 0 {
+				killEmptyMessage()
+				return (pointSystem.count)
+			} else {
+				emptyMessage(message: "There are no point types enabled for submitting.")
+				return 0
+			}
+		}
+		
     }
 
     
@@ -151,7 +159,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         filteredPoints = DataManager.sharedManager.getPoints()!.filter({( point : PointType) -> Bool in
-            return point.pointDescription.lowercased().contains(searchText.lowercased())
+            return point.pointDescription.lowercased().contains(searchText.lowercased()) && checkPermission(pointType: point)
         })
         tableView.reloadData()
     }

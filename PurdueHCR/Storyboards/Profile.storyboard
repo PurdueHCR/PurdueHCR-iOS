@@ -92,7 +92,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Sign Out" image="Settings" id="k1f-dT-QSa">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="Dfe-yH-3iZ" kind="show" id="dct-tE-Lyv"/>
+                                <action selector="showSettings:" destination="zGs-DW-f3U" id="edp-cs-7vH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -103,6 +103,7 @@
                         <outlet property="profileView" destination="vhe-Cn-9Q8" id="Y1U-xG-8uY"/>
                         <outlet property="reportButton" destination="Fb9-Hi-LHH" id="2qp-cG-eqZ"/>
                         <outlet property="scrollView" destination="vFy-4D-Lcd" id="EnM-T6-l03"/>
+                        <outlet property="settingsButton" destination="k1f-dT-QSa" id="Ngu-Px-ruI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyd-ge-ozp" sceneMemberID="firstResponder"/>
@@ -118,13 +119,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="wp8-5c-gie">
-                                <rect key="frame" x="10" y="74" width="355" height="143"/>
+                                <rect key="frame" x="20" y="40" width="335" height="113"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6C-I4-8Fq">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZkP-0h-tUu">
-                                                <rect key="frame" x="20" y="10" width="315" height="80"/>
+                                                <rect key="frame" x="20" y="10" width="295" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="Log Out"/>
                                                 <connections>
@@ -134,7 +135,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="Dj7-kI-99q"/>
+                                            <constraint firstAttribute="height" constant="50" id="Dj7-kI-99q"/>
                                             <constraint firstAttribute="bottom" secondItem="ZkP-0h-tUu" secondAttribute="bottom" constant="10" id="JAj-s9-GAs"/>
                                             <constraint firstItem="ZkP-0h-tUu" firstAttribute="leading" secondItem="Z6C-I4-8Fq" secondAttribute="leading" constant="20" id="WMg-LK-138"/>
                                             <constraint firstItem="ZkP-0h-tUu" firstAttribute="top" secondItem="Z6C-I4-8Fq" secondAttribute="top" constant="10" id="XXU-P3-PzE"/>
@@ -142,12 +143,12 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb9-Hi-LHH">
-                                        <rect key="frame" x="0.0" y="113" width="355" height="30"/>
+                                        <rect key="frame" x="0.0" y="63" width="335" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="M8D-M6-ef7"/>
+                                            <constraint firstAttribute="height" constant="50" id="M8D-M6-ef7"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Report a Bug"/>
                                         <connections>
                                             <action selector="report:" destination="Dfe-yH-3iZ" eventType="touchUpInside" id="Pqm-FC-gXZ"/>
@@ -160,9 +161,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wp8-5c-gie" firstAttribute="top" secondItem="FmM-Cg-brK" secondAttribute="top" constant="10" id="Es2-95-chD"/>
-                            <constraint firstItem="wp8-5c-gie" firstAttribute="leading" secondItem="FmM-Cg-brK" secondAttribute="leading" constant="10" id="TyZ-7a-M8Z"/>
-                            <constraint firstItem="FmM-Cg-brK" firstAttribute="trailing" secondItem="wp8-5c-gie" secondAttribute="trailing" constant="10" id="XEY-PL-Ff3"/>
+                            <constraint firstItem="wp8-5c-gie" firstAttribute="leading" secondItem="FmM-Cg-brK" secondAttribute="leading" constant="20" id="aea-O7-Gu9"/>
+                            <constraint firstItem="FmM-Cg-brK" firstAttribute="trailing" secondItem="wp8-5c-gie" secondAttribute="trailing" constant="20" id="jau-LX-APK"/>
+                            <constraint firstItem="wp8-5c-gie" firstAttribute="top" secondItem="FmM-Cg-brK" secondAttribute="top" constant="20" id="peJ-1t-72H"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FmM-Cg-brK"/>
                     </view>

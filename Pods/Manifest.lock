@@ -1,4 +1,5 @@
 PODS:
+  - AZDialogView (1.3.0)
   - AZDropdownMenu (1.1.3)
   - BoringSSL (10.0.6):
     - BoringSSL/Implementation (= 10.0.6)
@@ -133,11 +134,13 @@ PODS:
   - NotificationBannerSwift (1.8.0):
     - MarqueeLabel/Swift (~> 3.2.0)
     - SnapKit (~> 4.0.1)
+  - PopupWindow (0.1.0)
   - Protobuf (3.6.1)
   - SnapKit (4.0.1)
   - ValueStepper (1.5)
 
 DEPENDENCIES:
+  - AZDialogView
   - AZDropdownMenu
   - Cely
   - Charts
@@ -147,10 +150,12 @@ DEPENDENCIES:
   - Firebase/Storage
   - KDCircularProgress
   - NotificationBannerSwift
+  - PopupWindow
   - ValueStepper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AZDialogView
     - AZDropdownMenu
     - BoringSSL
     - Cely
@@ -176,11 +181,13 @@ SPEC REPOS:
     - MarqueeLabel
     - nanopb
     - NotificationBannerSwift
+    - PopupWindow
     - Protobuf
     - SnapKit
     - ValueStepper
 
 SPEC CHECKSUMS:
+  AZDialogView: 9301351cb2e12d36f2757ccdaec56f016d89575d
   AZDropdownMenu: 5aa9d598d0c8aa36ca51a7302e79b98d544d5554
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   Cely: e3e3c51cb50e6ec1e7bb323dee103b056452319c
@@ -206,10 +213,11 @@ SPEC CHECKSUMS:
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
+  PopupWindow: 2f3a33001295435a3ab568e42a970d51539ed6e9
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   ValueStepper: e84d21a2ce62a7975df8b222c7273d6810f7e78c
 
-PODFILE CHECKSUM: e95bbdd112d4c80b27729ac0fe70a36853546d1f
+PODFILE CHECKSUM: ebed382ae86a94956ab3a11bf8fc276e51bcc0fb
 
 COCOAPODS: 1.5.3
