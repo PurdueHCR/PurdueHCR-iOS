@@ -13,6 +13,7 @@ PODS:
   - Charts (3.2.1):
     - Charts/Core (= 3.2.1)
   - Charts/Core (3.2.1)
+  - CNPPopupController (0.3.3)
   - Firebase/Auth (5.12.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.5)
@@ -134,9 +135,11 @@ PODS:
   - NotificationBannerSwift (1.8.0):
     - MarqueeLabel/Swift (~> 3.2.0)
     - SnapKit (~> 4.0.1)
+  - PopupKit (3.1.1)
   - PopupWindow (0.1.0)
   - Protobuf (3.6.1)
   - SnapKit (4.0.1)
+  - SubscriptionPrompt (1.1.0)
   - ValueStepper (1.5)
 
 DEPENDENCIES:
@@ -144,13 +147,16 @@ DEPENDENCIES:
   - AZDropdownMenu
   - Cely
   - Charts
+  - CNPPopupController
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
   - KDCircularProgress
   - NotificationBannerSwift
+  - PopupKit
   - PopupWindow
+  - SubscriptionPrompt
   - ValueStepper
 
 SPEC REPOS:
@@ -160,6 +166,7 @@ SPEC REPOS:
     - BoringSSL
     - Cely
     - Charts
+    - CNPPopupController
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -181,9 +188,11 @@ SPEC REPOS:
     - MarqueeLabel
     - nanopb
     - NotificationBannerSwift
+    - PopupKit
     - PopupWindow
     - Protobuf
     - SnapKit
+    - SubscriptionPrompt
     - ValueStepper
 
 SPEC CHECKSUMS:
@@ -192,6 +201,7 @@ SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   Cely: e3e3c51cb50e6ec1e7bb323dee103b056452319c
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
+  CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
   Firebase: 9190018e296139d938b99521cde0c15a6e8d2946
   FirebaseAnalytics: 63202d2665de4e6adcbdce189135255d8b5962ba
   FirebaseAuth: 9299ab178271bec7426967b05b2718bb6fc31f17
@@ -213,11 +223,13 @@ SPEC CHECKSUMS:
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
+  PopupKit: e362ed92148d831a9c38a2bc7a25893e46d64c54
   PopupWindow: 2f3a33001295435a3ab568e42a970d51539ed6e9
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SubscriptionPrompt: 13addbf96ed4a57f32d1ef83c061964a3026b94b
   ValueStepper: e84d21a2ce62a7975df8b222c7273d6810f7e78c
 
-PODFILE CHECKSUM: ebed382ae86a94956ab3a11bf8fc276e51bcc0fb
+PODFILE CHECKSUM: bca1c69af940bed20cc6b92851a965a50bfc9f52
 
 COCOAPODS: 1.5.3

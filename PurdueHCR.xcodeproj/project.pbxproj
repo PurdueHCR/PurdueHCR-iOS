@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B5EC232521B099B70088ECE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5EC232421B099B70088ECE7 /* GoogleService-Info.plist */; };
 		B5F963BF2192A11C00BF4135 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F963BE2192A11C00BF4135 /* SettingsPage.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
 		B5EC232421B099B70088ECE7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5F963BE2192A11C00BF4135 /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				D30FBEE520FC046F000DD221 /* Storyboards */,
 				D30FBEE320FC0457000DD221 /* Resources */,
 				D30FBEE120FC0420000DD221 /* Models */,
+				B551BDD221B1004F00CF4F6C /* Register */,
 				D30FBEE220FC0433000DD221 /* Utils */,
 				D30FBEE020FC0403000DD221 /* ViewControllers */,
 				D3CC77CC210522CC00B88F03 /* Views */,
@@ -448,6 +451,7 @@
 			files = (
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
 				D3355C8F214A25B10037556C /* Profile.storyboard in Resources */,
+				B551BDD321B1004F00CF4F6C /* Register in Resources */,
 				D3355C8D214A253D0037556C /* PointSubmission.storyboard in Resources */,
 				D33F43AD2108362D00D3982D /* LaunchScreen.storyboard in Resources */,
 				D3355C95214A26EC0037556C /* QRCode.storyboard in Resources */,
@@ -478,6 +482,7 @@
 				"${BUILT_PRODUCTS_DIR}/AZDialogView/AZDialogView.framework",
 				"${BUILT_PRODUCTS_DIR}/AZDropdownMenu/AZDropdownMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/CNPPopupController/CNPPopupController.framework",
 				"${BUILT_PRODUCTS_DIR}/Cely/Cely.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -485,9 +490,11 @@
 				"${BUILT_PRODUCTS_DIR}/KDCircularProgress/KDCircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupKit/PopupKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PopupWindow/PopupWindow.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SubscriptionPrompt/SubscriptionPrompt.framework",
 				"${BUILT_PRODUCTS_DIR}/ValueStepper/ValueStepper.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
@@ -502,6 +509,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZDialogView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZDropdownMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CNPPopupController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cely.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
@@ -509,9 +517,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KDCircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupWindow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SubscriptionPrompt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ValueStepper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",

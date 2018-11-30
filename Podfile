@@ -14,4 +14,7 @@ target 'PurdueHCR' do
   pod 'AZDropdownMenu'
   pod 'PopupWindow'
   pod 'AZDialogView'
+  pod 'CNPPopupController'
+  pod 'SubscriptionPrompt'
+  pod 'PopupKit'
 end
