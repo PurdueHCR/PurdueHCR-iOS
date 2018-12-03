@@ -24,11 +24,10 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     var refreshCount = 0
 	var p : PopupView?
 	var house : House?
+    let radius : CGFloat = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-		var houses = DataManager.sharedManager.getHouses()!
 	
         refresher = UIRefreshControl()
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -40,17 +39,20 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         self.profileView.layer.shadowOpacity = 0.5
         self.profileView.layer.shadowOffset = CGSize.zero
         self.profileView.layer.shadowRadius = 5
+        self.profileView.layer.cornerRadius = radius
 		
         self.housePointsView.layer.shadowColor = UIColor.darkGray.cgColor
         self.housePointsView.layer.shadowOpacity = 0.5
         self.housePointsView.layer.shadowOffset = CGSize.zero
         self.housePointsView.layer.shadowRadius = 5
+        self.housePointsView.layer.cornerRadius = radius
         
         self.housePointsCompareView.layer.shadowColor = UIColor.black.cgColor
         self.housePointsCompareView.layer.shadowOpacity = 0.5
         self.housePointsCompareView.layer.shadowOffset = CGSize.zero
         self.housePointsCompareView.layer.shadowRadius = 5
-		
+        self.housePointsCompareView.layer.cornerRadius = radius
+        
     }
 //    @objc func logOut(_ sender: Any) {
 //        try? Auth.auth().signOut()
@@ -97,11 +99,10 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		
 		let color = AppUtils.hexStringToUIColor(hex: house!.hexColor)
 		
-		let width : Int = Int(self.view.frame.width - 100)
-		let height = 240
-		let buttonWidth = width - 20
+		let width : Int = Int(self.view.frame.width - 75)
+		let height = 300
+		let buttonWidth = width - 50
 		let borderWidth : CGFloat = 2
-		let radius : CGFloat = 10
 		
 		let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
 		contentView.backgroundColor = UIColor.white
@@ -109,9 +110,9 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		
 		p = PopupView.init(contentView: contentView)
 		p?.maskType = .dimmed
-		p?.layer.cornerRadius = 10
+		p?.layer.cornerRadius = radius
 		
-		let button = UIButton.init(frame: CGRect.init(x: 10, y: 95, width: buttonWidth, height: 75))
+		let button = UIButton.init(frame: CGRect.init(x: 25, y: 125, width: buttonWidth, height: 75))
 		button.layer.cornerRadius = radius
 		button.layer.borderWidth = borderWidth
 		button.layer.borderColor = color.cgColor
@@ -119,7 +120,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		button.setTitle("Report a bug", for: .normal)
 		button.addTarget(self, action: #selector(reportBug), for: .touchUpInside)
 		
-		let logoutButton = UIButton.init(frame: CGRect.init(x: 10, y: 10, width: buttonWidth, height: 75))
+		let logoutButton = UIButton.init(frame: CGRect.init(x: 25, y: 25, width: buttonWidth, height: 75))
 		logoutButton.layer.cornerRadius = radius
 		logoutButton.layer.borderWidth = borderWidth
 		logoutButton.layer.borderColor = color.cgColor
@@ -127,9 +128,10 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		logoutButton.setTitle("Logout", for: .normal)
 		logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
 		
-		let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 35, y: height - 60, width: 70, height: 50))
+		let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 45, y: height - 75, width: 90, height: 50))
 		closeButton.layer.cornerRadius = 25
-		closeButton.setTitle("Close", for: .normal)
+		closeButton.setTitle("Cancel", for: .normal)
+//        closeButton.titleLabel?.font = UIFont.init(name: "Avenir", size: 30)
 		closeButton.backgroundColor = color
 		closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
 		

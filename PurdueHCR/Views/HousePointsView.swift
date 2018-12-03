@@ -43,6 +43,7 @@ class HousePointsView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        backgroundView.layer.cornerRadius = 10
         
         rewardImageView = createImageView()
     }

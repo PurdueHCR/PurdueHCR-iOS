@@ -1,0 +1,6 @@
+framework module CNPPopupController {
+  umbrella header "CNPPopupController-umbrella.h"
+
+  export *
+  module * { export * }
+}
