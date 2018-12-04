@@ -139,11 +139,14 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		contentView.addSubview(logoutButton)
 		contentView.addSubview(closeButton)
 		
-		p?.show()
-	}
+        p?.showType = .slideInFromBottom
+        let location = CGPoint.init(x: self.view.frame.width/2, y: self.view.frame.height - 250)
+        //p?.show()
+    }
 	
 	@objc func buttonAction(sender: UIButton!) {
-		p?.dismiss(animated: true)
+        p?.dismissType = .slideOutToBottom
+        p?.dismiss(animated: true)
 	}
 	
 	@objc func logout(sender: UIButton!) {
