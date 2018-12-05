@@ -99,9 +99,9 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		
 		let color = AppUtils.hexStringToUIColor(hex: house!.hexColor)
 		
-		let width : Int = Int(self.view.frame.width - 75)
+		let width : Int = Int(self.view.frame.width - 20)
 		let height = 300
-		let buttonWidth = width - 50
+		let buttonWidth = width - 20
 		let borderWidth : CGFloat = 2
 		
 		let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
@@ -112,7 +112,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		p?.maskType = .dimmed
 		p?.layer.cornerRadius = radius
 		
-		let button = UIButton.init(frame: CGRect.init(x: 25, y: 125, width: buttonWidth, height: 75))
+		let button = UIButton.init(frame: CGRect.init(x: 10, y: 125, width: buttonWidth, height: 75))
 		button.layer.cornerRadius = radius
 		button.layer.borderWidth = borderWidth
 		button.layer.borderColor = color.cgColor
@@ -120,7 +120,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		button.setTitle("Report a bug", for: .normal)
 		button.addTarget(self, action: #selector(reportBug), for: .touchUpInside)
 		
-		let logoutButton = UIButton.init(frame: CGRect.init(x: 25, y: 25, width: buttonWidth, height: 75))
+		let logoutButton = UIButton.init(frame: CGRect.init(x: 10, y: 25, width: buttonWidth, height: 75))
 		logoutButton.layer.cornerRadius = radius
 		logoutButton.layer.borderWidth = borderWidth
 		logoutButton.layer.borderColor = color.cgColor
@@ -131,7 +131,6 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 45, y: height - 75, width: 90, height: 50))
 		closeButton.layer.cornerRadius = 25
 		closeButton.setTitle("Cancel", for: .normal)
-//        closeButton.titleLabel?.font = UIFont.init(name: "Avenir", size: 30)
 		closeButton.backgroundColor = color
 		closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
 		
@@ -140,8 +139,13 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		contentView.addSubview(closeButton)
 		
         p?.showType = .slideInFromBottom
-        let location = CGPoint.init(x: self.view.frame.width/2, y: self.view.frame.height - 250)
-        //p?.show()
+		let xPos = self.view.frame.width / 2
+		let yPos = self.view.frame.height - ((self.tabBarController?.view!.safeAreaInsets.bottom)!) - (CGFloat(height) / 2) - 10
+		print(self.view.safeAreaInsets.bottom)
+		//let yPos = self.view.frame.height - (CGFloat(height) / 2) - 10
+        let location = CGPoint.init(x: xPos, y: yPos)
+		p?.show(at: location, in: (self.tabBarController?.view)!)
+		//p?.show()
     }
 	
 	@objc func buttonAction(sender: UIButton!) {
