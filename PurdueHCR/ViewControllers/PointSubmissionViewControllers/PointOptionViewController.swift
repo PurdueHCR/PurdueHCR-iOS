@@ -127,21 +127,27 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             nextViewController.type = filteredPoints[(indexPath?.row)!]
         }
         else{
-          nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
+          	nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
         }
         
     }
     
     @objc func resfreshData(){
-        DataManager.sharedManager.refreshPointTypes(onDone: {(types:[PointType]) in
-            self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: types)
-            DispatchQueue.main.async { [weak self] in
-                if(self != nil){
-                    self?.tableView.reloadData()
-                }
-            }
-            self.tableView.refreshControl?.endRefreshing()
-        })
+		DataManager.sharedManager.refreshSystemPreferences { (sysPref) in
+			if (sysPref != nil) {
+				DataManager.sharedManager.refreshPointTypes(onDone: {(types:[PointType]) in
+					self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: types)
+					DispatchQueue.main.async { [weak self] in
+						if(self != nil){
+							self?.tableView.reloadData()
+						}
+					}
+					self.tableView.refreshControl?.endRefreshing()
+				})
+			} else {
+				self.notify(title: "Failure", subtitle: "Refresh Error", style: .danger)
+			}
+		}
     }
     
 //    func filter(pg:[PointGroup]) -> [PointGroup]{
