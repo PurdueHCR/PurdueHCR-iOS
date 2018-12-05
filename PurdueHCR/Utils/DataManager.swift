@@ -18,26 +18,27 @@ import Cely
 class DataManager {
     
     public static let sharedManager = DataManager()
-    private var firstRun = true;
-    private let fbh = FirebaseHelper();
-    private var _pointTypes: [PointType]? = nil
+    private var firstRun = true
+    private let fbh = FirebaseHelper()
+	var pointTypes: [PointType] = [PointType]()
     private var _unconfirmedPointLogs: [PointLog]? = nil
     private var _houses: [House]? = nil
     private var _rewards: [Reward]? = nil
     private var _houseCodes: [HouseCode]? = nil
     private var _links: LinkList? = nil
+	var systemPreferences : SystemPreferences?
     
     private init(){}
     
 
     
     func getPoints() ->[PointType]? {
-        return self._pointTypes
+        return self.pointTypes
     }
     
     
     func getPointType(value:Int)->PointType{
-        for pt in self._pointTypes!{
+        for pt in self.pointTypes{
             if(pt.pointID == value){
                 return pt
             }
@@ -57,8 +58,8 @@ class DataManager {
     
     func refreshPointTypes(onDone:@escaping ([PointType])-> Void) {
         fbh.retrievePointTypes(onDone: {(pointTypes:[PointType]) in
-            self._pointTypes = pointTypes
-            onDone(self._pointTypes!)
+            self.pointTypes = pointTypes
+            onDone(self.pointTypes)
         })
     }
     
@@ -173,64 +174,79 @@ class DataManager {
         }
     }
     
-    func initializeData(finished:@escaping ()->Void){
+	func initializeData(finished:@escaping (_ error: NSError?)->Void){
         print("INITIALIZE")
-        let counter = AppUtils.AtomicCounter(identifier: "initializer")
+		let TOTALCOUNT = 5
+        let counter = AppUtils.AtomicCounter(identifier: "initializeData")
         guard let _ = User.get(.name) else{
             print("FAILED INIT")
-            return;
+            return
         }
         if let id = User.get(.id) as! String?{
-            getUserWhenLogginIn(id: id, onDone: {(done:Bool) in
-                self.refreshPointTypes(onDone: {(onDone:[PointType]) in
-                    counter.increment()
-                    if((User.get(.permissionLevel) as! Int) == 1){
-                        //Check if user is an RHP
-                        self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in
-                            counter.increment()
-                            if(counter.value == 4){
-                                finished();
-                            }
-                        })
-                    }
-                    else{
-                        counter.increment()
-                        if(counter.value == 4){
-                            finished();
-                        }
-                    }
-                    
+            getUserWhenLogginIn(id: id, onDone: {(isLoggedIn:Bool) in
+				self.refreshPointTypes(onDone: {(pointTypes:[PointType]) in
+					counter.increment()
+					if((User.get(.permissionLevel) as! Int) == 1){
+						//Check if user is an RHP
+						self.refreshUnconfirmedPointLogs(onDone:{(pointLogs:[PointLog]) in
+							counter.increment()
+							if(counter.value == TOTALCOUNT){
+								finished(nil)
+							}
+						})
+					}
+					else{
+						counter.increment()
+						if(counter.value == TOTALCOUNT){
+							finished(nil)
+						}
+					}
                 })
-                self.refreshHouses(onDone:{(onDone:[House]) in
-                    // Check if user is an REC, in which case you need to get the top scorers
-                    if((User.get(.permissionLevel) as! Int) == 2){
-                        self.getHouseScorers {
-                            counter.increment()
-                            if(counter.value == 4){
-                                finished();
-                            }
-                        }
-                    }
-                    //User is not REC, so they do not need house Scorers (yet)
-                    else{
-                        counter.increment()
-                        if(counter.value == 4){
-                            finished();
-                        }
-                    }
+                self.refreshHouses(onDone:{(houses:[House]) in
+					if (houses.count == 0) {
+						finished(NSError(domain: "Unable to load houses.", code: 1, userInfo: nil))
+					} else {
+						// Check if user is an REC, in which case you need to get the top scorers
+						if((User.get(.permissionLevel) as! Int) == 2){
+							self.getHouseScorers {
+								counter.increment()
+								if(counter.value == TOTALCOUNT){
+									finished(nil)
+								}
+							}
+						}
+							//User is not REC, so they do not need house Scorers (yet)
+						else{
+							counter.increment()
+							if(counter.value == TOTALCOUNT){
+								finished(nil)
+							}
+						}
+					}
                     
                 })
                 self.refreshRewards(onDone: {(rewards:[Reward]) in
-                    counter.increment()
-                    if(counter.value == 4){
-                        finished();
-                    }
+					counter.increment()
+					if(counter.value == TOTALCOUNT){
+						finished(nil)
+					}
                 })
-                
+				self.refreshSystemPreferences(onDone: { (sysPref) in
+					if (sysPref == nil) {
+						finished(NSError(domain: "Unable to load system preferences.", code: 1, userInfo: nil))
+					} else {
+						counter.increment()
+						if(counter.value == TOTALCOUNT) {
+							finished(nil)
+						}
+					}
+				})
             })
-        }
-        
-        
+		}
+		// If user is not found
+		else {
+			finished(NSError(domain: "Unable to find account", code: 2, userInfo: nil))
+		}
     }
     
     func getDocumentsDirectory() -> URL {
@@ -257,7 +273,14 @@ class DataManager {
             }
             return
         }
-        
+		
+		if (!systemPreferences!.isHouseEnabled) {
+			let banner = NotificationBanner(title: "Failure", subtitle: "House competition is inactive.", style: .danger)
+			banner.duration = 2
+			banner.show()
+			return
+		}
+		
         fbh.findLinkWithID(id: id, onDone: {(linkOptional:Link?) in
             guard let link = linkOptional else {
                 DispatchQueue.main.async {
@@ -413,13 +436,24 @@ class DataManager {
             }
         }
     }
-    
 
     //Used for handling link to make sure all necessairy information is there
     func isInitialized() -> Bool {
-        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.name) != nil && User.get(.permissionLevel) != nil
+        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.name) != nil && User.get(.permissionLevel) != nil && systemPreferences != nil
 		
     }
+	
+	func refreshSystemPreferences(onDone: @escaping (_ sysPref: SystemPreferences?)->Void) {
+		fbh.getSystemPreferences { (sysPref) in
+			if (sysPref == nil) {
+				onDone(nil)
+			} else {
+				self.systemPreferences = sysPref
+				onDone(sysPref)
+			}
+		}
+	}
+	
 }
 
 

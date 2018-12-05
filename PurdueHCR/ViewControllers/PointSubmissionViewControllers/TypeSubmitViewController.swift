@@ -36,7 +36,7 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func submit(_ sender: Any) {
         submitButton.isEnabled = false;
-        guard let description = descriptionField.text, !description.isEmpty else{
+        guard let description = descriptionField.text, !description.isEmpty, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else{
             notify(title: "Failure", subtitle: "Please enter a description", style: .danger)
             submitButton.isEnabled = true;
             return

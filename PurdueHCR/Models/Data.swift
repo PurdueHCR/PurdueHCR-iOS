@@ -181,3 +181,13 @@ class UserModel {
     }
 }
 
+class SystemPreferences {
+	var isHouseEnabled : Bool
+	var houseEnabledMessage : String
+	
+	init(isHouseEnabled: Bool, houseEnabledMessage: String) {
+		self.isHouseEnabled = isHouseEnabled
+		self.houseEnabledMessage = houseEnabledMessage
+	}
+}
+

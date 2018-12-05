@@ -59,11 +59,11 @@
             </objects>
             <point key="canvasLocation" x="-90.400000000000006" y="-1052.0239880059971"/>
         </scene>
-        <!--Add Point-->
+        <!--Submit Points-->
         <scene sceneID="ymG-0j-Wqh">
             <objects>
                 <navigationController storyboardIdentifier="Point_Submission_Initial" id="GaJ-ht-lTq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Add Point" image="list" selectedImage="list" id="VQv-Mm-WXr"/>
+                    <tabBarItem key="tabBarItem" title="Submit Points" image="list" selectedImage="list" id="VQv-Mm-WXr" userLabel="Submit Points"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z1Z-nv-EXB">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -141,6 +141,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="list" width="18.75" height="18.75"/>
+        <image name="list" width="37.5" height="37.5"/>
     </resources>
 </document>

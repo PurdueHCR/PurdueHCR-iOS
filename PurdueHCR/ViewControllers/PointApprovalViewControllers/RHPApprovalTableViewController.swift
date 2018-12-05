@@ -54,7 +54,12 @@ class RHPApprovalTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        if unconfirmedLogs.count > 0 {
+		if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
+			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
+			emptyMessage(message: message)
+			return 0
+		}
+        else if unconfirmedLogs.count > 0 {
             killEmptyMessage()
             return 1
         } else {

@@ -101,7 +101,6 @@
                         <outlet property="housePointsCompareView" destination="2EP-Vu-eK9" id="2Zq-YB-rw1"/>
                         <outlet property="housePointsView" destination="dGl-5f-Wyl" id="bGB-uW-bPQ"/>
                         <outlet property="profileView" destination="vhe-Cn-9Q8" id="Y1U-xG-8uY"/>
-                        <outlet property="reportButton" destination="Fb9-Hi-LHH" id="2qp-cG-eqZ"/>
                         <outlet property="scrollView" destination="vFy-4D-Lcd" id="EnM-T6-l03"/>
                         <outlet property="settingsButton" destination="k1f-dT-QSa" id="Ngu-Px-ruI"/>
                     </connections>
@@ -109,73 +108,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyd-ge-ozp" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1485.5999999999999" y="-271.664167916042"/>
-        </scene>
-        <!--Settings Page-->
-        <scene sceneID="vxh-VD-oy3">
-            <objects>
-                <viewController id="Dfe-yH-3iZ" customClass="SettingsPage" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gn6-zc-x35">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="wp8-5c-gie">
-                                <rect key="frame" x="20" y="40" width="335" height="113"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6C-I4-8Fq">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZkP-0h-tUu">
-                                                <rect key="frame" x="20" y="10" width="295" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Log Out"/>
-                                                <connections>
-                                                    <action selector="logOut:" destination="Dfe-yH-3iZ" eventType="touchUpInside" id="0o8-UY-sbd"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="Dj7-kI-99q"/>
-                                            <constraint firstAttribute="bottom" secondItem="ZkP-0h-tUu" secondAttribute="bottom" constant="10" id="JAj-s9-GAs"/>
-                                            <constraint firstItem="ZkP-0h-tUu" firstAttribute="leading" secondItem="Z6C-I4-8Fq" secondAttribute="leading" constant="20" id="WMg-LK-138"/>
-                                            <constraint firstItem="ZkP-0h-tUu" firstAttribute="top" secondItem="Z6C-I4-8Fq" secondAttribute="top" constant="10" id="XXU-P3-PzE"/>
-                                            <constraint firstAttribute="trailing" secondItem="ZkP-0h-tUu" secondAttribute="trailing" constant="20" id="rER-dW-R4c"/>
-                                        </constraints>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb9-Hi-LHH">
-                                        <rect key="frame" x="0.0" y="63" width="335" height="50"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="M8D-M6-ef7"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Report a Bug"/>
-                                        <connections>
-                                            <action selector="report:" destination="Dfe-yH-3iZ" eventType="touchUpInside" id="Pqm-FC-gXZ"/>
-                                            <action selector="reportABugLink:" destination="zGs-DW-f3U" eventType="touchUpInside" id="7Xg-az-I7X"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="wp8-5c-gie" firstAttribute="leading" secondItem="FmM-Cg-brK" secondAttribute="leading" constant="20" id="aea-O7-Gu9"/>
-                            <constraint firstItem="FmM-Cg-brK" firstAttribute="trailing" secondItem="wp8-5c-gie" secondAttribute="trailing" constant="20" id="jau-LX-APK"/>
-                            <constraint firstItem="wp8-5c-gie" firstAttribute="top" secondItem="FmM-Cg-brK" secondAttribute="top" constant="20" id="peJ-1t-72H"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="FmM-Cg-brK"/>
-                    </view>
-                    <connections>
-                        <outlet property="logOutButton" destination="ZkP-0h-tUu" id="Svz-nj-9rK"/>
-                        <outlet property="logOutView" destination="Z6C-I4-8Fq" id="6FU-Ll-19Y"/>
-                        <outlet property="reportButton" destination="Fb9-Hi-LHH" id="AKF-Wt-hzc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RAH-qR-z0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2200.8000000000002" y="-538.38080959520244"/>
         </scene>
     </scenes>
     <resources>

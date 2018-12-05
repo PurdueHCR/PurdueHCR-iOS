@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 import Cely
 
 class AnimatedLoadingViewController: UIViewController {
@@ -37,8 +38,29 @@ class AnimatedLoadingViewController: UIViewController {
     }
     
     func finishLoadinng(){
-        DataManager.sharedManager.initializeData(finished: {() in
-            self.performSegue(withIdentifier: "doneWithInit", sender: nil)
+        DataManager.sharedManager.initializeData(finished: {(error) in
+			if (error == nil) {
+				self.performSegue(withIdentifier: "doneWithInit", sender: nil)
+			} else if (error!.code == 1) {
+				let alertController = UIAlertController.init(title: "Error", message: error!.domain, preferredStyle: .alert)
+				
+				let retryOption = UIAlertAction.init(title: "Try Again", style: .default, handler: { (alert) in
+					self.finishLoadinng()
+				})
+				
+				alertController.addAction(retryOption)
+				self.addChild(alertController)
+				
+			} else if (error!.code == 2) {
+				let alertController = UIAlertController.init(title: "Error", message: error!.domain, preferredStyle: .alert)
+				
+				let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: { (alert) in
+					try! Auth.auth().signOut()
+					Cely.logout()
+				})
+				alertController.addAction(okAction)
+				self.addChild(alertController)
+			}
         })
     }
 
