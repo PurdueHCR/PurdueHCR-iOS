@@ -712,6 +712,24 @@ class FirebaseHelper {
             }
         }
     }
+	
+	/// Retrieves the system preferences for the app
+	///
+	/// - Parameter onDone: returns the system preferences that were retrieved
+	func getSystemPreferences(onDone: @escaping (_ sysPref:SystemPreferences?)->Void) {
+		var ref: DocumentReference? = self.db.collection("SystemPreferences").document("Preferences")
+		ref?.getDocument { (document, error) in
+			if let document = document, document.exists {
+				let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
+				let houseEnabledMessage = document.data()!["houseEnabledMessage"] as! String
+				let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage)
+				onDone(systemPreferences)
+			} else {
+				print("Error: Unabled to retrieve SystemPreferences information")
+				onDone(nil)
+			}
+		}
+	}
 
 }
 

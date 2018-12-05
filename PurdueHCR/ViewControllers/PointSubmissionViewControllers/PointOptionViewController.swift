@@ -28,9 +28,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
         tableView.refreshControl = refresher
         // Do any additional setup after loading the view, typically from a nib.
-        if(pointSystem.count == 0){
-            resfreshData()
-        }
+		self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: DataManager.sharedManager.pointTypes)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Points"
@@ -76,14 +74,19 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if isFiltering() {
+		if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
+			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
+			emptyMessage(message: message)
+			return 0
+		}
+		else if isFiltering() {
             if(filteredPoints.count > 0){
                 killEmptyMessage()
                 return 1
             }
             else {
                 emptyMessage(message: "Could not find points matching that description.")
-                return 0;
+                return 0
             }
 		} else {
 			if pointSystem.count > 0 {

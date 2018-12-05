@@ -131,10 +131,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         self.activityIndicator.stopAnimating()
                         try! Auth.auth().signOut()
                     } else {
-                        DataManager.sharedManager.initializeData(finished:{() in return})
-                        Cely.changeStatus(to: .loggedIn)
-                        self.activityIndicator.stopAnimating()
-                        
+						self.initializeData()
                     }
                 }))
             }
@@ -142,6 +139,34 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         
     }
+	
+	func initializeData() {
+		DataManager.sharedManager.initializeData(finished:{(initError) in
+		if (initError == nil) {
+			Cely.changeStatus(to: .loggedIn)
+			self.activityIndicator.stopAnimating()
+		} else if (initError!.code == 1) {
+			let alertController = UIAlertController.init(title: "Error", message: initError!.domain, preferredStyle: .alert)
+			
+			let retryOption = UIAlertAction.init(title: "Try Again", style: .default, handler: { (alert) in
+				self.initializeData()
+			})
+			
+			alertController.addAction(retryOption)
+			self.addChild(alertController)
+			
+		} else if (initError!.code == 2) {
+			let alertController = UIAlertController.init(title: "Error", message: initError!.domain, preferredStyle: .alert)
+			
+			let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: { (alert) in
+				try! Auth.auth().signOut()
+				Cely.logout()
+			})
+			alertController.addAction(okAction)
+			self.addChild(alertController)
+		}
+		})
+	}
     
     
     // code is format [houseIdentifier:roomNumber]
