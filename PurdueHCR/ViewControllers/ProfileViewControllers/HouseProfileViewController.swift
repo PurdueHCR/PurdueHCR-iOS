@@ -94,60 +94,58 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 	
 	@IBAction func showSettings(_ sender: Any) {
 		
-		var houses = DataManager.sharedManager.getHouses()!
-		self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
-		
-		let color = AppUtils.hexStringToUIColor(hex: house!.hexColor)
-		
-		let width : Int = Int(self.view.frame.width - 20)
-		let height = 280
-		let distance = 20
-		let buttonWidth = width - (distance * 2)
-		let borderWidth : CGFloat = 2
-		
-		let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
-		contentView.backgroundColor = UIColor.white
-		contentView.layer.cornerRadius = radius
-		
-		p = PopupView.init(contentView: contentView)
-		p?.maskType = .dimmed
-		p?.layer.cornerRadius = radius
-		
-		let reportButton = UIButton.init(frame: CGRect.init(x: distance, y: 115, width: buttonWidth, height: 75))
-		reportButton.layer.cornerRadius = radius
-		reportButton.layer.borderWidth = borderWidth
-		reportButton.layer.borderColor = color.cgColor
-		reportButton.setTitleColor(UIColor.black, for: .normal)
-		reportButton.setTitle("Report a bug", for: .normal)
-		//button.backgroundColor = color
-		reportButton.addTarget(self, action: #selector(reportBug), for: .touchUpInside)
-		
-		let logoutButton = UIButton.init(frame: CGRect.init(x: distance, y: 25, width: buttonWidth, height: 75))
-		logoutButton.layer.cornerRadius = radius
-		logoutButton.layer.borderWidth = borderWidth
-		logoutButton.layer.borderColor = color.cgColor
-		logoutButton.setTitleColor(UIColor.black, for: .normal)
-		logoutButton.setTitle("Logout", for: .normal)
-		//logoutButton.backgroundColor = color
-		logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-		
-		let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 45, y: height - 75, width: 90, height: 50))
-		closeButton.layer.cornerRadius = 25
-		closeButton.setTitle("Cancel", for: .normal)
-		closeButton.backgroundColor = color
-		closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-		
-		contentView.addSubview(reportButton)
-		contentView.addSubview(logoutButton)
-		contentView.addSubview(closeButton)
-		
-		let xPos = self.view.frame.width / 2
-		let yPos = self.view.frame.height - ((self.tabBarController?.view!.safeAreaInsets.bottom)!) - (CGFloat(height) / 2) - 10
+        var houses = DataManager.sharedManager.getHouses()!
+        self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
+        
+        let color = AppUtils.hexStringToUIColor(hex: house!.hexColor)
+        
+        let width : Int = Int(self.view.frame.width - 20)
+        let height = 280
+        let distance = 20
+        let buttonWidth = width - (distance * 2)
+        let borderWidth : CGFloat = 2
+        
+        let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
+        contentView.backgroundColor = UIColor.white
+        contentView.layer.cornerRadius = radius
+        
+        p = PopupView.init(contentView: contentView)
+        p?.maskType = .dimmed
+        p?.layer.cornerRadius = radius
+        
+        let reportButton = UIButton.init(frame: CGRect.init(x: distance, y: 115, width: buttonWidth, height: 75))
+        reportButton.layer.cornerRadius = radius
+        reportButton.layer.borderWidth = borderWidth
+        reportButton.layer.borderColor = color.cgColor
+        reportButton.setTitleColor(UIColor.black, for: .normal)
+        reportButton.setTitle("Report a bug", for: .normal)
+        reportButton.addTarget(self, action: #selector(reportBug), for: .touchUpInside)
+        
+        let logoutButton = UIButton.init(frame: CGRect.init(x: distance, y: 25, width: buttonWidth, height: 75))
+        logoutButton.layer.cornerRadius = radius
+        logoutButton.layer.borderWidth = borderWidth
+        logoutButton.layer.borderColor = color.cgColor
+        logoutButton.setTitleColor(UIColor.black, for: .normal)
+        logoutButton.setTitle("Logout", for: .normal)
+        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        
+        let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 45, y: height - 75, width: 90, height: 50))
+        closeButton.layer.cornerRadius = 25
+        closeButton.setTitle("Cancel", for: .normal)
+        closeButton.backgroundColor = color
+        closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        contentView.addSubview(reportButton)
+        contentView.addSubview(logoutButton)
+        contentView.addSubview(closeButton)
+        
+        let xPos = self.view.frame.width / 2
+        let yPos = self.view.frame.height - ((self.tabBarController?.view!.safeAreaInsets.bottom)!) - (CGFloat(height) / 2) - 10
         let location = CGPoint.init(x: xPos, y: yPos)
-		p?.showType = .slideInFromBottom
-		p?.maskType = .dimmed
-		p?.dismissType = .slideOutToBottom
-		p?.show(at: location, in: (self.tabBarController?.view)!)
+        p?.showType = .slideInFromBottom
+        p?.maskType = .dimmed
+        p?.dismissType = .slideOutToBottom
+        p?.show(at: location, in: (self.tabBarController?.view)!)
     }
 	
 	@objc func buttonAction(sender: UIButton!) {

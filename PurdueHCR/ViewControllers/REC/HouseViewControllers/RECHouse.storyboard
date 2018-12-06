@@ -314,7 +314,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="Settings" id="3km-Es-eeM">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="bMY-Ca-6ML" kind="show" id="Ave-aD-E86"/>
+                                <action selector="openSettings:" destination="qQL-ih-pe3" id="2di-MI-TUB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -329,6 +329,7 @@
                         <outlet property="houseSelectionControl" destination="Udu-Fn-kzs" id="eH4-6N-5BI"/>
                         <outlet property="secondPlaceLabel" destination="5Wl-1v-cu4" id="MF8-Bp-yWl"/>
                         <outlet property="secondPointsLabel" destination="gCx-cb-z2r" id="XhO-hB-qhQ"/>
+                        <outlet property="settingsButton" destination="3km-Es-eeM" id="nvr-Wk-MR0"/>
                         <outlet property="thirdPlaceLabel" destination="lRg-Oh-dHW" id="J2W-bz-yl6"/>
                         <outlet property="thirdPointsLabel" destination="F7w-gJ-oq5" id="SRE-ZP-9Aw"/>
                     </connections>
@@ -525,74 +526,8 @@
             </objects>
             <point key="canvasLocation" x="844" y="717"/>
         </scene>
-        <!--Settings Page-->
-        <scene sceneID="IHj-Z9-jOV">
-            <objects>
-                <viewController id="bMY-Ca-6ML" customClass="SettingsPage" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Owc-Kf-ItC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="p4R-Z4-0RB">
-                                <rect key="frame" x="10" y="74" width="355" height="143"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJO-8S-MpB">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="100"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDi-RU-7b8">
-                                                <rect key="frame" x="20" y="10" width="315" height="80"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Log Out"/>
-                                                <connections>
-                                                    <action selector="logOut:" destination="bMY-Ca-6ML" eventType="touchUpInside" id="0EY-DO-Irw"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="wDi-RU-7b8" firstAttribute="top" secondItem="nJO-8S-MpB" secondAttribute="top" constant="10" id="2br-hi-omm"/>
-                                            <constraint firstAttribute="trailing" secondItem="wDi-RU-7b8" secondAttribute="trailing" constant="20" id="7oK-eN-OTb"/>
-                                            <constraint firstItem="wDi-RU-7b8" firstAttribute="leading" secondItem="nJO-8S-MpB" secondAttribute="leading" constant="20" id="Eby-MK-LVm"/>
-                                            <constraint firstAttribute="bottom" secondItem="wDi-RU-7b8" secondAttribute="bottom" constant="10" id="suh-Ac-FDd"/>
-                                            <constraint firstAttribute="height" constant="100" id="vYC-Rc-0ne"/>
-                                        </constraints>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ny6-s1-owu">
-                                        <rect key="frame" x="0.0" y="113" width="355" height="30"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="SzZ-Na-G9J"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title="Report a Bug"/>
-                                        <connections>
-                                            <action selector="report:" destination="bMY-Ca-6ML" eventType="touchUpInside" id="RV8-R3-vAe"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="p4R-Z4-0RB" firstAttribute="leading" secondItem="RDx-1z-2zP" secondAttribute="leading" constant="10" id="QqC-FF-Hpg"/>
-                            <constraint firstItem="p4R-Z4-0RB" firstAttribute="top" secondItem="RDx-1z-2zP" secondAttribute="top" constant="10" id="mOm-aa-1Sa"/>
-                            <constraint firstItem="RDx-1z-2zP" firstAttribute="trailing" secondItem="p4R-Z4-0RB" secondAttribute="trailing" constant="10" id="vMC-wC-VIV"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="RDx-1z-2zP"/>
-                    </view>
-                    <connections>
-                        <outlet property="logOutButton" destination="wDi-RU-7b8" id="No4-EN-8Aq"/>
-                        <outlet property="logOutView" destination="nJO-8S-MpB" id="mMa-59-zyA"/>
-                        <outlet property="reportButton" destination="ny6-s1-owu" id="brg-Xt-Zli"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1JV-ck-Z04" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-26" y="-780"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="Settings" width="37.5" height="37.5"/>
+        <image name="Settings" width="25" height="25"/>
     </resources>
 </document>

@@ -143,10 +143,8 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/AZDialogView/AZDialogView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AZDropdownMenu/AZDropdownMenu.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/CNPPopupController/CNPPopupController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Cely/Cely.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework"
@@ -155,10 +153,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PopupKit/PopupKit.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/PopupWindow/PopupWindow.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SubscriptionPrompt/SubscriptionPrompt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ValueStepper/ValueStepper.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework"
@@ -169,10 +165,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/AZDialogView/AZDialogView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AZDropdownMenu/AZDropdownMenu.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/CNPPopupController/CNPPopupController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Cely/Cely.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework"
@@ -181,10 +175,8 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PopupKit/PopupKit.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/PopupWindow/PopupWindow.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SubscriptionPrompt/SubscriptionPrompt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ValueStepper/ValueStepper.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework"
