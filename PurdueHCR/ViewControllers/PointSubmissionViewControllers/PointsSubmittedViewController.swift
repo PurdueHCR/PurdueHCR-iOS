@@ -8,14 +8,15 @@
 
 import UIKit
 
-class PointsSubmittedViewController: UIViewController {
+class PointsSubmittedViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        self.navigationItem.title = "Submitted Points"
+        
     }
-    
 
     /*
     // MARK: - Navigation

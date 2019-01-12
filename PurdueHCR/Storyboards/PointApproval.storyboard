@@ -176,10 +176,10 @@
             </objects>
             <point key="canvasLocation" x="-90.400000000000006" y="502.39880059970017"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Points Submitted View Controller-->
         <scene sceneID="csl-6a-YeJ">
             <objects>
-                <tableViewController id="Yyz-RD-CqG" sceneMemberID="viewController">
+                <tableViewController id="Yyz-RD-CqG" customClass="PointsSubmittedViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0Ml-rZ-5bg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
