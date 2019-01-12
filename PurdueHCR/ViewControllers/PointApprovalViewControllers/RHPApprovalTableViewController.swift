@@ -196,13 +196,15 @@ class RHPApprovalTableViewController: UITableViewController {
     // This function is called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // get a reference to the second view controller
-        let nextViewController = segue.destination as! PointLogOverviewController
-        let indexPath = tableView.indexPathForSelectedRow
-        
-        nextViewController.pointLog = self.unconfirmedLogs[(indexPath?.row)!]
-        nextViewController.index = ( sender as! RHPApprovalTableViewController ).tableView.indexPathForSelectedRow
-        nextViewController.preViewContr = self
+        if (segue.identifier == "cell_push") {
+            // get a reference to the second view controller
+            let nextViewController = segue.destination as! PointLogOverviewController
+            let indexPath = tableView.indexPathForSelectedRow
+            
+            nextViewController.pointLog = self.unconfirmedLogs[(indexPath?.row)!]
+            nextViewController.index = ( sender as! RHPApprovalTableViewController ).tableView.indexPathForSelectedRow
+            nextViewController.preViewContr = self
+        }
     }
 
 }
