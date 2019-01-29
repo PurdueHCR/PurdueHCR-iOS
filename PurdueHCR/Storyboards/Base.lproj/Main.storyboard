@@ -25,12 +25,6 @@
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="275" id="ydV-L3-htl"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UU7-Vb-8Wc">
-                                <rect key="frame" x="16" y="175" width="343" height="31.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="j8K-2A-WkV">
                                 <rect key="frame" x="177.5" y="496" width="20" height="20"/>
                             </activityIndicatorView>
@@ -38,12 +32,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="j8K-2A-WkV" firstAttribute="top" secondItem="WUo-sG-Abw" secondAttribute="bottom" constant="50" id="4OC-Qg-Wug"/>
-                            <constraint firstItem="UU7-Vb-8Wc" firstAttribute="top" secondItem="oTi-77-cX2" secondAttribute="top" constant="155" id="6UH-o4-X5L"/>
-                            <constraint firstItem="UU7-Vb-8Wc" firstAttribute="leading" secondItem="JYw-7r-eBW" secondAttribute="leadingMargin" id="QxM-g4-JHJ"/>
                             <constraint firstItem="WUo-sG-Abw" firstAttribute="leading" secondItem="oTi-77-cX2" secondAttribute="leading" constant="75" id="TXC-GH-m8J"/>
                             <constraint firstItem="j8K-2A-WkV" firstAttribute="centerX" secondItem="JYw-7r-eBW" secondAttribute="centerX" id="UAT-YD-6rI"/>
                             <constraint firstItem="WUo-sG-Abw" firstAttribute="centerX" secondItem="JYw-7r-eBW" secondAttribute="centerX" id="foK-la-QRC"/>
-                            <constraint firstItem="UU7-Vb-8Wc" firstAttribute="trailing" secondItem="JYw-7r-eBW" secondAttribute="trailingMargin" id="iqt-Hm-rcb"/>
                             <constraint firstItem="WUo-sG-Abw" firstAttribute="centerY" secondItem="JYw-7r-eBW" secondAttribute="centerY" id="vfB-0b-RCE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oTi-77-cX2"/>

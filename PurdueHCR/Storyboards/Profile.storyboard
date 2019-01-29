@@ -88,7 +88,7 @@
                         <viewLayoutGuide key="safeArea" id="QII-wG-4Zx"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="info" selectedImage="info" id="JSU-7P-lap"/>
-                    <navigationItem key="navigationItem" title="Your Points" id="2Xh-z0-fiO">
+                    <navigationItem key="navigationItem" id="2Xh-z0-fiO">
                         <barButtonItem key="rightBarButtonItem" title="Sign Out" image="Settings" id="k1f-dT-QSa">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
