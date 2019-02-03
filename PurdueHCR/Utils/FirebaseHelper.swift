@@ -174,6 +174,13 @@ class FirebaseHelper {
         }
     }
     
+    /// Handle the point logs when it is being approved, rejected, or updated
+    ///
+    /// - Parameters:
+    ///   - log: Log that is being updated
+    ///   - approved: BOOL: Approved (true) rejected(false)
+    ///   - updating: Bool: If the log has already been approved or rejected, and you are changing that status, set updating to true
+    ///   - onDone: Closure to handle when the function is finished or if there is an error
     func handlePointLogApproval(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         //TODO While User.get(house) will work for now, look at doing this a better way
         let house = User.get(.house) as! String
@@ -365,8 +372,17 @@ class FirebaseHelper {
         }
     }
     
-    func updateUserPoints(log:PointLog, userRef:DocumentReference, updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void) {
+    /// Helper function to updateUserPoints
+    ///
+    /// - Parameters:
+    ///   - log: Log to be saved
+    ///   - userRef: DocumentReference for firebase user
+    ///   - updatePointValue: Bool for if the point is being update. Set this to false if this log has not been previously approved or rejected
+    ///   - onDone: Closure to run when the function is finished or errors
+    private func updateUserPoints(log:PointLog, userRef:DocumentReference, updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void) {
+        //Start Firebase Transaction - Used to prevent concurrency issues when updating a value
         db.runTransaction({ (transaction, errorPointer) -> Any? in
+            //Get the old user document
             let userDocument: DocumentSnapshot
             do {
                 try userDocument = transaction.getDocument(userRef)
@@ -374,7 +390,7 @@ class FirebaseHelper {
                 errorPointer?.pointee = fetchError
                 return nil
             }
-            
+            //Get the value of the old points total for the user
             guard let oldTotal = userDocument.data()?["TotalPoints"] as? Int else {
                 let error = NSError(
                     domain: "AppErrorDomain",
@@ -386,22 +402,25 @@ class FirebaseHelper {
                 errorPointer?.pointee = error
                 return nil
             }
+            //Update the value
             var newTotal = oldTotal
             if(updatePointValue){
                 if(log.wasRejected()){
-                    newTotal -= log.type.pointValue
+                    newTotal -= log.type.pointValue // if log is being updated and is rejected, subtract points
                 }
                 else{
-                    newTotal += log.type.pointValue
+                    newTotal += log.type.pointValue // if log is being updated and it is approved, add points
                 }
             }
             else{
-                newTotal += log.type.pointValue
+                newTotal += log.type.pointValue // If this is the first time being updated, add points
             }
+            //Complete transaction update
             transaction.updateData(["TotalPoints": newTotal], forDocument: userRef)
             return nil
         })
         { (object, error) in
+            //handle errors
             if let error = error {
                 print("Transaction failed: \(error)")
                 onDone(error)
@@ -419,7 +438,7 @@ class FirebaseHelper {
     ///   - houseRef: DocumentReference that points to house in Firebase
     ///   - updatePointValue: Bool if the pointlog is being updated after already being approved/rejected
     ///   - onDone: Closure to handle what to do when the function is finished or if there was an error
-    func updateHousePoints(log:PointLog, houseRef:DocumentReference, updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void)
+    private func updateHousePoints(log:PointLog, houseRef:DocumentReference, updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void)
     {
         //Transaction allows multiple firebase calls to occur without fear of concurrency issues
         db.runTransaction({ (transaction, errorPointer) -> Any? in
@@ -475,7 +494,7 @@ class FirebaseHelper {
         }
     }
     
-    /// Handles the updating of the house points for House and User in firebase
+    /// Private helper function that will handle the updating of the house points for House and User in firebase
     /// Note this will need to be changed when we switch to API and MySQL database
     ///
     /// - Parameters:
@@ -485,7 +504,7 @@ class FirebaseHelper {
     ///   - isRECGrantingAward: Boolean (defaults to false) true if REC is giving award to entire house
     ///   - updatePointValue: Boolean if this point is being updated. Make this true if log was already approved or disapproved, and this is an update to its status that requires its point value be changed.
     ///   - onDone: Closure function to be called on completion. Err is nil if no errors are thrown.
-    func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference, isRECGrantingAward:Bool = false,updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void)
+    private func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference, isRECGrantingAward:Bool = false,updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void)
     {
         updateHousePoints(log: log, houseRef: houseRef,updatePointValue: updatePointValue , onDone: {(err:Error?)in
             if(err != nil){
