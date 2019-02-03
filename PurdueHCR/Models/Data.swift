@@ -124,6 +124,9 @@ class PointLog {
         if(idValue < 1){
             self.wasHandled = false
         }
+        else{
+            self.wasHandled = true
+        }
         self.type = DataManager.sharedManager.getPointType(value: abs(idValue))
         if(floorID == "Shreve"){
             resident = "(Shreve) "+resident
@@ -134,21 +137,39 @@ class PointLog {
         return self.pointDescription.contains(REJECTED_STRING)
     }
     
-    func updateApprovalStatus( approved:Bool){
+    /// changes the value of the point log when it is being rejected or approved.
+    /// NOTE: It does not matter if the point was already handled. It will work properly either way
+    ///
+    /// - Parameters:
+    ///   - approved: Bool Point is approved
+    ///   - preapproved: Bool Point was preapproved
+    func updateApprovalStatus( approved:Bool,preapproved:Bool = false){
         wasHandled = true
         if(approved){
+            //Approve the point
             if(wasRejected()){
+                //Point was previously rejected so remove Rejected String
                 self.pointDescription = String(self.pointDescription.dropFirst(REJECTED_STRING.count))
             }
-            self.approvedBy = User.get(.name) as! String?
+            
+            if(preapproved){
+                self.approvedBy = "Preapproved"
+            }
+            else{
+                self.approvedBy = User.get(.name) as! String?
+            }
+            
             self.approvedOn = Timestamp.init()
         }
         else{
+            //Reject the point
             if(!wasRejected()){
+                //Point was not already rejected
                 self.pointDescription = REJECTED_STRING + self.pointDescription
+                self.approvedBy = User.get(.name) as! String?
+                self.approvedOn = Timestamp.init()
             }
-            self.approvedBy = User.get(.name) as! String?
-            self.approvedOn = Timestamp.init()
+            //else point was already rejected so it does not need ot be updated
         }
     }
     

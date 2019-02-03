@@ -116,29 +116,22 @@ class FirebaseHelper {
             onDone(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
             return
         }
-        
-        var multiplier = -1
+        //If the log is preapproved, update the approval status
         if(preApproved){
-            multiplier = 1
+            log.updateApprovalStatus(approved: preApproved, preapproved: preApproved)
         }
+        
         if(documentID == "" )
         {
             // write the document to the HOUSE table and save the reference
-            ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: [
-                "Description" : log.pointDescription,
-                "PointTypeID" : ( log.type.pointID * multiplier),
-                "Resident"    : log.resident,
-                "ResidentRef"  : log.residentRef,
-                "ResidentReportTime" : Timestamp.init(),
-                FLOOR_ID      : log.floorID as Any
-            ]){ err in
+            ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: log.convertToDict()){ err in
                 if ( err == nil){
                     //add a document to the table for the user with the reference to the point
                     log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
                     {err in
                         if(err == nil && preApproved)
                         {
-                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, onDone: onDone)
+                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
                         }
                         else{
                             onDone(err)
@@ -158,20 +151,14 @@ class FirebaseHelper {
                 if let document = document, document.exists {
                     onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
                 } else {
-                    ref!.setData([
-                        "Description" : log.pointDescription,
-                        "PointTypeID" : ( log.type.pointID * multiplier),
-                        "Resident"    : log.resident,
-                        "ResidentRef"  : log.residentRef,
-                        self.FLOOR_ID      : log.floorID as Any
-                    ]){ err in
+                    ref!.setData(log.convertToDict()){ err in
                         if ( err == nil){
                             //add a document to the table for the user with the reference to the point
                             log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
                             {err in
                                 if(err == nil && preApproved)
                                 {
-                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, onDone: onDone)
+                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
                                 }
                                 else{
                                     onDone(err)
@@ -187,7 +174,7 @@ class FirebaseHelper {
         }
     }
     
-    func approvePoint(log:PointLog, approved:Bool, onDone:@escaping (_ err:Error?)->Void){
+    func handlePointLogApproval(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         //TODO While User.get(house) will work for now, look at doing this a better way
         let house = User.get(.house) as! String
         var housePointRef: DocumentReference?
@@ -196,27 +183,24 @@ class FirebaseHelper {
         houseRef = self.db.collection(self.HOUSE).document(house)
         housePointRef = houseRef!.collection(self.POINTS).document(log.logID!)
         userRef = log.residentRef
-        let value = log.type.pointID
-        var description = log.pointDescription
-        if(!approved){
-            description = "DENIED: "+description
-        }
+        log.updateApprovalStatus(approved: approved)
         //TODO: yes this is not entirely thread safe. If some future developer would be so kind as to make this more robust, this would be great
         //Note: The race conditions only happens with Firebase rn, so if in the future we switch to a different database solution, this may no longer be an issue
         housePointRef!.getDocument { (document, error) in
             //make sure that the document exists
             if let document = document, document.exists {
-                //Make sure that no one has laready approved it.
-                if((document.data()!["ApprovedBy"] as! String?) != nil){
+                //If this is the first handling of this log, check to make sure it was not already approved.
+                if(!updating && (document.data()!["ApprovedBy"] as! String?) != nil){
                     // someone has already approved it :(
                     onDone(NSError(domain: "Document has already been approved", code: 1, userInfo: nil))
                     
                 }
                 else{
-                    //It has not been approved yet, you are good to go
-                    housePointRef!.setData(["PointTypeID":value,"ApprovedBy":User.get(.name) as! String,"ApprovedOn":Timestamp.init(), "Description":description],merge:true){err in
-                        if(err == nil && approved){
-                            self.updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, onDone: {(err:Error?) in
+                    //It has not been approved yet or is being updated, so you are good to go
+                    housePointRef!.setData(log.convertToDict(),merge:true){err in
+                        //if approved or update, update total points
+                        if((approved || updating) && err == nil){
+                            self.updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, updatePointValue: updating, onDone: {(err:Error?) in
                                 onDone(err)
                             })
                         }
@@ -257,37 +241,14 @@ class FirebaseHelper {
                         }
                         if(floorID != otherCode){
                             let id = document.documentID
-                            let description = document.data()["Description"] as! String
-                            let idType = (document.data()["PointTypeID"] as! Int) * -1
-                            var resident = document.data()["Resident"] as! String
-                            if(floorID == "Shreve"){
-                                resident = "(Shreve) "+resident
-                            }
-                            let residentRefMaybe = document.data()["ResidentRef"]
-                            var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1")
-                            if(residentRefMaybe != nil ){
-                                residentRef = residentRefMaybe as! DocumentReference
-                            }
-                            let pointType = DataManager.sharedManager.getPointType(value: idType)
-                            let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID, residentRef:residentRef)
-                            pointLog.logID = id
+                            let pointLog = PointLog(id: id, document: document.data())
                             pointLogs.append(pointLog)
                         }
                     }
                     else{
                         if(floorID == userFloorID){
                             let id = document.documentID
-                            let description = document.data()["Description"] as! String
-                            let idType = (document.data()["PointTypeID"] as! Int) * -1
-                            let resident = document.data()["Resident"] as! String
-                            let residentRefMaybe = document.data()["ResidentRef"]
-                            var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1")
-                            if(residentRefMaybe != nil ){
-                                residentRef = residentRefMaybe as! DocumentReference
-                            }
-                            let pointType = DataManager.sharedManager.getPointType(value: idType)
-                            let pointLog = PointLog(pointDescription: description, resident: resident, type: pointType, floorID: floorID, residentRef:residentRef)
-                            pointLog.logID = id
+                            let pointLog = PointLog(id: id, document: document.data())
                             pointLogs.append(pointLog)
                         }
                     }
@@ -404,7 +365,7 @@ class FirebaseHelper {
         }
     }
     
-    func updateUserPoints(log:PointLog, userRef:DocumentReference,onDone:@escaping (_ err:Error?)->Void) {
+    func updateUserPoints(log:PointLog, userRef:DocumentReference, updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void) {
         db.runTransaction({ (transaction, errorPointer) -> Any? in
             let userDocument: DocumentSnapshot
             do {
@@ -425,7 +386,18 @@ class FirebaseHelper {
                 errorPointer?.pointee = error
                 return nil
             }
-            let newTotal = oldTotal + log.type.pointValue
+            var newTotal = oldTotal
+            if(updatePointValue){
+                if(log.wasRejected()){
+                    newTotal -= log.type.pointValue
+                }
+                else{
+                    newTotal += log.type.pointValue
+                }
+            }
+            else{
+                newTotal += log.type.pointValue
+            }
             transaction.updateData(["TotalPoints": newTotal], forDocument: userRef)
             return nil
         })
@@ -440,9 +412,18 @@ class FirebaseHelper {
         }
     }
     
-    func updateHousePoints(log:PointLog, houseRef:DocumentReference,onDone:@escaping (_ err:Error?)->Void)
+    /// Helper function that contains the code that will actually update the House's points
+    ///
+    /// - Parameters:
+    ///   - log: PointLog that is being handled/Updated
+    ///   - houseRef: DocumentReference that points to house in Firebase
+    ///   - updatePointValue: Bool if the pointlog is being updated after already being approved/rejected
+    ///   - onDone: Closure to handle what to do when the function is finished or if there was an error
+    func updateHousePoints(log:PointLog, houseRef:DocumentReference, updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void)
     {
+        //Transaction allows multiple firebase calls to occur without fear of concurrency issues
         db.runTransaction({ (transaction, errorPointer) -> Any? in
+            //Get the House Document from firebase
             let houseDocument: DocumentSnapshot
             do {
                 try houseDocument = transaction.getDocument(houseRef)
@@ -450,7 +431,7 @@ class FirebaseHelper {
                 errorPointer?.pointee = fetchError
                 return nil
             }
-            
+            //Get the Total Points number from the object
             guard let oldTotal = houseDocument.data()?["TotalPoints"] as? Int else {
                 let error = NSError(
                     domain: "AppErrorDomain",
@@ -462,11 +443,28 @@ class FirebaseHelper {
                 errorPointer?.pointee = error
                 return nil
             }
-            let newTotal = oldTotal + log.type.pointValue
+            
+            //Update a local value with the correct point value
+            var newTotal = oldTotal
+            if(updatePointValue){ //If log was already approved/rejected and the status has been changed
+                if(log.wasRejected()){
+                    newTotal -= log.type.pointValue //If log was approved but is now rejected, remove points
+                }
+                else{
+                    newTotal += log.type.pointValue // If log was rejected but is now approved, add points
+                }
+            }
+            else{
+                newTotal += log.type.pointValue //If log has not been handled yet, then add the points.
+                //NOTE: because the log had to be either updating or approved to call this function,
+                //      we do not need to check for the log not being approved
+            }
+            
+            //Update Firebase with new value
             transaction.updateData(["TotalPoints": newTotal], forDocument: houseRef)
             return nil
-        })
-        { (object, error) in
+        }){ (object, error) in
+            //Error Handling
             if let error = error {
                 print("Transaction failed: \(error)")
                 onDone(error)
@@ -485,16 +483,17 @@ class FirebaseHelper {
     ///   - userRef: Reference to the User in Firebase that needs to be awarded points
     ///   - houseRef: Reference to the house that will be given the points
     ///   - isRECGrantingAward: Boolean (defaults to false) true if REC is giving award to entire house
+    ///   - updatePointValue: Boolean if this point is being updated. Make this true if log was already approved or disapproved, and this is an update to its status that requires its point value be changed.
     ///   - onDone: Closure function to be called on completion. Err is nil if no errors are thrown.
-    func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference, isRECGrantingAward:Bool = false, onDone:@escaping (_ err:Error?)->Void)
+    func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference, isRECGrantingAward:Bool = false,updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void)
     {
-        updateHousePoints(log: log, houseRef: houseRef, onDone: {(err:Error?)in
+        updateHousePoints(log: log, houseRef: houseRef,updatePointValue: updatePointValue , onDone: {(err:Error?)in
             if(err != nil){
                 onDone(err)
             }
             //If REC is giving award to House, dont give the points to a specific user
             else if(!isRECGrantingAward){
-                self.updateUserPoints(log: log, userRef: userRef, onDone: {(errDeep:Error?) in
+                self.updateUserPoints(log: log, userRef: userRef, updatePointValue: updatePointValue, onDone: {(errDeep:Error?) in
                     onDone(errDeep)
                 })
             }
@@ -717,7 +716,7 @@ class FirebaseHelper {
 	///
 	/// - Parameter onDone: returns the system preferences that were retrieved
 	func getSystemPreferences(onDone: @escaping (_ sysPref:SystemPreferences?)->Void) {
-		var ref: DocumentReference? = self.db.collection("SystemPreferences").document("Preferences")
+		let ref: DocumentReference? = self.db.collection("SystemPreferences").document("Preferences")
 		ref?.getDocument { (document, error) in
 			if let document = document, document.exists {
 				let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
