@@ -103,7 +103,7 @@ class RHPApprovalTableViewController: UITableViewController {
         let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             print("Approve button tapped")
             let log = self.unconfirmedLogs.remove(at: indexPath.row)
-            self.handlePointApproval(log: log, approve: true)
+            self.updatePointLogStatus(log: log, approve: true)
             if(self.unconfirmedLogs.count == 0){
                 let indexSet = NSMutableIndexSet()
                 indexSet.add(0)
@@ -125,7 +125,7 @@ class RHPApprovalTableViewController: UITableViewController {
         let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             print("Delete button tapped")
             let log = self.unconfirmedLogs.remove(at: indexPath.row)
-            self.handlePointApproval(log: log, approve: false)
+            self.updatePointLogStatus(log: log, approve: false)
             if(self.unconfirmedLogs.count == 0){
                 let indexSet = NSMutableIndexSet()
                 indexSet.add(0)
@@ -143,8 +143,8 @@ class RHPApprovalTableViewController: UITableViewController {
     }
     
     
-    func handlePointApproval(log:PointLog, approve:Bool){
-        DataManager.sharedManager.confirmOrDenyPoints(log: log, approved: approve, onDone: { (err: Error?) in
+    func updatePointLogStatus(log:PointLog, approve:Bool){
+        DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, onDone: { (err: Error?) in
             if let error = err {
                 if(error.localizedDescription == "The operation couldn’t be completed. (Document has already been approved error 1.)"){
                     self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)

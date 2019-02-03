@@ -136,7 +136,7 @@ class PointsSubmittedViewController: UITableViewController {
 	
 	
 	func handlePointApproval(log:PointLog, approve:Bool){
-		DataManager.sharedManager.confirmOrDenyPoints(log: log, approved: approve, onDone: { (err: Error?) in
+		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Document has already been approved error 1.)"){
 					self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)

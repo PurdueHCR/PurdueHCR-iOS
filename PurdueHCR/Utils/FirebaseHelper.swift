@@ -174,14 +174,14 @@ class FirebaseHelper {
         }
     }
     
-    /// Handle the point logs when it is being approved, rejected, or updated
+    /// update the status of the point log if it has been approved, rejected, or updated
     ///
     /// - Parameters:
     ///   - log: Log that is being updated
     ///   - approved: BOOL: Approved (true) rejected(false)
     ///   - updating: Bool: If the log has already been approved or rejected, and you are changing that status, set updating to true
     ///   - onDone: Closure to handle when the function is finished or if there is an error
-    func handlePointLogApproval(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+    func updatePointLogStatus(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         //TODO While User.get(house) will work for now, look at doing this a better way
         let house = User.get(.house) as! String
         var housePointRef: DocumentReference?

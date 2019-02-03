@@ -63,8 +63,8 @@ class DataManager {
         })
     }
     
-    func confirmOrDenyPoints(log:PointLog, approved:Bool, onDone:@escaping (_ err:Error?)->Void){
-        fbh.handlePointLogApproval(log: log, approved: approved, onDone:{[weak self] (_ err :Error?) in
+    func updatePointLogStatus(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+        fbh.updatePointLogStatus(log: log, approved: approved, updating: updating, onDone:{[weak self] (_ err :Error?) in
             if(err != nil){
                 print("Failed to confirm or deny point")
             }
