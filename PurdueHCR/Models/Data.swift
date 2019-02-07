@@ -124,7 +124,7 @@ class Link {
     var enabled:Bool
     var archived:Bool
     //Constructor for code from Database
-    init(id:String, description:String,singleUse:Bool, pointTypeID:Int, enabled:Bool, archived:Bool){
+    init(id:String, description:String, singleUse:Bool, pointTypeID:Int, enabled:Bool, archived:Bool){
         self.id = id
         self.description = description
         self.singleUse = singleUse

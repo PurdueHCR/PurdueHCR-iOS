@@ -25,9 +25,35 @@ class AnimatedLoadingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if(Cely.currentLoginStatus() == .loggedIn){
-            if(NewLaunch.newLaunch.isFirstLaunch){
-                //createNewLaunchAlert()
-            }
+			/*
+			if(NewLaunch.newLaunch.isFirstLaunch){
+                createNewLaunchAlert()
+            }*/
+			let houseName = User.get(.house) as! String
+			if(houseName == "Platinum"){
+				self.imageView.image = #imageLiteral(resourceName: "Platinum")
+			}
+			else if(houseName == "Copper"){
+				self.imageView.image = #imageLiteral(resourceName: "Copper")
+			}
+			else if(houseName == "Palladium"){
+				self.imageView.image = #imageLiteral(resourceName: "Palladium")
+			}
+			else if(houseName == "Silver"){
+				self.imageView.image = #imageLiteral(resourceName: "Silver")
+			}
+			else if(houseName == "Titanium"){
+				self.imageView.image = #imageLiteral(resourceName: "Titanium")
+			}
+			self.imageView.image = #imageLiteral(resourceName: "emblem")
+			self.imageView.layer.borderWidth = 5
+			self.imageView.layer.borderColor = UIColor.black.cgColor
+			let height = self.imageView.frame.height
+			self.imageView.layer.cornerRadius = height/2
+			self.imageView.layer.shadowColor = UIColor.gray.cgColor
+			self.imageView.layer.shadowRadius = 10
+			self.imageView.layer.shadowOpacity = 100
+			self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 10)
             finishLoadinng()
 
         }

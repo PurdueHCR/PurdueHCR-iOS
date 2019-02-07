@@ -11,7 +11,6 @@ import FirebaseAuth
 import Cely
 import PopupKit
 
-
 class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -45,13 +44,13 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         self.housePointsView.layer.shadowOpacity = 0.5
         self.housePointsView.layer.shadowOffset = CGSize.zero
         self.housePointsView.layer.shadowRadius = 5
-        self.housePointsView.layer.cornerRadius = radius
+		self.housePointsView.layer.cornerRadius = radius
         
         self.housePointsCompareView.layer.shadowColor = UIColor.black.cgColor
         self.housePointsCompareView.layer.shadowOpacity = 0.5
         self.housePointsCompareView.layer.shadowOffset = CGSize.zero
         self.housePointsCompareView.layer.shadowRadius = 5
-        self.housePointsCompareView.layer.cornerRadius = radius
+		self.housePointsCompareView.layer.cornerRadius = radius
         
     }
 //    @objc func logOut(_ sender: Any) {
@@ -94,10 +93,11 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 	
 	@IBAction func showSettings(_ sender: Any) {
 		
-        var houses = DataManager.sharedManager.getHouses()!
-        self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
+        //var houses = DataManager.sharedManager.getHouses()!
+        //self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
         
-        let color = AppUtils.hexStringToUIColor(hex: house!.hexColor)
+        //let color = AppUtils.hexStringToUIColor(hex: house!.hexColor)
+		let color = UIColor.lightGray
         
         let width : Int = Int(self.view.frame.width - 20)
         let height = 280

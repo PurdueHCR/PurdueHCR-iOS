@@ -21,6 +21,7 @@ class TabBarController: UITabBarController {
             //Resident Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
+			viewControllers.append(linkSettingsViewController())
         }
         else if( p == 1){
             //RHP Controllers
@@ -28,6 +29,8 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkPointSubmissionViewController())
             viewControllers.append(linkPointApprovalViewController())
             viewControllers.append(linkQRCodeViewController())
+			viewControllers.append(linkSettingsViewController())
+
         }
         else if( p == 2){
             //REA/REC Controllers
@@ -35,6 +38,8 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkQRCodeViewController())
             viewControllers.append(linkRECPointOptionsViewController())
             viewControllers.append(linkRECRewardsViewController())
+			viewControllers.append(linkSettingsViewController())
+
         }
         // Do any additional setup after loading the view.
         self.setViewControllers(viewControllers, animated: false)
@@ -80,7 +85,12 @@ class TabBarController: UITabBarController {
         rewardsViewController.tabBarItem = UITabBarItem(title: "Rewards", image: #imageLiteral(resourceName: "RewardIcon"), selectedImage: #imageLiteral(resourceName: "RewardIcon"))
         return rewardsViewController
     }
-    
+	
+	func linkSettingsViewController() -> UIViewController {
+		let pointApprovalViewController = UIStoryboard(name: "PointApproval", bundle: nil).instantiateViewController(withIdentifier: "Point_Approval_Initial") as! UINavigationController
+		pointApprovalViewController.tabBarItem = UITabBarItem(title: "", image: #imageLiteral(resourceName: "Settings"), selectedImage: #imageLiteral(resourceName: "Settings"))
+		return pointApprovalViewController
+	}
     
 //    override func viewWillAppear(_ animated: Bool) {
 //        if(NewLaunch.newLaunch.isFirstLaunch){

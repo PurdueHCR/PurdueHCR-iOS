@@ -35,6 +35,7 @@ class LinkCodeViewController: UIViewController {
         archiveSwitch.setOn(link!.archived, animated: false)
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(back))
         self.navigationItem.leftBarButtonItem = newBackButton
+		
     }
 
     func generateQRCode(){

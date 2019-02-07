@@ -10,6 +10,17 @@ import UIKit
 import Cely
 import FirebaseAuth
 
+extension UIViewController {
+	func hideKeyboardWhenTappedAround() {
+		let tap: UITapGestureRecognizer =     UITapGestureRecognizer(target: self, action:    #selector(UIViewController.dismissKeyboard))
+		tap.cancelsTouchesInView = false
+		self.view.addGestureRecognizer(tap)
+	}
+	@objc func dismissKeyboard() {
+		view.endEditing(true)
+	}
+}
+
 class LogInViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var username: UITextField!
@@ -23,7 +34,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+		
+		self.hideKeyboardWhenTappedAround()
+		
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.gray
@@ -46,17 +59,18 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         logInButton.layer.masksToBounds = true
         logInButton.layer.borderWidth = 1
         logInButton.layer.borderColor = UIColor.darkGray.cgColor
-        
+		
         // Do any additional setup after loading the view.
     }
 	
 	@IBAction func nextTextField(_ sender: Any) {
+		/*
 		if let nextField = username.superview?.viewWithTag(username.tag + 1) as? UITextField {
 			nextField.becomeFirstResponder()
 		} else {
 			// Not found, so remove keyboard.
 			username.resignFirstResponder()
-		}
+		}*/
 	}
 	
 	
@@ -160,7 +174,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		alert.addAction(action)
 		present(alert, animated: true, completion: nil)
 	}
-	
+	/*
     func moveTextField(textField:UITextField, up:Bool){
         if(up && textField.frame.minY > self.fortyPercent){
             let movement = self.fortyPercent - textField.frame.minY
@@ -180,15 +194,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
             UIView.commitAnimations()
         }
-    }
+    }*/
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField: textField, up: true)
+        //moveTextField(textField: textField, up: true)
     }
 
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        moveTextField(textField: textField, up: false)
+        //moveTextField(textField: textField, up: false)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

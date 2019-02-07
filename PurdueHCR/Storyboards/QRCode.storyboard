@@ -201,11 +201,11 @@
         <scene sceneID="ad8-zJ-OIo">
             <objects>
                 <viewController title="QR Code" id="oaG-gE-l7h" customClass="LinkCodeViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="eG0-Ne-jSj">
+                    <view key="view" contentMode="scaleToFill" id="eG0-Ne-jSj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="icz-Ou-EmI">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icz-Ou-EmI">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snk-oM-mKz">
@@ -337,6 +337,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dzV-p3-AiX"/>
+        <segue reference="wz4-yh-41l"/>
     </inferredMetricsTieBreakers>
 </document>

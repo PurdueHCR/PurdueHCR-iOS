@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 class PointLogOverviewController: UIViewController {
     
@@ -19,11 +21,19 @@ class PointLogOverviewController: UIViewController {
     @IBOutlet var pointDescriptionView: PointDescriptionView!
     var preViewContr: RHPApprovalTableViewController?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         pointDescriptionView.setLog(pointLog: pointLog!)
         // Do any additional setup after loading the view.
+		//let plusImage = UIImage(named: "list")?.withRenderingMode(.alwaysTemplate)
+		let buttonScheme = MDCButtonScheme()
+		let button = MDCFloatingButton()
+		button.titleLabel?.text = "Hello World!"
+		button.setBackgroundColor(UIColor.black)
+		//button.setImage(plusImage, for: .normal)
+		MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
+		button.minimumSize = CGSize(width: 64, height: 48)
+		
     }
 
     override func didReceiveMemoryWarning() {

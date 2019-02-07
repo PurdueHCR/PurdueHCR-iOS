@@ -32,6 +32,7 @@ class RHPApprovalTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         resfreshData()
+		
     }
     
     @objc func resfreshData(){
