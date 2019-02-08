@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Profile-->
+        <!--Navigation Controller-->
         <scene sceneID="z0g-vh-fPi">
             <objects>
                 <navigationController storyboardIdentifier="Profile_Initial" id="VqF-NJ-TsV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="profile" selectedImage="profile" id="VpI-rK-W91"/>
+                    <tabBarItem key="tabBarItem" title="" image="profile" selectedImage="profile" id="VpI-rK-W91"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1cj-4l-3Wv">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

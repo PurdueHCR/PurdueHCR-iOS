@@ -37,7 +37,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Submit Points"
+        //self.title = nil//"Submit Points"
         if let index = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: index, animated: true)
         }

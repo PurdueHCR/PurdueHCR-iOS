@@ -102,7 +102,8 @@ class AnimatedLoadingViewController: UIViewController {
     }
     
     //This will be for showing announcements
-    func createNewLaunchAlert(){
+	/*
+	func createNewLaunchAlert(){
         let alert = UIAlertController(title: "Are you interested in joining Development Committee?", message: "Development Committee is looking for software developers, marketers, and designers to help with the future of Purdue HCR. If you are interested in helping, checkout our Discord channel!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Take me to the Discord", style: UIAlertAction.Style.default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
@@ -115,6 +116,7 @@ class AnimatedLoadingViewController: UIViewController {
         }))
         self.present(alert, animated: true, completion: nil)
     }
+	*/
     
 
     /*
