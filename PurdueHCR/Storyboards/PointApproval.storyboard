@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqo-t1-xiX">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aiE-uo-dDB">
                                         <rect key="frame" x="8" y="243" width="170" height="50"/>
@@ -105,6 +105,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <connections>
+                            <outlet property="dataSource" destination="TSA-qS-UEd" id="sYl-0J-WN7"/>
+                            <outlet property="delegate" destination="TSA-qS-UEd" id="VwB-em-UcV"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Approvals" id="pRB-rv-Zvx">
+                        <barButtonItem key="rightBarButtonItem" title="History" id="3rg-SZ-u9Q">
+                            <connections>
+                                <segue destination="Yyz-RD-CqG" kind="show" id="Mnl-Sm-ys8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jSw-Mc-D98" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-90.400000000000006" y="502.39880059970017"/>
+        </scene>
+        <!--Points Submitted View Controller-->
+        <scene sceneID="csl-6a-YeJ">
+            <objects>
+                <tableViewController id="Yyz-RD-CqG" customClass="PointsSubmittedViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0Ml-rZ-5bg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="95" id="atv-Wa-xhG" customClass="ApprovalCell" customModule="PurdueHCR" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="95"/>
@@ -155,43 +180,7 @@
                                     <outlet property="descriptionLabel" destination="PN8-dy-rlh" id="xjd-qP-gyL"/>
                                     <outlet property="nameLabel" destination="cZB-yh-MzJ" id="n1U-Z3-4Xk"/>
                                     <outlet property="reasonLabel" destination="fh2-19-8fg" id="a8J-kz-KI8"/>
-                                    <segue destination="v84-jY-ASU" kind="show" identifier="cell_push" trigger="accessoryAction" id="Bx9-JZ-XZH"/>
                                 </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="TSA-qS-UEd" id="sYl-0J-WN7"/>
-                            <outlet property="delegate" destination="TSA-qS-UEd" id="VwB-em-UcV"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Approvals" id="pRB-rv-Zvx">
-                        <barButtonItem key="rightBarButtonItem" title="History" id="3rg-SZ-u9Q">
-                            <connections>
-                                <segue destination="Yyz-RD-CqG" kind="show" id="Mnl-Sm-ys8"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jSw-Mc-D98" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-90.400000000000006" y="502.39880059970017"/>
-        </scene>
-        <!--Points Submitted View Controller-->
-        <scene sceneID="csl-6a-YeJ">
-            <objects>
-                <tableViewController id="Yyz-RD-CqG" customClass="PointsSubmittedViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0Ml-rZ-5bg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="1qu-64-Tl5">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1qu-64-Tl5" id="0Aq-Qu-8c9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -202,7 +191,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yc3-dd-kXB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="489" y="1229"/>
+            <point key="canvasLocation" x="345" y="1218"/>
         </scene>
         <!--Approve-->
         <scene sceneID="bar-DL-EBK">
