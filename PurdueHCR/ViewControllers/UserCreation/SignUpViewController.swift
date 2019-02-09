@@ -19,7 +19,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var verifyPasswordField: UITextField!
     @IBOutlet var codeField: UITextField!
     @IBOutlet var signUpButton: UIButton!
-    
+	@IBOutlet weak var imageView: UIImageView!
+	
     
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
@@ -29,10 +30,23 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DataManager.sharedManager.refreshHouses(onDone: {(h:[House]) in
+		
+		self.hideKeyboardWhenTappedAround()
+		
+		self.imageView.image = #imageLiteral(resourceName: "emblem")
+		self.imageView.layer.borderWidth = 5
+		self.imageView.layer.borderColor = UIColor.black.cgColor
+		let height = self.imageView.frame.height
+		self.imageView.layer.cornerRadius = height/2
+		self.imageView.layer.shadowColor = UIColor.gray.cgColor
+		self.imageView.layer.shadowRadius = 10
+		self.imageView.layer.shadowOpacity = 100
+		self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 10)
+		
+		DataManager.sharedManager.refreshHouses(onDone: {(h:[House]) in
             self.houses = h
         })
-        
+		
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.gray

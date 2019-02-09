@@ -80,7 +80,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="27G-ic-2Pg">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emblem" translatesAutoresizingMaskIntoConstraints="NO" id="27G-ic-2Pg">
                                 <rect key="frame" x="92" y="94" width="191" height="191"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="27G-ic-2Pg" secondAttribute="height" multiplier="1:1" id="PNC-Fa-VBN"/>
@@ -139,6 +139,7 @@
                     </view>
                     <connections>
                         <outlet property="forgotPasswordButton" destination="M3W-A2-Sop" id="VA8-7V-wHR"/>
+                        <outlet property="imageView" destination="27G-ic-2Pg" id="jAs-XE-UxJ"/>
                         <outlet property="logInButton" destination="rR0-AF-a2o" id="sLw-a2-fuA"/>
                         <outlet property="password" destination="vQo-Oe-EGD" id="9Mp-yp-9DV"/>
                         <outlet property="username" destination="W4d-ka-VCi" id="NLf-in-PKT"/>
@@ -242,7 +243,7 @@
                                             <action selector="submitSignUp:" destination="ilj-Rk-Dkf" eventType="touchUpInside" id="6v6-6x-Jzn"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="h3W-NU-nmS">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emblem" translatesAutoresizingMaskIntoConstraints="NO" id="h3W-NU-nmS">
                                         <rect key="frame" x="92" y="8" width="191" height="191"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="h3W-NU-nmS" secondAttribute="height" multiplier="1:1" id="xFw-nn-Zk9"/>
@@ -305,6 +306,7 @@
                     <connections>
                         <outlet property="codeField" destination="0ni-pQ-5Kk" id="Gr6-UW-kfM"/>
                         <outlet property="emailField" destination="pvN-Ew-6q3" id="foU-af-XF1"/>
+                        <outlet property="imageView" destination="h3W-NU-nmS" id="Qmh-Y3-eKK"/>
                         <outlet property="nameField" destination="a2w-QD-IyF" id="ddD-fD-dWM"/>
                         <outlet property="passwordField" destination="QyA-iQ-m68" id="jQG-46-KFu"/>
                         <outlet property="signUpButton" destination="mCh-EH-SkA" id="gsm-dy-PCg"/>
@@ -318,6 +320,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="HCRIcon" width="986" height="986"/>
+        <image name="emblem" width="1500" height="1500"/>
     </resources>
 </document>

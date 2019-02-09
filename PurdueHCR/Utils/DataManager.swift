@@ -264,7 +264,8 @@ class DataManager {
     
     func handlePointLink(id:String){
         //Make sure that the user submitting a QR point is a Resident or an RHP
-        let userLevel = User.get(.permissionLevel) as! Int
+		
+		let userLevel = User.get(.permissionLevel) as! Int
         if(userLevel != 0 && userLevel != 1){
             DispatchQueue.main.async {
                 let banner = NotificationBanner(title: "Failure", subtitle: "Only residents can submit points.", style: .danger)
@@ -273,13 +274,6 @@ class DataManager {
             }
             return
         }
-		
-		if (!systemPreferences!.isHouseEnabled) {
-			let banner = NotificationBanner(title: "Failure", subtitle: "House competition is inactive.", style: .danger)
-			banner.duration = 2
-			banner.show()
-			return
-		}
 		
         fbh.findLinkWithID(id: id, onDone: {(linkOptional:Link?) in
             guard let link = linkOptional else {
@@ -307,7 +301,12 @@ class DataManager {
                 group.leave()
             }
             group.notify(queue: .main) {
-                
+				if (!self.systemPreferences!.isHouseEnabled) {
+					let banner = NotificationBanner(title: "Failure", subtitle: "House competition is inactive.", style: .danger)
+					banner.duration = 2
+					banner.show()
+					return
+				}
                 
                 let pointType = self.getPointType(value: link.pointTypeID)
                 let resident = User.get(.name) as! String
