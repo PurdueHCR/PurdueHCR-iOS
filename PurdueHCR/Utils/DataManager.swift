@@ -22,6 +22,7 @@ class DataManager {
     private let fbh = FirebaseHelper()
 	var pointTypes: [PointType] = [PointType]()
     private var _unconfirmedPointLogs: [PointLog]? = nil
+	private var _confiredPointLogs: [PointLog]? = nil
     private var _houses: [House]? = nil
     private var _rewards: [Reward]? = nil
     private var _houseCodes: [HouseCode]? = nil
@@ -101,7 +102,14 @@ class DataManager {
 
         fbh.addPointLog(log: log, preApproved: true, house: house.houseID, isRECGrantingAward: true, onDone: onDone)
     }
-    
+	
+	/// Retrieves the confirmed points
+	///
+	/// - Returns: The logs of the confirmed points.
+	func getResolvedPointLogs()->[PointLog]?{
+		return self._confiredPointLogs
+	}
+	
     func getUnconfirmedPointLogs()->[PointLog]?{
         return self._unconfirmedPointLogs
     }
@@ -109,7 +117,16 @@ class DataManager {
     func refreshUser(onDone:@escaping (_ err:Error?)->Void){
         fbh.refreshUserInformation(onDone: onDone)
     }
-    
+	
+	func refreshResolvedPointLogs(onDone: @escaping (_ pointLogs:[PointLog])->Void) {
+		fbh.getResolvedPoints(onDone: {[weak self] (pointLogs:[PointLog]) in
+			if let strongSelf = self {
+				strongSelf._confiredPointLogs = pointLogs
+			}
+			onDone(pointLogs)
+		})
+	}
+	
     func refreshUnconfirmedPointLogs(onDone:@escaping (_ pointLogs:[PointLog])->Void ){
         fbh.getUnconfirmedPoints(onDone: {[weak self] (pointLogs:[PointLog]) in
             if let strongSelf = self {

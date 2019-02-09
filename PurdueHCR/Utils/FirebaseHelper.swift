@@ -223,17 +223,56 @@ class FirebaseHelper {
         
         
     }
-    
-    func getUnconfirmedPoints(onDone:@escaping ( _ pointLogs:[PointLog])->Void)
-    {
+	
+	/// Retrives the points that have been previously resolved
+	///
+	/// - Parameter onDone: returns pointLogs
+	func getResolvedPoints(onDone: @escaping ( _ pointLogs:[PointLog])->Void) {
+		let house = User.get(.house) as! String
+		let docRef = db.collection(self.HOUSE).document(house).collection(self.POINTS)
+		let userFloorID = User.get(.floorID) as! String
+		
+		docRef.whereField("PointTypeID", isGreaterThan: 0).getDocuments() { (querySnapshot, error) in
+			if error != nil {
+				print("Error getting documents: \(String(describing: error))")
+				return
+			}
+			var pointLogs = [PointLog]()
+			for document in querySnapshot!.documents {
+				let floorID = document.data()["FloorID"] as! String
+				// The reason I check this here instead of in the query is because Firestore does not support,
+				// at the time of writing, the ability to query the data on more than one field. :(
+				if(userFloorID == "6N" || userFloorID == "6S"){
+					var otherCode = "6N"
+					if(userFloorID == "6N"){
+						otherCode = "6S"
+					}
+					if(floorID != otherCode){
+						let id = document.documentID
+						let pointLog = PointLog(id: id, document: document.data())
+						pointLogs.append(pointLog)
+					}
+				}
+				else{
+					if(floorID == userFloorID){
+						let id = document.documentID
+						let pointLog = PointLog(id: id, document: document.data())
+						pointLogs.append(pointLog)
+					}
+				}
+			}
+			onDone(pointLogs)
+		}
+	}
+	
+    func getUnconfirmedPoints(onDone:@escaping ( _ pointLogs:[PointLog])->Void) {
         let house = User.get(.house) as! String
         let docRef = db.collection(self.HOUSE).document(house).collection(self.POINTS)
         let userFloorID = User.get(.floorID) as! String
         
-        docRef.whereField("PointTypeID", isLessThan: 0).getDocuments()
-            { (querySnapshot, error) in
+        docRef.whereField("PointTypeID", isLessThan: 0).getDocuments() { (querySnapshot, error) in
                 if error != nil {
-                    print("Error getting documenbts: \(String(describing: error))")
+                    print("Error getting documents: \(String(describing: error))")
                     return
                 }
                 var pointLogs = [PointLog]()
@@ -261,8 +300,6 @@ class FirebaseHelper {
                     }
                 }
                 onDone(pointLogs)
-                
-
         }
     }
     
@@ -504,7 +541,7 @@ class FirebaseHelper {
     ///   - isRECGrantingAward: Boolean (defaults to false) true if REC is giving award to entire house
     ///   - updatePointValue: Boolean if this point is being updated. Make this true if log was already approved or disapproved, and this is an update to its status that requires its point value be changed.
     ///   - onDone: Closure function to be called on completion. Err is nil if no errors are thrown.
-    private func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference, isRECGrantingAward:Bool = false,updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void)
+    private func updateHouseAndUserPoints(log:PointLog,userRef:DocumentReference,houseRef:DocumentReference, isRECGrantingAward:Bool = false, updatePointValue:Bool, onDone:@escaping (_ err:Error?)->Void)
     {
         updateHousePoints(log: log, houseRef: houseRef,updatePointValue: updatePointValue , onDone: {(err:Error?)in
             if(err != nil){
@@ -593,7 +630,7 @@ class FirebaseHelper {
                     let idType = (document.data()["PointTypeID"] as! Int)
                     var resident = document.data()["Resident"] as! String
                     if(floorID == "Shreve"){
-                        resident = "(Shreve) "+resident
+                        resident = "(Shreve) " + resident
                     }
                     let residentRefMaybe = document.data()["ResidentRef"]
                     var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1") // Hard code a ref for when a code doesnt have one. (IE points were Given by REC to no specific user)
