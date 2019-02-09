@@ -8,14 +8,22 @@
 
 import UIKit
 
-class PointsSubmittedViewController: UITableViewController {
+class ResolvedCell: UITableViewCell {
+	@IBOutlet weak var activeView: UIView!
+	@IBOutlet weak var nameLabel: UILabel!
+	@IBOutlet weak var descriptionLabel: UILabel!
+	@IBOutlet weak var reasonLabel: UILabel!
+	
+}
 
-	var refresher: UIRefreshControl?
-	var confirmedLogs = [PointLog]()
+class PointsSubmittedViewController: RHPApprovalTableViewController {
+
+	//var refresher: UIRefreshControl?
+	//var displayedLogs = [PointLog]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		confirmedLogs = DataManager.sharedManager.getResolvedPointLogs() ?? [PointLog]()
+		displayedLogs = DataManager.sharedManager.getResolvedPointLogs() ?? [PointLog]()
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
 		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
@@ -26,9 +34,9 @@ class PointsSubmittedViewController: UITableViewController {
 		resfreshData()
 	}
 	
-	@objc func resfreshData(){
+	@objc override func resfreshData(){
 		DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
-			self.confirmedLogs = pointLogs
+			self.displayedLogs = pointLogs
 			DispatchQueue.main.async { [unowned self] in
 				self.tableView.reloadData()
 			}
@@ -51,7 +59,7 @@ class PointsSubmittedViewController: UITableViewController {
 			emptyMessage(message: message)
 			return 0
 		}
-		else if confirmedLogs.count > 0 {
+		else if displayedLogs.count > 0 {
 			killEmptyMessage()
 			return 1
 		} else {
@@ -62,16 +70,22 @@ class PointsSubmittedViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		return confirmedLogs.count
+		return displayedLogs.count
 	}
 	
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ApprovalCell
+		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResolvedCell
 		
-		cell.reasonLabel?.text = confirmedLogs[indexPath.row].type.pointDescription
-		cell.nameLabel?.text = confirmedLogs[indexPath.row].resident
-		cell.descriptionLabel?.text = confirmedLogs[indexPath.row].pointDescription
+		cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
+		cell.nameLabel?.text = displayedLogs[indexPath.row].resident
+		cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
+		cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
+		if (displayedLogs[indexPath.row].wasRejected() == true) {
+			cell.activeView.backgroundColor = UIColor.red
+		} else {
+			cell.activeView.backgroundColor = UIColor.green
+		}
 		return cell
 	}
 	
@@ -93,19 +107,19 @@ class PointsSubmittedViewController: UITableViewController {
 		
 		let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 			print("Approve button tapped")
-			let log = self.confirmedLogs.remove(at: indexPath.row)
-			self.handlePointApproval(log: log, approve: true)
-			if(self.confirmedLogs.count == 0){
+//			let log = self.displayedLogs.remove(at: indexPath.row)
+			let log = self.displayedLogs[indexPath.row]
+			self.updatePointLogStatus(log: log, approve: true)
+			if(self.displayedLogs.count == 0){
 				let indexSet = NSMutableIndexSet()
 				indexSet.add(0)
 				self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
 				success(true)
 			}
-			else{
-				self.tableView.deleteRows(at: [indexPath], with: .automatic)
-				success(true)
-			}
-			
+//			else{
+//				self.tableView.deleteRows(at: [indexPath], with: .automatic)
+//				success(true)
+//			}
 		})
 		approveAction.backgroundColor = .green
 		approveAction.title = "Approve"
@@ -115,18 +129,19 @@ class PointsSubmittedViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 			print("Delete button tapped")
-			let log = self.confirmedLogs.remove(at: indexPath.row)
-			self.handlePointApproval(log: log, approve: false)
-			if(self.confirmedLogs.count == 0){
+			//let log = self.displayedLogs.remove(at: indexPath.row)
+			let log = self.displayedLogs[indexPath.row]
+			self.updatePointLogStatus(log: log, approve: false)
+			if(self.displayedLogs.count == 0){
 				let indexSet = NSMutableIndexSet()
 				indexSet.add(0)
 				self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
 				success(true)
 			}
-			else{
-				self.tableView.deleteRows(at: [indexPath], with: .automatic)
-				success(true)
-			}
+//			else{
+//				self.tableView.deleteRows(at: [indexPath], with: .automatic)
+//				success(true)
+//			}
 		})
 		rejectAction.backgroundColor = .red
 		rejectAction.title = "Reject"
@@ -134,8 +149,8 @@ class PointsSubmittedViewController: UITableViewController {
 	}
 	
 	
-	func handlePointApproval(log:PointLog, approve:Bool){
-		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, onDone: { (err: Error?) in
+	override func updatePointLogStatus(log:PointLog, approve:Bool){
+		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Document has already been approved error 1.)"){
 					self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
@@ -153,9 +168,9 @@ class PointsSubmittedViewController: UITableViewController {
 				}
 				else{
 					self.notify(title: "Failed", subtitle: "Failed to remove point log.", style: .danger)
-					self.confirmedLogs.append(log)
+					self.displayedLogs.append(log)
 					DispatchQueue.main.async { [unowned self] in
-						if(self.confirmedLogs.count == 0 && self.tableView.numberOfSections != 0){
+						if(self.displayedLogs.count == 0 && self.tableView.numberOfSections != 0){
 							let indexSet = NSMutableIndexSet()
 							indexSet.add(0)
 							self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
@@ -180,19 +195,22 @@ class PointsSubmittedViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
 		// Segue to the second view controller
-		//self.performSegue(withIdentifier: "cell_push", sender: self)
+		self.performSegue(withIdentifier: "cell_push", sender: self)
 		
 	}
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+	
+	// This function is called before the segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		
+		if (segue.identifier == "cell_push") {
+			// get a reference to the second view controller
+			let nextViewController = segue.destination as! PointLogOverviewController
+			let indexPath = tableView.indexPathForSelectedRow
+			
+			nextViewController.pointLog = self.displayedLogs[(indexPath?.row)!]
+			//nextViewController.index = ( sender as! RHPApprovalTableViewController ).tableView.indexPathForSelectedRow
+			nextViewController.preViewContr = self
+		}
+	}
 
 }

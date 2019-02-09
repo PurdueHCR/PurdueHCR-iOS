@@ -15,9 +15,9 @@ class PointLogOverviewController: UIViewController {
     
     
     var pointLog: PointLog?
-    var index: IndexPath?
+    //var index: IndexPath?
     @IBOutlet var pointDescriptionView: PointDescriptionView!
-    var preViewContr: RHPApprovalTableViewController?
+	var preViewContr: RHPApprovalTableViewController?
     
     
     override func viewDidLoad() {
@@ -34,13 +34,13 @@ class PointLogOverviewController: UIViewController {
     
     @IBAction func approvePointLog(_ sender: Any) {
         approveButton.isEnabled = false
-        preViewContr?.unconfirmedLogs.remove(at:index!.row)
+        //preViewContr?.displayedLogs.remove(at:index!.row)
         preViewContr?.updatePointLogStatus(log: pointLog!, approve: true)
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func rejectPointLog(_ sender: Any) {
         rejectButton.isEnabled = false
-        preViewContr?.unconfirmedLogs.remove(at: index!.row)
+        //preViewContr?.displayedLogs.remove(at: index!.row)
         preViewContr?.updatePointLogStatus(log: pointLog!, approve: false)
         self.navigationController?.popViewController(animated: true)
     }
