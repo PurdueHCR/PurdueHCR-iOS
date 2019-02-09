@@ -68,7 +68,8 @@ class PointGroup{
 class PointLog {
     
     public let REJECTED_STRING:String = "DENIED: "
-    
+    public let SHREVE_RESIDENT:String = "(Shreve) "
+
     //Values stored in Firebase
     var approvedBy:String?
     var approvedOn:Timestamp?
@@ -129,7 +130,7 @@ class PointLog {
         }
         self.type = DataManager.sharedManager.getPointType(value: abs(idValue))
         if(floorID == "Shreve"){
-            resident = "(Shreve) "+resident
+            resident = SHREVE_RESIDENT+resident
         }
     }
     
@@ -178,11 +179,17 @@ class PointLog {
         if(!wasHandled){
             pointTypeIDValue = pointTypeIDValue * -1
         }
+        var residentName = self.resident
+        if(floorID == "Shreve"){
+            residentName = String(residentName.dropFirst(SHREVE_RESIDENT.count))
+            
+        }
+
         var dict: [String : Any] = [
             "Description":self.pointDescription,
             "FloorID":self.floorID,
             "PointTypeID":pointTypeIDValue,
-            "Resident":self.resident,
+            "Resident":residentName,
             "ResidentRef":self.residentRef,
             "ResidentReportTime":self.residentReportTime!
         ]
