@@ -196,23 +196,31 @@ class FirebaseHelper {
         housePointRef!.getDocument { (document, error) in
             //make sure that the document exists
             if let document = document, document.exists {
+                let oldPointLog = PointLog(id: document.documentID, document: document.data()!)
                 //If this is the first handling of this log, check to make sure it was not already approved.
-                if(!updating && (document.data()!["ApprovedBy"] as! String?) != nil){
-                    // someone has already approved it :(
-                    onDone(NSError(domain: "Document has already been approved", code: 1, userInfo: nil))
+                if(!updating && oldPointLog.wasHandled){
+                    // someone has already handled it :(
+                    onDone(NSError(domain: "Point request has already been handled", code: 1, userInfo: nil))
                     
                 }
                 else{
-                    //It has not been approved yet or is being updated, so you are good to go
-                    housePointRef!.setData(log.convertToDict(),merge:true){err in
-                        //if approved or update, update total points
-                        if((approved || updating) && err == nil){
-                            self.updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, updatePointValue: updating, onDone: {(err:Error?) in
+                    //It has either not been approved yet or is being updated, so you are good to go
+                    //First we check if it is being updated and the old status equals the new status
+                    if(updating && (log.wasRejected() == oldPointLog.wasRejected())){
+                        onDone(NSError(domain: "Point request was already changed.", code: 1, userInfo: nil))
+                    }
+                    else{
+                        //Conditions are met for point updating
+                        housePointRef!.setData(log.convertToDict(),merge:true){err in
+                            //if approved or update, update total points
+                            if((approved || updating) && err == nil){
+                                self.updateHouseAndUserPoints(log: log, userRef: userRef!, houseRef: houseRef!, updatePointValue: updating, onDone: {(err:Error?) in
+                                    onDone(err)
+                                })
+                            }
+                            else{
                                 onDone(err)
-                            })
-                        }
-                        else{
-                            onDone(err)
+                            }
                         }
                     }
                 }
