@@ -30,10 +30,6 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 		tableView.refreshControl = refresher
 	}
 	
-	override func viewWillAppear(_ animated: Bool) {
-		resfreshData()
-	}
-	
 	@objc override func resfreshData(){
 		DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
@@ -44,35 +40,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 		})
 	}
 	
-	
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-	
 	// MARK: - Table view data source
-	
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		// #warning Incomplete implementation, return the number of sections
-		if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
-			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
-			emptyMessage(message: message)
-			return 0
-		}
-		else if displayedLogs.count > 0 {
-			killEmptyMessage()
-			return 1
-		} else {
-			emptyMessage(message: "You don't have any to approve. Good job!")
-			return 0
-		}
-	}
-	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		// #warning Incomplete implementation, return the number of rows
-		return displayedLogs.count
-	}
-	
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResolvedCell
@@ -89,70 +57,10 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 		return cell
 	}
 	
-	
-	
-	
-	// Override to support conditional editing of the table view.
-	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		// Return false if you do not want the specified item to be editable.
-		return true
-	}
-	
-	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-		return UITableView.automaticDimension
-	}
-	
-	
-	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		
-		let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-			print("Approve button tapped")
-//			let log = self.displayedLogs.remove(at: indexPath.row)
-			let log = self.displayedLogs[indexPath.row]
-			self.updatePointLogStatus(log: log, approve: true, indexPath: indexPath)
-//			if(self.displayedLogs.count == 0){
-//				let indexSet = NSMutableIndexSet()
-//				indexSet.add(0)
-//				//self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-//				success(true)
-//			}
-//			else{
-//				self.tableView.deleteRows(at: [indexPath], with: .automatic)
-//				success(true)
-//			}
-		})
-		approveAction.backgroundColor = .green
-		approveAction.title = "Approve"
-		return UISwipeActionsConfiguration(actions: [approveAction])
-	}
-	
-	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-			print("Delete button tapped")
-			//let log = self.displayedLogs.remove(at: indexPath.row)
-			let log = self.displayedLogs[indexPath.row]
-			self.updatePointLogStatus(log: log, approve: false, indexPath: indexPath)
-//			if(self.displayedLogs.count == 0){
-//				let indexSet = NSMutableIndexSet()
-//				indexSet.add(0)
-//				//self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-//				success(true)
-//			}
-//			else{
-//				self.tableView.deleteRows(at: [indexPath], with: .automatic)
-//				success(true)
-//			}
-		})
-		rejectAction.backgroundColor = .red
-		rejectAction.title = "Reject"
-		return UISwipeActionsConfiguration(actions: [rejectAction])
-	}
-	
-	
 	override func updatePointLogStatus(log:PointLog, approve:Bool, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
 			if let error = err {
-				if(error.localizedDescription == "The operation couldn’t be completed. (Document has already been approved error 1.)"){
+				if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
 					self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
 					//                    DispatchQueue.main.async {
 					//                        self.resfreshData()
@@ -160,14 +68,18 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 					return
 				}
 				else if( error.localizedDescription == "The operation couldn’t be completed. (Document does not exist error 2.)"){
-					self.notify(title: "Failure", subtitle: "Document no longer exists.", style: .danger)
+					self.notify(title: "Failure", subtitle: "Point request no longer exists.", style: .danger)
 					//                    DispatchQueue.main.async {
 					//                        self.resfreshData()
 					//                    }
 					return
 				}
-				else{
-					self.notify(title: "Failed", subtitle: "Failed to remove point log.", style: .danger)
+				else if (error.localizedDescription == "The operation couldn’t be completed. (Point request was already changed. error 1.)"){
+					self.notify(title: "Failure", subtitle: "Point has already been updated.", style: .warning)
+					return
+				}
+				else {
+					self.notify(title: "Failed", subtitle: "Failed to update point request.", style: .danger)
 					self.displayedLogs.append(log)
 					DispatchQueue.main.async { [unowned self] in
 						if(self.displayedLogs.count == 0 && self.tableView.numberOfSections != 0){
@@ -184,12 +96,14 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 				if(approve){
 					self.notify(title: "Success", subtitle: "Point approved", style: .success)
 					DispatchQueue.main.async {
+						self.tableView.setEditing(false, animated: true)
 						self.tableView.reloadRows(at: [indexPath], with: .automatic)
 					}
 				}
 				else{
 					self.notify(title: "Success", subtitle: "Point rejected", style: .success)
 					DispatchQueue.main.async {
+						self.tableView.setEditing(false, animated: true)
 						self.tableView.reloadRows(at: [indexPath], with: .automatic)
 					}
 				}

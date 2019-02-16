@@ -98,47 +98,56 @@ class RHPApprovalTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            print("Approve button tapped")
-            let log = self.displayedLogs.remove(at: indexPath.row)
-            self.updatePointLogStatus(log: log, approve: true, indexPath: indexPath)
-            if(self.displayedLogs.count == 0){
-                let indexSet = NSMutableIndexSet()
-                indexSet.add(0)
-                self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-                success(true)
-            }
-            else{
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                success(true)
-            }
-            
-        })
-        approveAction.backgroundColor = .green
-        approveAction.title = "Approve"
-        return UISwipeActionsConfiguration(actions: [approveAction])
+		var action : [UIContextualAction] = []
+		let log = self.displayedLogs[indexPath.row]
+		if ((log.wasHandled && log.wasRejected()) || (!log.wasHandled && !log.wasRejected())) {
+			let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+				print("Approve button tapped")
+				let log = self.displayedLogs.remove(at: indexPath.row)
+				self.updatePointLogStatus(log: log, approve: true, indexPath: indexPath)
+				if(self.displayedLogs.count == 0){
+					let indexSet = NSMutableIndexSet()
+					indexSet.add(0)
+					self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+					success(true)
+				}
+				else{
+					self.tableView.deleteRows(at: [indexPath], with: .automatic)
+					success(true)
+				}
+				
+			})
+			approveAction.backgroundColor = .green
+			approveAction.title = "Approve"
+			action.append(approveAction)
+		}
+        return UISwipeActionsConfiguration(actions: action)
     }
     
-    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            print("Delete button tapped")
-            let log = self.displayedLogs.remove(at: indexPath.row)
-            self.updatePointLogStatus(log: log, approve: false, indexPath: indexPath)
-            if(self.displayedLogs.count == 0){
-                let indexSet = NSMutableIndexSet()
-                indexSet.add(0)
-                self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-                success(true)
-            }
-            else{
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                success(true)
-            }
-        })
-        rejectAction.backgroundColor = .red
-        rejectAction.title = "Reject"
-        return UISwipeActionsConfiguration(actions: [rejectAction])
+	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		var action : [UIContextualAction] = []
+		let log = self.displayedLogs[indexPath.row]
+		if (!log.wasRejected()) {
+			let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+				print("Delete button tapped")
+				let log = self.displayedLogs.remove(at: indexPath.row)
+				self.updatePointLogStatus(log: log, approve: false, indexPath: indexPath)
+				if(self.displayedLogs.count == 0){
+					let indexSet = NSMutableIndexSet()
+					indexSet.add(0)
+					self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+					success(true)
+				}
+				else{
+					self.tableView.deleteRows(at: [indexPath], with: .automatic)
+					success(true)
+				}
+			})
+			rejectAction.backgroundColor = .red
+			rejectAction.title = "Reject"
+			action.append(rejectAction)
+		}
+        return UISwipeActionsConfiguration(actions: action)
     }
     
     
