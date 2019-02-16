@@ -99,8 +99,8 @@ class RHPApprovalTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		var action : [UIContextualAction] = []
-		let log = self.displayedLogs[indexPath.row]
-		if ((log.wasHandled && log.wasRejected()) || (!log.wasHandled && !log.wasRejected())) {
+		let logs = self.displayedLogs[indexPath.row]
+		if ((logs.wasHandled && logs.wasRejected()) || (!logs.wasHandled && !logs.wasRejected())) {
 			let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 				print("Approve button tapped")
 				let log = self.displayedLogs.remove(at: indexPath.row)
@@ -126,8 +126,8 @@ class RHPApprovalTableViewController: UITableViewController {
     
 	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		var action : [UIContextualAction] = []
-		let log = self.displayedLogs[indexPath.row]
-		if (!log.wasRejected()) {
+		let logs = self.displayedLogs[indexPath.row]
+		if (!logs.wasRejected()) {
 			let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 				print("Delete button tapped")
 				let log = self.displayedLogs.remove(at: indexPath.row)

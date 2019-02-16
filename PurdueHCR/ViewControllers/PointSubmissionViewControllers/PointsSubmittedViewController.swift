@@ -13,13 +13,12 @@ class ResolvedCell: UITableViewCell {
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var descriptionLabel: UILabel!
 	@IBOutlet weak var reasonLabel: UILabel!
-	
 }
 
-class PointsSubmittedViewController: RHPApprovalTableViewController {
+class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchResultsUpdating {
 
-	//var refresher: UIRefreshControl?
-	//var displayedLogs = [PointLog]()
+	let searchController = UISearchController(searchResultsController: nil)
+	var filteredPoints = [PointLog]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -28,6 +27,11 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
 		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
 		tableView.refreshControl = refresher
+		searchController.searchResultsUpdater = self
+		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.searchBar.placeholder = "Search Points"
+		navigationItem.searchController = searchController
+		definesPresentationContext = true
 	}
 	
 	@objc override func resfreshData(){
@@ -40,19 +44,47 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 		})
 	}
 	
-	// MARK: - Table view data source
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		// #warning Incomplete implementation, return the number of sections
+		if isFiltering() {
+			if(filteredPoints.count > 0){
+				killEmptyMessage()
+				return 1
+			}
+			else {
+				emptyMessage(message: "Could not find points matching that description.")
+				return 0
+			}
+		}
+		return 1
+	}
+	
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		// #warning Incomplete implementation, return the number of rows
+		if (isFiltering()) {
+			return filteredPoints.count
+		}
+		return displayedLogs.count
+	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResolvedCell
 		
-		cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
-		cell.nameLabel?.text = displayedLogs[indexPath.row].resident
-		cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
 		cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
 		if (displayedLogs[indexPath.row].wasRejected() == true) {
 			cell.activeView.backgroundColor = UIColor.red
 		} else {
 			cell.activeView.backgroundColor = UIColor.green
+		}
+		if(isFiltering()){
+			cell.descriptionLabel.text = filteredPoints[indexPath.row].pointDescription
+			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointDescription
+			cell.nameLabel.text = filteredPoints[indexPath.row].resident
+		}
+		else{
+			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
+			cell.nameLabel?.text = displayedLogs[indexPath.row].resident
+			cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
 		}
 		return cell
 	}
@@ -112,10 +144,8 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		
 		// Segue to the second view controller
 		self.performSegue(withIdentifier: "cell_push", sender: self)
-		
 	}
 	
 	// This function is called before the segue
@@ -126,11 +156,36 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 			let nextViewController = segue.destination as! PointLogOverviewController
 			let indexPath = tableView.indexPathForSelectedRow
 			
-			nextViewController.pointLog = self.displayedLogs[(indexPath?.row)!]
-			//nextViewController.index = ( sender as! RHPApprovalTableViewController ).tableView.indexPathForSelectedRow
+			if(isFiltering()) {
+				nextViewController.pointLog = self.filteredPoints[(indexPath?.row)!]
+			} else {
+				nextViewController.pointLog = self.displayedLogs[(indexPath?.row)!]
+			}
 			nextViewController.preViewContr = self
 			nextViewController.indexPath = indexPath
 		}
+	}
+	
+	func updateSearchResults(for searchController: UISearchController) {
+		filterContentForSearchText(searchController.searchBar.text!)
+	}
+	func searchBarIsEmpty() -> Bool {
+		// Returns true if the text is empty or nil
+		return searchController.searchBar.text?.isEmpty ?? true
+	}
+	
+	func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+		filteredPoints = displayedLogs.filter({( point : PointLog) -> Bool in
+			let searched = searchText.lowercased()
+			let inName = point.resident.lowercased().contains(searched)
+			let inReason = point.type.pointDescription.lowercased().contains(searched)
+			let inDescription = point.pointDescription.lowercased().contains(searched)
+			return (inName || inReason || inDescription)
+		})
+		tableView.reloadData()
+	}
+	func isFiltering() -> Bool {
+		return searchController.isActive && !searchBarIsEmpty()
 	}
 
 }
