@@ -12,7 +12,8 @@ class PointLogOverviewController: UIViewController {
     
     @IBOutlet var approveButton: UIButton!
     @IBOutlet var rejectButton: UIButton!
-    
+	
+	var indexPath : IndexPath?
     
     var pointLog: PointLog?
     //var index: IndexPath?
@@ -35,13 +36,23 @@ class PointLogOverviewController: UIViewController {
     @IBAction func approvePointLog(_ sender: Any) {
         approveButton.isEnabled = false
         //preViewContr?.displayedLogs.remove(at:index!.row)
-        preViewContr?.updatePointLogStatus(log: pointLog!, approve: true)
+		if (pointLog?.wasHandled == true) {
+			if let viewTest = (preViewContr as! PointsSubmittedViewController?) {
+				viewTest.updatePointLogStatus(log: pointLog!, approve: true, indexPath: indexPath!)
+			}
+		} else {
+			preViewContr?.updatePointLogStatus(log: pointLog!, approve: true, indexPath: indexPath!)
+		}
+		
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func rejectPointLog(_ sender: Any) {
         rejectButton.isEnabled = false
         //preViewContr?.displayedLogs.remove(at: index!.row)
-        preViewContr?.updatePointLogStatus(log: pointLog!, approve: false)
+		if (pointLog?.wasHandled == true) {
+			preViewContr = preViewContr as! PointsSubmittedViewController
+		}
+		preViewContr?.updatePointLogStatus(log: pointLog!, approve: false, indexPath: indexPath!)
         self.navigationController?.popViewController(animated: true)
     }
     

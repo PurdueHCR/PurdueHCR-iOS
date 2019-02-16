@@ -109,13 +109,13 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 			print("Approve button tapped")
 //			let log = self.displayedLogs.remove(at: indexPath.row)
 			let log = self.displayedLogs[indexPath.row]
-			self.updatePointLogStatus(log: log, approve: true)
-			if(self.displayedLogs.count == 0){
-				let indexSet = NSMutableIndexSet()
-				indexSet.add(0)
-				self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-				success(true)
-			}
+			self.updatePointLogStatus(log: log, approve: true, indexPath: indexPath)
+//			if(self.displayedLogs.count == 0){
+//				let indexSet = NSMutableIndexSet()
+//				indexSet.add(0)
+//				//self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+//				success(true)
+//			}
 //			else{
 //				self.tableView.deleteRows(at: [indexPath], with: .automatic)
 //				success(true)
@@ -131,13 +131,13 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 			print("Delete button tapped")
 			//let log = self.displayedLogs.remove(at: indexPath.row)
 			let log = self.displayedLogs[indexPath.row]
-			self.updatePointLogStatus(log: log, approve: false)
-			if(self.displayedLogs.count == 0){
-				let indexSet = NSMutableIndexSet()
-				indexSet.add(0)
-				self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-				success(true)
-			}
+			self.updatePointLogStatus(log: log, approve: false, indexPath: indexPath)
+//			if(self.displayedLogs.count == 0){
+//				let indexSet = NSMutableIndexSet()
+//				indexSet.add(0)
+//				//self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+//				success(true)
+//			}
 //			else{
 //				self.tableView.deleteRows(at: [indexPath], with: .automatic)
 //				success(true)
@@ -149,7 +149,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 	}
 	
 	
-	override func updatePointLogStatus(log:PointLog, approve:Bool){
+	override func updatePointLogStatus(log:PointLog, approve:Bool, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Document has already been approved error 1.)"){
@@ -183,11 +183,16 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 			else{
 				if(approve){
 					self.notify(title: "Success", subtitle: "Point approved", style: .success)
+					DispatchQueue.main.async {
+						self.tableView.reloadRows(at: [indexPath], with: .automatic)
+					}
 				}
 				else{
 					self.notify(title: "Success", subtitle: "Point rejected", style: .success)
+					DispatchQueue.main.async {
+						self.tableView.reloadRows(at: [indexPath], with: .automatic)
+					}
 				}
-				//self.resfreshData()
 			}
 		})
 	}
@@ -210,6 +215,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController {
 			nextViewController.pointLog = self.displayedLogs[(indexPath?.row)!]
 			//nextViewController.index = ( sender as! RHPApprovalTableViewController ).tableView.indexPathForSelectedRow
 			nextViewController.preViewContr = self
+			nextViewController.indexPath = indexPath
 		}
 	}
 
