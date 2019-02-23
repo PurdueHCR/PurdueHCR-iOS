@@ -39,14 +39,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		self.hideKeyboardWhenTappedAround()
 		
 		self.imageView.image = #imageLiteral(resourceName: "emblem")
-		self.imageView.layer.borderWidth = 5
-		self.imageView.layer.borderColor = UIColor.black.cgColor
-		let height = self.imageView.frame.height
-		self.imageView.layer.cornerRadius = height/2
 		self.imageView.layer.shadowColor = UIColor.gray.cgColor
-		self.imageView.layer.shadowRadius = 10
+		self.imageView.layer.shadowRadius = 2
 		self.imageView.layer.shadowOpacity = 100
-		self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 10)
+		self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
 		
 		activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true

@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Profile-->
         <scene sceneID="z0g-vh-fPi">
             <objects>
                 <navigationController storyboardIdentifier="Profile_Initial" id="VqF-NJ-TsV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="profile" selectedImage="profile" id="VpI-rK-W91"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" selectedImage="profile" id="VpI-rK-W91"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1cj-4l-3Wv">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -88,7 +88,7 @@
                         <viewLayoutGuide key="safeArea" id="QII-wG-4Zx"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile" selectedImage="profile" id="JSU-7P-lap"/>
-                    <navigationItem key="navigationItem" id="2Xh-z0-fiO">
+                    <navigationItem key="navigationItem" title="Profile" id="2Xh-z0-fiO">
                         <barButtonItem key="rightBarButtonItem" title="Sign Out" image="Settings" id="k1f-dT-QSa">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -111,7 +111,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Settings" width="37.5" height="37.5"/>
-        <image name="profile" width="50" height="50"/>
+        <image name="Settings" width="25" height="25"/>
+        <image name="profile" width="25" height="25"/>
     </resources>
 </document>

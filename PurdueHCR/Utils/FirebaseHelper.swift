@@ -717,7 +717,7 @@ class FirebaseHelper {
 	///
 	/// - Parameter onDone: returns the system preferences that were retrieved
 	func getSystemPreferences(onDone: @escaping (_ sysPref:SystemPreferences?)->Void) {
-		var ref: DocumentReference? = self.db.collection("SystemPreferences").document("Preferences")
+		let ref: DocumentReference? = self.db.collection("SystemPreferences").document("Preferences")
 		ref?.getDocument { (document, error) in
 			if let document = document, document.exists {
 				let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
