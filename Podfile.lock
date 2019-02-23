@@ -125,52 +125,6 @@ PODS:
   - KDCircularProgress (1.5.2)
   - leveldb-library (1.20)
   - MarqueeLabel/Swift (3.2.0)
-  - MaterialComponents/Buttons (70.0.0):
-    - MaterialComponents/Ink
-    - MaterialComponents/private/Math
-    - MaterialComponents/private/Shapes
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
-    - MaterialComponents/Typography
-    - MDFInternationalization
-    - MDFTextAccessibility
-  - "MaterialComponents/Buttons+ButtonThemer (70.0.0)":
-    - MaterialComponents/Buttons
-    - "MaterialComponents/Buttons+ColorThemer"
-    - "MaterialComponents/Buttons+ShapeThemer"
-    - "MaterialComponents/Buttons+TypographyThemer"
-  - "MaterialComponents/Buttons+ColorThemer (70.0.0)":
-    - MaterialComponents/Buttons
-    - MaterialComponents/schemes/Color
-  - "MaterialComponents/Buttons+ShapeThemer (70.0.0)":
-    - MaterialComponents/Buttons
-    - MaterialComponents/schemes/Shape
-  - "MaterialComponents/Buttons+TypographyThemer (70.0.0)":
-    - MaterialComponents/Buttons
-    - MaterialComponents/schemes/Typography
-  - MaterialComponents/Ink (70.0.0):
-    - MaterialComponents/private/Math
-  - MaterialComponents/private/Application (70.0.0)
-  - MaterialComponents/private/Math (70.0.0)
-  - MaterialComponents/private/ShapeLibrary (70.0.0):
-    - MaterialComponents/private/Math
-    - MaterialComponents/private/Shapes
-  - MaterialComponents/private/Shapes (70.0.0):
-    - MaterialComponents/private/Math
-    - MaterialComponents/ShadowLayer
-  - MaterialComponents/schemes/Color (70.0.0)
-  - MaterialComponents/schemes/Shape (70.0.0):
-    - MaterialComponents/private/ShapeLibrary
-    - MaterialComponents/private/Shapes
-  - MaterialComponents/schemes/Typography (70.0.0)
-  - MaterialComponents/ShadowElevations (70.0.0)
-  - MaterialComponents/ShadowLayer (70.0.0):
-    - MaterialComponents/ShadowElevations
-  - MaterialComponents/Typography (70.0.0):
-    - MaterialComponents/private/Application
-    - MaterialComponents/private/Math
-  - MDFInternationalization (1.1.0)
-  - MDFTextAccessibility (1.2.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -193,10 +147,9 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - KDCircularProgress
-  - MaterialComponents/Buttons
-  - "MaterialComponents/Buttons+ButtonThemer"
   - NotificationBannerSwift
   - PopupKit
+  - SnapKit
   - ValueStepper
 
 SPEC REPOS:
@@ -224,9 +177,6 @@ SPEC REPOS:
     - KDCircularProgress
     - leveldb-library
     - MarqueeLabel
-    - MaterialComponents
-    - MDFInternationalization
-    - MDFTextAccessibility
     - nanopb
     - NotificationBannerSwift
     - PopupKit
@@ -258,9 +208,6 @@ SPEC CHECKSUMS:
   KDCircularProgress: 12f677b2deb02409ab48c6cae1898d146b8ad549
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
-  MaterialComponents: 7c107af5ae6566de2f1ba94bde3db99d1b874bab
-  MDFInternationalization: b5b8626628abf026e630e5ebaeee563037712cbb
-  MDFTextAccessibility: 94098925e0853551c5a311ce7c1ecefbe297cdb6
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
   PopupKit: e362ed92148d831a9c38a2bc7a25893e46d64c54
@@ -268,6 +215,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   ValueStepper: e84d21a2ce62a7975df8b222c7273d6810f7e78c
 
-PODFILE CHECKSUM: 9944488506bf1023b2d2ec0ec5e675bba42cd33d
+PODFILE CHECKSUM: 61c0c49e1a58ac80566044afae05ec98860d7881
 
 COCOAPODS: 1.5.3

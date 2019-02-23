@@ -13,6 +13,5 @@ target 'PurdueHCR' do
   pod 'NotificationBannerSwift'
   pod 'AZDropdownMenu'
   pod 'PopupKit'
-  pod 'MaterialComponents/Buttons'
-  pod 'MaterialComponents/Buttons+ButtonThemer'
+  pod 'SnapKit'
 end

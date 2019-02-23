@@ -1,6 +1,0 @@
-framework module AZDialogView {
-  umbrella header "AZDialogView-umbrella.h"
-
-  export *
-  module * { export * }
-}
