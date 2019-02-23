@@ -21,7 +21,8 @@ class DataManager {
     private var firstRun = true
     private let fbh = FirebaseHelper()
 	var pointTypes: [PointType] = [PointType]()
-    private var _unconfirmedPointLogs: [PointLog]? = nil
+    private var unconfirmedPointLogs: [PointLog]? = nil
+	private var confirmedPointLogs: [PointLog]? = nil
     private var _houses: [House]? = nil
     private var _rewards: [Reward]? = nil
     private var _houseCodes: [HouseCode]? = nil
@@ -29,8 +30,6 @@ class DataManager {
 	var systemPreferences : SystemPreferences?
     
     private init(){}
-    
-
     
     func getPoints() ->[PointType]? {
         return self.pointTypes
@@ -63,14 +62,16 @@ class DataManager {
         })
     }
     
-    func confirmOrDenyPoints(log:PointLog, approved:Bool, onDone:@escaping (_ err:Error?)->Void){
-        fbh.approvePoint(log: log, approved: approved, onDone:{[weak self] (_ err :Error?) in
+    func updatePointLogStatus(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+        fbh.updatePointLogStatus(log: log, approved: approved, updating: updating, onDone:{[weak self] (_ err :Error?) in
             if(err != nil){
                 print("Failed to confirm or deny point")
             }
             else{
-                if let index = self?._unconfirmedPointLogs!.index(of: log) {
-                    self?._unconfirmedPointLogs!.remove(at: index)
+                if (!updating) {
+                    if let index = self?.unconfirmedPointLogs!.index(of: log) {
+                        self?.unconfirmedPointLogs!.remove(at: index)
+                    }
                 }
             }
             onDone(err)
@@ -101,19 +102,35 @@ class DataManager {
 
         fbh.addPointLog(log: log, preApproved: true, house: house.houseID, isRECGrantingAward: true, onDone: onDone)
     }
-    
+	
+	/// Retrieves the confirmed points
+	///
+	/// - Returns: The logs of the confirmed points.
+	func getResolvedPointLogs()->[PointLog]?{
+		return self.confirmedPointLogs
+	}
+	
     func getUnconfirmedPointLogs()->[PointLog]?{
-        return self._unconfirmedPointLogs
+        return self.unconfirmedPointLogs
     }
     
     func refreshUser(onDone:@escaping (_ err:Error?)->Void){
         fbh.refreshUserInformation(onDone: onDone)
     }
-    
+	
+	func refreshResolvedPointLogs(onDone: @escaping (_ pointLogs:[PointLog])->Void) {
+		fbh.getResolvedPoints(onDone: {[weak self] (pointLogs:[PointLog]) in
+			if let strongSelf = self {
+				strongSelf.confirmedPointLogs = pointLogs
+			}
+			onDone(pointLogs)
+		})
+	}
+	
     func refreshUnconfirmedPointLogs(onDone:@escaping (_ pointLogs:[PointLog])->Void ){
         fbh.getUnconfirmedPoints(onDone: {[weak self] (pointLogs:[PointLog]) in
             if let strongSelf = self {
-                strongSelf._unconfirmedPointLogs = pointLogs
+                strongSelf.unconfirmedPointLogs = pointLogs
             }
             onDone(pointLogs)
         })

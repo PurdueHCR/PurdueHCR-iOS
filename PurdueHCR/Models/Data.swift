@@ -66,19 +66,142 @@ class PointGroup{
 }
 
 class PointLog {
+    
+    public let REJECTED_STRING:String = "DENIED: "
+    public let SHREVE_RESIDENT:String = "(Shreve) "
+
+    //Values stored in Firebase
+    var approvedBy:String?
+    var approvedOn:Timestamp?
     var pointDescription:String;
+    var floorID:String;
     var type:PointType;
     var resident:String;
     var residentRef:DocumentReference
-    var floorID:String;
+    var residentReportTime:Timestamp?
     var logID:String? = nil;
+    
+    //Values stayed local
+    var wasHandled:Bool;
+    
+    
+    /// Initialization for newly created points. If the points are being pulled from Firebase database, use the other init method.
+    ///
+    /// - Parameters:
+    ///   - pointDescription: Description of PointLog
+    ///   - resident: Name of resident who submitted
+    ///   - type: PointType for which the point is being submitted for
+    ///   - floorID: Id of the floor for who submitted it
+    ///   - residentRef: Firebase reference to the resident who submitted it
     init(pointDescription:String, resident:String, type:PointType, floorID:String, residentRef:DocumentReference){
         self.pointDescription = pointDescription
         self.floorID = floorID
         self.type = type
         self.resident = resident
         self.residentRef = residentRef
+        self.residentReportTime = Timestamp.init()
+        self.wasHandled = false
     }
+    
+    /// Initialization method for points pulled from Firebase Database
+    ///
+    /// - Parameters:
+    ///   - id: FirebaseId of the log
+    ///   - document: Dictionary that was returned from the database
+    init(id:String,document:[String:Any]){
+        
+        self.logID = id
+        
+        self.floorID = document["FloorID"] as! String
+        self.pointDescription = document["Description"] as! String
+        self.resident = document["Resident"] as! String
+        self.residentRef = document["ResidentRef"] as! DocumentReference
+        self.approvedBy = document["ApprovedBy"] as! String?
+        self.approvedOn = document["ApprovedOn"] as! Timestamp?
+        self.residentReportTime = document["ResidentReportTime"] as! Timestamp?
+        
+        
+        let idValue = (document["PointTypeID"] as! Int)
+        if(idValue < 1){
+            self.wasHandled = false
+        }
+        else{
+            self.wasHandled = true
+        }
+        self.type = DataManager.sharedManager.getPointType(value: abs(idValue))
+        if(floorID == "Shreve"){
+            resident = SHREVE_RESIDENT+resident
+        }
+    }
+    
+    func wasRejected() -> Bool {
+        return self.pointDescription.contains(REJECTED_STRING)
+    }
+    
+    /// changes the value of the point log when it is being rejected or approved.
+    /// NOTE: It does not matter if the point was already handled. It will work properly either way
+    ///
+    /// - Parameters:
+    ///   - approved: Bool Point is approved
+    ///   - preapproved: Bool Point was preapproved
+    func updateApprovalStatus( approved:Bool,preapproved:Bool = false){
+        wasHandled = true
+        if(approved){
+            //Approve the point
+            if(wasRejected()){
+                //Point was previously rejected so remove Rejected String
+                self.pointDescription = String(self.pointDescription.dropFirst(REJECTED_STRING.count))
+            }
+            
+            if(preapproved){
+                self.approvedBy = "Preapproved"
+            }
+            else{
+                self.approvedBy = User.get(.name) as! String?
+            }
+            
+            self.approvedOn = Timestamp.init()
+        }
+        else{
+            //Reject the point
+            if(!wasRejected()){
+                //Point was not already rejected
+                self.pointDescription = REJECTED_STRING + self.pointDescription
+                self.approvedBy = User.get(.name) as! String?
+                self.approvedOn = Timestamp.init()
+            }
+            //else point was already rejected so it does not need ot be updated
+        }
+    }
+    
+    func convertToDict()->[String:Any]{
+        var pointTypeIDValue = self.type.pointID
+        if(!wasHandled){
+            pointTypeIDValue = pointTypeIDValue * -1
+        }
+        var residentName = self.resident
+        if(floorID == "Shreve"){
+            residentName = String(residentName.dropFirst(SHREVE_RESIDENT.count))
+            
+        }
+
+        var dict: [String : Any] = [
+            "Description":self.pointDescription,
+            "FloorID":self.floorID,
+            "PointTypeID":pointTypeIDValue,
+            "Resident":residentName,
+            "ResidentRef":self.residentRef,
+            "ResidentReportTime":self.residentReportTime!
+        ]
+        if(self.approvedBy != nil){
+            dict["ApprovedBy"] = self.approvedBy!
+        }
+        if(self.approvedOn != nil){
+            dict["ApprovedOn"] = self.approvedOn!
+        }
+        return dict
+    }
+    
 }
 
 extension PointLog: Equatable {
