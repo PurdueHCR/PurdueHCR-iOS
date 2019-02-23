@@ -103,17 +103,27 @@ class RHPApprovalTableViewController: UITableViewController {
 		if ((logs.wasHandled && logs.wasRejected()) || (!logs.wasHandled && !logs.wasRejected())) {
 			let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 				print("Approve button tapped")
-				let log = self.displayedLogs.remove(at: indexPath.row)
-				self.updatePointLogStatus(log: log, approve: true, indexPath: indexPath)
+                let reviewing = logs.wasHandled
+                print(reviewing)
+                let log = self.displayedLogs.remove(at: indexPath.row)
+                if (reviewing) {
+                    self.updatePointLogStatus(log: log, approve: true, updating: true, indexPath: indexPath)
+                } else {
+                    self.updatePointLogStatus(log: log, approve: true, indexPath: indexPath)
+                }
 				if(self.displayedLogs.count == 0){
 					let indexSet = NSMutableIndexSet()
 					indexSet.add(0)
-					self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-					success(true)
+                    if (!reviewing) {
+                        self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+                    }
+                    success(true)
 				}
 				else{
-					self.tableView.deleteRows(at: [indexPath], with: .automatic)
-					success(true)
+                   // if (!reviewing) {
+                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    //}
+                    success(true)
 				}
 				
 			})
@@ -130,16 +140,26 @@ class RHPApprovalTableViewController: UITableViewController {
 		if (!logs.wasRejected()) {
 			let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 				print("Delete button tapped")
-				let log = self.displayedLogs.remove(at: indexPath.row)
-				self.updatePointLogStatus(log: log, approve: false, indexPath: indexPath)
+                let reviewing = logs.wasHandled
+                print(reviewing)
+                let log = self.displayedLogs.remove(at: indexPath.row)
+                if (reviewing) {
+                    self.updatePointLogStatus(log: log, approve: true, updating: true, indexPath: indexPath)
+                } else {
+                    self.updatePointLogStatus(log: log, approve: true, indexPath: indexPath)
+                }
 				if(self.displayedLogs.count == 0){
-					let indexSet = NSMutableIndexSet()
-					indexSet.add(0)
-					self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+                    if (!reviewing) {
+                        let indexSet = NSMutableIndexSet()
+                        indexSet.add(0)
+                        self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+                    }
 					success(true)
 				}
 				else{
-					self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    if (!reviewing) {
+                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }
 					success(true)
 				}
 			})
@@ -151,8 +171,8 @@ class RHPApprovalTableViewController: UITableViewController {
     }
     
     
-	func updatePointLogStatus(log:PointLog, approve:Bool, indexPath: IndexPath) {
-		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, onDone: { (err: Error?) in
+    func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = false, indexPath: IndexPath) {
+		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: updating, onDone: { (err: Error?) in
             if let error = err {
                 if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
                     self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
