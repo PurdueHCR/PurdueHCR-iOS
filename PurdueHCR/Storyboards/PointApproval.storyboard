@@ -21,34 +21,21 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqo-t1-xiX">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aiE-uo-dDB">
-                                        <rect key="frame" x="25" y="535" width="80" height="80"/>
-                                        <color key="backgroundColor" red="0.88332201089999995" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" backgroundImage="reject">
-                                            <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="40"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="rejectPointLog:" destination="v84-jY-ASU" eventType="touchUpInside" id="9Ww-8B-ff9"/>
-                                        </connections>
-                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEe-ur-E04" customClass="PointDescriptionView" customModule="PurdueHCR" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="359" height="227"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="227" id="1i2-M9-9mc"/>
+                                            <constraint firstAttribute="height" constant="227" id="TcT-xg-RQd"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v80-Uv-pmU">
-                                        <rect key="frame" x="270" y="535" width="80" height="80"/>
+                                        <rect key="frame" x="280" y="243" width="80" height="80"/>
                                         <color key="backgroundColor" red="0.0" green="0.78054638980000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="HH8-m1-wTy"/>
-                                            <constraint firstAttribute="height" constant="80" id="IbZ-f5-pqe"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="Hmo-WN-N9v"/>
+                                            <constraint firstAttribute="height" constant="80" id="JdS-8R-Cwc"/>
+                                            <constraint firstAttribute="width" secondItem="v80-Uv-pmU" secondAttribute="height" multiplier="1:1" id="luH-EY-N9I"/>
+                                            <constraint firstAttribute="width" constant="80" id="xOr-vZ-aKy"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="approve">
                                             <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -62,30 +49,49 @@
                                             <action selector="approvePointLog:" destination="v84-jY-ASU" eventType="touchUpInside" id="yuM-Be-OpB"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aiE-uo-dDB">
+                                        <rect key="frame" x="15" y="243" width="80" height="80"/>
+                                        <color key="backgroundColor" red="0.88332201089999995" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="568-kq-UNn"/>
+                                            <constraint firstAttribute="width" constant="80" id="NX7-2u-Ei3"/>
+                                            <constraint firstAttribute="width" secondItem="aiE-uo-dDB" secondAttribute="height" multiplier="1:1" id="wik-wD-WbN"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="reject">
+                                            <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="40"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="rejectPointLog:" destination="v84-jY-ASU" eventType="touchUpInside" id="9Ww-8B-ff9"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="v80-Uv-pmU" firstAttribute="top" secondItem="wqo-t1-xiX" secondAttribute="top" constant="535" id="1GS-Ld-Hle"/>
-                                    <constraint firstItem="aEe-ur-E04" firstAttribute="leading" secondItem="wqo-t1-xiX" secondAttribute="leading" constant="8" id="79N-62-B7a"/>
-                                    <constraint firstAttribute="trailing" secondItem="v80-Uv-pmU" secondAttribute="trailing" constant="25" id="BOE-mt-Yz7"/>
-                                    <constraint firstAttribute="trailing" secondItem="aEe-ur-E04" secondAttribute="trailing" constant="8" id="DKC-ms-DA1"/>
-                                    <constraint firstItem="v80-Uv-pmU" firstAttribute="width" secondItem="aiE-uo-dDB" secondAttribute="width" id="N2J-af-2Qc"/>
-                                    <constraint firstItem="v80-Uv-pmU" firstAttribute="height" secondItem="aiE-uo-dDB" secondAttribute="height" id="NNr-dA-lm7"/>
-                                    <constraint firstItem="aiE-uo-dDB" firstAttribute="leading" secondItem="wqo-t1-xiX" secondAttribute="leading" constant="25" id="SX3-YV-V7k"/>
-                                    <constraint firstItem="aEe-ur-E04" firstAttribute="centerX" secondItem="wqo-t1-xiX" secondAttribute="centerX" id="TgD-rW-kv2"/>
-                                    <constraint firstItem="v80-Uv-pmU" firstAttribute="bottom" secondItem="aiE-uo-dDB" secondAttribute="bottom" id="eJn-g0-KLk"/>
-                                    <constraint firstItem="v80-Uv-pmU" firstAttribute="baseline" secondItem="aiE-uo-dDB" secondAttribute="firstBaseline" id="qOT-Qm-Bxc"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="aiE-uo-dDB" secondAttribute="bottom" constant="10" id="s8H-BR-k5d"/>
-                                    <constraint firstItem="aEe-ur-E04" firstAttribute="top" secondItem="wqo-t1-xiX" secondAttribute="top" constant="8" id="sny-jl-Sp5"/>
+                                    <constraint firstItem="aiE-uo-dDB" firstAttribute="leading" secondItem="wqo-t1-xiX" secondAttribute="leading" constant="15" id="9J2-42-4mu"/>
+                                    <constraint firstItem="aEe-ur-E04" firstAttribute="leading" secondItem="wqo-t1-xiX" secondAttribute="leadingMargin" id="9u8-tc-tbj"/>
+                                    <constraint firstAttribute="bottom" secondItem="aiE-uo-dDB" secondAttribute="bottom" constant="280" id="Hk8-xG-yWY"/>
+                                    <constraint firstItem="aEe-ur-E04" firstAttribute="trailing" secondItem="wqo-t1-xiX" secondAttribute="trailingMargin" id="MhU-3f-wtB"/>
+                                    <constraint firstItem="aiE-uo-dDB" firstAttribute="bottom" secondItem="v80-Uv-pmU" secondAttribute="bottom" id="Q9t-8F-sx0"/>
+                                    <constraint firstItem="aEe-ur-E04" firstAttribute="centerX" secondItem="wqo-t1-xiX" secondAttribute="centerX" id="Tud-6R-joG"/>
+                                    <constraint firstItem="aiE-uo-dDB" firstAttribute="top" secondItem="aEe-ur-E04" secondAttribute="bottom" constant="8" symbolic="YES" id="aTe-Pd-YuC"/>
+                                    <constraint firstAttribute="trailing" secondItem="v80-Uv-pmU" secondAttribute="trailing" constant="15" id="cKn-Ou-jgW"/>
+                                    <constraint firstItem="aEe-ur-E04" firstAttribute="top" secondItem="wqo-t1-xiX" secondAttribute="topMargin" id="euq-wV-2GR"/>
+                                    <constraint firstItem="aiE-uo-dDB" firstAttribute="height" secondItem="v80-Uv-pmU" secondAttribute="height" id="t93-TT-MMx"/>
+                                    <constraint firstItem="aiE-uo-dDB" firstAttribute="top" secondItem="v80-Uv-pmU" secondAttribute="top" id="yTJ-uv-Bmd"/>
                                 </constraints>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="wqo-t1-xiX" firstAttribute="leading" secondItem="HfZ-GI-4Eb" secondAttribute="leading" id="Fgs-uJ-Wl3"/>
-                            <constraint firstAttribute="trailing" secondItem="wqo-t1-xiX" secondAttribute="trailing" id="mAX-jW-gu5"/>
-                            <constraint firstItem="wqo-t1-xiX" firstAttribute="bottom" secondItem="hgh-5a-tUs" secondAttribute="bottom" id="tro-n6-azx"/>
-                            <constraint firstItem="wqo-t1-xiX" firstAttribute="top" secondItem="hgh-5a-tUs" secondAttribute="top" id="yVA-hf-ll9"/>
+                            <constraint firstItem="wqo-t1-xiX" firstAttribute="leading" secondItem="HfZ-GI-4Eb" secondAttribute="leading" id="INm-B2-Urg"/>
+                            <constraint firstAttribute="trailing" secondItem="wqo-t1-xiX" secondAttribute="trailing" id="NjJ-e6-BJf"/>
+                            <constraint firstItem="wqo-t1-xiX" firstAttribute="top" secondItem="hgh-5a-tUs" secondAttribute="top" id="O37-ny-1OV"/>
+                            <constraint firstItem="wqo-t1-xiX" firstAttribute="bottom" secondItem="hgh-5a-tUs" secondAttribute="bottom" id="vpL-Wv-xvW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hgh-5a-tUs"/>
                     </view>
@@ -93,6 +99,7 @@
                         <outlet property="approveButton" destination="v80-Uv-pmU" id="OhA-Eb-lbu"/>
                         <outlet property="pointDescriptionView" destination="aEe-ur-E04" id="mZx-PW-Idr"/>
                         <outlet property="rejectButton" destination="aiE-uo-dDB" id="0wt-aY-9X1"/>
+                        <outlet property="scrollView" destination="wqo-t1-xiX" id="Q1A-fx-hhT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wFd-NK-4CK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -293,10 +300,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="approve" width="1500" height="1500"/>
+        <image name="approve" width="1650" height="1650"/>
         <image name="reject" width="1650" height="1650"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Cb-0I-gSI"/>
+        <segue reference="vd2-Hg-7bX"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -204,7 +204,11 @@ class PointLog {
     
 }
 
-extension PointLog: Equatable {
+extension PointLog: Equatable, CustomStringConvertible {
+    var description: String {
+        return convertToDict().description
+    }
+    
     static func == (lhs: PointLog, rhs: PointLog) -> Bool {
         return
             lhs.type.pointID == rhs.type.pointID &&

@@ -152,7 +152,7 @@ class RHPApprovalTableViewController: UITableViewController {
     }
     
     
-	func updatePointLogStatus(log:PointLog, approve:Bool, indexPath: IndexPath) {
+	func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = false, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, onDone: { (err: Error?) in
             if let error = err {
                 if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
