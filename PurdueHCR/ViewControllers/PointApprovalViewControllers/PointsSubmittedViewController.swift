@@ -95,15 +95,14 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		var action : [UIContextualAction] = []
-        var logs : PointLog
+        var log : PointLog
         if (isFiltering()) {
-            logs = self.filteredPoints[indexPath.row]
+            log = self.filteredPoints[indexPath.row]
         } else {
-            logs = self.displayedLogs[indexPath.row]
+            log = self.displayedLogs[indexPath.row]
         }
-		if ((logs.wasHandled && logs.wasRejected()) || (!logs.wasHandled && !logs.wasRejected())) {
+		if ((log.wasHandled && log.wasRejected()) || (!log.wasHandled && !log.wasRejected())) {
 			let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-				let log = self.displayedLogs[indexPath.row]
 				self.updatePointLogStatus(log: log, approve: true, updating: true, indexPath: indexPath)
 				if(self.displayedLogs.count == 0){
 					let indexSet = NSMutableIndexSet()
@@ -124,15 +123,14 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	
 	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		var action : [UIContextualAction] = []
-        var logs : PointLog
+        var log : PointLog
         if (isFiltering()) {
-            logs = self.filteredPoints[indexPath.row]
+            log = self.filteredPoints[indexPath.row]
         } else {
-            logs = self.displayedLogs[indexPath.row]
+            log = self.displayedLogs[indexPath.row]
         }
-		if (!logs.wasRejected()) {
+		if (!log.wasRejected()) {
 			let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-				let log = self.displayedLogs[indexPath.row]
 				self.updatePointLogStatus(log: log, approve: false, updating: true, indexPath: indexPath)
 				if(self.displayedLogs.count == 0){
 					let indexSet = NSMutableIndexSet()
