@@ -68,7 +68,7 @@ class AnimatedLoadingViewController: UIViewController {
 			if (error == nil) {
 				self.performSegue(withIdentifier: "doneWithInit", sender: nil)
 			} else if (error!.code == 1) {
-				let alertController = UIAlertController.init(title: "Error", message: error!.domain, preferredStyle: .alert)
+				let alertController = UIAlertController.init(title: "Error", message: "Data could not be loaded.", preferredStyle: .alert)
 				
 				let retryOption = UIAlertAction.init(title: "Try Again", style: .default, handler: { (alert) in
 					self.finishLoadinng()
@@ -78,7 +78,7 @@ class AnimatedLoadingViewController: UIViewController {
 				self.addChild(alertController)
 				
 			} else if (error!.code == 2) {
-				let alertController = UIAlertController.init(title: "Error", message: error!.domain, preferredStyle: .alert)
+				let alertController = UIAlertController.init(title: "Failure to Find Account", message: "Please create a new account.", preferredStyle: .alert)
 				
 				let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: { (alert) in
 					try! Auth.auth().signOut()

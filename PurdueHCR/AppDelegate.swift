@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 else{
                     try! Auth.auth().signOut() // Sign out from firebase
                     Cely.logout()
-                    UIViewController().notify(title: "Failure", subtitle: "Could not find data with account.", style: .danger) //Create drop down message
+                    UIViewController().notify(title: "Could Not Find User Data", subtitle: "Please try signing in again.", style: .danger) //Create drop down message
                 }
             })
             Cely.setup(with: window!, forModel: User(), requiredProperties: [.id], withOptions: [

@@ -203,6 +203,10 @@ class DataManager {
         }
         if let id = User.get(.id) as! String?{
             getUserWhenLogginIn(id: id, onDone: {(isLoggedIn:Bool) in
+                if(!isLoggedIn){
+                    finished(NSError(domain: "Unable to find account", code: 2, userInfo: nil))
+                    return
+                }
 				self.refreshPointTypes(onDone: {(pointTypes:[PointType]) in
 					counter.increment()
 					if((User.get(.permissionLevel) as! Int) == 1){

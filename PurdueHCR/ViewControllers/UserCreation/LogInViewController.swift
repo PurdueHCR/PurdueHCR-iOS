@@ -106,7 +106,16 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		
 		Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
 			guard let usr = user, error == nil else {
-				self.notify(title: "Failed to Log In", subtitle: error!.localizedDescription, style: .danger)
+                if(error!.localizedDescription.contains("The password is invalid")){
+                    self.notify(title: "Wrong Password", subtitle: "Please try again", style: .danger)
+                }
+                else if(error!.localizedDescription.contains("There is no user record")){
+                    self.notify(title: "Could not find user with that email", subtitle: "Please try again", style: .danger)
+                }
+                else{
+                    self.notify(title: "Failed to Log In", subtitle: error!.localizedDescription, style: .danger)
+                }
+				
 				self.logInButton.isEnabled = true
 				self.activityIndicator.stopAnimating()
 				return
@@ -123,7 +132,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 					self.logInButton.isEnabled = true
 					self.activityIndicator.stopAnimating()
 					try! Auth.auth().signOut()
-					self.notify(title: "Error", subtitle: "Could not find user information. Please create a new account.", style: .danger)
+					self.notify(title: "Could Not Find User", subtitle: "Please create a new account.", style: .danger)
 					return
 				}
 			})
