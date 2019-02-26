@@ -108,6 +108,15 @@ class FieldValue {
     return tag_;
   }
 
+  /**
+   * PORTING NOTE: This deviates from the other platforms that define TypeOrder.
+   * Since we already define Type for union types, we use it together with this
+   * function to achieve the equivalent order of types i.e.
+   *     i) if two types are comparable, then they are of equal order;
+   *    ii) otherwise, their order is the same as the order of their Type.
+   */
+  static bool Comparable(Type lhs, Type rhs);
+
   bool boolean_value() const {
     HARD_ASSERT(tag_ == Type::Boolean);
     return boolean_value_;
@@ -120,17 +129,17 @@ class FieldValue {
 
   Timestamp timestamp_value() const {
     HARD_ASSERT(tag_ == Type::Timestamp);
-    return timestamp_value_;
+    return *timestamp_value_;
   }
 
   const std::string& string_value() const {
     HARD_ASSERT(tag_ == Type::String);
-    return string_value_;
+    return *string_value_;
   }
 
-  ObjectValue object_value() const {
+  const ObjectValue& object_value() const {
     HARD_ASSERT(tag_ == Type::Object);
-    return ObjectValue{object_value_};
+    return *object_value_;
   }
 
   /**
@@ -162,30 +171,30 @@ class FieldValue {
   absl::optional<FieldValue> Get(const FieldPath& field_path) const;
 
   /** factory methods. */
-  static const FieldValue& NullValue();
-  static const FieldValue& TrueValue();
-  static const FieldValue& FalseValue();
-  static const FieldValue& BooleanValue(bool value);
-  static const FieldValue& NanValue();
-  static FieldValue IntegerValue(int64_t value);
-  static FieldValue DoubleValue(double value);
-  static FieldValue TimestampValue(const Timestamp& value);
-  static FieldValue ServerTimestampValue(const Timestamp& local_write_time,
-                                         const Timestamp& previous_value);
-  static FieldValue ServerTimestampValue(const Timestamp& local_write_time);
-  static FieldValue StringValue(const char* value);
-  static FieldValue StringValue(const std::string& value);
-  static FieldValue StringValue(std::string&& value);
-  static FieldValue BlobValue(const uint8_t* source, size_t size);
-  static FieldValue ReferenceValue(const DocumentKey& value,
-                                   const DatabaseId* database_id);
-  static FieldValue ReferenceValue(DocumentKey&& value,
-                                   const DatabaseId* database_id);
-  static FieldValue GeoPointValue(const GeoPoint& value);
-  static FieldValue ArrayValue(const std::vector<FieldValue>& value);
-  static FieldValue ArrayValue(std::vector<FieldValue>&& value);
-  static FieldValue ObjectValueFromMap(const ObjectValue::Map& value);
-  static FieldValue ObjectValueFromMap(ObjectValue::Map&& value);
+  static const FieldValue& Null();
+  static const FieldValue& True();
+  static const FieldValue& False();
+  static const FieldValue& Nan();
+  static const FieldValue& FromBoolean(bool value);
+  static FieldValue FromInteger(int64_t value);
+  static FieldValue FromDouble(double value);
+  static FieldValue FromTimestamp(const Timestamp& value);
+  static FieldValue FromServerTimestamp(const Timestamp& local_write_time,
+                                        const Timestamp& previous_value);
+  static FieldValue FromServerTimestamp(const Timestamp& local_write_time);
+  static FieldValue FromString(const char* value);
+  static FieldValue FromString(const std::string& value);
+  static FieldValue FromString(std::string&& value);
+  static FieldValue FromBlob(const uint8_t* source, size_t size);
+  static FieldValue FromReference(const DocumentKey& value,
+                                  const DatabaseId* database_id);
+  static FieldValue FromReference(DocumentKey&& value,
+                                  const DatabaseId* database_id);
+  static FieldValue FromGeoPoint(const GeoPoint& value);
+  static FieldValue FromArray(const std::vector<FieldValue>& value);
+  static FieldValue FromArray(std::vector<FieldValue>&& value);
+  static FieldValue FromMap(const ObjectValue::Map& value);
+  static FieldValue FromMap(ObjectValue::Map&& value);
 
   friend bool operator<(const FieldValue& lhs, const FieldValue& rhs);
 
@@ -204,15 +213,15 @@ class FieldValue {
     bool boolean_value_;
     int64_t integer_value_;
     double double_value_;
-    Timestamp timestamp_value_;
-    ServerTimestamp server_timestamp_value_;
-    std::string string_value_;
-    std::vector<uint8_t> blob_value_;
-    // Qualified name to avoid conflict with the member function of same name.
-    firebase::firestore::model::ReferenceValue reference_value_;
-    GeoPoint geo_point_value_;
-    std::vector<FieldValue> array_value_;
-    ObjectValue object_value_;
+    std::unique_ptr<Timestamp> timestamp_value_;
+    std::unique_ptr<ServerTimestamp> server_timestamp_value_;
+    // TODO(rsgowman): Change unique_ptr<std::string> to nanopb::String?
+    std::unique_ptr<std::string> string_value_;
+    std::unique_ptr<std::vector<uint8_t>> blob_value_;
+    std::unique_ptr<ReferenceValue> reference_value_;
+    std::unique_ptr<GeoPoint> geo_point_value_;
+    std::unique_ptr<std::vector<FieldValue>> array_value_;
+    std::unique_ptr<ObjectValue> object_value_;
   };
 };
 

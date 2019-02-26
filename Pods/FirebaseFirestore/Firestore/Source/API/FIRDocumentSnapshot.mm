@@ -59,13 +59,15 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
 - (instancetype)initWithFirestore:(FIRFirestore *)firestore
                       documentKey:(DocumentKey)documentKey
                          document:(nullable FSTDocument *)document
-                        fromCache:(BOOL)fromCache NS_DESIGNATED_INITIALIZER;
+                        fromCache:(BOOL)fromCache
+                 hasPendingWrites:(BOOL)pendingWrites NS_DESIGNATED_INITIALIZER;
 
 - (const DocumentKey &)internalKey;
 
 @property(nonatomic, strong, readonly) FIRFirestore *firestore;
 @property(nonatomic, strong, readonly, nullable) FSTDocument *internalDocument;
 @property(nonatomic, assign, readonly) BOOL fromCache;
+@property(nonatomic, assign, readonly) BOOL pendingWrites;
 
 @end
 
@@ -74,11 +76,13 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
 + (instancetype)snapshotWithFirestore:(FIRFirestore *)firestore
                           documentKey:(DocumentKey)documentKey
                              document:(nullable FSTDocument *)document
-                            fromCache:(BOOL)fromCache {
+                            fromCache:(BOOL)fromCache
+                     hasPendingWrites:(BOOL)pendingWrites {
   return [[[self class] alloc] initWithFirestore:firestore
                                      documentKey:std::move(documentKey)
                                         document:document
-                                       fromCache:fromCache];
+                                       fromCache:fromCache
+                                hasPendingWrites:pendingWrites];
 }
 
 @end
@@ -93,12 +97,14 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
 - (instancetype)initWithFirestore:(FIRFirestore *)firestore
                       documentKey:(DocumentKey)documentKey
                          document:(nullable FSTDocument *)document
-                        fromCache:(BOOL)fromCache {
+                        fromCache:(BOOL)fromCache
+                 hasPendingWrites:(BOOL)pendingWrites {
   if (self = [super init]) {
     _firestore = firestore;
     _internalKey = std::move(documentKey);
     _internalDocument = document;
     _fromCache = fromCache;
+    _pendingWrites = pendingWrites;
   }
   return self;
 }
@@ -123,13 +129,14 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
   return [self.firestore isEqual:snapshot.firestore] && self.internalKey == snapshot.internalKey &&
          (self.internalDocument == snapshot.internalDocument ||
           [self.internalDocument isEqual:snapshot.internalDocument]) &&
-         self.fromCache == snapshot.fromCache;
+         self.pendingWrites == snapshot.pendingWrites && self.fromCache == snapshot.fromCache;
 }
 
 - (NSUInteger)hash {
   NSUInteger hash = [self.firestore hash];
   hash = hash * 31u + self.internalKey.Hash();
   hash = hash * 31u + [self.internalDocument hash];
+  hash = hash * 31u + (_pendingWrites ? 1 : 0);
   hash = hash * 31u + (self.fromCache ? 1 : 0);
   return hash;
 }
@@ -150,9 +157,8 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
 
 - (FIRSnapshotMetadata *)metadata {
   if (!_cachedMetadata) {
-    _cachedMetadata = [FIRSnapshotMetadata
-        snapshotMetadataWithPendingWrites:self.internalDocument.hasLocalMutations
-                                fromCache:self.fromCache];
+    _cachedMetadata = [FIRSnapshotMetadata snapshotMetadataWithPendingWrites:_pendingWrites
+                                                                   fromCache:self.fromCache];
   }
   return _cachedMetadata;
 }
@@ -194,9 +200,12 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
     (FIRServerTimestampBehavior)serverTimestampBehavior {
   FSTServerTimestampBehavior internalBehavior =
       InternalServerTimestampBehavor(serverTimestampBehavior);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   return [[FSTFieldValueOptions alloc]
       initWithServerTimestampBehavior:internalBehavior
          timestampsInSnapshotsEnabled:self.firestore.settings.timestampsInSnapshotsEnabled];
+#pragma clang diagnostic pop
 }
 
 - (nullable id)objectForKeyedSubscript:(id)key {
@@ -214,16 +223,15 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
     const DatabaseId *database = self.firestore.databaseID;
     if (*refDatabase != *database) {
       // TODO(b/32073923): Log this as a proper warning.
-      NSLog(
-          @"WARNING: Document %@ contains a document reference within a different database "
-           "(%s/%s) which is not supported. It will be treated as a reference within the "
-           "current database (%s/%s) instead.",
-          self.reference.path, refDatabase->project_id().c_str(),
-          refDatabase->database_id().c_str(), database->project_id().c_str(),
-          database->database_id().c_str());
+      NSLog(@"WARNING: Document %@ contains a document reference within a different database "
+             "(%s/%s) which is not supported. It will be treated as a reference within the "
+             "current database (%s/%s) instead.",
+            self.reference.path, refDatabase->project_id().c_str(),
+            refDatabase->database_id().c_str(), database->project_id().c_str(),
+            database->database_id().c_str());
     }
-    return [FIRDocumentReference referenceWithKey:[ref valueWithOptions:options]
-                                        firestore:self.firestore];
+    DocumentKey key = [[ref valueWithOptions:options] key];
+    return [FIRDocumentReference referenceWithKey:key firestore:self.firestore];
   } else {
     return [value valueWithOptions:options];
   }
@@ -256,7 +264,8 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
 - (instancetype)initWithFirestore:(FIRFirestore *)firestore
                       documentKey:(DocumentKey)documentKey
                          document:(FSTDocument *)document
-                        fromCache:(BOOL)fromCache NS_DESIGNATED_INITIALIZER;
+                        fromCache:(BOOL)fromCache
+                 hasPendingWrites:(BOOL)pendingWrites NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -265,11 +274,13 @@ static FSTServerTimestampBehavior InternalServerTimestampBehavor(
 - (instancetype)initWithFirestore:(FIRFirestore *)firestore
                       documentKey:(DocumentKey)documentKey
                          document:(FSTDocument *)document
-                        fromCache:(BOOL)fromCache {
+                        fromCache:(BOOL)fromCache
+                 hasPendingWrites:(BOOL)pendingWrites {
   self = [super initWithFirestore:firestore
                       documentKey:std::move(documentKey)
                          document:document
-                        fromCache:fromCache];
+                        fromCache:fromCache
+                 hasPendingWrites:pendingWrites];
   return self;
 }
 

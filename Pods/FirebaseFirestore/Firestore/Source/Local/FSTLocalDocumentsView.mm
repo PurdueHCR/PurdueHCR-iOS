@@ -16,44 +16,52 @@
 
 #import "Firestore/Source/Local/FSTLocalDocumentsView.h"
 
+#include <vector>
+
 #import "Firestore/Source/Core/FSTQuery.h"
-#import "Firestore/Source/Local/FSTMutationQueue.h"
-#import "Firestore/Source/Local/FSTRemoteDocumentCache.h"
 #import "Firestore/Source/Model/FSTDocument.h"
-#import "Firestore/Source/Model/FSTDocumentDictionary.h"
 #import "Firestore/Source/Model/FSTMutation.h"
 #import "Firestore/Source/Model/FSTMutationBatch.h"
 
+#include "Firestore/core/src/firebase/firestore/local/mutation_queue.h"
+#include "Firestore/core/src/firebase/firestore/local/remote_document_cache.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
+#include "Firestore/core/src/firebase/firestore/model/document_map.h"
 #include "Firestore/core/src/firebase/firestore/model/resource_path.h"
 #include "Firestore/core/src/firebase/firestore/model/snapshot_version.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 
+using firebase::firestore::local::MutationQueue;
+using firebase::firestore::local::RemoteDocumentCache;
 using firebase::firestore::model::DocumentKey;
+using firebase::firestore::model::DocumentKeySet;
+using firebase::firestore::model::DocumentMap;
+using firebase::firestore::model::MaybeDocumentMap;
 using firebase::firestore::model::ResourcePath;
 using firebase::firestore::model::SnapshotVersion;
-using firebase::firestore::model::DocumentKeySet;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FSTLocalDocumentsView ()
-- (instancetype)initWithRemoteDocumentCache:(id<FSTRemoteDocumentCache>)remoteDocumentCache
-                              mutationQueue:(id<FSTMutationQueue>)mutationQueue
+- (instancetype)initWithRemoteDocumentCache:(RemoteDocumentCache *)remoteDocumentCache
+                              mutationQueue:(MutationQueue *)mutationQueue
     NS_DESIGNATED_INITIALIZER;
-@property(nonatomic, strong, readonly) id<FSTRemoteDocumentCache> remoteDocumentCache;
-@property(nonatomic, strong, readonly) id<FSTMutationQueue> mutationQueue;
+
 @end
 
-@implementation FSTLocalDocumentsView
+@implementation FSTLocalDocumentsView {
+  RemoteDocumentCache *_remoteDocumentCache;
+  MutationQueue *_mutationQueue;
+}
 
-+ (instancetype)viewWithRemoteDocumentCache:(id<FSTRemoteDocumentCache>)remoteDocumentCache
-                              mutationQueue:(id<FSTMutationQueue>)mutationQueue {
++ (instancetype)viewWithRemoteDocumentCache:(RemoteDocumentCache *)remoteDocumentCache
+                              mutationQueue:(MutationQueue *)mutationQueue {
   return [[FSTLocalDocumentsView alloc] initWithRemoteDocumentCache:remoteDocumentCache
                                                       mutationQueue:mutationQueue];
 }
 
-- (instancetype)initWithRemoteDocumentCache:(id<FSTRemoteDocumentCache>)remoteDocumentCache
-                              mutationQueue:(id<FSTMutationQueue>)mutationQueue {
+- (instancetype)initWithRemoteDocumentCache:(RemoteDocumentCache *)remoteDocumentCache
+                              mutationQueue:(MutationQueue *)mutationQueue {
   if (self = [super init]) {
     _remoteDocumentCache = remoteDocumentCache;
     _mutationQueue = mutationQueue;
@@ -62,25 +70,78 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (nullable FSTMaybeDocument *)documentForKey:(const DocumentKey &)key {
-  FSTMaybeDocument *_Nullable remoteDoc = [self.remoteDocumentCache entryForKey:key];
-  return [self localDocument:remoteDoc key:key];
+  std::vector<FSTMutationBatch *> batches =
+      _mutationQueue->AllMutationBatchesAffectingDocumentKey(key);
+  return [self documentForKey:key inBatches:batches];
 }
 
-- (FSTMaybeDocumentDictionary *)documentsForKeys:(const DocumentKeySet &)keys {
-  FSTMaybeDocumentDictionary *results = [FSTMaybeDocumentDictionary maybeDocumentDictionary];
-  for (const DocumentKey &key : keys) {
-    // TODO(mikelehen): PERF: Consider fetching all remote documents at once rather than one-by-one.
-    FSTMaybeDocument *maybeDoc = [self documentForKey:key];
-    // TODO(http://b/32275378): Don't conflate missing / deleted.
-    if (!maybeDoc) {
-      maybeDoc = [FSTDeletedDocument documentWithKey:key version:SnapshotVersion::None()];
+// Internal version of documentForKey: which allows reusing `batches`.
+- (nullable FSTMaybeDocument *)documentForKey:(const DocumentKey &)key
+                                    inBatches:(const std::vector<FSTMutationBatch *> &)batches {
+  FSTMaybeDocument *_Nullable document = _remoteDocumentCache->Get(key);
+  for (FSTMutationBatch *batch : batches) {
+    document = [batch applyToLocalDocument:document documentKey:key];
+  }
+
+  return document;
+}
+
+// Returns the view of the given `docs` as they would appear after applying all
+// mutations in the given `batches`.
+- (MaybeDocumentMap)applyLocalMutationsToDocuments:(const MaybeDocumentMap &)docs
+                                       fromBatches:
+                                           (const std::vector<FSTMutationBatch *> &)batches {
+  MaybeDocumentMap results;
+
+  for (const auto &kv : docs) {
+    const DocumentKey &key = kv.first;
+    FSTMaybeDocument *localView = kv.second;
+    for (FSTMutationBatch *batch : batches) {
+      localView = [batch applyToLocalDocument:localView documentKey:key];
     }
-    results = [results dictionaryBySettingObject:maybeDoc forKey:key];
+    results = results.insert(key, localView);
   }
   return results;
 }
 
-- (FSTDocumentDictionary *)documentsMatchingQuery:(FSTQuery *)query {
+- (MaybeDocumentMap)documentsForKeys:(const DocumentKeySet &)keys {
+  MaybeDocumentMap docs = _remoteDocumentCache->GetAll(keys);
+  return [self localViewsForDocuments:docs];
+}
+
+/**
+ * Similar to `documentsForKeys`, but creates the local view from the given
+ * `baseDocs` without retrieving documents from the local store.
+ */
+- (MaybeDocumentMap)localViewsForDocuments:(const MaybeDocumentMap &)baseDocs {
+  MaybeDocumentMap results;
+
+  DocumentKeySet allKeys;
+  for (const auto &kv : baseDocs) {
+    allKeys = allKeys.insert(kv.first);
+  }
+  std::vector<FSTMutationBatch *> batches =
+      _mutationQueue->AllMutationBatchesAffectingDocumentKeys(allKeys);
+
+  MaybeDocumentMap docs = [self applyLocalMutationsToDocuments:baseDocs fromBatches:batches];
+
+  for (const auto &kv : docs) {
+    const DocumentKey &key = kv.first;
+    FSTMaybeDocument *maybeDoc = kv.second;
+
+    // TODO(http://b/32275378): Don't conflate missing / deleted.
+    if (!maybeDoc) {
+      maybeDoc = [FSTDeletedDocument documentWithKey:key
+                                             version:SnapshotVersion::None()
+                               hasCommittedMutations:NO];
+    }
+    results = results.insert(key, maybeDoc);
+  }
+
+  return results;
+}
+
+- (DocumentMap)documentsMatchingQuery:(FSTQuery *)query {
   if (DocumentKey::IsDocumentKey(query.path)) {
     return [self documentsMatchingDocumentQuery:query.path];
   } else {
@@ -88,100 +149,61 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
-- (FSTDocumentDictionary *)documentsMatchingDocumentQuery:(const ResourcePath &)docPath {
-  FSTDocumentDictionary *result = [FSTDocumentDictionary documentDictionary];
+- (DocumentMap)documentsMatchingDocumentQuery:(const ResourcePath &)docPath {
+  DocumentMap result;
   // Just do a simple document lookup.
   FSTMaybeDocument *doc = [self documentForKey:DocumentKey{docPath}];
   if ([doc isKindOfClass:[FSTDocument class]]) {
-    result = [result dictionaryBySettingObject:(FSTDocument *)doc forKey:doc.key];
+    result = result.insert(doc.key, static_cast<FSTDocument *>(doc));
   }
   return result;
 }
 
-- (FSTDocumentDictionary *)documentsMatchingCollectionQuery:(FSTQuery *)query {
-  // Query the remote documents and overlay mutations.
-  // TODO(mikelehen): There may be significant overlap between the mutations affecting these
-  // remote documents and the allMutationBatchesAffectingQuery mutations. Consider optimizing.
-  __block FSTDocumentDictionary *results = [self.remoteDocumentCache documentsMatchingQuery:query];
-  results = [self localDocuments:results];
+- (DocumentMap)documentsMatchingCollectionQuery:(FSTQuery *)query {
+  DocumentMap results = _remoteDocumentCache->GetMatching(query);
+  // Get locally persisted mutation batches.
+  std::vector<FSTMutationBatch *> matchingBatches =
+      _mutationQueue->AllMutationBatchesAffectingQuery(query);
 
-  // Now use the mutation queue to discover any other documents that may match the query after
-  // applying mutations.
-  DocumentKeySet matchingKeys;
-  NSArray<FSTMutationBatch *> *matchingMutationBatches =
-      [self.mutationQueue allMutationBatchesAffectingQuery:query];
-  for (FSTMutationBatch *batch in matchingMutationBatches) {
-    for (FSTMutation *mutation in batch.mutations) {
-      // TODO(mikelehen): PERF: Check if this mutation actually affects the query to reduce work.
-
-      // If the key is already in the results, we can skip it.
-      if (![results containsKey:mutation.key]) {
-        matchingKeys = matchingKeys.insert(mutation.key);
+  for (FSTMutationBatch *batch : matchingBatches) {
+    for (FSTMutation *mutation : [batch mutations]) {
+      // Only process documents belonging to the collection.
+      if (!query.path.IsImmediateParentOf(mutation.key.path())) {
+        continue;
       }
-    }
-  }
 
-  // Now add in results for the matchingKeys.
-  for (const DocumentKey &key : matchingKeys) {
-    FSTMaybeDocument *doc = [self documentForKey:key];
-    if ([doc isKindOfClass:[FSTDocument class]]) {
-      results = [results dictionaryBySettingObject:(FSTDocument *)doc forKey:key];
+      const DocumentKey &key = mutation.key;
+      // baseDoc may be nil for the documents that weren't yet written to the backend.
+      FSTMaybeDocument *baseDoc = nil;
+      auto found = results.underlying_map().find(key);
+      if (found != results.underlying_map().end()) {
+        baseDoc = found->second;
+      }
+      FSTMaybeDocument *mutatedDoc = [mutation applyToLocalDocument:baseDoc
+                                                       baseDocument:baseDoc
+                                                     localWriteTime:batch.localWriteTime];
+
+      if ([mutatedDoc isKindOfClass:[FSTDocument class]]) {
+        results = results.insert(key, static_cast<FSTDocument *>(mutatedDoc));
+      } else {
+        results = results.erase(key);
+      }
     }
   }
 
   // Finally, filter out any documents that don't actually match the query. Note that the extra
   // reference here prevents ARC from deallocating the initial unfiltered results while we're
   // enumerating them.
-  FSTDocumentDictionary *unfiltered = results;
-  [unfiltered
-      enumerateKeysAndObjectsUsingBlock:^(FSTDocumentKey *key, FSTDocument *doc, BOOL *stop) {
-        if (![query matchesDocument:doc]) {
-          results = [results dictionaryByRemovingObjectForKey:key];
-        }
-      }];
-
-  return results;
-}
-
-/**
- * Takes a remote document and applies local mutations to generate the local view of the
- * document.
- *
- * @param document The base remote document to apply mutations to.
- * @param documentKey The key of the document (necessary when remoteDocument is nil).
- */
-- (nullable FSTMaybeDocument *)localDocument:(nullable FSTMaybeDocument *)document
-                                         key:(const DocumentKey &)documentKey {
-  NSArray<FSTMutationBatch *> *batches =
-      [self.mutationQueue allMutationBatchesAffectingDocumentKey:documentKey];
-  for (FSTMutationBatch *batch in batches) {
-    document = [batch applyTo:document documentKey:documentKey];
+  DocumentMap unfiltered = results;
+  for (const auto &kv : unfiltered.underlying_map()) {
+    const DocumentKey &key = kv.first;
+    FSTDocument *doc = static_cast<FSTDocument *>(kv.second);
+    if (![query matchesDocument:doc]) {
+      results = results.erase(key);
+    }
   }
 
-  return document;
-}
-
-/**
- * Takes a set of remote documents and applies local mutations to generate the local view of
- * the documents.
- *
- * @param documents The base remote documents to apply mutations to.
- * @return The local view of the documents.
- */
-- (FSTDocumentDictionary *)localDocuments:(FSTDocumentDictionary *)documents {
-  __block FSTDocumentDictionary *result = documents;
-  [documents enumerateKeysAndObjectsUsingBlock:^(FSTDocumentKey *key, FSTDocument *remoteDocument,
-                                                 BOOL *stop) {
-    FSTMaybeDocument *mutatedDoc = [self localDocument:remoteDocument key:key];
-    if ([mutatedDoc isKindOfClass:[FSTDeletedDocument class]]) {
-      result = [result dictionaryByRemovingObjectForKey:key];
-    } else if ([mutatedDoc isKindOfClass:[FSTDocument class]]) {
-      result = [result dictionaryBySettingObject:(FSTDocument *)mutatedDoc forKey:key];
-    } else {
-      HARD_FAIL("Unknown document: %s", mutatedDoc);
-    }
-  }];
-  return result;
+  return results;
 }
 
 @end

@@ -19,7 +19,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var verifyPasswordField: UITextField!
     @IBOutlet var codeField: UITextField!
     @IBOutlet var signUpButton: UIButton!
-    
+	@IBOutlet weak var imageView: UIImageView!
+	
     
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
@@ -29,13 +30,22 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DataManager.sharedManager.refreshHouses(onDone: {(h:[House]) in
+		
+		self.hideKeyboardWhenTappedAround()
+		
+		self.imageView.image = #imageLiteral(resourceName: "emblem")
+		self.imageView.layer.shadowColor = UIColor.gray.cgColor
+		self.imageView.layer.shadowRadius = 2
+		self.imageView.layer.shadowOpacity = 100
+		self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+		
+		DataManager.sharedManager.refreshHouses(onDone: {(h:[House]) in
             self.houses = h
         })
-        
+		
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
         self.view.addSubview(activityIndicator)
         
         fortyPercent = self.view.frame.size.height * 0.4
@@ -131,10 +141,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         self.activityIndicator.stopAnimating()
                         try! Auth.auth().signOut()
                     } else {
-                        DataManager.sharedManager.initializeData(finished:{() in return})
-                        Cely.changeStatus(to: .loggedIn)
-                        self.activityIndicator.stopAnimating()
-                        
+						self.initializeData()
                     }
                 }))
             }
@@ -142,6 +149,34 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         
     }
+	
+	func initializeData() {
+		DataManager.sharedManager.initializeData(finished:{(initError) in
+		if (initError == nil) {
+			Cely.changeStatus(to: .loggedIn)
+			self.activityIndicator.stopAnimating()
+		} else if (initError!.code == 1) {
+			let alertController = UIAlertController.init(title: "Error", message: "Data could not be loaded.", preferredStyle: .alert)
+			
+			let retryOption = UIAlertAction.init(title: "Try Again", style: .default, handler: { (alert) in
+				self.initializeData()
+			})
+			
+			alertController.addAction(retryOption)
+			self.addChild(alertController)
+			
+		} else if (initError!.code == 2) {
+			let alertController = UIAlertController.init(title: "Failure to Find Account", message: "Please create a new account.", preferredStyle: .alert)
+			
+			let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: { (alert) in
+				try! Auth.auth().signOut()
+				Cely.logout()
+			})
+			alertController.addAction(okAction)
+			self.addChild(alertController)
+		}
+		})
+	}
     
     
     // code is format [houseIdentifier:roomNumber]
@@ -189,7 +224,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         moveTextField(textField: textField, up: true)
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         moveTextField(textField: textField, up: false)
     }
     

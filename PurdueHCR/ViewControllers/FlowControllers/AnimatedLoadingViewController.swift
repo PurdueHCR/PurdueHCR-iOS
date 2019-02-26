@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Cely
 
 class AnimatedLoadingViewController: UIViewController {
 
@@ -22,18 +24,54 @@ class AnimatedLoadingViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if(NewLaunch.newLaunch.isFirstLaunch){
-            createNewLaunchAlert()
+        if(Cely.currentLoginStatus() == .loggedIn){
+			/*
+			if(NewLaunch.newLaunch.isFirstLaunch){
+                createNewLaunchAlert()
+            }*/
+			
+			self.imageView.image = #imageLiteral(resourceName: "emblem")
+			self.imageView.layer.borderWidth = 5
+			self.imageView.layer.borderColor = UIColor.black.cgColor
+			let height = self.imageView.frame.height
+			self.imageView.layer.cornerRadius = height/2
+			self.imageView.layer.shadowColor = UIColor.gray.cgColor
+			self.imageView.layer.shadowRadius = 2
+			self.imageView.layer.shadowOpacity = 100
+			self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+            finishLoadinng()
+
         }
         else{
-            finishLoadinng()
+            self.dismiss(animated: false, completion: nil)
         }
         
     }
     
     func finishLoadinng(){
-        DataManager.sharedManager.initializeData(finished: {() in
-            self.performSegue(withIdentifier: "doneWithInit", sender: nil)
+        DataManager.sharedManager.initializeData(finished: {(error) in
+			if (error == nil) {
+				self.performSegue(withIdentifier: "doneWithInit", sender: nil)
+			} else if (error!.code == 1) {
+				let alertController = UIAlertController.init(title: "Error", message: "Data could not be loaded.", preferredStyle: .alert)
+				
+				let retryOption = UIAlertAction.init(title: "Try Again", style: .default, handler: { (alert) in
+					self.finishLoadinng()
+				})
+				
+				alertController.addAction(retryOption)
+				self.addChild(alertController)
+				
+			} else if (error!.code == 2) {
+				let alertController = UIAlertController.init(title: "Failure to Find Account", message: "Please create a new account.", preferredStyle: .alert)
+				
+				let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: { (alert) in
+					try! Auth.auth().signOut()
+					Cely.logout()
+				})
+				alertController.addAction(okAction)
+				self.addChild(alertController)
+			}
         })
     }
 
@@ -49,19 +87,21 @@ class AnimatedLoadingViewController: UIViewController {
     }
     
     //This will be for showing announcements
-    func createNewLaunchAlert(){
+	/*
+	func createNewLaunchAlert(){
         let alert = UIAlertController(title: "Are you interested in joining Development Committee?", message: "Development Committee is looking for software developers, marketers, and designers to help with the future of Purdue HCR. If you are interested in helping, checkout our Discord channel!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Take me to the Discord", style: UIAlertActionStyle.default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Take me to the Discord", style: UIAlertAction.Style.default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
-            UIApplication.shared.open(URL(string: "https://discord.gg/jptXrYG")!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(string: "https://discord.gg/jptXrYG")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             self.finishLoadinng()
         }))
-        alert.addAction(UIAlertAction(title: "No thanks", style: UIAlertActionStyle.default, handler: {(action)in
+        alert.addAction(UIAlertAction(title: "No thanks", style: UIAlertAction.Style.default, handler: {(action)in
             alert.dismiss(animated: true, completion: self.finishLoadinng)
             self.finishLoadinng()
         }))
         self.present(alert, animated: true, completion: nil)
     }
+	*/
     
 
     /*
@@ -74,4 +114,9 @@ class AnimatedLoadingViewController: UIViewController {
     }
     */
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

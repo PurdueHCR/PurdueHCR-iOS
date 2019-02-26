@@ -1,8 +1,8 @@
 platform :ios, '11.0'
 use_frameworks!
 
-target 'Platinum Points' do
-  pod 'Cely', :git => 'https://github.com/chaione/Cely', :branch => 'master' 
+target 'PurdueHCR' do
+  pod 'Cely'
   pod 'ValueStepper'
   pod 'Firebase/Core'
   pod 'Firebase/Storage'
@@ -11,4 +11,8 @@ target 'Platinum Points' do
   pod 'KDCircularProgress'
   pod 'Charts'
   pod 'NotificationBannerSwift'
+  pod 'AZDropdownMenu'
+  pod 'PopupKit'
+  pod 'SnapKit'
 end
+

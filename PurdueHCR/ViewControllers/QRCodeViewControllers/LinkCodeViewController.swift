@@ -33,8 +33,9 @@ class LinkCodeViewController: UIViewController {
         qrCodeDescriptionTextView.layer.borderColor = UIColor.black.cgColor
         activateSwitch.setOn(link!.enabled, animated: false)
         archiveSwitch.setOn(link!.archived, animated: false)
-        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(back))
+        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(back))
         self.navigationItem.leftBarButtonItem = newBackButton
+		
     }
 
     func generateQRCode(){
@@ -59,7 +60,7 @@ class LinkCodeViewController: UIViewController {
     
     @IBAction func saveToCameraRoll(_ sender: Any) {
         saveToPhotosButton.isEnabled = false
-        let context = CIContext(options: [kCIContextUseSoftwareRenderer:true])
+        let context = CIContext(options: convertToOptionalCIContextOptionDictionary([convertFromCIContextOption(CIContextOption.useSoftwareRenderer):true]))
         let cgimg = context.createCGImage(qrImage!, from: qrImage!.extent)
         let uiimage = UIImage(cgImage: cgimg!)
         
@@ -134,4 +135,15 @@ class LinkCodeViewController: UIViewController {
     }
     
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalCIContextOptionDictionary(_ input: [String: Any]?) -> [CIContextOption: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (CIContextOption(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCIContextOption(_ input: CIContextOption) -> String {
+	return input.rawValue
 }

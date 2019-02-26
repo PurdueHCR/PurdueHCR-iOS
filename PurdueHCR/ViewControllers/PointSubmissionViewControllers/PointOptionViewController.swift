@@ -28,10 +28,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
         tableView.refreshControl = refresher
         // Do any additional setup after loading the view, typically from a nib.
-        pointSystem = DataManager.sharedManager.getPointGroups() ?? [PointGroup]()
-        if(pointSystem.count == 0){
-            resfreshData()
-        }
+		self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: DataManager.sharedManager.pointTypes)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Points"
@@ -40,11 +37,11 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Submit Points"
+        //self.title = nil//"Submit Points"
         if let index = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: index, animated: true)
         }
-
+        resfreshData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,7 +51,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,17 +73,30 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if isFiltering() {
+		if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
+			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
+			emptyMessage(message: message)
+			return 0
+		}
+		else if isFiltering() {
             if(filteredPoints.count > 0){
                 killEmptyMessage()
                 return 1
             }
             else {
                 emptyMessage(message: "Could not find points matching that description.")
-                return 0;
+                return 0
             }
-        }
-        return (pointSystem.count)
+		} else {
+			if pointSystem.count > 0 {
+				killEmptyMessage()
+				return (pointSystem.count)
+			} else {
+				emptyMessage(message: "There are no point types enabled for submitting.")
+				return 0
+			}
+		}
+		
     }
 
     
@@ -116,22 +126,37 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             nextViewController.type = filteredPoints[(indexPath?.row)!]
         }
         else{
-          nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
+          	nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
         }
         
     }
     
     @objc func resfreshData(){
-        DataManager.sharedManager.refreshPointGroups(onDone: {(pg:[PointGroup]) in
-            self.pointSystem = pg
-            DispatchQueue.main.async { [weak self] in
-                if(self != nil){
-                    self?.tableView.reloadData()
-                }
-            }
-            self.tableView.refreshControl?.endRefreshing()
-        })
+		DataManager.sharedManager.refreshSystemPreferences { (sysPref) in
+			if (sysPref != nil) {
+				DataManager.sharedManager.refreshPointTypes(onDone: {(types:[PointType]) in
+					self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: types)
+					DispatchQueue.main.async { [weak self] in
+						if(self != nil){
+							self?.tableView.reloadData()
+						}
+					}
+					self.tableView.refreshControl?.endRefreshing()
+				})
+			} else {
+				self.notify(title: "Failure", subtitle: "Refresh Error", style: .danger)
+			}
+		}
     }
+    
+//    func filter(pg:[PointGroup]) -> [PointGroup]{
+//        var pointGroups = [PointGroup]()
+//        for group in pg{
+//            var pointGroup = PointGroup(val: group.pointValue)
+//
+//        }
+//    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
@@ -142,12 +167,42 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         filteredPoints = DataManager.sharedManager.getPoints()!.filter({( point : PointType) -> Bool in
-            return point.pointDescription.lowercased().contains(searchText.lowercased())
+            return point.pointDescription.lowercased().contains(searchText.lowercased()) && checkPermission(pointType: point)
         })
         tableView.reloadData()
     }
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    private func sortIntoPointGroupsWithPermission(arr:[PointType]) -> [PointGroup]{
+        var pointGroups = [PointGroup]()
+        if(!arr.isEmpty){
+            var currentValue = 0
+            var pg = PointGroup(val: 0)
+            for i in 0..<arr.count {
+                let pointType = arr[i]
+                if(checkPermission(pointType: pointType)){
+                    let value = pointType.pointValue
+                    if(value != currentValue){
+                        if(pg.pointValue != 0){
+                            pointGroups.append(pg)
+                        }
+                        currentValue = value
+                        pg = PointGroup(val:value)
+                    }
+                    pg.add(pt: pointType)
+                }
+            }
+            if(pg.pointValue != 0){
+                pointGroups.append(pg)
+            }
+        }
+        return pointGroups
+    }
+    
+    func checkPermission(pointType:PointType)->Bool {
+        return pointType.residentCanSubmit && pointType.isEnabled
     }
 }
 

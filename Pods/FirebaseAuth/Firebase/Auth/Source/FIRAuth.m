@@ -18,11 +18,18 @@
 
 #import "FIRAuth_Internal.h"
 
+#if __has_include(<UIKit/UIKit.h>)
+#import <UIKit/UIKit.h>
+#endif
+
 #import <FirebaseCore/FIRAppAssociationRegistration.h>
-#import <FirebaseCore/FIRAppEnvironmentUtil.h>
 #import <FirebaseCore/FIRAppInternal.h>
+#import <FirebaseCore/FIRComponent.h>
+#import <FirebaseCore/FIRComponentContainer.h>
+#import <FirebaseCore/FIRLibrary.h>
 #import <FirebaseCore/FIRLogger.h>
 #import <FirebaseCore/FIROptions.h>
+#import <GoogleUtilities/GULAppEnvironmentUtil.h>
 
 #import "AuthProviders/EmailPassword/FIREmailPasswordAuthCredential.h"
 #import "FIRAdditionalUserInfo_Internal.h"
@@ -43,6 +50,7 @@
 #import "FIRCreateAuthURIResponse.h"
 #import "FIREmailLinkSignInRequest.h"
 #import "FIREmailLinkSignInResponse.h"
+#import "FIRGameCenterAuthCredential.h"
 #import "FIRGetOOBConfirmationCodeRequest.h"
 #import "FIRGetOOBConfirmationCodeResponse.h"
 #import "FIRResetPasswordRequest.h"
@@ -51,6 +59,8 @@
 #import "FIRSendVerificationCodeResponse.h"
 #import "FIRSetAccountInfoRequest.h"
 #import "FIRSetAccountInfoResponse.h"
+#import "FIRSignInWithGameCenterRequest.h"
+#import "FIRSignInWithGameCenterResponse.h"
 #import "FIRSignUpNewUserRequest.h"
 #import "FIRSignUpNewUserResponse.h"
 #import "FIRVerifyAssertionRequest.h"
@@ -63,7 +73,6 @@
 #import "FIRVerifyPhoneNumberResponse.h"
 
 #if TARGET_OS_IOS
-#import <UIKit/UIKit.h>
 #import "FIRAuthAPNSToken.h"
 #import "FIRAuthAPNSTokenManager.h"
 #import "FIRAuthAppCredentialManager.h"
@@ -218,9 +227,9 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
 #pragma mark - FIRAuth
 
 #if TARGET_OS_IOS
-@interface FIRAuth () <FIRAuthAppDelegateHandler>
+@interface FIRAuth () <FIRAuthAppDelegateHandler, FIRLibrary, FIRComponentLifecycleMaintainer>
 #else
-@interface FIRAuth ()
+@interface FIRAuth () <FIRLibrary, FIRComponentLifecycleMaintainer>
 #endif
 
 /** @property firebaseAppId
@@ -300,42 +309,13 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
 }
 
 + (void)load {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    gKeychainServiceNameForAppName = [[NSMutableDictionary alloc] init];
+  [FIRApp registerInternalLibrary:(Class<FIRLibrary>)self
+                 withName:@"fire-auth"
+              withVersion:[NSString stringWithUTF8String:FirebaseAuthVersionStr]];
+}
 
-    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-
-    // Ensures the @c FIRAuth instance for a given app gets loaded as soon as the app is ready.
-    [defaultCenter addObserverForName:kFIRAppReadyToConfigureSDKNotification
-                               object:[FIRApp class]
-                                queue:nil
-                           usingBlock:^(NSNotification *notification) {
-      [FIRAuth authWithApp:[FIRApp appNamed:notification.userInfo[kFIRAppNameKey]]];
-    }];
-    // Ensures the saved user is cleared when the app is deleted.
-    [defaultCenter addObserverForName:kFIRAppDeleteNotification
-                               object:[FIRApp class]
-                                queue:nil
-                           usingBlock:^(NSNotification *notification) {
-      dispatch_async(FIRAuthGlobalWorkQueue(), ^{
-        // This doesn't stop any request already issued, see b/27704535 .
-        NSString *appName = notification.userInfo[kFIRAppNameKey];
-        NSString *keychainServiceName = [FIRAuth keychainServiceNameForAppName:appName];
-        if (keychainServiceName) {
-          [self deleteKeychainServiceNameForAppName:appName];
-          FIRAuthKeychain *keychain = [[FIRAuthKeychain alloc] initWithService:keychainServiceName];
-          NSString *userKey = [NSString stringWithFormat:kUserKey, appName];
-          [keychain removeDataForKey:userKey error:NULL];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [[NSNotificationCenter defaultCenter]
-              postNotificationName:FIRAuthStateDidChangeNotification
-                            object:nil];
-        });
-      });
-    }];
-  });
++ (void)initialize {
+  gKeychainServiceNameForAppName = [[NSMutableDictionary alloc] init];
 }
 
 + (FIRAuth *)auth {
@@ -352,11 +332,10 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
 }
 
 + (FIRAuth *)authWithApp:(FIRApp *)app {
-  return [FIRAppAssociationRegistration registeredObjectWithHost:app
-                                                             key:NSStringFromClass(self)
-                                                   creationBlock:^FIRAuth *_Nullable() {
-    return [[FIRAuth alloc] initWithApp:app];
-  }];
+  // Get the instance of Auth from the container, which will create or return the cached instance
+  // associated with this app.
+  id<FIRAuthInterop> auth = FIR_COMPONENT(FIRAuthInterop, app.container);
+  return (FIRAuth *)auth;
 }
 
 - (instancetype)initWithApp:(FIRApp *)app {
@@ -364,66 +343,6 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
   self = [self initWithAPIKey:app.options.APIKey appName:app.name];
   if (self) {
     _app = app;
-    __weak FIRAuth *weakSelf = self;
-    app.getTokenImplementation = ^(BOOL forceRefresh, FIRTokenCallback callback) {
-      dispatch_async(FIRAuthGlobalWorkQueue(), ^{
-        FIRAuth *strongSelf = weakSelf;
-        // Enable token auto-refresh if not aleady enabled.
-        if (strongSelf && !strongSelf->_autoRefreshTokens) {
-          FIRLogInfo(kFIRLoggerAuth, @"I-AUT000002", @"Token auto-refresh enabled.");
-          strongSelf->_autoRefreshTokens = YES;
-          [strongSelf scheduleAutoTokenRefresh];
-
-          #if TARGET_OS_IOS // TODO: Is a similar mechanism needed on macOS?
-          strongSelf->_applicationDidBecomeActiveObserver = [[NSNotificationCenter defaultCenter]
-              addObserverForName:UIApplicationDidBecomeActiveNotification
-                          object:nil
-                           queue:nil
-                      usingBlock:^(NSNotification *notification) {
-            FIRAuth *strongSelf = weakSelf;
-            if (strongSelf) {
-              strongSelf->_isAppInBackground = NO;
-              if (!strongSelf->_autoRefreshScheduled) {
-                [weakSelf scheduleAutoTokenRefresh];
-              }
-            }
-          }];
-          strongSelf->_applicationDidEnterBackgroundObserver = [[NSNotificationCenter defaultCenter]
-              addObserverForName:UIApplicationDidEnterBackgroundNotification
-                          object:nil
-                           queue:nil
-                      usingBlock:^(NSNotification *notification) {
-            FIRAuth *strongSelf = weakSelf;
-            if (strongSelf) {
-              strongSelf->_isAppInBackground = YES;
-            }
-          }];
-          #endif
-        }
-        // Call back with 'nil' if there is no current user.
-        if (!strongSelf || !strongSelf->_currentUser) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-            callback(nil, nil);
-          });
-          return;
-        }
-        // Call back with current user token.
-        [strongSelf->_currentUser internalGetTokenForcingRefresh:forceRefresh
-                                                        callback:^(NSString *_Nullable token,
-                                                                   NSError *_Nullable error) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-            callback(token, error);
-          });
-        }];
-      });
-    };
-    app.getUIDImplementation = ^NSString *_Nullable() {
-      __block NSString *uid;
-      dispatch_sync(FIRAuthGlobalWorkQueue(), ^{
-        uid = [weakSelf getUID];
-      });
-      return uid;
-    };
     #if TARGET_OS_IOS
     _authURLPresenter = [[FIRAuthURLPresenter alloc] init];
     #endif
@@ -443,7 +362,7 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
     static Class applicationClass = nil;
     // iOS App extensions should not call [UIApplication sharedApplication], even if UIApplication
     // responds to it.
-    if (![FIRAppEnvironmentUtil isAppExtension]) {
+    if (![GULAppEnvironmentUtil isAppExtension]) {
       Class cls = NSClassFromString(@"UIApplication");
       if (cls && [cls respondsToSelector:NSSelectorFromString(@"sharedApplication")]) {
         applicationClass = cls;
@@ -663,16 +582,62 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
                                            callback:completion];
 }
 
-/** @fn internalSignInWithEmail:link:completion:
+/** @fn signInAndRetrieveDataWithGameCenterCredential:callback:
+    @brief Signs in using a game center credential.
+    @param credential The Game Center Auth Credential used to sign in.
+    @param callback A block which is invoked when the sign in finished (or is cancelled). Invoked
+        asynchronously on the global auth work queue in the future.
+ */
+- (void)signInAndRetrieveDataWithGameCenterCredential:(FIRGameCenterAuthCredential *)credential
+                                             callback:(FIRAuthDataResultCallback)callback {
+  FIRSignInWithGameCenterRequest *request =
+    [[FIRSignInWithGameCenterRequest alloc] initWithPlayerID:credential.playerID
+                                                publicKeyURL:credential.publicKeyURL
+                                                   signature:credential.signature
+                                                        salt:credential.salt
+                                                   timestamp:credential.timestamp
+                                                 displayName:credential.displayName
+                                        requestConfiguration:_requestConfiguration];
+  [FIRAuthBackend signInWithGameCenter:request
+                              callback:^(FIRSignInWithGameCenterResponse *_Nullable response,
+                                         NSError *_Nullable error) {
+    if (error) {
+      if (callback) {
+        callback(nil, error);
+      }
+      return;
+    }
+
+    [self completeSignInWithAccessToken:response.IDToken
+              accessTokenExpirationDate:response.approximateExpirationDate
+                           refreshToken:response.refreshToken
+                              anonymous:NO
+                               callback:^(FIRUser *_Nullable user, NSError *_Nullable error) {
+      FIRAdditionalUserInfo *additionalUserInfo =
+      [[FIRAdditionalUserInfo alloc] initWithProviderID:FIRGameCenterAuthProviderID
+                                                profile:nil
+                                               username:nil
+                                              isNewUser:response.isNewUser];
+      FIRAuthDataResult *result = user ?
+      [[FIRAuthDataResult alloc] initWithUser:user
+                           additionalUserInfo:additionalUserInfo] : nil;
+      if (callback) {
+        callback(result, error);
+      }
+    }];
+  }];
+}
+
+/** @fn internalSignInAndRetrieveDataWithEmail:link:completion:
     @brief Signs in using an email and email sign-in link.
     @param email The user's email address.
     @param link The email sign-in link.
     @param callback A block which is invoked when the sign in finishes (or is cancelled.) Invoked
         asynchronously on the global auth work queue in the future.
  */
-- (void)internalSignInWithEmail:(nonnull NSString *)email
-                           link:(nonnull NSString *)link
-                       callback:(nullable FIRAuthResultCallback)callback {
+- (void)internalSignInAndRetrieveDataWithEmail:(nonnull NSString *)email
+                                          link:(nonnull NSString *)link
+                                      callback:(nullable FIRAuthDataResultCallback)callback {
   if (![self isSignInWithEmailLink:link]) {
     [FIRAuthExceptionUtils raiseInvalidParameterExceptionWithReason:
         kInvalidEmailSignInLinkExceptionMessage];
@@ -694,14 +659,34 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
                          callback:^(FIREmailLinkSignInResponse *_Nullable response,
                                     NSError *_Nullable error) {
     if (error) {
-      callback(nil, error);
+      if (callback) {
+        callback(nil, error);
+      }
       return;
     }
     [self completeSignInWithAccessToken:response.IDToken
               accessTokenExpirationDate:response.approximateExpirationDate
                            refreshToken:response.refreshToken
                               anonymous:NO
-                               callback:callback];
+                               callback:^(FIRUser *_Nullable user, NSError *_Nullable error) {
+      if (error) {
+        if (callback) {
+          callback(nil, error);
+        }
+        return;
+      }
+      FIRAdditionalUserInfo *additionalUserInfo =
+          [[FIRAdditionalUserInfo alloc] initWithProviderID:FIREmailAuthProviderID
+                                                    profile:nil
+                                                   username:nil
+                                                  isNewUser:response.isNewUser];
+      FIRAuthDataResult *result = user ?
+          [[FIRAuthDataResult alloc] initWithUser:user
+                               additionalUserInfo:additionalUserInfo] : nil;
+      if (callback) {
+        callback(result, error);
+      }
+    }];
   }];
 }
 
@@ -742,31 +727,42 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
     // Special case for email/password credentials
     FIREmailPasswordAuthCredential *emailPasswordCredential =
         (FIREmailPasswordAuthCredential *)credential;
-    FIRAuthResultCallback completeEmailSignIn = ^(FIRUser *user, NSError *error) {
-      if (callback) {
-        if (error) {
-          callback(nil, error);
-          return;
-        }
-    FIRAdditionalUserInfo *additionalUserInfo =
-        [[FIRAdditionalUserInfo alloc] initWithProviderID:FIREmailAuthProviderID
-                                                  profile:nil
-                                                 username:nil
-                                                isNewUser:NO];
-        FIRAuthDataResult *result = [[FIRAuthDataResult alloc] initWithUser:user
-                                                         additionalUserInfo:additionalUserInfo];
-        callback(result, error);
-      }
-    };
+
     if (emailPasswordCredential.link) {
-      [self internalSignInWithEmail:emailPasswordCredential.email
-                               link:emailPasswordCredential.link
-                           callback:completeEmailSignIn];
+      // Email link sign in
+      [self internalSignInAndRetrieveDataWithEmail:emailPasswordCredential.email
+                                              link:emailPasswordCredential.link
+                                          callback:callback];
     } else {
+      // Email password sign in
+      FIRAuthResultCallback completeEmailSignIn = ^(FIRUser *user, NSError *error) {
+        if (callback) {
+          if (error) {
+            callback(nil, error);
+            return;
+          }
+          FIRAdditionalUserInfo *additionalUserInfo =
+              [[FIRAdditionalUserInfo alloc] initWithProviderID:FIREmailAuthProviderID
+                                                        profile:nil
+                                                       username:nil
+                                                      isNewUser:NO];
+          FIRAuthDataResult *result = [[FIRAuthDataResult alloc] initWithUser:user
+                                                           additionalUserInfo:additionalUserInfo];
+          callback(result, error);
+        }
+      };
+
       [self signInWithEmail:emailPasswordCredential.email
                    password:emailPasswordCredential.password
                    callback:completeEmailSignIn];
     }
+    return;
+  }
+
+  if ([credential isKindOfClass:[FIRGameCenterAuthCredential class]]) {
+    // Special case for Game Center credentials.
+    [self signInAndRetrieveDataWithGameCenterCredential:(FIRGameCenterAuthCredential *)credential
+                                               callback:callback];
     return;
   }
 
@@ -1138,6 +1134,7 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
     if (!email) {
       [FIRAuthExceptionUtils raiseInvalidParameterExceptionWithReason:
           kMissingEmailInvalidParameterExceptionReason];
+      return;
     }
     FIRGetOOBConfirmationCodeRequest *request =
         [FIRGetOOBConfirmationCodeRequest passwordResetRequestWithEmail:email
@@ -1552,7 +1549,8 @@ static NSDictionary<NSString *, NSString *> *FIRAuthParseURL(NSString *urlString
  */
 - (void)possiblyPostAuthStateChangeNotification {
   NSString *token = _currentUser.rawAccessToken;
-  if (_lastNotifiedUserToken == token || [_lastNotifiedUserToken isEqualToString:token]) {
+  if (_lastNotifiedUserToken == token ||
+      (token != nil && [_lastNotifiedUserToken isEqualToString:token])) {
     return;
   }
   _lastNotifiedUserToken = token;
@@ -1878,7 +1876,105 @@ static NSDictionary<NSString *, NSString *> *FIRAuthParseURL(NSString *urlString
   return YES;
 }
 
-- (nullable NSString *)getUID {
+#pragma mark - Interoperability
+
++ (nonnull NSArray<FIRComponent *> *)componentsToRegister {
+  FIRComponentCreationBlock authCreationBlock =
+  ^id _Nullable(FIRComponentContainer *_Nonnull container, BOOL *_Nonnull isCacheable) {
+    *isCacheable = YES;
+    return [[FIRAuth alloc] initWithApp:container.app];
+  };
+  FIRComponent *authInterop = [FIRComponent componentWithProtocol:@protocol(FIRAuthInterop)
+                                                    creationBlock:authCreationBlock];
+  return @[authInterop];
+}
+
+#pragma mark - FIRCoreConfigurable
+
++ (void)configureWithApp:(nonnull FIRApp *)app {
+  // TODO: Evaluate what actually needs to be configured here instead of initializing a full
+  // instance.
+  // Ensures the @c FIRAuth instance for a given app gets loaded as soon as the app is ready.
+  [FIRAuth authWithApp:app];
+}
+
+#pragma mark - FIRComponentLifecycleMaintainer
+
+- (void)appWillBeDeleted:(nonnull FIRApp *)app {
+  dispatch_async(FIRAuthGlobalWorkQueue(), ^{
+    // This doesn't stop any request already issued, see b/27704535 .
+    NSString *keychainServiceName = [FIRAuth keychainServiceNameForAppName:app.name];
+    if (keychainServiceName) {
+      [[self class] deleteKeychainServiceNameForAppName:app.name];
+      FIRAuthKeychain *keychain = [[FIRAuthKeychain alloc] initWithService:keychainServiceName];
+      NSString *userKey = [NSString stringWithFormat:kUserKey, app.name];
+      [keychain removeDataForKey:userKey error:NULL];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+      // TODO: Move over to fire an event instead, once ready.
+      [[NSNotificationCenter defaultCenter] postNotificationName:FIRAuthStateDidChangeNotification
+                                                          object:nil];
+    });
+  });
+}
+
+#pragma mark - FIRAuthInterop
+
+- (void)getTokenForcingRefresh:(BOOL)forceRefresh withCallback:(FIRTokenCallback)callback {
+  __weak FIRAuth *weakSelf = self;
+  dispatch_async(FIRAuthGlobalWorkQueue(), ^{
+    FIRAuth *strongSelf = weakSelf;
+    // Enable token auto-refresh if not aleady enabled.
+    if (strongSelf && !strongSelf->_autoRefreshTokens) {
+      FIRLogInfo(kFIRLoggerAuth, @"I-AUT000002", @"Token auto-refresh enabled.");
+      strongSelf->_autoRefreshTokens = YES;
+      [strongSelf scheduleAutoTokenRefresh];
+
+#if TARGET_OS_IOS || TARGET_OS_TV // TODO: Is a similar mechanism needed on macOS?
+      strongSelf->_applicationDidBecomeActiveObserver = [[NSNotificationCenter defaultCenter]
+                                                         addObserverForName:UIApplicationDidBecomeActiveNotification
+                                                         object:nil
+                                                         queue:nil
+                                                         usingBlock:^(NSNotification *notification) {
+                                                           FIRAuth *strongSelf = weakSelf;
+                                                           if (strongSelf) {
+                                                             strongSelf->_isAppInBackground = NO;
+                                                             if (!strongSelf->_autoRefreshScheduled) {
+                                                               [weakSelf scheduleAutoTokenRefresh];
+                                                             }
+                                                           }
+                                                         }];
+      strongSelf->_applicationDidEnterBackgroundObserver = [[NSNotificationCenter defaultCenter]
+                                                            addObserverForName:UIApplicationDidEnterBackgroundNotification
+                                                            object:nil
+                                                            queue:nil
+                                                            usingBlock:^(NSNotification *notification) {
+                                                              FIRAuth *strongSelf = weakSelf;
+                                                              if (strongSelf) {
+                                                                strongSelf->_isAppInBackground = YES;
+                                                              }
+                                                            }];
+#endif
+    }
+    // Call back with 'nil' if there is no current user.
+    if (!strongSelf || !strongSelf->_currentUser) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        callback(nil, nil);
+      });
+      return;
+    }
+    // Call back with current user token.
+    [strongSelf->_currentUser internalGetTokenForcingRefresh:forceRefresh
+                                                    callback:^(NSString *_Nullable token,
+                                                               NSError *_Nullable error) {
+                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                        callback(token, error);
+                                                      });
+                                                    }];
+  });
+}
+
+- (nullable NSString *)getUserID {
   return _currentUser.uid;
 }
 

@@ -36,7 +36,7 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func submit(_ sender: Any) {
         submitButton.isEnabled = false;
-        guard let description = descriptionField.text, !description.isEmpty else{
+        guard let description = descriptionField.text, !description.isEmpty, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else{
             notify(title: "Failure", subtitle: "Please enter a description", style: .danger)
             submitButton.isEnabled = true;
             return
@@ -51,15 +51,31 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
             submitButton.isEnabled = true;
             return
         }
+        submitPointLog(pointType: pointType, logDescription: description)
+    }
+    
+    
+    /// Submit Point Log to DataHandler. 
+    ///
+    /// - Parameters:
+    ///   - pointType: Point Type to have a log created of
+    ///   - descriptions: String text describing what the residents did
+    func submitPointLog(pointType:PointType, logDescription:String){
         let name = User.get(.name) as! String
         let preApproved = ((User.get(.permissionLevel) as! Int) == 1 )
         let floor = User.get(.floorID) as! String
         let residentRef = DataManager.sharedManager.getUserRefFromUserID(id: User.get(.id) as! String)
-        let pointLog = PointLog(pointDescription: description, resident: name, type: pointType, floorID: floor, residentRef:residentRef)
+        let pointLog = PointLog(pointDescription: logDescription, resident: name, type: pointType, floorID: floor, residentRef:residentRef)
         DataManager.sharedManager.writePoints(log: pointLog, preApproved: preApproved) { (err:Error?) in
             if(err != nil){
-                self.notify(title: "Failed to submit", subtitle: err.debugDescription, style: .danger)
-                print("Error in posting: ",err.debugDescription)
+                if(err!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+                    self.notify(title: "Failed to submit", subtitle: "Point Type is no longer enabled.", style: .danger)
+                }
+                else{
+                    self.notify(title: "Failed to submit", subtitle: "Database Error.", style: .danger)
+                    print("Error in posting: ",err!.localizedDescription)
+                }
+                
                 self.submitButton.isEnabled = true;
                 return
             }
@@ -73,7 +89,6 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
                 }
             }
         }
-        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -88,7 +103,15 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
         }
     }
 
-
+	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+		let currentText = descriptionField.text ?? ""
+		guard let stringRange = Range(range, in: currentText) else { return false }
+		
+		let changedText = currentText.replacingCharacters(in: stringRange, with: text)
+		
+		return changedText.count <= 240
+	}
+	
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         self.descriptionField.resignFirstResponder()
     }

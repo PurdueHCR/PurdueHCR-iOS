@@ -136,7 +136,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
         }
     }
     
-    public var glowMode: KDCircularProgressGlowMode = .forward {
+    var glowMode: KDCircularProgressGlowMode = .forward {
         didSet {
             progressLayer.glowMode = glowMode
         }
@@ -242,7 +242,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
     }
     
     private func checkAndSetIBColors() {
-        let nonNilColors = [IBColor1, IBColor2, IBColor3].compactMap { $0 }
+        let nonNilColors = [IBColor1, IBColor2, IBColor3].flatMap { $0 }
         if !nonNilColors.isEmpty {
             set(colors: nonNilColors)
         }

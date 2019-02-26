@@ -16,6 +16,11 @@
 
 #import <Foundation/Foundation.h>
 
+#include "Firestore/core/src/firebase/firestore/core/view_snapshot.h"
+#include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
+
+using firebase::firestore::model::DocumentKeySet;
+
 @class FSTDocument;
 @class FSTQuery;
 @class FSTDocumentSet;
@@ -25,26 +30,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FSTDocumentViewChange
 
-/**
- * The types of changes that can happen to a document with respect to a view.
- * NOTE: We sort document changes by their type, so the ordering of this enum is significant.
- */
-typedef NS_ENUM(NSInteger, FSTDocumentViewChangeType) {
-  FSTDocumentViewChangeTypeRemoved = 0,
-  FSTDocumentViewChangeTypeAdded,
-  FSTDocumentViewChangeTypeModified,
-  FSTDocumentViewChangeTypeMetadata,
-};
-
 /** A change to a single document's state within a view. */
 @interface FSTDocumentViewChange : NSObject
 
 - (id)init __attribute__((unavailable("Use a static constructor method.")));
 
-+ (instancetype)changeWithDocument:(FSTDocument *)document type:(FSTDocumentViewChangeType)type;
++ (instancetype)changeWithDocument:(FSTDocument *)document
+                              type:(firebase::firestore::core::DocumentViewChangeType)type;
 
 /** The type of change for the document. */
-@property(nonatomic, assign, readonly) FSTDocumentViewChangeType type;
+@property(nonatomic, assign, readonly) firebase::firestore::core::DocumentViewChangeType type;
 /** The document whose status changed. */
 @property(nonatomic, strong, readonly) FSTDocument *document;
 
@@ -86,10 +81,18 @@ typedef void (^FSTViewSnapshotHandler)(FSTViewSnapshot *_Nullable snapshot,
                  oldDocuments:(FSTDocumentSet *)oldDocuments
               documentChanges:(NSArray<FSTDocumentViewChange *> *)documentChanges
                     fromCache:(BOOL)fromCache
-             hasPendingWrites:(BOOL)hasPendingWrites
-             syncStateChanged:(BOOL)syncStateChanged NS_DESIGNATED_INITIALIZER;
+                  mutatedKeys:(DocumentKeySet)mutatedKeys
+             syncStateChanged:(BOOL)syncStateChanged
+      excludesMetadataChanges:(BOOL)excludesMetadataChanges NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
+
+/** Returns a view snapshot as if all documents in the snapshot were added. */
++ (instancetype)snapshotForInitialDocuments:(FSTDocumentSet *)documents
+                                      query:(FSTQuery *)query
+                                mutatedKeys:(DocumentKeySet)mutatedKeys
+                                  fromCache:(BOOL)fromCache
+                    excludesMetadataChanges:(BOOL)excludesMetadataChanges;
 
 /** The query this view is tracking the results for. */
 @property(nonatomic, strong, readonly) FSTQuery *query;
@@ -111,6 +114,12 @@ typedef void (^FSTViewSnapshotHandler)(FSTViewSnapshot *_Nullable snapshot,
 
 /** Whether the sync state changed as part of this snapshot. */
 @property(nonatomic, assign, readonly) BOOL syncStateChanged;
+
+/** Whether this snapshot has been filtered to not include metadata changes */
+@property(nonatomic, assign, readonly) BOOL excludesMetadataChanges;
+
+/** The document in this snapshot that have unconfirmed writes. */
+@property(nonatomic, assign, readonly) DocumentKeySet mutatedKeys;
 
 @end
 

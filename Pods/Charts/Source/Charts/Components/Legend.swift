@@ -315,7 +315,7 @@ open class Legend: ComponentBase
             
             // Start calculating layout
             
-            let labelAttrs = [NSAttributedStringKey.font: labelFont]
+            let labelAttrs = [NSAttributedString.Key.font: labelFont]
             var maxLineWidth: CGFloat = 0.0
             var currentLineWidth: CGFloat = 0.0
             var requiredWidth: CGFloat = 0.0
@@ -420,7 +420,7 @@ open class Legend: ComponentBase
     }
     
     /// **default**: false (automatic legend)
-    /// - returns: `true` if a custom legend entries has been set
+    /// `true` if a custom legend entries has been set
     @objc open var isLegendCustom: Bool
     {
         return _isLegendCustom
