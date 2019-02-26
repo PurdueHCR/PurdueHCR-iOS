@@ -8,12 +8,6 @@
 
 import UIKit
 
-<<<<<<< HEAD
-class PointsSubmittedViewController: UITableViewController {
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-=======
 class ResolvedCell: UITableViewCell {
 	@IBOutlet weak var activeView: UIView!
 	@IBOutlet weak var nameLabel: UILabel!
@@ -156,7 +150,6 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	
 	// This function is called before the segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
->>>>>>> Point_Deletion_Firebase
 		
 		if (segue.identifier == "cell_push") {
 			// get a reference to the second view controller

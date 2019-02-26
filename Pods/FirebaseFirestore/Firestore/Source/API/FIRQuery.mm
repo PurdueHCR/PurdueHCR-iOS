@@ -22,6 +22,7 @@
 #import "Firestore/Source/API/FIRDocumentReference+Internal.h"
 #import "Firestore/Source/API/FIRDocumentSnapshot+Internal.h"
 #import "Firestore/Source/API/FIRFieldPath+Internal.h"
+#import "Firestore/Source/API/FIRFieldValue+Internal.h"
 #import "Firestore/Source/API/FIRFirestore+Internal.h"
 #import "Firestore/Source/API/FIRListenerRegistration+Internal.h"
 #import "Firestore/Source/API/FIRQuery+Internal.h"
@@ -143,8 +144,8 @@ NS_ASSUME_NONNULL_BEGIN
     }
   };
 
-  listenerRegistration =
-      [self addSnapshotListenerInternalWithOptions:listenOptions listener:listener];
+  listenerRegistration = [self addSnapshotListenerInternalWithOptions:listenOptions
+                                                             listener:listener];
   dispatch_semaphore_signal(registered);
 }
 
@@ -228,8 +229,9 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (FIRQuery *)queryWhereField:(NSString *)field isGreaterThan:(id)value {
-  return
-      [self queryWithFilterOperator:FSTRelationFilterOperatorGreaterThan field:field value:value];
+  return [self queryWithFilterOperator:FSTRelationFilterOperatorGreaterThan
+                                 field:field
+                                 value:value];
 }
 
 - (FIRQuery *)queryWhereFieldPath:(FIRFieldPath *)path isGreaterThan:(id)value {
@@ -239,8 +241,9 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (FIRQuery *)queryWhereField:(NSString *)field arrayContains:(id)value {
-  return
-      [self queryWithFilterOperator:FSTRelationFilterOperatorArrayContains field:field value:value];
+  return [self queryWithFilterOperator:FSTRelationFilterOperatorArrayContains
+                                 field:field
+                                 value:value];
 }
 
 - (FIRQuery *)queryWhereFieldPath:(FIRFieldPath *)path arrayContains:(id)value {
@@ -338,21 +341,19 @@ NS_ASSUME_NONNULL_BEGIN
                                           predicateWithBlock:^BOOL(id obj, NSDictionary *bindings) {
                                             return true;
                                           }] class]]) {
-    FSTThrowInvalidArgument(
-        @"Invalid query. Block-based predicates are not "
-         "supported. Please use predicateWithFormat to "
-         "create predicates instead.");
+    FSTThrowInvalidArgument(@"Invalid query. Block-based predicates are not "
+                             "supported. Please use predicateWithFormat to "
+                             "create predicates instead.");
   } else {
-    FSTThrowInvalidArgument(
-        @"Invalid query. Expect comparison or compound of "
-         "comparison predicate. Please use "
-         "predicateWithFormat to create predicates.");
+    FSTThrowInvalidArgument(@"Invalid query. Expect comparison or compound of "
+                             "comparison predicate. Please use "
+                             "predicateWithFormat to create predicates.");
   }
 }
 
 - (FIRQuery *)queryOrderedByField:(NSString *)field {
-  return
-      [self queryOrderedByFieldPath:[FIRFieldPath pathWithDotSeparatedString:field] descending:NO];
+  return [self queryOrderedByFieldPath:[FIRFieldPath pathWithDotSeparatedString:field]
+                            descending:NO];
 }
 
 - (FIRQuery *)queryOrderedByFieldPath:(FIRFieldPath *)fieldPath {
@@ -376,8 +377,8 @@ NS_ASSUME_NONNULL_BEGIN
         @"InvalidQueryException",
         @"Invalid query. You must not specify an ending point before specifying the order by.");
   }
-  FSTSortOrder *sortOrder =
-      [FSTSortOrder sortOrderWithFieldPath:fieldPath.internalValue ascending:!descending];
+  FSTSortOrder *sortOrder = [FSTSortOrder sortOrderWithFieldPath:fieldPath.internalValue
+                                                       ascending:!descending];
   return [FIRQuery referenceWithQuery:[self.query queryByAddingSortOrder:sortOrder]
                             firestore:self.firestore];
 }
@@ -416,26 +417,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (FIRQuery *)queryEndingBeforeDocument:(FIRDocumentSnapshot *)snapshot {
   FSTBound *bound = [self boundFromSnapshot:snapshot isBefore:YES];
-  return
-      [FIRQuery referenceWithQuery:[self.query queryByAddingEndAt:bound] firestore:self.firestore];
+  return [FIRQuery referenceWithQuery:[self.query queryByAddingEndAt:bound]
+                            firestore:self.firestore];
 }
 
 - (FIRQuery *)queryEndingBeforeValues:(NSArray *)fieldValues {
   FSTBound *bound = [self boundFromFieldValues:fieldValues isBefore:YES];
-  return
-      [FIRQuery referenceWithQuery:[self.query queryByAddingEndAt:bound] firestore:self.firestore];
+  return [FIRQuery referenceWithQuery:[self.query queryByAddingEndAt:bound]
+                            firestore:self.firestore];
 }
 
 - (FIRQuery *)queryEndingAtDocument:(FIRDocumentSnapshot *)snapshot {
   FSTBound *bound = [self boundFromSnapshot:snapshot isBefore:NO];
-  return
-      [FIRQuery referenceWithQuery:[self.query queryByAddingEndAt:bound] firestore:self.firestore];
+  return [FIRQuery referenceWithQuery:[self.query queryByAddingEndAt:bound]
+                            firestore:self.firestore];
 }
 
 - (FIRQuery *)queryEndingAtValues:(NSArray *)fieldValues {
   FSTBound *bound = [self boundFromFieldValues:fieldValues isBefore:NO];
-  return
-      [FIRQuery referenceWithQuery:[self.query queryByAddingEndAt:bound] firestore:self.firestore];
+  return [FIRQuery referenceWithQuery:[self.query queryByAddingEndAt:bound]
+                            firestore:self.firestore];
 }
 
 #pragma mark - Private Methods
@@ -462,33 +463,31 @@ NS_ASSUME_NONNULL_BEGIN
     if ([value isKindOfClass:[NSString class]]) {
       NSString *documentKey = (NSString *)value;
       if ([documentKey containsString:@"/"]) {
-        FSTThrowInvalidArgument(
-            @"Invalid query. When querying by document ID you must provide "
-             "a valid document ID, but '%@' contains a '/' character.",
-            documentKey);
+        FSTThrowInvalidArgument(@"Invalid query. When querying by document ID you must provide "
+                                 "a valid document ID, but '%@' contains a '/' character.",
+                                documentKey);
       } else if (documentKey.length == 0) {
-        FSTThrowInvalidArgument(
-            @"Invalid query. When querying by document ID you must provide "
-             "a valid document ID, but it was an empty string.");
+        FSTThrowInvalidArgument(@"Invalid query. When querying by document ID you must provide "
+                                 "a valid document ID, but it was an empty string.");
       }
       ResourcePath path = self.query.path.Append([documentKey UTF8String]);
-      fieldValue =
-          [FSTReferenceValue referenceValue:DocumentKey{path} databaseID:self.firestore.databaseID];
+      fieldValue = [FSTReferenceValue referenceValue:DocumentKey{path}
+                                          databaseID:self.firestore.databaseID];
     } else if ([value isKindOfClass:[FIRDocumentReference class]]) {
       FIRDocumentReference *ref = (FIRDocumentReference *)value;
       fieldValue = [FSTReferenceValue referenceValue:ref.key databaseID:self.firestore.databaseID];
     } else {
-      FSTThrowInvalidArgument(
-          @"Invalid query. When querying by document ID you must provide a "
-           "valid string or DocumentReference, but it was of type: %@",
-          NSStringFromClass([value class]));
+      FSTThrowInvalidArgument(@"Invalid query. When querying by document ID you must provide a "
+                               "valid string or DocumentReference, but it was of type: %@",
+                              NSStringFromClass([value class]));
     }
   } else {
     fieldValue = [self.firestore.dataConverter parsedQueryValue:value];
   }
 
-  FSTFilter *filter =
-      [FSTFilter filterWithField:fieldPath filterOperator:filterOperator value:fieldValue];
+  FSTFilter *filter = [FSTFilter filterWithField:fieldPath
+                                  filterOperator:filterOperator
+                                           value:fieldValue];
 
   if ([filter isKindOfClass:[FSTRelationFilter class]]) {
     [self validateNewRelationFilter:(FSTRelationFilter *)filter];
@@ -552,7 +551,9 @@ NS_ASSUME_NONNULL_BEGIN
  * Note that the FSTBound will always include the key of the document and the position will be
  * unambiguous.
  *
- * Will throw if the document does not contain all fields of the order by of the query.
+ * Will throw if the document does not contain all fields of the order by of
+ * the query or if any of the fields in the order by are an uncommitted server
+ * timestamp.
  */
 - (FSTBound *)boundFromSnapshot:(FIRDocumentSnapshot *)snapshot isBefore:(BOOL)isBefore {
   if (![snapshot exists]) {
@@ -574,7 +575,15 @@ NS_ASSUME_NONNULL_BEGIN
                                                    databaseID:self.firestore.databaseID]];
     } else {
       FSTFieldValue *value = [document fieldForPath:sortOrder.field];
-      if (value != nil) {
+
+      if ([value isKindOfClass:[FSTServerTimestampValue class]]) {
+        FSTThrowInvalidUsage(@"InvalidQueryException",
+                             @"Invalid query. You are trying to start or end a query using a "
+                              "document for which the field '%s' is an uncommitted server "
+                              "timestamp. (Since the value of this field is unknown, you cannot "
+                              "start/end a query with it.)",
+                             sortOrder.field.CanonicalString().c_str());
+      } else if (value != nil) {
         [components addObject:value];
       } else {
         FSTThrowInvalidUsage(@"InvalidQueryException",
@@ -612,8 +621,8 @@ NS_ASSUME_NONNULL_BEGIN
                              @"Invalid query. Document ID '%@' contains a slash.", documentID);
       }
       const DocumentKey key{self.query.path.Append([documentID UTF8String])};
-      [components
-          addObject:[FSTReferenceValue referenceValue:key databaseID:self.firestore.databaseID]];
+      [components addObject:[FSTReferenceValue referenceValue:key
+                                                   databaseID:self.firestore.databaseID]];
     } else {
       FSTFieldValue *fieldValue = [self.firestore.dataConverter parsedQueryValue:rawValue];
       [components addObject:fieldValue];

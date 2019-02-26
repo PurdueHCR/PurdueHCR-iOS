@@ -188,8 +188,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-<<<<<<< HEAD
-=======
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="95" id="atv-Wa-xhG" customClass="ResolvedCell" customModule="PurdueHCR" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="95"/>
@@ -263,7 +261,6 @@
                                 </connections>
                             </tableViewCell>
                         </prototypes>
->>>>>>> Point_Deletion_Firebase
                         <connections>
                             <outlet property="dataSource" destination="Yyz-RD-CqG" id="ebb-cR-1Vc"/>
                             <outlet property="delegate" destination="Yyz-RD-CqG" id="s4b-jh-rHI"/>
@@ -295,14 +292,11 @@
             <point key="canvasLocation" x="-874" y="504"/>
         </scene>
     </scenes>
-<<<<<<< HEAD
     <resources>
         <image name="approve" width="1500" height="1500"/>
         <image name="reject" width="1650" height="1650"/>
     </resources>
-=======
     <inferredMetricsTieBreakers>
         <segue reference="0Cb-0I-gSI"/>
     </inferredMetricsTieBreakers>
->>>>>>> Point_Deletion_Firebase
 </document>

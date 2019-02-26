@@ -23,14 +23,17 @@
 #import "Firestore/Source/Model/FSTDocument.h"
 #import "Firestore/Source/Model/FSTDocumentSet.h"
 #import "Firestore/Source/Model/FSTFieldValue.h"
-#import "Firestore/Source/Remote/FSTRemoteEvent.h"
 
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
+#include "Firestore/core/src/firebase/firestore/remote/remote_event.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 
+using firebase::firestore::core::DocumentViewChangeType;
 using firebase::firestore::model::DocumentKey;
 using firebase::firestore::model::DocumentKeySet;
+using firebase::firestore::model::MaybeDocumentMap;
 using firebase::firestore::model::OnlineState;
+using firebase::firestore::remote::TargetChange;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -155,8 +158,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FSTView
 
-static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChangeType c1,
-                                                            FSTDocumentViewChangeType c2);
+static NSComparisonResult FSTCompareDocumentViewChangeTypes(DocumentViewChangeType c1,
+                                                            DocumentViewChangeType c2);
 
 @interface FSTView ()
 
@@ -200,21 +203,21 @@ static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChang
   return _syncedDocuments;
 }
 
-- (FSTViewDocumentChanges *)computeChangesWithDocuments:(FSTMaybeDocumentDictionary *)docChanges {
+- (FSTViewDocumentChanges *)computeChangesWithDocuments:(const MaybeDocumentMap &)docChanges {
   return [self computeChangesWithDocuments:docChanges previousChanges:nil];
 }
 
-- (FSTViewDocumentChanges *)computeChangesWithDocuments:(FSTMaybeDocumentDictionary *)docChanges
+- (FSTViewDocumentChanges *)computeChangesWithDocuments:(const MaybeDocumentMap &)docChanges
                                         previousChanges:
                                             (nullable FSTViewDocumentChanges *)previousChanges {
   FSTDocumentViewChangeSet *changeSet =
       previousChanges ? previousChanges.changeSet : [FSTDocumentViewChangeSet changeSet];
   FSTDocumentSet *oldDocumentSet = previousChanges ? previousChanges.documentSet : self.documentSet;
 
-  __block DocumentKeySet newMutatedKeys =
-      previousChanges ? previousChanges.mutatedKeys : _mutatedKeys;
-  __block FSTDocumentSet *newDocumentSet = oldDocumentSet;
-  __block BOOL needsRefill = NO;
+  DocumentKeySet newMutatedKeys = previousChanges ? previousChanges.mutatedKeys : _mutatedKeys;
+  DocumentKeySet oldMutatedKeys = _mutatedKeys;
+  FSTDocumentSet *newDocumentSet = oldDocumentSet;
+  BOOL needsRefill = NO;
 
   // Track the last doc in a (full) limit. This is necessary, because some update (a delete, or an
   // update moving a doc past the old limit) might mean there is some other document in the local
@@ -228,76 +231,96 @@ static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChang
       (self.query.limit && oldDocumentSet.count == self.query.limit) ? oldDocumentSet.lastDocument
                                                                      : nil;
 
-  [docChanges enumerateKeysAndObjectsUsingBlock:^(FSTDocumentKey *key,
-                                                  FSTMaybeDocument *maybeNewDoc, BOOL *stop) {
+  for (const auto &kv : docChanges) {
+    const DocumentKey &key = kv.first;
+    FSTMaybeDocument *maybeNewDoc = kv.second;
+
     FSTDocument *_Nullable oldDoc = [oldDocumentSet documentForKey:key];
     FSTDocument *_Nullable newDoc = nil;
     if ([maybeNewDoc isKindOfClass:[FSTDocument class]]) {
       newDoc = (FSTDocument *)maybeNewDoc;
     }
     if (newDoc) {
-      HARD_ASSERT([key isEqual:newDoc.key], "Mismatching key in document changes: %s != %s", key,
+      HARD_ASSERT(key == newDoc.key, "Mismatching key in document changes: %s != %s", key,
                   newDoc.key.ToString());
       if (![self.query matchesDocument:newDoc]) {
         newDoc = nil;
       }
     }
-    if (newDoc) {
-      newDocumentSet = [newDocumentSet documentSetByAddingDocument:newDoc];
-      if (newDoc.hasLocalMutations) {
-        newMutatedKeys = newMutatedKeys.insert(key);
-      } else {
-        newMutatedKeys = newMutatedKeys.erase(key);
-      }
-    } else {
-      newDocumentSet = [newDocumentSet documentSetByRemovingKey:key];
-      newMutatedKeys = newMutatedKeys.erase(key);
-    }
 
+    BOOL oldDocHadPendingMutations = oldDoc && oldMutatedKeys.contains(oldDoc.key);
+
+    // We only consider committed mutations for documents that were mutated during the lifetime of
+    // the view.
+    BOOL newDocHasPendingMutations =
+        newDoc && (newDoc.hasLocalMutations ||
+                   (oldMutatedKeys.contains(newDoc.key) && newDoc.hasCommittedMutations));
+
+    BOOL changeApplied = NO;
     // Calculate change
     if (oldDoc && newDoc) {
       BOOL docsEqual = [oldDoc.data isEqual:newDoc.data];
-      if (!docsEqual || oldDoc.hasLocalMutations != newDoc.hasLocalMutations) {
-        // only report a change if document actually changed.
-        if (docsEqual) {
+      if (!docsEqual) {
+        if (![self shouldWaitForSyncedDocument:newDoc oldDocument:oldDoc]) {
           [changeSet addChange:[FSTDocumentViewChange
                                    changeWithDocument:newDoc
-                                                 type:FSTDocumentViewChangeTypeMetadata]];
-        } else {
-          [changeSet addChange:[FSTDocumentViewChange
-                                   changeWithDocument:newDoc
-                                                 type:FSTDocumentViewChangeTypeModified]];
-        }
+                                                 type:DocumentViewChangeType::kModified]];
+          changeApplied = YES;
 
-        if (lastDocInLimit && self.query.comparator(newDoc, lastDocInLimit) > 0) {
-          // This doc moved from inside the limit to after the limit. That means there may be some
-          // doc in the local cache that's actually less than this one.
-          needsRefill = YES;
+          if (lastDocInLimit && self.query.comparator(newDoc, lastDocInLimit) > 0) {
+            // This doc moved from inside the limit to after the limit. That means there may be
+            // some doc in the local cache that's actually less than this one.
+            needsRefill = YES;
+          }
         }
+      } else if (oldDocHadPendingMutations != newDocHasPendingMutations) {
+        [changeSet
+            addChange:[FSTDocumentViewChange changeWithDocument:newDoc
+                                                           type:DocumentViewChangeType::kMetadata]];
+        changeApplied = YES;
       }
+
     } else if (!oldDoc && newDoc) {
       [changeSet
           addChange:[FSTDocumentViewChange changeWithDocument:newDoc
-                                                         type:FSTDocumentViewChangeTypeAdded]];
+                                                         type:DocumentViewChangeType::kAdded]];
+      changeApplied = YES;
     } else if (oldDoc && !newDoc) {
       [changeSet
           addChange:[FSTDocumentViewChange changeWithDocument:oldDoc
-                                                         type:FSTDocumentViewChangeTypeRemoved]];
+                                                         type:DocumentViewChangeType::kRemoved]];
+      changeApplied = YES;
+
       if (lastDocInLimit) {
         // A doc was removed from a full limit query. We'll need to re-query from the local cache
         // to see if we know about some other doc that should be in the results.
         needsRefill = YES;
       }
     }
-  }];
+
+    if (changeApplied) {
+      if (newDoc) {
+        newDocumentSet = [newDocumentSet documentSetByAddingDocument:newDoc];
+        if (newDoc.hasLocalMutations) {
+          newMutatedKeys = newMutatedKeys.insert(key);
+        } else {
+          newMutatedKeys = newMutatedKeys.erase(key);
+        }
+      } else {
+        newDocumentSet = [newDocumentSet documentSetByRemovingKey:key];
+        newMutatedKeys = newMutatedKeys.erase(key);
+      }
+    }
+  }
+
   if (self.query.limit) {
-    // TODO(klimt): Make DocumentSet size be constant time.
-    while (newDocumentSet.count > self.query.limit) {
+    for (long i = newDocumentSet.count - self.query.limit; i > 0; --i) {
       FSTDocument *oldDoc = [newDocumentSet lastDocument];
       newDocumentSet = [newDocumentSet documentSetByRemovingKey:oldDoc.key];
+      newMutatedKeys = newMutatedKeys.erase(oldDoc.key);
       [changeSet
           addChange:[FSTDocumentViewChange changeWithDocument:oldDoc
-                                                         type:FSTDocumentViewChangeTypeRemoved]];
+                                                         type:DocumentViewChangeType::kRemoved]];
     }
   }
 
@@ -310,12 +333,22 @@ static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChang
                                                  mutatedKeys:newMutatedKeys];
 }
 
+- (BOOL)shouldWaitForSyncedDocument:(FSTDocument *)newDoc oldDocument:(FSTDocument *)oldDoc {
+  // We suppress the initial change event for documents that were modified as part of a write
+  // acknowledgment (e.g. when the value of a server transform is applied) as Watch will send us
+  // the same document again. By suppressing the event, we only raise two user visible events (one
+  // with `hasPendingWrites` and the final state of the document) instead of three (one with
+  // `hasPendingWrites`, the modified document with `hasPendingWrites` and the final state of the
+  // document).
+  return (oldDoc.hasLocalMutations && newDoc.hasCommittedMutations && !newDoc.hasLocalMutations);
+}
+
 - (FSTViewChange *)applyChangesToDocuments:(FSTViewDocumentChanges *)docChanges {
-  return [self applyChangesToDocuments:docChanges targetChange:nil];
+  return [self applyChangesToDocuments:docChanges targetChange:{}];
 }
 
 - (FSTViewChange *)applyChangesToDocuments:(FSTViewDocumentChanges *)docChanges
-                              targetChange:(nullable FSTTargetChange *)targetChange {
+                              targetChange:(const absl::optional<TargetChange> &)targetChange {
   HARD_ASSERT(!docChanges.needsRefill, "Cannot apply changes that need a refill");
 
   FSTDocumentSet *oldDocuments = self.documentSet;
@@ -349,8 +382,9 @@ static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChang
                                   oldDocuments:oldDocuments
                                documentChanges:changes
                                      fromCache:newSyncState == FSTSyncStateLocal
-                              hasPendingWrites:!docChanges.mutatedKeys.empty()
-                              syncStateChanged:syncStateChanged];
+                                   mutatedKeys:docChanges.mutatedKeys
+                              syncStateChanged:syncStateChanged
+                       excludesMetadataChanges:NO];
 
     return [FSTViewChange changeWithSnapshot:snapshot limboChanges:limboChanges];
   }
@@ -359,7 +393,7 @@ static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChang
 - (FSTViewChange *)applyChangedOnlineState:(OnlineState)onlineState {
   if (self.isCurrent && onlineState == OnlineState::Offline) {
     // If we're offline, set `current` to NO and then call applyChanges to refresh our syncState
-    // and generate an FSTViewChange as appropriate. We are guaranteed to get a new FSTTargetChange
+    // and generate an FSTViewChange as appropriate. We are guaranteed to get a new `TargetChange`
     // that sets `current` back to YES once the client is back online.
     self.current = NO;
     return
@@ -400,20 +434,22 @@ static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChang
 /**
  * Updates syncedDocuments and current based on the given change.
  */
-- (void)applyTargetChange:(nullable FSTTargetChange *)targetChange {
-  if (targetChange) {
-    for (const DocumentKey &key : targetChange.addedDocuments) {
+- (void)applyTargetChange:(const absl::optional<TargetChange> &)maybeTargetChange {
+  if (maybeTargetChange.has_value()) {
+    const TargetChange &target_change = maybeTargetChange.value();
+
+    for (const DocumentKey &key : target_change.added_documents()) {
       _syncedDocuments = _syncedDocuments.insert(key);
     }
-    for (const DocumentKey &key : targetChange.modifiedDocuments) {
+    for (const DocumentKey &key : target_change.modified_documents()) {
       HARD_ASSERT(_syncedDocuments.find(key) != _syncedDocuments.end(),
                   "Modified document %s not found in view.", key.ToString());
     }
-    for (const DocumentKey &key : targetChange.removedDocuments) {
+    for (const DocumentKey &key : target_change.removed_documents()) {
       _syncedDocuments = _syncedDocuments.erase(key);
     }
 
-    self.current = targetChange.current;
+    self.current = target_change.current();
   }
 }
 
@@ -453,26 +489,26 @@ static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChang
 
 @end
 
-static inline int DocumentViewChangeTypePosition(FSTDocumentViewChangeType changeType) {
+static inline int DocumentViewChangeTypePosition(DocumentViewChangeType changeType) {
   switch (changeType) {
-    case FSTDocumentViewChangeTypeRemoved:
+    case DocumentViewChangeType::kRemoved:
       return 0;
-    case FSTDocumentViewChangeTypeAdded:
+    case DocumentViewChangeType::kAdded:
       return 1;
-    case FSTDocumentViewChangeTypeModified:
+    case DocumentViewChangeType::kModified:
       return 2;
-    case FSTDocumentViewChangeTypeMetadata:
+    case DocumentViewChangeType::kMetadata:
       // A metadata change is converted to a modified change at the public API layer. Since we sort
       // by document key and then change type, metadata and modified changes must be sorted
       // equivalently.
       return 2;
     default:
-      HARD_FAIL("Unknown FSTDocumentViewChangeType %s", changeType);
+      HARD_FAIL("Unknown DocumentViewChangeType %s", changeType);
   }
 }
 
-static NSComparisonResult FSTCompareDocumentViewChangeTypes(FSTDocumentViewChangeType c1,
-                                                            FSTDocumentViewChangeType c2) {
+static NSComparisonResult FSTCompareDocumentViewChangeTypes(DocumentViewChangeType c1,
+                                                            DocumentViewChangeType c2) {
   int pos1 = DocumentViewChangeTypePosition(c1);
   int pos2 = DocumentViewChangeTypePosition(c2);
   if (pos1 == pos2) {

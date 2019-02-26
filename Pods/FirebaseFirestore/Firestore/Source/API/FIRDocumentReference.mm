@@ -16,8 +16,6 @@
 
 #import "FIRDocumentReference.h"
 
-#import <GRPCClient/GRPCCall.h>
-
 #include <memory>
 #include <utility>
 
@@ -101,8 +99,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (FIRCollectionReference *)parent {
-  return
-      [FIRCollectionReference referenceWithPath:self.key.path().PopLast() firestore:self.firestore];
+  return [FIRCollectionReference referenceWithPath:self.key.path().PopLast()
+                                         firestore:self.firestore];
 }
 
 - (NSString *)path {
@@ -139,9 +137,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setData:(NSDictionary<NSString *, id> *)documentData
           merge:(BOOL)merge
      completion:(nullable void (^)(NSError *_Nullable error))completion {
-  ParsedSetData parsed =
-      merge ? [self.firestore.dataConverter parsedMergeData:documentData fieldMask:nil]
-            : [self.firestore.dataConverter parsedSetData:documentData];
+  ParsedSetData parsed = merge ? [self.firestore.dataConverter parsedMergeData:documentData
+                                                                     fieldMask:nil]
+                               : [self.firestore.dataConverter parsedSetData:documentData];
   return [self.firestore.client
       writeMutations:std::move(parsed).ToMutations(self.key, Precondition::None())
           completion:completion];
@@ -150,8 +148,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setData:(NSDictionary<NSString *, id> *)documentData
     mergeFields:(NSArray<id> *)mergeFields
      completion:(nullable void (^)(NSError *_Nullable error))completion {
-  ParsedSetData parsed =
-      [self.firestore.dataConverter parsedMergeData:documentData fieldMask:mergeFields];
+  ParsedSetData parsed = [self.firestore.dataConverter parsedMergeData:documentData
+                                                             fieldMask:mergeFields];
   return [self.firestore.client
       writeMutations:std::move(parsed).ToMutations(self.key, Precondition::None())
           completion:completion];
@@ -174,9 +172,9 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)deleteDocumentWithCompletion:(nullable void (^)(NSError *_Nullable error))completion {
-  FSTDeleteMutation *mutation =
-      [[FSTDeleteMutation alloc] initWithKey:self.key precondition:Precondition::None()];
-  return [self.firestore.client writeMutations:@[ mutation ] completion:completion];
+  FSTDeleteMutation *mutation = [[FSTDeleteMutation alloc] initWithKey:self.key
+                                                          precondition:Precondition::None()];
+  return [self.firestore.client writeMutations:{mutation} completion:completion];
 }
 
 - (void)getDocumentWithCompletion:(void (^)(FIRDocumentSnapshot *_Nullable document,
@@ -274,10 +272,15 @@ NS_ASSUME_NONNULL_BEGIN
     HARD_ASSERT(snapshot.documents.count <= 1, "Too many document returned on a document query");
     FSTDocument *document = [snapshot.documents documentForKey:key];
 
+    BOOL hasPendingWrites = document
+                                ? snapshot.mutatedKeys.contains(key)
+                                : NO;  // We don't raise `hasPendingWrites` for deleted documents.
+
     FIRDocumentSnapshot *result = [FIRDocumentSnapshot snapshotWithFirestore:firestore
                                                                  documentKey:key
                                                                     document:document
-                                                                   fromCache:snapshot.fromCache];
+                                                                   fromCache:snapshot.fromCache
+                                                            hasPendingWrites:hasPendingWrites];
     listener(result, nil);
   };
 
@@ -309,10 +312,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)referenceWithPath:(const ResourcePath &)path firestore:(FIRFirestore *)firestore {
   if (path.size() % 2 != 0) {
-    FSTThrowInvalidArgument(
-        @"Invalid document reference. Document references must have an even "
-         "number of segments, but %s has %zu",
-        path.CanonicalString().c_str(), path.size());
+    FSTThrowInvalidArgument(@"Invalid document reference. Document references must have an even "
+                             "number of segments, but %s has %zu",
+                            path.CanonicalString().c_str(), path.size());
   }
   return [FIRDocumentReference referenceWithKey:DocumentKey{path} firestore:firestore];
 }

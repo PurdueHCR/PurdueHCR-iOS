@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4454C6AFA09530E419A46C09 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2187A54ED2714026F6C05361 /* Pods_PurdueHCR.framework */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
-		B59C97DD21FACF71000D34B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B59C97DC21FACF70000D34B7 /* GoogleService-Info.plist */; };
 		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
@@ -45,6 +43,7 @@
 		D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */; };
 		D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */; };
 		D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */; };
+		D3B37C292224E55500DF3AB2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3B37C282224E55500DF3AB2 /* GoogleService-Info.plist */; };
 		D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3BC48BA210E9B0900D46088 /* HousePointsView.xib */; };
 		D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C42103D65A00B88F03 /* HousePointsView.swift */; };
 		D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */; };
@@ -57,15 +56,15 @@
 		D3D062C320E8219C00E8B3A3 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062C220E8219C00E8B3A3 /* LogInViewController.swift */; };
 		D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */; };
 		D3D062C720E82A6500E8B3A3 /* TypeSubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */; };
+		D69348E5D0256D59F9F1053F /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D946014B419B3EBB08BC7A /* Pods_PurdueHCR.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2031CE9F18210917AC2F7364 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
-		2187A54ED2714026F6C05361 /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F3B8BC3BE72C69A07BC0429 /* Pods-PurdueHCR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.debug.xcconfig"; sourceTree = "<group>"; };
+		112BB4A3D70984A8551F3356 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
+		6824205D1AD8453AB05C3EDC /* Pods-PurdueHCR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.debug.xcconfig"; sourceTree = "<group>"; };
+		84D946014B419B3EBB08BC7A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
-		B59C97DC21FACF70000D34B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -107,6 +106,7 @@
 		D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorViewController.swift; sourceTree = "<group>"; };
 		D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodeViewController.swift; sourceTree = "<group>"; };
 		D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodesTableViewController.swift; sourceTree = "<group>"; };
+		D3B37C282224E55500DF3AB2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3BC48BA210E9B0900D46088 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
 		D3CC77C42103D65A00B88F03 /* HousePointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsView.swift; sourceTree = "<group>"; };
 		D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsCompareView.xib; sourceTree = "<group>"; };
@@ -126,26 +126,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4454C6AFA09530E419A46C09 /* Pods_PurdueHCR.framework in Frameworks */,
+				D69348E5D0256D59F9F1053F /* Pods_PurdueHCR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2E0EB952C345B96240C55F2F /* Frameworks */ = {
+		53AD8D1C62DF0FC8F8057DD8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2187A54ED2714026F6C05361 /* Pods_PurdueHCR.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A20D543F16296F6B3394FCE0 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5F3B8BC3BE72C69A07BC0429 /* Pods-PurdueHCR.debug.xcconfig */,
-				2031CE9F18210917AC2F7364 /* Pods-PurdueHCR.release.xcconfig */,
+				6824205D1AD8453AB05C3EDC /* Pods-PurdueHCR.debug.xcconfig */,
+				112BB4A3D70984A8551F3356 /* Pods-PurdueHCR.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -213,8 +205,8 @@
 				D30FC91720DF35D900201E74 /* PurdueHCRTests */,
 				D30FC8FF20DF35D800201E74 /* Products */,
 				D30FC92220DF35D900201E74 /* PurdueHCRUITests */,
-				A20D543F16296F6B3394FCE0 /* Pods */,
-				2E0EB952C345B96240C55F2F /* Frameworks */,
+				53AD8D1C62DF0FC8F8057DD8 /* Pods */,
+				FBDC2B055B453E462EE444A6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -229,7 +221,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				B59C97DC21FACF70000D34B7 /* GoogleService-Info.plist */,
+				D3B37C282224E55500DF3AB2 /* GoogleService-Info.plist */,
 				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
@@ -383,6 +375,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		FBDC2B055B453E462EE444A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84D946014B419B3EBB08BC7A /* Pods_PurdueHCR.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -390,11 +390,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D30FC92820DF35D900201E74 /* Build configuration list for PBXNativeTarget "PurdueHCR" */;
 			buildPhases = (
-				6931C94479462B12F04ADF9F /* [CP] Check Pods Manifest.lock */,
+				9D415F200FAEC95E2B122B44 /* [CP] Check Pods Manifest.lock */,
 				D30FC8FA20DF35D800201E74 /* Sources */,
 				D30FC8FB20DF35D800201E74 /* Frameworks */,
 				D30FC8FC20DF35D800201E74 /* Resources */,
-				684BFB311097B19B76EF495C /* [CP] Embed Pods Frameworks */,
+				739D49B43EC63139329BC5D0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -459,9 +459,9 @@
 				D3912A6E219CE77B0002E7C7 /* RECHouse.storyboard in Resources */,
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
-				B59C97DD21FACF71000D34B7 /* GoogleService-Info.plist in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
+				D3B37C292224E55500DF3AB2 /* GoogleService-Info.plist in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
@@ -472,17 +472,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		684BFB311097B19B76EF495C /* [CP] Embed Pods Frameworks */ = {
+		739D49B43EC63139329BC5D0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AZDropdownMenu/AZDropdownMenu.framework",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/Cely/Cely.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -494,20 +492,15 @@
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ValueStepper/ValueStepper.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZDropdownMenu.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cely.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
@@ -519,11 +512,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ValueStepper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -532,20 +522,16 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6931C94479462B12F04ADF9F /* [CP] Check Pods Manifest.lock */ = {
+		9D415F200FAEC95E2B122B44 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-PurdueHCR-checkManifestLockResult.txt",
 			);
@@ -726,11 +712,11 @@
 		};
 		D30FC92920DF35D900201E74 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F3B8BC3BE72C69A07BC0429 /* Pods-PurdueHCR.debug.xcconfig */;
+			baseConfigurationReference = 6824205D1AD8453AB05C3EDC /* Pods-PurdueHCR.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 72BQNS7NEU;
+				DEVELOPMENT_TEAM = 5N596YY333;
 				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -746,11 +732,11 @@
 		};
 		D30FC92A20DF35D900201E74 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2031CE9F18210917AC2F7364 /* Pods-PurdueHCR.release.xcconfig */;
+			baseConfigurationReference = 112BB4A3D70984A8551F3356 /* Pods-PurdueHCR.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 72BQNS7NEU;
+				DEVELOPMENT_TEAM = 5N596YY333;
 				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
