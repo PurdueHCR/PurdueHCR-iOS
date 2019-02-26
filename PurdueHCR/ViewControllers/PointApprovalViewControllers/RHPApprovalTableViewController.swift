@@ -190,7 +190,7 @@ class RHPApprovalTableViewController: UITableViewController {
                 else{
                     self.notify(title: "Success", subtitle: "Point rejected", style: .success)
                 }
-                //self.resfreshData()
+                self.resfreshData()
             }
         })
     }
@@ -211,6 +211,7 @@ class RHPApprovalTableViewController: UITableViewController {
             let indexPath = tableView.indexPathForSelectedRow
             
             nextViewController.pointLog = self.displayedLogs[(indexPath?.row)!]
+            nextViewController.indexPath = indexPath
             index = ( sender as! RHPApprovalTableViewController ).tableView.indexPathForSelectedRow
             nextViewController.preViewContr = self
         }
