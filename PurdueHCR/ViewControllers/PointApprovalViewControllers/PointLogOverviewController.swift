@@ -38,11 +38,11 @@ class PointLogOverviewController: UIViewController {
         approveButton.isEnabled = false
         //preViewContr?.displayedLogs.remove(at:index!.row)
 		if (pointLog?.wasHandled == true) {
-			if let viewTest = (preViewContr as! PointsSubmittedViewController?) {
-				viewTest.updatePointLogStatus(log: pointLog!, approve: true, indexPath: indexPath!)
+			if let pointSubmittedViewContr = (preViewContr as! PointsSubmittedViewController?) {
+				pointSubmittedViewContr.updatePointLogStatus(log: pointLog!, approve: true, updating: true, indexPath: indexPath!)
 			}
 		} else {
-			preViewContr?.updatePointLogStatus(log: pointLog!, approve: true, indexPath: indexPath!)
+			preViewContr?.updatePointLogStatus(log: pointLog!, approve: true, updating: false, indexPath: indexPath!)
 		}
 		
         self.navigationController?.popViewController(animated: true)
@@ -51,9 +51,12 @@ class PointLogOverviewController: UIViewController {
         rejectButton.isEnabled = false
         //preViewContr?.displayedLogs.remove(at: index!.row)
 		if (pointLog?.wasHandled == true) {
-			preViewContr = preViewContr as! PointsSubmittedViewController
+			if let pointSubmittedViewContr = (preViewContr as! PointsSubmittedViewController?) {
+				pointSubmittedViewContr.updatePointLogStatus(log: pointLog!, approve: false, updating: true, indexPath: indexPath!)
+			}
+		} else {
+			preViewContr?.updatePointLogStatus(log: pointLog!, approve: false, updating: false, indexPath: indexPath!)
 		}
-		preViewContr?.updatePointLogStatus(log: pointLog!, approve: false, indexPath: indexPath!)
         self.navigationController?.popViewController(animated: true)
     }
     

@@ -70,9 +70,11 @@ class DataManager {
                 print("Failed to confirm or deny point")
             }
             else{
-                if let index = self?._unconfirmedPointLogs!.index(of: log) {
-                    self?._unconfirmedPointLogs!.remove(at: index)
-                }
+				if (!updating) {
+					if let index = self?._unconfirmedPointLogs!.index(of: log) {
+						self?._unconfirmedPointLogs!.remove(at: index)
+					}
+				}
             }
             onDone(err)
         })
