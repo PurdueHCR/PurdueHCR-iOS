@@ -10,7 +10,7 @@
 		4454C6AFA09530E419A46C09 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2187A54ED2714026F6C05361 /* Pods_PurdueHCR.framework */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
-		B564C7362221A4470053468C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B564C7352221A4470053468C /* GoogleService-Info.plist */; };
+		B59C97DD21FACF71000D34B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B59C97DC21FACF70000D34B7 /* GoogleService-Info.plist */; };
 		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
@@ -65,7 +65,7 @@
 		5F3B8BC3BE72C69A07BC0429 /* Pods-PurdueHCR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.debug.xcconfig"; sourceTree = "<group>"; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
-		B564C7352221A4470053468C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B59C97DC21FACF70000D34B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				B564C7352221A4470053468C /* GoogleService-Info.plist */,
+				B59C97DC21FACF70000D34B7 /* GoogleService-Info.plist */,
 				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
@@ -459,7 +459,7 @@
 				D3912A6E219CE77B0002E7C7 /* RECHouse.storyboard in Resources */,
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
-				B564C7362221A4470053468C /* GoogleService-Info.plist in Resources */,
+				B59C97DD21FACF71000D34B7 /* GoogleService-Info.plist in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
