@@ -62,6 +62,8 @@ class ProfileView: UIView {
             houseLogoImageView.image = #imageLiteral(resourceName: "Titanium")
         }
         nameLabel.text = (User.get(.name) as! String)
+		
+		totalPointsLabel.adjustsFontSizeToFitWidth = true
         totalPointsLabel.text = (User.get(.points) as! Int).description + " points"
 //		houseLogoImageView.layer.borderWidth = 2
 //		houseLogoImageView.layer.borderColor = UIColor.black.cgColor
