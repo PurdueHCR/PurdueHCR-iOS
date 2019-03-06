@@ -27,10 +27,11 @@ class RHPApprovalTableViewController: UITableViewController {
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
         tableView.refreshControl = refresher
+		resfreshData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        resfreshData()
+		
 		
     }
     

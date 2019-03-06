@@ -94,6 +94,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         let distance = 20
         let buttonWidth = width - (distance * 2)
         let borderWidth : CGFloat = 2
+		let color = UIColor.lightGray
         
         let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
         contentView.backgroundColor = UIColor.white
@@ -106,7 +107,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         let reportButton = UIButton.init(frame: CGRect.init(x: distance, y: 115, width: buttonWidth, height: 75))
         reportButton.layer.cornerRadius = radius
         reportButton.layer.borderWidth = borderWidth
-        reportButton.layer.borderColor = UIColor.darkGray.cgColor
+        reportButton.layer.borderColor = color.cgColor
         reportButton.setTitleColor(UIColor.black, for: .normal)
         reportButton.setTitle("Report a bug", for: .normal)
         //button.backgroundColor = color
@@ -115,7 +116,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         let logoutButton = UIButton.init(frame: CGRect.init(x: distance, y: 25, width: buttonWidth, height: 75))
         logoutButton.layer.cornerRadius = radius
         logoutButton.layer.borderWidth = borderWidth
-        logoutButton.layer.borderColor = UIColor.darkGray.cgColor
+        logoutButton.layer.borderColor = color.cgColor
         logoutButton.setTitleColor(UIColor.black, for: .normal)
         logoutButton.setTitle("Logout", for: .normal)
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
@@ -123,7 +124,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 45, y: height - 75, width: 90, height: 50))
         closeButton.layer.cornerRadius = 25
         closeButton.setTitle("Cancel", for: .normal)
-        closeButton.backgroundColor = UIColor.darkGray
+        closeButton.backgroundColor = color
         closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         contentView.addSubview(reportButton)

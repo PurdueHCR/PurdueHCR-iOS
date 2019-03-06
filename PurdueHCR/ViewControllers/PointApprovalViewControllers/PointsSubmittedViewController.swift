@@ -16,12 +16,18 @@ class ResolvedCell: UITableViewCell {
 }
 
 class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchResultsUpdating {
-
+	
 	let searchController = UISearchController(searchResultsController: nil)
 	var filteredPoints = [PointLog]()
+	var activityIndicator = UIActivityIndicatorView()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.activityIndicator.startAnimating()
+		activityIndicator.center = self.view.center
+		activityIndicator.style = .gray
+		activityIndicator.hidesWhenStopped = true
+		view.addSubview(activityIndicator)
 		displayedLogs = DataManager.sharedManager.getResolvedPointLogs() ?? [PointLog]()
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -32,9 +38,11 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 		searchController.searchBar.placeholder = "Search Points"
 		navigationItem.searchController = searchController
 		definesPresentationContext = true
+		self.activityIndicator.stopAnimating()
 	}
 	
 	@objc override func resfreshData(){
+		self.activityIndicator.startAnimating()
 		DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
 			DispatchQueue.main.async { [unowned self] in
