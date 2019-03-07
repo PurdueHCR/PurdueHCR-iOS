@@ -18,29 +18,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="100" verticalHuggingPriority="251" ambiguous="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WUo-sG-Abw">
-                                <rect key="frame" x="87.5" y="120" width="200" height="200"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="100" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WUo-sG-Abw">
+                                <rect key="frame" x="88" y="120" width="199" height="199"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="1cr-6S-gYp"/>
                                     <constraint firstAttribute="width" secondItem="WUo-sG-Abw" secondAttribute="height" multiplier="1:1" id="Z4R-yN-rcB"/>
                                 </constraints>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="j8K-2A-WkV">
-                                <rect key="frame" x="177.5" y="370" width="20" height="20"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbk-rQ-ztg">
+                                <rect key="frame" x="88" y="592" width="199" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="vsw-0v-mHJ"/>
+                                </constraints>
+                                <state key="normal" title="Sign Out">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="signOutAction:" destination="0p3-Is-rZU" eventType="touchUpInside" id="JQl-ne-c4a"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="j8K-2A-WkV">
+                                <rect key="frame" x="177.5" y="369" width="20" height="20"/>
                             </activityIndicatorView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5oD-ez-eae">
+                                <rect key="frame" x="88" y="529" width="200" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="mBm-ye-kQK"/>
+                                </constraints>
+                                <state key="normal" title="Retry">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="retryAction:" destination="0p3-Is-rZU" eventType="touchUpInside" id="PbT-Nh-rGI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="j8K-2A-WkV" firstAttribute="top" secondItem="WUo-sG-Abw" secondAttribute="bottom" constant="50" id="4OC-Qg-Wug"/>
-                            <constraint firstItem="WUo-sG-Abw" firstAttribute="top" secondItem="oTi-77-cX2" secondAttribute="top" constant="100" id="KXT-wK-roj"/>
-                            <constraint firstItem="WUo-sG-Abw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oTi-77-cX2" secondAttribute="leading" constant="75" id="TXC-GH-m8J"/>
+                            <constraint firstItem="j8K-2A-WkV" firstAttribute="top" secondItem="WUo-sG-Abw" secondAttribute="bottom" priority="750" constant="50" id="4OC-Qg-Wug"/>
+                            <constraint firstItem="j8K-2A-WkV" firstAttribute="centerX" secondItem="oTi-77-cX2" secondAttribute="centerX" id="7yU-Aw-ClB"/>
+                            <constraint firstItem="WUo-sG-Abw" firstAttribute="leading" secondItem="oTi-77-cX2" secondAttribute="leading" constant="88" id="GFn-JN-WKe"/>
+                            <constraint firstItem="pbk-rQ-ztg" firstAttribute="top" secondItem="5oD-ez-eae" secondAttribute="bottom" constant="8" symbolic="YES" id="KM8-8x-Hhl"/>
+                            <constraint firstItem="WUo-sG-Abw" firstAttribute="top" secondItem="oTi-77-cX2" secondAttribute="top" priority="750" constant="100" id="KXT-wK-roj"/>
                             <constraint firstItem="j8K-2A-WkV" firstAttribute="centerX" secondItem="JYw-7r-eBW" secondAttribute="centerX" id="UAT-YD-6rI"/>
+                            <constraint firstItem="WUo-sG-Abw" firstAttribute="width" secondItem="JYw-7r-eBW" secondAttribute="height" multiplier="200:667" priority="750" constant="-1" id="Y1d-s6-tWZ"/>
+                            <constraint firstItem="5oD-ez-eae" firstAttribute="height" secondItem="pbk-rQ-ztg" secondAttribute="height" id="ajG-6R-zV6"/>
                             <constraint firstItem="WUo-sG-Abw" firstAttribute="centerX" secondItem="JYw-7r-eBW" secondAttribute="centerX" id="foK-la-QRC"/>
+                            <constraint firstItem="5oD-ez-eae" firstAttribute="trailing" secondItem="pbk-rQ-ztg" secondAttribute="trailing" constant="1" id="hF4-eA-6Db"/>
+                            <constraint firstItem="5oD-ez-eae" firstAttribute="width" secondItem="JYw-7r-eBW" secondAttribute="height" multiplier="200:667" id="j5J-3d-dGK"/>
+                            <constraint firstItem="5oD-ez-eae" firstAttribute="centerX" secondItem="oTi-77-cX2" secondAttribute="centerX" id="joQ-dl-6kR"/>
+                            <constraint firstItem="5oD-ez-eae" firstAttribute="width" secondItem="pbk-rQ-ztg" secondAttribute="width" constant="1" id="nN4-H4-LYa"/>
+                            <constraint firstAttribute="bottom" secondItem="pbk-rQ-ztg" secondAttribute="bottom" constant="20" symbolic="YES" id="oJH-3J-7AW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oTi-77-cX2"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="j8K-2A-WkV" id="bYd-xS-C0L"/>
                         <outlet property="imageView" destination="WUo-sG-Abw" id="9Vi-RC-qoB"/>
+                        <outlet property="retryButton" destination="5oD-ez-eae" id="u4u-jF-0YR"/>
+                        <outlet property="signOutButton" destination="pbk-rQ-ztg" id="8HC-3S-C5Q"/>
                         <segue destination="49e-Tb-3d3" kind="show" identifier="doneWithInit" id="uWT-sX-PZX"/>
                     </connections>
                 </viewController>

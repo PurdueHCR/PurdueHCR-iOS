@@ -180,7 +180,7 @@ class PointLog {
             pointTypeIDValue = pointTypeIDValue * -1
         }
         var residentName = self.resident
-        if(floorID == "Shreve"){
+        if(residentName.contains(SHREVE_RESIDENT)){
             residentName = String(residentName.dropFirst(SHREVE_RESIDENT.count))
             
         }

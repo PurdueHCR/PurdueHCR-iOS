@@ -51,6 +51,12 @@ class AppUtils {
                 value += 1
             }
         }
+        
+        func reset(){
+            queue.sync {
+                value = 0
+            }
+        }
     }
     
 }
