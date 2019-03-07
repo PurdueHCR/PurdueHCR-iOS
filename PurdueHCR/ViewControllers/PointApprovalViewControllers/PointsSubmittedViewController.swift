@@ -16,12 +16,19 @@ class ResolvedCell: UITableViewCell {
 }
 
 class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchResultsUpdating {
-
+	
 	let searchController = UISearchController(searchResultsController: nil)
 	var filteredPoints = [PointLog]()
+	var activityIndicator = UIActivityIndicatorView()
 	
 	override func viewDidLoad() {
+        
+        self.activityIndicator.startAnimating()
 		super.viewDidLoad()
+		activityIndicator.center = self.view.center
+		activityIndicator.style = .gray
+		activityIndicator.hidesWhenStopped = true
+		view.addSubview(activityIndicator)
 		displayedLogs = DataManager.sharedManager.getResolvedPointLogs() ?? [PointLog]()
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -35,13 +42,14 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	}
 	
 	@objc override func resfreshData(){
-		DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
-			self.displayedLogs = pointLogs
-			DispatchQueue.main.async { [unowned self] in
-				self.tableView.reloadData()
-			}
-			self.tableView.refreshControl?.endRefreshing()
-		})
+        DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
+            self.displayedLogs = pointLogs
+            DispatchQueue.main.async { [unowned self] in
+                self.tableView.reloadData()
+            }
+            self.tableView.refreshControl?.endRefreshing()
+            self.activityIndicator.stopAnimating()
+        })
 	}
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
@@ -56,7 +64,16 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 				return 0
 			}
 		}
-		return 1
+        else{
+            if(displayedLogs.count > 0){
+                killEmptyMessage()
+                return 1
+            }
+            else {
+                emptyMessage(message: "Loading History")
+                return 0
+            }
+        }
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
