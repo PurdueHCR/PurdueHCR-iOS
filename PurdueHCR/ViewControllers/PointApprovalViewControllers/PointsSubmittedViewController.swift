@@ -42,7 +42,6 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	}
 	
 	@objc override func resfreshData(){
-		self.activityIndicator.startAnimating()
 		DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
 			DispatchQueue.main.async { [unowned self] in
