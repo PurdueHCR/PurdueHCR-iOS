@@ -53,10 +53,6 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 		self.housePointsCompareView.layer.cornerRadius = radius
         
     }
-//    @objc func logOut(_ sender: Any) {
-//        try? Auth.auth().signOut()
-//        Cely.changeStatus(to: .loggedOut)
-//    }
 	
 	override func viewWillAppear(_ animated: Bool) {
 		refreshData()
@@ -92,13 +88,8 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
     }
 	
 	@IBAction func showSettings(_ sender: Any) {
-		
-        //var houses = DataManager.sharedManager.getHouses()!
-        //self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
-        
-        //let color = AppUtils.hexStringToUIColor(hex: house!.hexColor)
+
 		let color = UIColor.lightGray
-        
         let width : Int = Int(self.view.frame.width - 20)
         let height = 280
         let distance = 20

@@ -53,14 +53,16 @@ class HousePointsView: UIView {
         self.house = houses.remove(at: houses.index(of: House(id: User.get(.house) as! String, points: 0,hexColor:"",numberOfResidents: 0))!)
         
         circleProgress.progressColors = [AppUtils.hexStringToUIColor(hex: house.hexColor),UIColor.white]
-		//circleProgress.glowMode = KDCircularProgressGlowMode.noGlow
-        rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from:self.circleProgress)
+        rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from: self.circleProgress)
         let reward = getCurrentReward()
+		let prevRewardValue = getPrevRewardValue()
+		print("Previous reward value: ", prevRewardValue)
         if(reward != nil){
             nextRewardLabel.text = "Next Reward:\n"+reward!.rewardName
             rewardImageView?.image = reward!.image
-            circleProgress.angle = (Double(self.house.totalPoints) / Double(reward!.requiredValue)) * 360.0
-            pointsRemainingLabel.text? = "Next Goal: " + self.house.totalPoints.description + "/"+reward!.requiredValue.description
+            circleProgress.angle = (Double(self.house.totalPoints - prevRewardValue) / Double(reward!.requiredValue - prevRewardValue)) * 360.0
+			let pointsToGo = reward!.requiredValue - self.house.totalPoints
+			pointsRemainingLabel.text? = (pointsToGo.description + " Points Away!")
         }
         else{
             nextRewardLabel.text = "Next Reward:\n Eternal Glory"
@@ -69,13 +71,14 @@ class HousePointsView: UIView {
             pointsRemainingLabel.text? = "Next Goal: Victory"
         }
         
-        rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from:self.circleProgress)
+        rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from: self.circleProgress)
         addSubview(rewardImageView!)
     }
     
     func createImageView() -> UIImageView {
         if(rewardImageView == nil){
-            let size = self.circleProgress.frame.size.width * 0.4
+            var size = self.circleProgress.frame.size.width * 0.36
+			//size = sqrt((size * size) * 2)
             return UIImageView(frame: CGRect(x:0, y: 1000, width: size, height: size))
         }
         else{
@@ -94,4 +97,18 @@ class HousePointsView: UIView {
         }
         return nil
     }
+	
+	func getPrevRewardValue() -> Int {
+		var i = 0
+		while( i < rewards.count){
+			if(rewards[i].requiredValue > self.house.totalPoints){
+				if (i > 0) {
+					return rewards[i - 1].requiredValue
+				}
+				return 0;
+			}
+			i += 1
+		}
+		return 0
+	}
 }

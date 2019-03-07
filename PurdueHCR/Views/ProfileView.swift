@@ -65,9 +65,6 @@ class ProfileView: UIView {
 		
 		totalPointsLabel.adjustsFontSizeToFitWidth = true
         totalPointsLabel.text = (User.get(.points) as! Int).description + " points"
-//		houseLogoImageView.layer.borderWidth = 2
-//		houseLogoImageView.layer.borderColor = UIColor.black.cgColor
-//		houseLogoImageView.layer.cornerRadius = 10
         
     }
     
