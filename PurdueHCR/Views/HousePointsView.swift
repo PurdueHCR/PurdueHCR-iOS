@@ -58,11 +58,11 @@ class HousePointsView: UIView {
 		let prevRewardValue = getPrevRewardValue()
 		print("Previous reward value: ", prevRewardValue)
         if(reward != nil){
-            nextRewardLabel.text = "Next Reward:\n"+reward!.rewardName
+			nextRewardLabel.text = "Next Reward:\n" + reward!.rewardName
             rewardImageView?.image = reward!.image
             circleProgress.angle = (Double(self.house.totalPoints - prevRewardValue) / Double(reward!.requiredValue - prevRewardValue)) * 360.0
 			let pointsToGo = reward!.requiredValue - self.house.totalPoints
-			pointsRemainingLabel.text? = (pointsToGo.description + " Points Away!")
+			pointsRemainingLabel.text? = (pointsToGo.description + " points away!\n(" + reward!.requiredValue.description + " points total)")
         }
         else{
             nextRewardLabel.text = "Next Reward:\n Eternal Glory"
@@ -77,7 +77,7 @@ class HousePointsView: UIView {
     
     func createImageView() -> UIImageView {
         if(rewardImageView == nil){
-            var size = self.circleProgress.frame.size.width * 0.36
+            let size = self.circleProgress.frame.size.width * 0.36
 			//size = sqrt((size * size) * 2)
             return UIImageView(frame: CGRect(x:0, y: 1000, width: size, height: size))
         }
