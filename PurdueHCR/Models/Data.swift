@@ -268,6 +268,15 @@ class Link {
         self.enabled = false
         self.archived = false
     }
+    
+    func getIOSDeepLink() -> String {
+        return "hcrpoint://addpoints/"+id
+        
+    }
+    
+    func getAndroidDeepLink() -> String {
+        return "intent://addpoints/"+id+"#Intent;scheme=hcrpoint;package=com.hcrpurdue.jason.hcrhousepoints;end"
+    }
 }
 
 class LinkList {
