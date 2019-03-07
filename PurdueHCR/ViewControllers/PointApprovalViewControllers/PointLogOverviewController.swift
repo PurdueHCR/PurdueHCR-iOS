@@ -11,10 +11,10 @@ import UIKit
 class PointLogOverviewController: UIViewController {
     
 	@IBOutlet weak var scrollView: UIScrollView!
-	@IBOutlet var approveButton: UIButton!
-    @IBOutlet var rejectButton: UIButton!
 	
 	var indexPath : IndexPath?
+	var approveButton : UIButton?
+	var rejectButton : UIButton?
     
     var pointLog: PointLog?
     //var index: IndexPath?
@@ -24,19 +24,45 @@ class PointLogOverviewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		let radius : CGFloat = 10
+		
 		pointDescriptionView.setLog(pointLog: pointLog!)
-		self.approveButton.layer.shadowColor = UIColor.gray.cgColor
-		self.approveButton.layer.shadowRadius = 3
-		self.approveButton.layer.shadowOpacity = 15
-		self.approveButton.layer.shadowOffset = CGSize.init(width: 0, height: 2)
+		pointDescriptionView.layer.cornerRadius = radius
+		let height : CGFloat = 80
+		let width : CGFloat = 80
+		let offset : CGFloat = 20
+		let heightModifier = height + offset + (self.tabBarController?.tabBar.frame.height)!
+		let x = self.view.frame.width - height - offset
+		let y = self.view.frame.height - heightModifier
+		let approveOrigin = CGPoint.init(x: x, y: y)
+		let rejectOrigin = CGPoint.init(x: 20, y: y)
+		let buttonSize = CGSize.init(width: width, height: height)
 		
-		self.rejectButton.layer.shadowColor = UIColor.gray.cgColor
-		self.rejectButton.layer.shadowRadius = 3
-		self.rejectButton.layer.shadowOpacity = 15
-		self.rejectButton.layer.shadowOffset = CGSize.init(width: 0, height: 2)
-        // Do any additional setup after loading the view.
-		//let plusImage = UIImage(named: "list")?.withRenderingMode(.alwaysTemplate)
+		approveButton = UIButton.init(type: .custom)
+		approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
+		rejectButton = UIButton.init(type: .custom)
+		rejectButton?.frame = CGRect.init(origin: rejectOrigin, size: buttonSize)
 		
+		approveButton?.setImage(#imageLiteral(resourceName: "approve"), for: .normal)
+		approveButton?.layer.cornerRadius = radius
+		approveButton?.backgroundColor = UIColor.green
+		approveButton?.layer.shadowColor = UIColor.gray.cgColor
+		approveButton?.layer.shadowRadius = 3
+		approveButton?.layer.shadowOpacity = 15
+		approveButton?.layer.shadowOffset = CGSize.init(width: 0, height: 2)
+		approveButton?.addTarget(self, action: #selector(approvePointLog), for: .touchUpInside)
+		
+		rejectButton?.setImage(#imageLiteral(resourceName: "reject"), for: .normal)
+		rejectButton?.layer.cornerRadius = radius
+		rejectButton?.backgroundColor = UIColor.red
+		rejectButton?.layer.shadowColor = UIColor.gray.cgColor
+		rejectButton?.layer.shadowRadius = 3
+		rejectButton?.layer.shadowOpacity = 15
+		rejectButton?.layer.shadowOffset = CGSize.init(width: 0, height: 2)
+		rejectButton?.addTarget(self, action: #selector(rejectPointLog), for: .touchUpInside)
+		
+		self.view.addSubview(approveButton!)
+		self.view.addSubview(rejectButton!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,8 +71,8 @@ class PointLogOverviewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func approvePointLog(_ sender: Any) {
-        approveButton.isEnabled = false
+    @objc func approvePointLog() {
+        approveButton?.isEnabled = false
         //preViewContr?.displayedLogs.remove(at:index!.row)
 		if (pointLog?.wasHandled == true) {
 			if let pointSubmittedViewContr = (preViewContr as! PointsSubmittedViewController?) {
@@ -58,8 +84,9 @@ class PointLogOverviewController: UIViewController {
 		
         self.navigationController?.popViewController(animated: true)
     }
-    @IBAction func rejectPointLog(_ sender: Any) {
-        rejectButton.isEnabled = false
+	
+    @objc func rejectPointLog() {
+        rejectButton?.isEnabled = false
         //preViewContr?.displayedLogs.remove(at: index!.row)
 		if (pointLog?.wasHandled == true) {
 			if let pointSubmittedViewContr = (preViewContr as! PointsSubmittedViewController?) {

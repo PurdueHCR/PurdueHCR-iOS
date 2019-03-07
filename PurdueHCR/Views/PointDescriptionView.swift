@@ -39,6 +39,7 @@ class PointDescriptionView: UIView {
         descriptionLabel.text = pointLog.pointDescription
         descriptionLabel.layer.borderColor = UIColor.black.cgColor
         descriptionLabel.layer.borderWidth = 1.0
+		descriptionLabel.layer.cornerRadius = 10
     }
     
 
