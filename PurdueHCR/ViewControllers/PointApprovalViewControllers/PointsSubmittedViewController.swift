@@ -23,8 +23,10 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	
 	override func viewDidLoad() {
         
-        self.activityIndicator.startAnimating()
+		self.navigationItem.hidesBackButton = true
+    self.activityIndicator.startAnimating()
 		super.viewDidLoad()
+
 		activityIndicator.center = self.view.center
 		activityIndicator.style = .gray
 		activityIndicator.hidesWhenStopped = true
@@ -49,6 +51,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
             }
             self.tableView.refreshControl?.endRefreshing()
             self.activityIndicator.stopAnimating()
+            self.navigationItem.hidesBackButton = false
         })
 	}
 	
