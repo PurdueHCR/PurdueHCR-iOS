@@ -73,6 +73,7 @@
                         <viewLayoutGuide key="safeArea" id="oTi-77-cX2"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="j8K-2A-WkV" id="bYd-xS-C0L"/>
                         <outlet property="imageView" destination="WUo-sG-Abw" id="9Vi-RC-qoB"/>
                         <outlet property="retryButton" destination="5oD-ez-eae" id="u4u-jF-0YR"/>
                         <outlet property="signOutButton" destination="pbk-rQ-ztg" id="8HC-3S-C5Q"/>

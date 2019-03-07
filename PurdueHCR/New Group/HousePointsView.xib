@@ -23,8 +23,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="392"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Goal" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4JU-e9-e5w">
-                    <rect key="frame" x="20" y="332" width="335" height="50"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="Points Remaining Label" text="Next Goal" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4JU-e9-e5w" userLabel="Points Remaining Label">
+                    <rect key="frame" x="20" y="342" width="335" height="50"/>
+                    <accessibility key="accessibilityConfiguration" identifier="Points Remaining Label" label="Points Remaining Label"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="yHd-dH-0g0"/>
                     </constraints>

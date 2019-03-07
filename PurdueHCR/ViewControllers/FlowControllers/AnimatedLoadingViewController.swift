@@ -17,6 +17,7 @@ class AnimatedLoadingViewController: UIViewController {
     @IBOutlet var signOutButton: UIButton!
     
     let images = [#imageLiteral(resourceName: "Platinum"),#imageLiteral(resourceName: "Copper"),#imageLiteral(resourceName: "Titanium"),#imageLiteral(resourceName: "Silver"),#imageLiteral(resourceName: "Palladium")]
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +65,7 @@ class AnimatedLoadingViewController: UIViewController {
         resetCount()
         DataManager.sharedManager.initializeData(finished: {(error) in
 			if (error == nil) {
+                self.activityIndicator.stopAnimating()
 				self.performSegue(withIdentifier: "doneWithInit", sender: nil)
 			} else if (error!.code == 1) {
 				let alertController = UIAlertController.init(title: "Error", message: "Data could not be loaded.", preferredStyle: .alert)

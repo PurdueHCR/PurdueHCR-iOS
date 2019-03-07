@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
+		AFFF5C517BE37CA63E769D79 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
+		D3037504222527F4000115DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3037503222527F3000115DE /* GoogleService-Info.plist */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -19,6 +22,7 @@
 		D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */; };
 		D30FC90920DF35D800201E74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90720DF35D800201E74 /* Main.storyboard */; };
 		D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90A20DF35D900201E74 /* Assets.xcassets */; };
+		D32B156C220FEE870015CC8A /* QRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B156B220FEE870015CC8A /* QRUITests.swift */; };
 		D3355C8D214A253D0037556C /* PointSubmission.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C8C214A253D0037556C /* PointSubmission.storyboard */; };
 		D3355C8F214A25B10037556C /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C8E214A25B10037556C /* Profile.storyboard */; };
 		D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C92214A267E0037556C /* PointApproval.storyboard */; };
@@ -28,6 +32,9 @@
 		D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */; };
 		D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F43B0210AA00700D3982D /* PointDescriptionView.swift */; };
 		D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */; };
+		D36DFEBE220F2EF40062184C /* UserLogInUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DFEBD220F2EF40062184C /* UserLogInUITests.swift */; };
+		D36DFEC6220F30270062184C /* UiTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DFEC5220F30270062184C /* UiTestUtils.swift */; };
+		D36DFEC8220F3CBF0062184C /* ResidentPointSubmissionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DFEC7220F3CBF0062184C /* ResidentPointSubmissionUITests.swift */; };
 		D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */; };
 		D3912A6A219CE77B0002E7C7 /* HouseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */; };
 		D3912A6B219CE77B0002E7C7 /* SubmitGrantedAwardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A66219CE77A0002E7C7 /* SubmitGrantedAwardViewController.swift */; };
@@ -43,6 +50,7 @@
 		D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */; };
 		D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */; };
 		D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */; };
+		D3B27942221228A100921DB2 /* PointApprovalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B27941221228A100921DB2 /* PointApprovalUITests.swift */; };
 		D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3BC48BA210E9B0900D46088 /* HousePointsView.xib */; };
 		D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C42103D65A00B88F03 /* HousePointsView.swift */; };
 		D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */; };
@@ -55,17 +63,28 @@
 		D3D062C320E8219C00E8B3A3 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062C220E8219C00E8B3A3 /* LogInViewController.swift */; };
 		D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */; };
 		D3D062C720E82A6500E8B3A3 /* TypeSubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */; };
-		D3EFFAA2222BB1DC0053B452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3EFFAA1222BB1DC0053B452 /* GoogleService-Info.plist */; };
-		D69348E5D0256D59F9F1053F /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D946014B419B3EBB08BC7A /* Pods_PurdueHCR.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D36DFEC0220F2EF40062184C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D30FC8F620DF35D700201E74 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D30FC8FD20DF35D800201E74;
+			remoteInfo = PurdueHCR;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		112BB4A3D70984A8551F3356 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
-		6824205D1AD8453AB05C3EDC /* Pods-PurdueHCR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.debug.xcconfig"; sourceTree = "<group>"; };
-		84D946014B419B3EBB08BC7A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.release.xcconfig"; sourceTree = "<group>"; };
+		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
+		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
 		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
+		D3037503222527F3000115DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Google_Runway/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -77,10 +96,7 @@
 		D30FC90820DF35D800201E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D30FC90A20DF35D900201E74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D30FC90F20DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D30FC91820DF35D900201E74 /* Platinum_PointsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platinum_PointsTests.swift; sourceTree = "<group>"; };
-		D30FC91A20DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platinum_PointsUITests.swift; sourceTree = "<group>"; };
-		D30FC92520DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D32B156B220FEE870015CC8A /* QRUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRUITests.swift; sourceTree = "<group>"; };
 		D3355C8C214A253D0037556C /* PointSubmission.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PointSubmission.storyboard; sourceTree = "<group>"; };
 		D3355C8E214A25B10037556C /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		D3355C92214A267E0037556C /* PointApproval.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PointApproval.storyboard; sourceTree = "<group>"; };
@@ -91,6 +107,11 @@
 		D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PointDescriptionView.xib; sourceTree = "<group>"; };
 		D33F43B0210AA00700D3982D /* PointDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDescriptionView.swift; sourceTree = "<group>"; };
 		D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		D36DFEBB220F2EF40062184C /* PurdueHCRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PurdueHCRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D36DFEBD220F2EF40062184C /* UserLogInUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogInUITests.swift; sourceTree = "<group>"; };
+		D36DFEBF220F2EF40062184C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D36DFEC5220F30270062184C /* UiTestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiTestUtils.swift; sourceTree = "<group>"; };
+		D36DFEC7220F3CBF0062184C /* ResidentPointSubmissionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentPointSubmissionUITests.swift; sourceTree = "<group>"; };
 		D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HouseTableViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/HouseTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		D3912A66219CE77A0002E7C7 /* SubmitGrantedAwardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitGrantedAwardViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/SubmitGrantedAwardViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -106,6 +127,7 @@
 		D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorViewController.swift; sourceTree = "<group>"; };
 		D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodeViewController.swift; sourceTree = "<group>"; };
 		D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodesTableViewController.swift; sourceTree = "<group>"; };
+		D3B27941221228A100921DB2 /* PointApprovalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointApprovalUITests.swift; sourceTree = "<group>"; };
 		D3BC48BA210E9B0900D46088 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
 		D3CC77C42103D65A00B88F03 /* HousePointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsView.swift; sourceTree = "<group>"; };
 		D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsCompareView.xib; sourceTree = "<group>"; };
@@ -118,7 +140,7 @@
 		D3D062C220E8219C00E8B3A3 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSubmitViewController.swift; sourceTree = "<group>"; };
-		D3EFFAA1222BB1DC0053B452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E2069A978FC04FB762BECDEB /* Pods-PurdueHCR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,20 +148,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D69348E5D0256D59F9F1053F /* Pods_PurdueHCR.framework in Frameworks */,
+				AFFF5C517BE37CA63E769D79 /* Pods_PurdueHCR.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D36DFEB8220F2EF40062184C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		53AD8D1C62DF0FC8F8057DD8 /* Pods */ = {
+		54A6A3EE8AE04E29868B02EB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6824205D1AD8453AB05C3EDC /* Pods-PurdueHCR.debug.xcconfig */,
-				112BB4A3D70984A8551F3356 /* Pods-PurdueHCR.release.xcconfig */,
+				E2069A978FC04FB762BECDEB /* Pods-PurdueHCR.debug.xcconfig */,
+				AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */,
+				39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */,
+				2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		AB577E93D3B4B5BCEA137EE1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */,
+				AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D30FBEE020FC0403000DD221 /* ViewControllers */ = {
@@ -202,11 +243,10 @@
 			isa = PBXGroup;
 			children = (
 				D30FC90020DF35D800201E74 /* PurdueHCR */,
-				D30FC91720DF35D900201E74 /* PurdueHCRTests */,
+				D36DFEBC220F2EF40062184C /* PurdueHCRUITests */,
 				D30FC8FF20DF35D800201E74 /* Products */,
-				D30FC92220DF35D900201E74 /* PurdueHCRUITests */,
-				53AD8D1C62DF0FC8F8057DD8 /* Pods */,
-				FBDC2B055B453E462EE444A6 /* Frameworks */,
+				54A6A3EE8AE04E29868B02EB /* Pods */,
+				AB577E93D3B4B5BCEA137EE1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -214,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				D30FC8FE20DF35D800201E74 /* PurdueHCR.app */,
+				D36DFEBB220F2EF40062184C /* PurdueHCRUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,7 +262,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				D3EFFAA1222BB1DC0053B452 /* GoogleService-Info.plist */,
+				D3037503222527F3000115DE /* GoogleService-Info.plist */,
 				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
@@ -237,24 +278,6 @@
 			path = PurdueHCR;
 			sourceTree = "<group>";
 		};
-		D30FC91720DF35D900201E74 /* PurdueHCRTests */ = {
-			isa = PBXGroup;
-			children = (
-				D30FC91820DF35D900201E74 /* Platinum_PointsTests.swift */,
-				D30FC91A20DF35D900201E74 /* Info.plist */,
-			);
-			path = PurdueHCRTests;
-			sourceTree = "<group>";
-		};
-		D30FC92220DF35D900201E74 /* PurdueHCRUITests */ = {
-			isa = PBXGroup;
-			children = (
-				D30FC92320DF35D900201E74 /* Platinum_PointsUITests.swift */,
-				D30FC92520DF35D900201E74 /* Info.plist */,
-			);
-			path = PurdueHCRUITests;
-			sourceTree = "<group>";
-		};
 		D3355C90214A25BF0037556C /* ViewXIB */ = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +288,27 @@
 			);
 			name = ViewXIB;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		D36DFEBC220F2EF40062184C /* PurdueHCRUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D3B279402212285E00921DB2 /* RHPUITests */,
+				D3B2793F2212249300921DB2 /* ResidentUITests */,
+				D36DFEC9220F3CDA0062184C /* GeneralUITests */,
+				D36DFEBF220F2EF40062184C /* Info.plist */,
+				D36DFEC5220F30270062184C /* UiTestUtils.swift */,
+			);
+			path = PurdueHCRUITests;
+			sourceTree = "<group>";
+		};
+		D36DFEC9220F3CDA0062184C /* GeneralUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D32B156B220FEE870015CC8A /* QRUITests.swift */,
+				D36DFEBD220F2EF40062184C /* UserLogInUITests.swift */,
+			);
+			path = GeneralUITests;
 			sourceTree = "<group>";
 		};
 		D3912A63219CE75D0002E7C7 /* RECViewControllers */ = {
@@ -364,6 +408,22 @@
 			path = PointApprovalViewControllers;
 			sourceTree = "<group>";
 		};
+		D3B2793F2212249300921DB2 /* ResidentUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D36DFEC7220F3CBF0062184C /* ResidentPointSubmissionUITests.swift */,
+			);
+			path = ResidentUITests;
+			sourceTree = "<group>";
+		};
+		D3B279402212285E00921DB2 /* RHPUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D3B27941221228A100921DB2 /* PointApprovalUITests.swift */,
+			);
+			path = RHPUITests;
+			sourceTree = "<group>";
+		};
 		D3CC77CC210522CC00B88F03 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,14 +435,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		FBDC2B055B453E462EE444A6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				84D946014B419B3EBB08BC7A /* Pods_PurdueHCR.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -390,11 +442,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D30FC92820DF35D900201E74 /* Build configuration list for PBXNativeTarget "PurdueHCR" */;
 			buildPhases = (
-				9D415F200FAEC95E2B122B44 /* [CP] Check Pods Manifest.lock */,
+				DD42DA661F297DDCE5022C4C /* [CP] Check Pods Manifest.lock */,
 				D30FC8FA20DF35D800201E74 /* Sources */,
 				D30FC8FB20DF35D800201E74 /* Frameworks */,
 				D30FC8FC20DF35D800201E74 /* Resources */,
-				739D49B43EC63139329BC5D0 /* [CP] Embed Pods Frameworks */,
+				8AB907A4EBDADFAD07571479 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -405,13 +457,33 @@
 			productReference = D30FC8FE20DF35D800201E74 /* PurdueHCR.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D36DFEBA220F2EF40062184C /* PurdueHCRUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D36DFEC2220F2EF40062184C /* Build configuration list for PBXNativeTarget "PurdueHCRUITests" */;
+			buildPhases = (
+				F04F77C8A32B268788EF1C05 /* [CP] Check Pods Manifest.lock */,
+				D36DFEB7220F2EF40062184C /* Sources */,
+				D36DFEB8220F2EF40062184C /* Frameworks */,
+				D36DFEB9220F2EF40062184C /* Resources */,
+				4801D9ECEFD799803BB84713 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D36DFEC1220F2EF40062184C /* PBXTargetDependency */,
+			);
+			name = PurdueHCRUITests;
+			productName = PurdueHCRUITests;
+			productReference = D36DFEBB220F2EF40062184C /* PurdueHCRUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		D30FC8F620DF35D700201E74 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = DecodeProgramming;
 				TargetAttributes = {
@@ -423,6 +495,10 @@
 								enabled = 0;
 							};
 						};
+					};
+					D36DFEBA220F2EF40062184C = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = D30FC8FD20DF35D800201E74;
 					};
 				};
 			};
@@ -440,6 +516,7 @@
 			projectRoot = "";
 			targets = (
 				D30FC8FD20DF35D800201E74 /* PurdueHCR */,
+				D36DFEBA220F2EF40062184C /* PurdueHCRUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -461,7 +538,7 @@
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
-				D3EFFAA2222BB1DC0053B452 /* GoogleService-Info.plist in Resources */,
+				D3037504222527F4000115DE /* GoogleService-Info.plist in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
@@ -469,10 +546,67 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D36DFEB9220F2EF40062184C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		739D49B43EC63139329BC5D0 /* [CP] Embed Pods Frameworks */ = {
+		4801D9ECEFD799803BB84713 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AZDropdownMenu/AZDropdownMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/Cely/Cely.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/KDCircularProgress/KDCircularProgress.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupKit/PopupKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ValueStepper/ValueStepper.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZDropdownMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cely.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KDCircularProgress.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ValueStepper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AB907A4EBDADFAD07571479 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -522,7 +656,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9D415F200FAEC95E2B122B44 /* [CP] Check Pods Manifest.lock */ = {
+		DD42DA661F297DDCE5022C4C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -534,6 +668,24 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-PurdueHCR-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F04F77C8A32B268788EF1C05 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PurdueHCRUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -582,7 +734,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D36DFEB7220F2EF40062184C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D32B156C220FEE870015CC8A /* QRUITests.swift in Sources */,
+				D3B27942221228A100921DB2 /* PointApprovalUITests.swift in Sources */,
+				D36DFEBE220F2EF40062184C /* UserLogInUITests.swift in Sources */,
+				D36DFEC8220F3CBF0062184C /* ResidentPointSubmissionUITests.swift in Sources */,
+				D36DFEC6220F30270062184C /* UiTestUtils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D36DFEC1220F2EF40062184C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D30FC8FD20DF35D800201E74 /* PurdueHCR */;
+			targetProxy = D36DFEC0220F2EF40062184C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D30FC90720DF35D800201E74 /* Main.storyboard */ = {
@@ -712,7 +884,7 @@
 		};
 		D30FC92920DF35D900201E74 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6824205D1AD8453AB05C3EDC /* Pods-PurdueHCR.debug.xcconfig */;
+			baseConfigurationReference = E2069A978FC04FB762BECDEB /* Pods-PurdueHCR.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -732,7 +904,7 @@
 		};
 		D30FC92A20DF35D900201E74 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 112BB4A3D70984A8551F3356 /* Pods-PurdueHCR.release.xcconfig */;
+			baseConfigurationReference = AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -747,6 +919,51 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		D36DFEC3220F2EF40062184C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5N596YY333;
+				INFOPLIST_FILE = PurdueHCRUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.PurdueHCR.PurdueHCRUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PurdueHCR;
+			};
+			name = Debug;
+		};
+		D36DFEC4220F2EF40062184C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5N596YY333;
+				INFOPLIST_FILE = PurdueHCRUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.PurdueHCR.PurdueHCRUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PurdueHCR;
 			};
 			name = Release;
 		};
@@ -767,6 +984,15 @@
 			buildConfigurations = (
 				D30FC92920DF35D900201E74 /* Debug */,
 				D30FC92A20DF35D900201E74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D36DFEC2220F2EF40062184C /* Build configuration list for PBXNativeTarget "PurdueHCRUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D36DFEC3220F2EF40062184C /* Debug */,
+				D36DFEC4220F2EF40062184C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -93,9 +93,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Tell us about what you did!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-yh-8Ny">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="descriptionField" text="Tell us about what you did!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-yh-8Ny" userLabel="descriptionField">
                                 <rect key="frame" x="16" y="118" width="343" height="190"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="descriptionField" label="descriptionField"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="190" id="Mf8-a3-BPc"/>
                                 </constraints>
