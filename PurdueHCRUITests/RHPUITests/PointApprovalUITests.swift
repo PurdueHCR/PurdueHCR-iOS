@@ -42,11 +42,10 @@ class PointApprovalUITests: XCTestCase {
         
         //Points Remaining Label
         //Total Points Label
-        let currentHousePoints = app.staticTexts.element(matching:.any, identifier: "Points Remaining Label").label
-        print(app.debugDescription)
+        let currentUserPoints = Int(app.staticTexts.element(matching:.any, identifier: "Resident Point Label").label.components(separatedBy: CharacterSet.decimalDigits.inverted)[0])!
         
         //Get Current Users point, total house points, and value of base point type.
-        UITestUtils.submitPoints(app: app, test: self, testPointDescription: testPointDescription)
+        UITestUtils.submitPoints(app: app, test: self, testPointDescription: testPointDescription, pointTypeName: "Cool Point")
         UITestUtils.waitForDropDownDismissal(app: app, test: self, message: "Submitted for approval!")
         app.tabBars.buttons["Profile"].tap()
         UITestUtils.logout(app: app)
@@ -68,7 +67,8 @@ class PointApprovalUITests: XCTestCase {
         //Log back in as Resident and compare points
         UITestUtils.logIn(app: app, test: self, type: .RESIDENT)
         UITestUtils.waitForLoadingToComplete(app: app, test: self)
-        XCTAssertTrue(app.staticTexts["Points Remaining Label"].exists, "Points exist")
+        let newUserPoints = Int(app.staticTexts.element(matching:.any, identifier: "Resident Point Label").label.components(separatedBy: CharacterSet.decimalDigits.inverted)[0])!
+        XCTAssertTrue(app.staticTexts["Points Remaining Label"].exists && (newUserPoints - currentUserPoints == 1), "Points exist")
         
         
         

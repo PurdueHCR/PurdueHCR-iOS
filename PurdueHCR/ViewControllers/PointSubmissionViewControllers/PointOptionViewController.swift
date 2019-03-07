@@ -64,11 +64,14 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
         if(isFiltering()){
+            cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointDescription
             cell.typeLabel.text = filteredPoints[indexPath.row].pointDescription
         }
         else{
             cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointDescription
+            cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointDescription
         }
+        
         return(cell)
     }
     

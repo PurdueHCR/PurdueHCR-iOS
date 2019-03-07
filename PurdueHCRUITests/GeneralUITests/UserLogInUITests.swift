@@ -39,5 +39,20 @@ class UserLogInUITests: XCTestCase {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
+    
+    func testInvalidLogIn(){
+        let app = XCUIApplication()
+        let emailField = app.textFields["Email"]
+        emailField.tap()
+        emailField.typeText("FakeAccount@purdue.edu")
+        
+        let passwordField = app.secureTextFields["Password"]
+        passwordField.tap()
+        passwordField.typeText("Fake PAssword")
+        
+        app.buttons["Login"].tap()
+        UITestUtils.waitForLoadingToComplete(app: app, test: self)
+        XCTAssertTrue(app.staticTexts["Could not find user with that email"].exists, "Failure message was not found.")
+    }
 
 }
