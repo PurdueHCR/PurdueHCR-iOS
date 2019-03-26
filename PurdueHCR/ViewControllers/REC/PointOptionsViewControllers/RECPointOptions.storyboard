@@ -161,8 +161,9 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="1" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="F9L-Wk-FSF">
+                                                <slider opaque="NO" contentMode="scaleToFill" restorationIdentifier="qrCodeSlider" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="1" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="F9L-Wk-FSF" userLabel="qrCodeSlider">
                                                     <rect key="frame" x="14" y="50" width="347" height="30"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="qrCodeSlider" label="qrCodeSlider"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="29" id="M1C-1j-wVA"/>
                                                     </constraints>
@@ -241,8 +242,9 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWp-jK-QxU">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="enabledButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWp-jK-QxU" userLabel="enabledButton">
                                                     <rect key="frame" x="312" y="11" width="51" height="31"/>
+                                                    <accessibility key="accessibilityConfiguration" label="enabledButton"/>
                                                 </switch>
                                             </subviews>
                                             <constraints>

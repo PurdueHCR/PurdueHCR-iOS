@@ -31,8 +31,13 @@ class UITestUtils{
     static func logout(app:XCUIApplication){
         
         if(app.tabBars.element(boundBy: 0).exists){
-            app.tabBars.buttons["Profile"].tap()
-            app.navigationBars["Profile"].buttons["Sign Out"].tap()
+            if(app.tabBars.buttons["Profile"].exists){
+                app.tabBars.buttons["Profile"].tap()
+                app.navigationBars["Profile"].buttons["Sign Out"].tap()
+            }
+            else{
+                app.navigationBars["House Overview"].buttons["Item"].tap()
+            }
             app.buttons["Logout"].tap()
             app.alerts["Log out?"].buttons["Yes"].tap()
         }

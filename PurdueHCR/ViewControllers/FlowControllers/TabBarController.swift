@@ -50,48 +50,49 @@ class TabBarController: UITabBarController {
     
     func linkPointSubmissionViewController() -> UIViewController {
         let pointSubmissionViewController = UIStoryboard(name: "PointSubmission", bundle: nil).instantiateViewController(withIdentifier: "Point_Submission_Initial") as! UINavigationController
+        pointSubmissionViewController.tabBarItem.accessibilityIdentifier = "PointSubmission"
 		//pointSubmissionViewController.tabBarItem.imageInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
         return pointSubmissionViewController
     }
     
     func linkProfileViewController() -> UIViewController {
         let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "Profile_Initial") as! UINavigationController
-		//profileViewController.tabBarItem.imageInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+		profileViewController.tabBarItem.accessibilityIdentifier = "Profile"
         return profileViewController
     }
     
     func linkPointApprovalViewController() -> UIViewController {
         let pointApprovalViewController = UIStoryboard(name: "PointApproval", bundle: nil).instantiateViewController(withIdentifier: "Point_Approval_Initial") as! UINavigationController
 		pointApprovalViewController.tabBarItem = UITabBarItem(title: "Approve", image: #imageLiteral(resourceName: "check"), selectedImage: #imageLiteral(resourceName: "check"))
-		//pointApprovalViewController.tabBarItem.imageInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+		pointApprovalViewController.tabBarItem.accessibilityIdentifier = "PointApproval"
         return pointApprovalViewController
     }
     
     func linkQRCodeViewController() -> UIViewController {
         let qrCodeViewController = UIStoryboard(name: "QRCode", bundle: nil).instantiateViewController(withIdentifier: "QR_Code_Initial") as! UINavigationController
         qrCodeViewController.tabBarItem = UITabBarItem(title: "QR", image: #imageLiteral(resourceName: "QRCode"), selectedImage: #imageLiteral(resourceName: "QRCode"))
-		//qrCodeViewController.tabBarItem.imageInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+		qrCodeViewController.tabBarItem.accessibilityIdentifier = "QRCode"
 		return qrCodeViewController
     }
     
     func linkRECHouseViewController() -> UIViewController {
         let recHouseViewController = UIStoryboard(name: "RECHouse", bundle: nil).instantiateViewController(withIdentifier: "HouseOverview") as! UINavigationController
         recHouseViewController.tabBarItem = UITabBarItem(title: "Houses", image: #imageLiteral(resourceName: "Competition"), selectedImage: #imageLiteral(resourceName: "Competition"))
-		//recHouseViewController.tabBarItem.imageInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+		recHouseViewController.tabBarItem.accessibilityIdentifier = "RECHouse"
 		return recHouseViewController
     }
     
     func linkRECPointOptionsViewController() -> UIViewController {
         let pointOptionsViewController = UIStoryboard(name: "RECPointOptions", bundle: nil).instantiateViewController(withIdentifier: "PointOptions") as! UINavigationController
         pointOptionsViewController.tabBarItem = UITabBarItem(title: "Points", image: #imageLiteral(resourceName: "list"), selectedImage: #imageLiteral(resourceName: "list"))
-		//pointOptionsViewController.tabBarItem.imageInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+		pointOptionsViewController.tabBarItem.accessibilityIdentifier = "RECPointOptions"
 		return pointOptionsViewController
     }
     
     func linkRECRewardsViewController() -> UIViewController {
         let rewardsViewController = UIStoryboard(name: "RECRewards", bundle: nil).instantiateViewController(withIdentifier: "Rewards") as! UINavigationController
         rewardsViewController.tabBarItem = UITabBarItem(title: "Rewards", image: #imageLiteral(resourceName: "RewardIcon"), selectedImage: #imageLiteral(resourceName: "RewardIcon"))
-		//rewardsViewController.tabBarItem.imageInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+		rewardsViewController.tabBarItem.accessibilityIdentifier = "RECRewards"
 		return rewardsViewController
     }
     
