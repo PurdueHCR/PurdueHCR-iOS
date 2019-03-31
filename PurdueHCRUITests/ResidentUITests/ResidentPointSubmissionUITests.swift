@@ -36,6 +36,7 @@ class ResidentPointSubmissionUITests: XCTestCase {
         UITestUtils.logIn(app: app,test: self ,type: .RESIDENT)
         let testPointDescription = "This is a test point submission: "+UITestUtils.randomString(length: 10)
         
+        print(app.debugDescription)
         UITestUtils.waitForLoadingToComplete(app: app, test: self)
         UITestUtils.submitPoints(app: app, test: self, testPointDescription: testPointDescription)
         UITestUtils.waitForDropDownDismissal(app: app, test: self, message: "Submitted for approval!")

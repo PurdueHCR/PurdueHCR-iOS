@@ -65,6 +65,8 @@ class ProfileView: UIView {
 		
 		totalPointsLabel.adjustsFontSizeToFitWidth = true
         totalPointsLabel.text = (User.get(.points) as! Int).description + " points"
+        totalPointsLabel.accessibilityIdentifier = "Resident Points"
+        
         
     }
     
