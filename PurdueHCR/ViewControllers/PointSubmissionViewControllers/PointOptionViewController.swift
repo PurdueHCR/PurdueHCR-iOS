@@ -65,9 +65,11 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
         if(isFiltering()){
             cell.typeLabel.text = filteredPoints[indexPath.row].pointDescription
+            cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointDescription
         }
         else{
             cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointDescription
+            cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointDescription
         }
         return(cell)
     }

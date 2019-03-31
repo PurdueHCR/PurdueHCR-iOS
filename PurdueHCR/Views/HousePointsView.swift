@@ -46,6 +46,7 @@ class HousePointsView: UIView {
         backgroundView.layer.cornerRadius = 10
         
         rewardImageView = createImageView()
+        pointsRemainingLabel.accessibilityIdentifier = "TotalHousePoints"
     }
     
     func refresh(){
