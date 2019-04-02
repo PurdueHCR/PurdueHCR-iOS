@@ -12,10 +12,31 @@ import XCTest
 
 class HouseOverviewPage: BasePage, UITestPageProtocol {
 
-    @discardableResult func waitForLoadingToComplete() -> HouseOverviewPage {
-        waitForLoading()
-        return self
-    }
-    
+	let competitionSwitch : XCUIElement
+	
+	override init(app: XCUIApplication, test: XCTestCase) {
+		competitionSwitch = app.switches["House Competition Switch"]
+		super.init(app: app, test: test)
+	}
+   
+  @discardableResult func waitForLoadingToComplete() -> HouseOverviewPage {
+      waitForLoading()
+      return self
+  }
+	
+	@discardableResult func flipHouseCompetitionEnabledSwitch(houseEnabledMessage: String = "") -> HouseOverviewPage {
+		sleep(2)
+		competitionSwitch.tap()
+		if (app.alerts["Disable House Competition"].exists) {
+			let messageTextField = app.alerts.element.textFields["Enter a message"]
+			messageTextField.tap()
+			messageTextField.typeText(houseEnabledMessage)
+			app.alerts["Disable House Competition"].buttons["Confirm"].tap()
+		}
+		else if (app.alerts["Enable House Competition"].exists) {
+			app.alerts["Enable House Competition"].buttons["Confirm"].tap()
+		}
+		return self
+  }
 }
 

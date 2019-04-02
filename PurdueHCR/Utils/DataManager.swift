@@ -476,6 +476,18 @@ class DataManager {
 		}
 	}
 	
+	/// Update System Preferences in Firebase
+	///
+	/// Saves the local system preferences to Firebase.
+	/// Update the instance variables in the local system preferences before you call
+	/// this method.
+	///
+	/// - Parameters:
+	///   - onDone: Closure to handle error
+	func updateSystemPreferences(withCompletion onDone:@escaping ( _ err:Error?) ->Void){
+		fbh.updateSystemPreferences(systemPreferences: systemPreferences!, withCompletion: onDone)
+	}
+	
 }
 
 

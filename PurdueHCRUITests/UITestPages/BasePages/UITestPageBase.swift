@@ -77,13 +77,18 @@ class BasePage{
     /// Log the user out if they are already logged in and are on a ViewController that displays the bottom bar
     ///
     /// - Parameter app: The current XCUIApplication
+	@discardableResult
     func logout() -> SignInPage{
-        if(app.tabBars.element(boundBy: 0).exists){
+        if(app.tabBars.buttons["Profile"].exists){
             app.tabBars.buttons["Profile"].tap()
             app.navigationBars["Profile"].buttons["Sign Out"].tap()
-            app.buttons["Logout"].tap()
-            app.alerts["Log out?"].buttons["Yes"].tap()
         }
+		else if(app.tabBars.buttons["Houses"].exists){
+			app.tabBars.buttons["Houses"].tap()
+			app.navigationBars["House Overview"].buttons["Item"].tap()
+		}
+		app.buttons["Logout"].tap()
+		app.alerts["Log out?"].buttons["Yes"].tap()
         return SignInPage(app: app, test: test)
     }
     

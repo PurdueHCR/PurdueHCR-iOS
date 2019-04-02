@@ -793,6 +793,17 @@ class FirebaseHelper {
 			}
 		}
 	}
+	
+	/// Update System Preferences in Firebase
+	///
+	/// - Parameters:
+	///   - systemPreferences: The updated local system preferences
+	///   - onDone: Closure to handle error
+	func updateSystemPreferences(systemPreferences: SystemPreferences, withCompletion onDone:@escaping ( _ err:Error?) ->Void){
+		db.collection("SystemPreferences").document("Preferences").updateData(systemPreferences.convertToDictionary()){err in
+			onDone(err)
+		}
+	}
 
 }
 

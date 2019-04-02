@@ -10,12 +10,14 @@ import UIKit
 import FirebaseAuth
 import Cely
 import PopupKit
+import NotificationBannerSwift
 
 class HouseCompetitionOverviewTableViewController: UITableViewController {
 
     @IBOutlet var houseGraph: HousePointsCompareView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
-    
+	@IBOutlet weak var competitionSwitch: UISwitch!
+	
     let houses = ["Copper","Palladium","Platinum","Silver","Titanium"]
     @IBOutlet var houseSelectionControl: UISegmentedControl!
     @IBOutlet var firstPlaceLabel: UILabel!
@@ -42,6 +44,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refresher
         setPlaceLabels(house: getHouseWithName(name: "Copper")!)
+		competitionSwitch.isOn = DataManager.sharedManager.systemPreferences!.isHouseEnabled
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -164,7 +167,60 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
     @objc func reportBug(sender: UIButton!) {
         UIApplication.shared.open(URL(string: "https://sites.google.com/view/hcr-points/home")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
-    
+	
+	@IBAction func changeHouseEnabledStatus(_ sender: Any) {
+		if (competitionSwitch.isOn) {
+			let alertController = UIAlertController(title: "Enable House Competition", message: "Are you sure you want to enable the House Competition?", preferredStyle: .alert)
+			let confirm = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+				DataManager.sharedManager.systemPreferences?.isHouseEnabled = self.competitionSwitch.isOn
+				DataManager.sharedManager.updateSystemPreferences(withCompletion: { (err) in
+					if (err == nil) {
+						self.notify(title: "House Competition Enabled", subtitle: "The House Competition was successfully enabled.", style: .success)
+					} else {
+						self.notify(title: "House Competition was not updated.", subtitle: "There was an error.", style: .success)
+						self.competitionSwitch.setOn(false, animated: true)
+						DataManager.sharedManager.systemPreferences?.isHouseEnabled = self.competitionSwitch.isOn
+					}
+				})
+			})
+			let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+				self.competitionSwitch.setOn(false, animated: true)
+			}
+			alertController.addAction(confirm)
+			alertController.addAction(cancel)
+			present(alertController, animated: true, completion: nil)
+		}
+		else {
+			var loginTextField: UITextField?
+			var disabledMessage : String?
+			let alertController = UIAlertController(title: "Disable House Competition", message: "Enter a message explaining why the house competition is suspended.", preferredStyle: .alert)
+			alertController.addTextField { (textField) -> Void in
+				// Enter the textfield customization code here.
+				loginTextField = textField
+				loginTextField?.placeholder = "Enter a message"
+			}
+			let confirm = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+				DataManager.sharedManager.systemPreferences?.isHouseEnabled = self.competitionSwitch.isOn
+				DataManager.sharedManager.systemPreferences?.houseEnabledMessage = loginTextField!.text!
+				DataManager.sharedManager.updateSystemPreferences(withCompletion: { (err) in
+					if (err == nil) {
+						self.notify(title: "House Competition Disabled", subtitle: "The House Competition was successfully disabled.", style: .success)
+					} else {
+						self.notify(title: "House Competition was not updated.", subtitle: "There was an error.", style: .success)
+						self.competitionSwitch.setOn(true, animated: true)
+						DataManager.sharedManager.systemPreferences?.isHouseEnabled = self.competitionSwitch.isOn
+					}
+				})
+			})
+			let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+				self.competitionSwitch.setOn(true, animated: true)
+			}
+			alertController.addAction(confirm)
+			alertController.addAction(cancel)
+			present(alertController, animated: true, completion: nil)
+		}
+	}
+	
     // This function is called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "show_point_breakdown"){

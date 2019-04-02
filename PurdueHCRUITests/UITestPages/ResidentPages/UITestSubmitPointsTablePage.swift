@@ -48,4 +48,11 @@ class SubmitPointsTablePage: BasePage, UITestTabBarProtocol {
             .tapSubmitButton(waitForDismissal: waitForDismissal)
         return self
     }
+	
+	func getEmptyMessageFieldText() -> String {
+		return app.staticTexts["Empty Message"].label
+	}
+	func doesEmptyMessageFieldExist() -> Bool {
+		return app.staticTexts["Empty Message"].exists
+	}
 }

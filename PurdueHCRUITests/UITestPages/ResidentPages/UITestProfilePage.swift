@@ -58,12 +58,14 @@ class ProfilePage: BasePage, UITestPageProtocol, UITestTabBarProtocol {
 class TabBarContainer:BasePage {
     func tapProfileTab() -> ProfilePage {
         app.tabBars.buttons["Profile"].tap()
+		waitForLoading()
         return ProfilePage(app: app, test: test)
         
     }
     
     func tapSubmitPointsTab() -> SubmitPointsTablePage {
         app.tabBars.buttons["Submit Points"].tap()
+		waitForLoading()
         return SubmitPointsTablePage(app: app, test: test)
         
     }

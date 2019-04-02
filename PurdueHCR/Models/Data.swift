@@ -325,5 +325,14 @@ class SystemPreferences {
 		self.isHouseEnabled = isHouseEnabled
 		self.houseEnabledMessage = houseEnabledMessage
 	}
+	
+	func convertToDictionary() -> [String:Any] {
+		let dict : [String:Any] = [
+			"isHouseEnabled":isHouseEnabled,
+			"houseEnabledMessage":houseEnabledMessage
+		]
+		return dict
+	}
+	
 }
 
