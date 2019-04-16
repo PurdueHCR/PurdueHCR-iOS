@@ -99,12 +99,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             self.signUpButton.isEnabled = true
             self.activityIndicator.stopAnimating()
         }
+		else if (password!.split(separator: " ").count != 1) {
+			self.notify(title: "Failed to Sign Up", subtitle: "Password contains invalid characters.", style: .danger)
+			self.signUpButton.isEnabled = true
+			self.activityIndicator.stopAnimating()
+		}
         else if ( password! != verifyPassword){
             self.notify(title: "Failed to Sign Up", subtitle: "Please verify your passwords are the same.", style: .danger)
             self.signUpButton.isEnabled = true
             self.activityIndicator.stopAnimating()
         }
-        else if ( name?.split(separator: " ").count != 2){
+        else if ( name!.split(separator: " ").count != 2){
             self.notify(title: "Failed to Sign Up", subtitle: "Please enter your preferred first and last name.", style: .danger)
             self.signUpButton.isEnabled = true
             self.activityIndicator.stopAnimating()
@@ -115,7 +120,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             self.activityIndicator.stopAnimating()
         }
         else if(!codeIsValid(code:code!)){
-            self.notify(title: "Failed to Sign Up", subtitle: "Code is Invalid.", style: .danger)
+            self.notify(title: "Failed to Sign Up", subtitle: "Code is invalid.", style: .danger)
             self.signUpButton.isEnabled = true
             self.activityIndicator.stopAnimating()
         }

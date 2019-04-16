@@ -12,6 +12,7 @@
 		B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
+		B5A98394225D7D5E00AE64B8 /* UITestSignup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A98393225D7D5E00AE64B8 /* UITestSignup.swift */; };
 		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
@@ -102,6 +103,7 @@
 		B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRECSystemPreferences.swift; sourceTree = "<group>"; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
+		B5A98393225D7D5E00AE64B8 /* UITestSignup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestSignup.swift; sourceTree = "<group>"; };
 		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				D3CF6BDB224FF3EC00D97A0F /* UITestPointSubmission.swift */,
 				D3CF6BE12250867E00D97A0F /* UITestQRCode.swift */,
 				B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */,
+				B5A98393225D7D5E00AE64B8 /* UITestSignup.swift */,
 			);
 			path = UITests;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3BCD38D224C65050041AB2D /* UITestSignUpPage.swift in Sources */,
+				B5A98394225D7D5E00AE64B8 /* UITestSignup.swift in Sources */,
 				D3BCD397224C984E0041AB2D /* UITestRHPApprovalPage.swift in Sources */,
 				D3CF6BDE2250264D00D97A0F /* UITestRHPHistoryPage.swift in Sources */,
 				D32B156C220FEE870015CC8A /* QRUITests.swift in Sources */,

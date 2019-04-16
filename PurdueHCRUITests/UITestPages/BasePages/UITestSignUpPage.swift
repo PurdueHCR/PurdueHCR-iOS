@@ -66,8 +66,8 @@ class SignUpPage: BasePage, UITestPageProtocol {
     
     @discardableResult
     func typeCode(code:String) -> SignUpPage {
-        verifyPasswordField.tap()
-        verifyPasswordField.typeText(code)
+        codeField.tap()
+        codeField.typeText(code)
         return self
     }
     
@@ -84,8 +84,8 @@ class SignUpPage: BasePage, UITestPageProtocol {
     }
     
     @discardableResult
-    func fillSignupPage(email:String, name:String, password:String, code:String) -> ProfilePage {
-        return typeName(name: name).typeEmail(email: email).typePassword(password: password).typeVerifyPassword(password: password).typeCode(code: code).tapSignupButton()
+	func fillSignupPage(email:String, name:String, password:String, verifyPassword:String = "", code:String) -> ProfilePage {
+		return typeEmail(email: email).typeName(name: name).typePassword(password: password).typeVerifyPassword(password: (verifyPassword == "") ? password : verifyPassword).typeCode(code: code).tapSignupButton()
     }
     
 }

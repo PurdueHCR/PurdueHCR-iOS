@@ -20,7 +20,7 @@ protocol UITestTabBarProtocol {
 }
 
 
-class BasePage{
+class BasePage {
     
     let app: XCUIApplication
     let test: XCTestCase
@@ -126,7 +126,7 @@ class BasePage{
             Safari.open(URLString: qrCodeLink, safariApp: safari)
         }
     }
-    
+	
 }
 
 
