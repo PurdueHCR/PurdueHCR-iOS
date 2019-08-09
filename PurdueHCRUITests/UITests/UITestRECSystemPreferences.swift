@@ -24,6 +24,7 @@ class UITestRECSystemPreferences: UITestBase {
 			.flipHouseCompetitionEnabledSwitch(houseEnabledMessage: "Test Disable")
 			.logout()
 			.logInResident()
+			.waitForLoadingToComplete()
 			.getTabBarContainer()
 			.tapSubmitPointsTab()
 			.waitForLoadingToComplete()

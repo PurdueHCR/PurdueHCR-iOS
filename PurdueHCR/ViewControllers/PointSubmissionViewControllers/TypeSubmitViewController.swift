@@ -10,22 +10,63 @@ import UIKit
 import ValueStepper
 import Firebase
 
-class TypeSubmitViewController: UIViewController, UITextViewDelegate {
+class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextViewDelegate {
 
     @IBOutlet var typeLabel: UILabel!
-    @IBOutlet var descriptionField: UITextView!
-    @IBOutlet var submitButton: UIBarButtonItem!
-    
+	@IBOutlet weak var nameLabel: UILabel!
+	@IBOutlet var descriptionField: UITextView!
+	@IBOutlet weak var houseImage: UIImageView!
+	@IBOutlet weak var submitButton: UIButton!
+	@IBOutlet weak var descriptionLabel: UILabel!
+	@IBOutlet weak var datePicker: UIDatePicker!
+	@IBOutlet weak var topView: UIView!
+	
+	
     var type:PointType?
     var user:User?
+	
+	let placeholder = "Tell us what you did!"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        typeLabel.text? = type!.pointDescription
-        descriptionField.layer.borderColor = UIColor.black.cgColor
-        descriptionField.layer.borderWidth = 1
+        typeLabel.text? = type!.pointName
+		typeLabel.sizeToFit()
+		descriptionLabel.text = type!.pointDescription
+		descriptionLabel.sizeToFit()
+		let firstName = User.get(.firstName) as! String
+		let lastName = User.get(.lastName) as! String
+		nameLabel.text = firstName + " " + lastName
+		descriptionField.text = placeholder
+		descriptionField.textColor = UIColor.lightGray
+		descriptionField.selectedTextRange = descriptionField.textRange(from: descriptionField.beginningOfDocument, to: descriptionField.beginningOfDocument)
+		descriptionField.becomeFirstResponder()
+		submitButton.layer.cornerRadius = 10
+		
+		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
+		self.topView.layer.shadowOpacity = 0.5
+		self.topView.layer.shadowOffset = CGSize.zero
+		self.topView.layer.shadowRadius = 7
+		self.topView.sizeToFit()
+		
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
+		let houseName = User.get(.house) as! String
+		if(houseName == "Platinum"){
+			houseImage.image = #imageLiteral(resourceName: "Platinum")
+		}
+		else if(houseName == "Copper"){
+			houseImage.image = #imageLiteral(resourceName: "Copper")
+		}
+		else if(houseName == "Palladium"){
+			houseImage.image = #imageLiteral(resourceName: "Palladium")
+		}
+		else if(houseName == "Silver"){
+			houseImage.image = #imageLiteral(resourceName: "Silver")
+		}
+		else if(houseName == "Titanium"){
+			houseImage.image = #imageLiteral(resourceName: "Titanium")
+		}
+		datePicker.maximumDate = Date()
         // Do any additional setup after loading the view.
     }
     
@@ -34,7 +75,7 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func submit(_ sender: Any) {
+	@IBAction func submit(_ sender: Any) {
         submitButton.isEnabled = false;
         guard let description = descriptionField.text, !description.isEmpty, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else{
             notify(title: "Failure", subtitle: "Please enter a description", style: .danger)
@@ -46,7 +87,7 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
             submitButton.isEnabled = true;
             return
         }
-        if(description == "Tell us about what you did!"){
+        if(description == placeholder){
             notify(title: "Failure", subtitle: "Please tell us more about what you did!", style: .danger)
             submitButton.isEnabled = true;
             return
@@ -61,13 +102,19 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
     ///   - pointType: Point Type to have a log created of
     ///   - descriptions: String text describing what the residents did
     func submitPointLog(pointType:PointType, logDescription:String){
-        let name = User.get(.name) as! String
+		
+		// TODO: Update reported time of point
+		
+		let firstName = User.get(.firstName) as! String
+		let lastName = User.get(.lastName) as! String
         let preApproved = ((User.get(.permissionLevel) as! Int) == 1 )
         let floor = User.get(.floorID) as! String
-        let residentRef = DataManager.sharedManager.getUserRefFromUserID(id: User.get(.id) as! String)
-        let pointLog = PointLog(pointDescription: logDescription, resident: name, type: pointType, floorID: floor, residentRef:residentRef)
-        DataManager.sharedManager.writePoints(log: pointLog, preApproved: preApproved) { (err:Error?) in
-            if(err != nil){
+		let residentId = User.get(.id) as! String
+		
+		let dateOccurred = Timestamp.init(date: datePicker.date)
+        let pointLog = PointLog(pointDescription: logDescription, firstName: firstName, lastName: lastName, type: pointType, floorID: floor, residentId: residentId, dateOccurred: dateOccurred)
+		DataManager.sharedManager.writePoints(log: pointLog, preApproved: preApproved) { (err:Error?) in
+            if (err != nil) {
                 if(err!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
                     self.notify(title: "Failed to submit", subtitle: "Point Type is no longer enabled.", style: .danger)
                 }
@@ -79,37 +126,44 @@ class TypeSubmitViewController: UIViewController, UITextViewDelegate {
                 self.submitButton.isEnabled = true;
                 return
             }
-            else{
-                self.navigationController?.popViewController(animated: true)
-                if(preApproved){
-                    self.notify(title: "Way to Go RHP", subtitle: "Congrats, \(pointLog.type.pointValue) points submitted.", style: .success)
-                }
-                else{
-                    self.notify(title: "Submitted for approval!", subtitle: pointLog.pointDescription, style: .success)
-                }
-            }
+			
         }
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if(textView.text == "Tell us about what you did!"){
-            textView.text = ""
-        }
+		self.navigationController?.popViewController(animated: true)
+		if(preApproved){
+			self.notify(title: "Way to Go RHP", subtitle: "Congrats, \(pointLog.type.pointValue) points submitted.", style: .success)
+		}
+		else{
+			self.notify(title: "Submitted for approval!", subtitle: pointLog.pointDescription, style: .success)
+		}
     }
 
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if(textView.text == ""){
-            textView.text = "Tell us about what you did!"
-        }
-    }
-
+	func textViewDidChangeSelection(_ textView: UITextView) {
+		if self.view.window != nil {
+			if textView.textColor == UIColor.lightGray {
+				textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+			}
+		}
+	}
+	
 	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-		let currentText = descriptionField.text ?? ""
-		guard let stringRange = Range(range, in: currentText) else { return false }
 		
-		let changedText = currentText.replacingCharacters(in: stringRange, with: text)
+		let currentText:String = textView.text
+		let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
 		
-		return changedText.count <= 240
+		if updatedText.isEmpty {
+			
+			textView.text = placeholder
+			textView.textColor = UIColor.lightGray
+			
+			textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+		}
+			
+		else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+			textView.textColor = UIColor.black
+			textView.text = ""
+		}
+
+		return updatedText.count <= 240
 	}
 	
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {

@@ -9,10 +9,17 @@
 /* Begin PBXBuildFile section */
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
 		AFFF5C517BE37CA63E769D79 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */; };
+		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
+		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
 		B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */; };
+		B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */; };
+		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
+		B53EBBE222D5502600475882 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
+		B553783522FCCAC600446259 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B553783422FCCAC600446259 /* GoogleService-Info.plist */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
-		B5A98394225D7D5E00AE64B8 /* UITestSignup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A98393225D7D5E00AE64B8 /* UITestSignup.swift */; };
+		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
+		B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599D98122F62F030033173C /* NotificationsViewController.swift */; };
 		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
@@ -23,7 +30,6 @@
 		D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */; };
 		D30FC90920DF35D800201E74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90720DF35D800201E74 /* Main.storyboard */; };
 		D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90A20DF35D900201E74 /* Assets.xcassets */; };
-		D32B156C220FEE870015CC8A /* QRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B156B220FEE870015CC8A /* QRUITests.swift */; };
 		D3355C8D214A253D0037556C /* PointSubmission.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C8C214A253D0037556C /* PointSubmission.storyboard */; };
 		D3355C8F214A25B10037556C /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C8E214A25B10037556C /* Profile.storyboard */; };
 		D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C92214A267E0037556C /* PointApproval.storyboard */; };
@@ -33,9 +39,6 @@
 		D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */; };
 		D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F43B0210AA00700D3982D /* PointDescriptionView.swift */; };
 		D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */; };
-		D36DFEBE220F2EF40062184C /* UserLogInUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DFEBD220F2EF40062184C /* UserLogInUITests.swift */; };
-		D36DFEC6220F30270062184C /* UiTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DFEC5220F30270062184C /* UiTestUtils.swift */; };
-		D36DFEC8220F3CBF0062184C /* ResidentPointSubmissionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DFEC7220F3CBF0062184C /* ResidentPointSubmissionUITests.swift */; };
 		D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */; };
 		D3912A6A219CE77B0002E7C7 /* HouseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */; };
 		D3912A6B219CE77B0002E7C7 /* SubmitGrantedAwardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A66219CE77A0002E7C7 /* SubmitGrantedAwardViewController.swift */; };
@@ -51,12 +54,10 @@
 		D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */; };
 		D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */; };
 		D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */; };
-		D3B27942221228A100921DB2 /* PointApprovalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B27941221228A100921DB2 /* PointApprovalUITests.swift */; };
 		D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3BC48BA210E9B0900D46088 /* HousePointsView.xib */; };
 		D3BCD383224BE5120041AB2D /* UITestPageBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD382224BE5120041AB2D /* UITestPageBase.swift */; };
 		D3BCD385224BE5760041AB2D /* UITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD384224BE5760041AB2D /* UITestBase.swift */; };
 		D3BCD387224C28910041AB2D /* UITestSignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD386224C28910041AB2D /* UITestSignInPage.swift */; };
-		D3BCD389224C29170041AB2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3BCD388224C29170041AB2D /* GoogleService-Info.plist */; };
 		D3BCD38B224C2C900041AB2D /* UITestProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD38A224C2C900041AB2D /* UITestProfilePage.swift */; };
 		D3BCD38D224C65050041AB2D /* UITestSignUpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD38C224C65050041AB2D /* UITestSignUpPage.swift */; };
 		D3BCD38F224C65330041AB2D /* UITestForgotPasswordPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD38E224C65330041AB2D /* UITestForgotPasswordPage.swift */; };
@@ -100,10 +101,16 @@
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
+		B50E6C9122F1202A00505AA3 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRECSystemPreferences.swift; sourceTree = "<group>"; };
+		B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointsTableViewController.swift; sourceTree = "<group>"; };
+		B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseCodeViewController.swift; sourceTree = "<group>"; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
+		B553783422FCCAC600446259 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
-		B5A98393225D7D5E00AE64B8 /* UITestSignup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestSignup.swift; sourceTree = "<group>"; };
+		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
+		B599D98122F62F030033173C /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -116,7 +123,6 @@
 		D30FC90820DF35D800201E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D30FC90A20DF35D900201E74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D30FC90F20DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D32B156B220FEE870015CC8A /* QRUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRUITests.swift; sourceTree = "<group>"; };
 		D3355C8C214A253D0037556C /* PointSubmission.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PointSubmission.storyboard; sourceTree = "<group>"; };
 		D3355C8E214A25B10037556C /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		D3355C92214A267E0037556C /* PointApproval.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PointApproval.storyboard; sourceTree = "<group>"; };
@@ -128,10 +134,7 @@
 		D33F43B0210AA00700D3982D /* PointDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDescriptionView.swift; sourceTree = "<group>"; };
 		D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		D36DFEBB220F2EF40062184C /* PurdueHCRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PurdueHCRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D36DFEBD220F2EF40062184C /* UserLogInUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogInUITests.swift; sourceTree = "<group>"; };
 		D36DFEBF220F2EF40062184C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D36DFEC5220F30270062184C /* UiTestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiTestUtils.swift; sourceTree = "<group>"; };
-		D36DFEC7220F3CBF0062184C /* ResidentPointSubmissionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentPointSubmissionUITests.swift; sourceTree = "<group>"; };
 		D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HouseTableViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/HouseTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		D3912A66219CE77A0002E7C7 /* SubmitGrantedAwardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitGrantedAwardViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/SubmitGrantedAwardViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -147,12 +150,10 @@
 		D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorViewController.swift; sourceTree = "<group>"; };
 		D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodeViewController.swift; sourceTree = "<group>"; };
 		D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCodesTableViewController.swift; sourceTree = "<group>"; };
-		D3B27941221228A100921DB2 /* PointApprovalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointApprovalUITests.swift; sourceTree = "<group>"; };
 		D3BC48BA210E9B0900D46088 /* HousePointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsView.xib; sourceTree = "<group>"; };
 		D3BCD382224BE5120041AB2D /* UITestPageBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestPageBase.swift; sourceTree = "<group>"; };
 		D3BCD384224BE5760041AB2D /* UITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestBase.swift; sourceTree = "<group>"; };
 		D3BCD386224C28910041AB2D /* UITestSignInPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestSignInPage.swift; sourceTree = "<group>"; };
-		D3BCD388224C29170041AB2D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D3BCD38A224C2C900041AB2D /* UITestProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestProfilePage.swift; sourceTree = "<group>"; };
 		D3BCD38C224C65050041AB2D /* UITestSignUpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestSignUpPage.swift; sourceTree = "<group>"; };
 		D3BCD38E224C65330041AB2D /* UITestForgotPasswordPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestForgotPasswordPage.swift; sourceTree = "<group>"; };
@@ -300,8 +301,8 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				D3BCD388224C29170041AB2D /* GoogleService-Info.plist */,
 				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
+				B553783422FCCAC600446259 /* GoogleService-Info.plist */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
 				D3355C90214A25BF0037556C /* ViewXIB */,
@@ -323,6 +324,7 @@
 				D33F43AE210A9FB100D3982D /* PointDescriptionView.xib */,
 				D3BC48BA210E9B0900D46088 /* HousePointsView.xib */,
 				D30FBEF020FC0B24000DD221 /* ProfileView.xib */,
+				B50E6C8F22F10E0B00505AA3 /* MessageView.xib */,
 			);
 			name = ViewXIB;
 			path = "New Group";
@@ -333,22 +335,9 @@
 			children = (
 				D3BCD381224BE4E00041AB2D /* UITestPages */,
 				D3BCD380224BE4BD0041AB2D /* UITests */,
-				D3B279402212285E00921DB2 /* RHPUITests */,
-				D3B2793F2212249300921DB2 /* ResidentUITests */,
-				D36DFEC9220F3CDA0062184C /* GeneralUITests */,
 				D36DFEBF220F2EF40062184C /* Info.plist */,
-				D36DFEC5220F30270062184C /* UiTestUtils.swift */,
 			);
 			path = PurdueHCRUITests;
-			sourceTree = "<group>";
-		};
-		D36DFEC9220F3CDA0062184C /* GeneralUITests */ = {
-			isa = PBXGroup;
-			children = (
-				D32B156B220FEE870015CC8A /* QRUITests.swift */,
-				D36DFEBD220F2EF40062184C /* UserLogInUITests.swift */,
-			);
-			path = GeneralUITests;
 			sourceTree = "<group>";
 		};
 		D3912A63219CE75D0002E7C7 /* RECViewControllers */ = {
@@ -406,6 +395,7 @@
 		D39D442F210E73FB0030F424 /* FlowControllers */ = {
 			isa = PBXGroup;
 			children = (
+				B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */,
 				D33F43A92106982100D3982D /* AnimatedLoadingViewController.swift */,
 				D3CC77CA210428B600B88F03 /* TabBarController.swift */,
 			);
@@ -417,6 +407,7 @@
 			children = (
 				D3D062C220E8219C00E8B3A3 /* LogInViewController.swift */,
 				D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */,
+				B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */,
 			);
 			path = UserCreation;
 			sourceTree = "<group>";
@@ -425,6 +416,8 @@
 			isa = PBXGroup;
 			children = (
 				D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */,
+				B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */,
+				B599D98122F62F030033173C /* NotificationsViewController.swift */,
 			);
 			path = ProfileViewControllers;
 			sourceTree = "<group>";
@@ -448,22 +441,6 @@
 			path = PointApprovalViewControllers;
 			sourceTree = "<group>";
 		};
-		D3B2793F2212249300921DB2 /* ResidentUITests */ = {
-			isa = PBXGroup;
-			children = (
-				D36DFEC7220F3CBF0062184C /* ResidentPointSubmissionUITests.swift */,
-			);
-			path = ResidentUITests;
-			sourceTree = "<group>";
-		};
-		D3B279402212285E00921DB2 /* RHPUITests */ = {
-			isa = PBXGroup;
-			children = (
-				D3B27941221228A100921DB2 /* PointApprovalUITests.swift */,
-			);
-			path = RHPUITests;
-			sourceTree = "<group>";
-		};
 		D3BCD380224BE4BD0041AB2D /* UITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,7 +448,6 @@
 				D3CF6BDB224FF3EC00D97A0F /* UITestPointSubmission.swift */,
 				D3CF6BE12250867E00D97A0F /* UITestQRCode.swift */,
 				B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */,
-				B5A98393225D7D5E00AE64B8 /* UITestSignup.swift */,
 			);
 			path = UITests;
 			sourceTree = "<group>";
@@ -494,6 +470,7 @@
 				D3CC77C42103D65A00B88F03 /* HousePointsView.swift */,
 				D30FBEEE20FC0B13000DD221 /* ProfileView.swift */,
 				D33F43B0210AA00700D3982D /* PointDescriptionView.swift */,
+				B50E6C9122F1202A00505AA3 /* MessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -594,7 +571,7 @@
 				TargetAttributes = {
 					D30FC8FD20DF35D800201E74 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 0;
@@ -603,6 +580,7 @@
 					};
 					D36DFEBA220F2EF40062184C = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = D30FC8FD20DF35D800201E74;
 					};
 				};
@@ -642,8 +620,9 @@
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
+				B553783522FCCAC600446259 /* GoogleService-Info.plist in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
-				D3BCD389224C29170041AB2D /* GoogleService-Info.plist in Resources */,
+				B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
@@ -806,19 +785,24 @@
 			files = (
 				D30FBEF3210380F3000DD221 /* PointLogOverviewController.swift in Sources */,
 				D3912A6D219CE77B0002E7C7 /* HouseCompetitionOverviewTableViewController.swift in Sources */,
+				B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */,
 				D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */,
 				B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */,
 				D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */,
+				B53EBBE222D5502600475882 /* (null) in Sources */,
 				D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */,
 				D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
 				D3912A74219CE7960002E7C7 /* RECPointOptionTableViewController.swift in Sources */,
 				B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */,
 				D3CC77CB210428B600B88F03 /* TabBarController.swift in Sources */,
+				B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */,
 				D3912A73219CE7960002E7C7 /* RECPointCreationTableViewController.swift in Sources */,
+				B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */,
 				D3D062BD20E816AB00E8B3A3 /* User.swift in Sources */,
 				D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */,
 				D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */,
+				B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */,
 				D3912A7B219CE7A90002E7C7 /* RECRewardsTableViewController.swift in Sources */,
 				D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */,
 				D3CC77CE21052CEF00B88F03 /* AppUtils.swift in Sources */,
@@ -835,6 +819,7 @@
 				D3D062C320E8219C00E8B3A3 /* LogInViewController.swift in Sources */,
 				D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */,
 				D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */,
+				B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */,
 				D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -844,25 +829,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3BCD38D224C65050041AB2D /* UITestSignUpPage.swift in Sources */,
-				B5A98394225D7D5E00AE64B8 /* UITestSignup.swift in Sources */,
 				D3BCD397224C984E0041AB2D /* UITestRHPApprovalPage.swift in Sources */,
 				D3CF6BDE2250264D00D97A0F /* UITestRHPHistoryPage.swift in Sources */,
-				D32B156C220FEE870015CC8A /* QRUITests.swift in Sources */,
-				D3B27942221228A100921DB2 /* PointApprovalUITests.swift in Sources */,
-				D36DFEBE220F2EF40062184C /* UserLogInUITests.swift in Sources */,
 				D3BCD383224BE5120041AB2D /* UITestPageBase.swift in Sources */,
 				B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */,
 				D3BCD387224C28910041AB2D /* UITestSignInPage.swift in Sources */,
 				D3BCD391224C6F0C0041AB2D /* UITestHouseOverviewPage.swift in Sources */,
 				D3CF6BE22250867E00D97A0F /* UITestQRCode.swift in Sources */,
 				D3BCD395224C97E00041AB2D /* UITestSubmitPointsTablePage.swift in Sources */,
-				D36DFEC8220F3CBF0062184C /* ResidentPointSubmissionUITests.swift in Sources */,
 				D3BCD385224BE5760041AB2D /* UITestBase.swift in Sources */,
 				D3BCD399224C98680041AB2D /* UITestRHPQRPage.swift in Sources */,
 				D3CF6BDC224FF3EC00D97A0F /* UITestPointSubmission.swift in Sources */,
 				D3BCD38F224C65330041AB2D /* UITestForgotPasswordPage.swift in Sources */,
 				D3BCD38B224C2C900041AB2D /* UITestProfilePage.swift in Sources */,
-				D36DFEC6220F30270062184C /* UiTestUtils.swift in Sources */,
 				D3CF6BD4224FE88100D97A0F /* UITestPointSubmissionPage.swift in Sources */,
 				D3BCD39B224CA0AD0041AB2D /* UITestRHPSubmitPointsTablePage.swift in Sources */,
 				D3CF6BDA224FEF1B00D97A0F /* UITestRHPPointSubmissionPage.swift in Sources */,
@@ -1012,7 +991,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5N596YY333;
+				DEVELOPMENT_TEAM = 72BQNS7NEU;
 				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1021,7 +1000,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = BenHardin.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1032,7 +1011,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5N596YY333;
+				DEVELOPMENT_TEAM = 72BQNS7NEU;
 				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1041,7 +1020,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = BenHardin.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1063,7 +1042,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.PurdueHCR.PurdueHCRUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PurdueHCR;
 			};
@@ -1085,7 +1064,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.PurdueHCR.PurdueHCRUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PurdueHCR;
 			};

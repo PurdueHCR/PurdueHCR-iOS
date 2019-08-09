@@ -116,7 +116,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         let permissionLevel = User.get(.permissionLevel) as! Int
         for point in points {
             // Permission Level 2 is REA/REC, then check if point is enabled, then check RHP/FHP permission
-            if( permissionLevel == 2 || (point.isEnabled && checkPermission(typePermission: point.permissionLevel, userPermission: permissionLevel))){
+			if( permissionLevel == 2 || (point.isEnabled && checkPermission(typePermission: point.permissionLevel.rawValue, userPermission: permissionLevel))){
                 types.append(point)
             }
         }

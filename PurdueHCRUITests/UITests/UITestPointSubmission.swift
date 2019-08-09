@@ -23,7 +23,7 @@ class UITestPointSubmission: UITestBase {
     /// Test that Honors residents can submit points and get notified
     func testHonorsResidentSubmitPointsNotification() {
         
-        let testPointDescription = "This is a test point submission: "+randomString(length: 10)
+        let testPointDescription = "This is a test point submission: " + randomString(length: 10)
         getStartingPage().logInResident()
             .getTabBarContainer()
             .tapSubmitPointsTab()

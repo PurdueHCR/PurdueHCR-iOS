@@ -11,15 +11,16 @@ import FirebaseAuth
 import Cely
 import PopupKit
 
-class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
+class HouseProfileViewController: UIViewController, UIScrollViewDelegate, CustomViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet var profileView: ProfileView!
 	@IBOutlet weak var housePointsCompareView: HousePointsCompareView!
 	@IBOutlet weak var housePointsView: HousePointsView!
-    
-    var refresher:UIRefreshControl?
+	@IBOutlet weak var notificationsButton: UIButton!
+	
+    var refresher: UIRefreshControl?
     var refreshCount = 0
 	var p : PopupView?
 	var house : House?
@@ -39,19 +40,43 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
         self.profileView.layer.shadowOffset = CGSize.zero
         self.profileView.layer.shadowRadius = 5
         self.profileView.layer.cornerRadius = radius
+		self.profileView.delegate = self
+		
+		//let myCustomView = Bundle.main.loadNibNamed("UserPoi", owner: self, options: nil)?[0] as! ProfileView
+		//myCustomView.delegate = self
 		
         self.housePointsView.layer.shadowColor = UIColor.darkGray.cgColor
         self.housePointsView.layer.shadowOpacity = 0.5
         self.housePointsView.layer.shadowOffset = CGSize.zero
         self.housePointsView.layer.shadowRadius = 5
 		self.housePointsView.layer.cornerRadius = radius
+		self.housePointsView.sizeToFit()
         
         self.housePointsCompareView.layer.shadowColor = UIColor.black.cgColor
         self.housePointsCompareView.layer.shadowOpacity = 0.5
         self.housePointsCompareView.layer.shadowOffset = CGSize.zero
         self.housePointsCompareView.layer.shadowRadius = 5
 		self.housePointsCompareView.layer.cornerRadius = radius
-        
+		
+		let permission = User.get(.permissionLevel) as! Int
+		if (permission != 0 && permission != 1) {
+			self.navigationItem.rightBarButtonItems = nil
+		}
+		
+		
+		// TODO: A separate method should probably be created for this so that it doesn't have to pass around as much data but instead just returns a boolean whether or not the user has a notification
+		
+		if (self.navigationItem.rightBarButtonItems != nil) {
+			DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs: [PointLog]) in
+				if (pointLogs.capacity > 0) {
+					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
+				}
+				else {
+					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+				}
+			})
+		}
+		
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +84,7 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
     @objc func refreshData(){
-        refreshCount = 0
+		refreshCount = 0
         DataManager.sharedManager.refreshUser(onDone: {(err:Error?) in
             self.profileView.reloadData()
             self.handleRefresher()
@@ -69,6 +94,16 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
             self.housePointsCompareView.refreshDataSet()
             self.handleRefresher()
         })
+		if (navigationItem.rightBarButtonItems != nil) {
+			DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs: [PointLog]) in
+				if (pointLogs.capacity > 0) {
+					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
+				}
+				else {
+					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+				}
+			})
+		}
     }
     
     func handleRefresher(){
@@ -163,7 +198,13 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate {
 	@objc func reportBug(sender: UIButton!) {
 		UIApplication.shared.open(URL(string: "https://sites.google.com/view/hcr-points/home")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
 	}
-
+	
+	func goToNextScene() {
+		let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+		let vc = storyboard.instantiateViewController(withIdentifier: "UserPointsController") 
+		self.navigationController?.pushViewController(vc, animated: true)
+	}
+		
 }
 
 // Helper function inserted by Swift 4.2 migrator.

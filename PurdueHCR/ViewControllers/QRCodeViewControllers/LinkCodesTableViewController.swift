@@ -21,6 +21,8 @@ class LinkCodesTableViewController: UITableViewController, UISearchResultsUpdati
     var filteredLinks = [Link]()
     let searchController = UISearchController(searchResultsController: nil)
 
+	let green = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -145,7 +147,7 @@ class LinkCodesTableViewController: UITableViewController, UISearchResultsUpdati
             cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
             cell.activeView.backgroundColor = UIColor.red
             if(self.filteredLinks[indexPath.row].enabled){
-                cell.activeView.backgroundColor = UIColor.green
+                cell.activeView.backgroundColor = green
             }
         }
         else {
@@ -153,7 +155,7 @@ class LinkCodesTableViewController: UITableViewController, UISearchResultsUpdati
             cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
             cell.activeView.backgroundColor = UIColor.red
             if(self.links.unarchivedLinks[indexPath.row].enabled){
-                cell.activeView.backgroundColor = UIColor.green
+                cell.activeView.backgroundColor = green
             }
         }
         // Configure the cell...

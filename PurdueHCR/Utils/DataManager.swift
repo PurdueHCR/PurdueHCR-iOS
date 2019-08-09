@@ -44,7 +44,8 @@ class DataManager {
                 return pt
             }
         }
-        return PointType(pv: 0, pd: "Unkown Point Type", rcs: false, pid: -1, permissionLevel: 3, isEnabled:false) // The famous this should never happen comment
+		// TODO: Update pn field and permission level
+		return PointType(pv: 0, pn: "", pd: "Unkown Point Type", rcs: false, pid: -1, permissionLevel: .rec, isEnabled:false) // The famous this should never happen comment
     }
     
 
@@ -71,7 +72,7 @@ class DataManager {
             }
             else{
 				if (!updating) {
-					if let index = self?._unconfirmedPointLogs!.index(of: log) {
+					if let index = self?._unconfirmedPointLogs!.firstIndex(of: log) {
 						self?._unconfirmedPointLogs!.remove(at: index)
 					}
 				}
@@ -87,9 +88,11 @@ class DataManager {
     ///   - log: PointLog that was submitted
     ///   - preApproved: Boolean that denotes whether the Log can skip RHP approval or not.
     ///   - onDone: Closure function the be called once the code hits an error or finish. err is nil if no errors are found.
-    func writePoints(log:PointLog, preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+    func writePoints(log:PointLog, preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void) {
         // take in a point log, write it to house then write the ref to the user
-        fbh.addPointLog(log: log, preApproved: preApproved, onDone: onDone)
+		fbh.addPointLog(log: log, preApproved: preApproved) { (err:Error?) in
+			onDone(err)
+		}
     }
     
     /// Add Award from REA/REC
@@ -115,7 +118,7 @@ class DataManager {
     func getUnconfirmedPointLogs()->[PointLog]?{
         return self._unconfirmedPointLogs
     }
-    
+	
     func refreshUser(onDone:@escaping (_ err:Error?)->Void){
         fbh.refreshUserInformation(onDone: onDone)
     }
@@ -137,10 +140,20 @@ class DataManager {
             onDone(pointLogs)
         })
     }
-    
+	
+	func getMessagesForPointLog(pointLog: PointLog, onDone:@escaping (_ messageLogs:[MessageLog])->Void) {
+		fbh.getMessagesForPointLog(pointLog: pointLog, onDone: {(messageLogs:[MessageLog]) in
+			onDone(messageLogs.sorted(by: { $0.creationDate.dateValue() < $1.creationDate.dateValue() }))
+		})
+	}
+	
+	func addMessageToPointLog(message: String, messageType: MessageLog.MessageType, pointID: String) {
+		fbh.addMessageToPontLog(message: message, messageType: messageType, pointID: pointID)
+	}
+	
     func refreshHouses(onDone:@escaping ( _ houses:[House]) ->Void){
         print("House refersh")
-        fbh.refreshHouseInformation(onDone: { (houses:[House],codes:[HouseCode]) in
+        fbh.refreshHouseInformation(onDone: { (houses:[House], codes:[HouseCode]) in
             self._houses = houses
             self._houseCodes = codes
             onDone(houses)
@@ -197,9 +210,14 @@ class DataManager {
         print("INITIALIZE")
 		let TOTALCOUNT = 5
         let counter = AppUtils.AtomicCounter(identifier: "initializeData")
-        guard let _ = User.get(.name) else{
-            print("FAILED INIT")
-            return
+		
+		// Something about the way this guard is set up could probably be better...
+		guard let _ = User.get(.firstName) else{
+			guard let _ = User.get(.lastName) else {
+				print("FAILED INIT")
+				return
+			}
+			return
         }
         if let id = User.get(.id) as! String?{
             getUserWhenLogginIn(id: id, onDone: {(isLoggedIn:Bool) in
@@ -332,10 +350,11 @@ class DataManager {
 				}
                 
                 let pointType = self.getPointType(value: link.pointTypeID)
-                let resident = User.get(.name) as! String
+				let firstName = User.get(.firstName) as! String
+				let lastName = User.get(.lastName) as! String
                 let floorID = User.get(.floorID) as! String
-                let ref = self.getUserRefFromUserID(id: User.get(.id) as! String)
-                let log = PointLog(pointDescription: link.description, resident: resident, type: pointType, floorID: floorID, residentRef: ref)
+				let residentId = User.get(.id) as! String
+                let log = PointLog(pointDescription: link.description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId, dateOccurred: Timestamp.init())
                 var documentID = ""
                 if(link.singleUse){
                     documentID = id
@@ -403,6 +422,14 @@ class DataManager {
     func getAllPointLogsForHouse(house:String, onDone:@escaping (([PointLog]) -> Void)){
         fbh.getAllPointLogsForHouse(house: house, onDone: onDone)
     }
+	
+	func getAllPointLogsForUser(residentID:String, house:String, onDone:@escaping (([PointLog]) -> Void)){
+		fbh.getAllPointLogsForUser(residentID: residentID, house: house, onDone: onDone)
+	}
+	
+	func getMessagesForUser(onDone: @escaping([PointLog]) -> Void) {
+		fbh.getMessagesForUser(onDone: onDone)
+	}
     
     func createPointType(pointType:PointType, onDone:@escaping ((_ err:Error?) ->Void)){
         fbh.addPointType(pointType: pointType, onDone: onDone)
@@ -461,7 +488,7 @@ class DataManager {
 
     //Used for handling link to make sure all necessairy information is there
     func isInitialized() -> Bool {
-        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.name) != nil && User.get(.permissionLevel) != nil && systemPreferences != nil
+        return getHouses() != nil && getPoints() != nil && Cely.currentLoginStatus() == .loggedIn && User.get(.id) != nil && User.get(.firstName) != nil && User.get(.lastName) != nil && User.get(.permissionLevel) != nil && systemPreferences != nil
 		
     }
 	

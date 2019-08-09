@@ -9,7 +9,6 @@
 import UIKit
 
 class RECRewardsTableViewController: UITableViewController {
-
     
     var rewards: [Reward]?
     var refresher: UIRefreshControl?

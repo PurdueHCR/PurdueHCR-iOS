@@ -66,4 +66,9 @@ class UITestSignup: UITestBase {
 		XCTAssertTrue(app.staticTexts["The email address is already in use by another account."].exists, "Could not find error message with that description")
 	}
 	
+    func testSignupPage() {
+		let page = getStartingPage().tapCreateAccountButton()
+		page.fillSignupPage(email: "InvalidEmail", name: "Example Name", password: "validpassword", code: "4N123").waitForDropDownNotification(message: "Failed to Sign Up")
+    }
+	
 }

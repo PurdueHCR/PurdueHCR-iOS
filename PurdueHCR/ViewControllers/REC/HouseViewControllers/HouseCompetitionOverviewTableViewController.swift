@@ -192,7 +192,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
 		}
 		else {
 			var loginTextField: UITextField?
-			var disabledMessage : String?
+			//var disabledMessage : String?
 			let alertController = UIAlertController(title: "Disable House Competition", message: "Enter a message explaining why the house competition is suspended.", preferredStyle: .alert)
 			alertController.addTextField { (textField) -> Void in
 				// Enter the textfield customization code here.

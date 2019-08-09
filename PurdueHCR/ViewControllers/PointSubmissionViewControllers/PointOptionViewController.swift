@@ -64,12 +64,12 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
         if(isFiltering()){
-            cell.typeLabel.text = filteredPoints[indexPath.row].pointDescription
-            cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointDescription
+            cell.typeLabel.text = filteredPoints[indexPath.row].pointName
+            cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
         }
         else{
-            cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointDescription
-            cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointDescription
+            cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+            cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
         }
         return(cell)
     }
@@ -78,6 +78,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 		if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
 			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
 			emptyMessage(message: message)
+			navigationItem.searchController = nil
 			return 0
 		}
 		else if isFiltering() {
@@ -92,9 +93,11 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 		} else {
 			if pointSystem.count > 0 {
 				killEmptyMessage()
+				navigationItem.searchController = searchController
 				return (pointSystem.count)
 			} else {
 				emptyMessage(message: "There are no point types enabled for submitting.")
+				navigationItem.searchController = nil
 				return 0
 			}
 		}
@@ -110,7 +113,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         return pointSystem[section].pointValue.description + " Points" ;
     }
     
-    // method to run when table view cell is tapped
+    // Runs when table view cell is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Segue to the second view controller
@@ -162,19 +165,21 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
+	
     func searchBarIsEmpty() -> Bool {
         // Returns true if the text is empty or nil
         return searchController.searchBar.text?.isEmpty ?? true
     }
-    
+
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         filteredPoints = DataManager.sharedManager.getPoints()!.filter({( point : PointType) -> Bool in
-            return point.pointDescription.lowercased().contains(searchText.lowercased()) && checkPermission(pointType: point)
+            return point.pointName.lowercased().contains(searchText.lowercased()) && checkPermission(pointType: point)
         })
         tableView.reloadData()
     }
+
     func isFiltering() -> Bool {
-        return searchController.isActive && !searchBarIsEmpty()
+		return searchController.isActive && !searchBarIsEmpty()
     }
     
     private func sortIntoPointGroupsWithPermission(arr:[PointType]) -> [PointGroup]{

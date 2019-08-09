@@ -20,7 +20,7 @@ protocol UITestTabBarProtocol {
 }
 
 
-class BasePage {
+class BasePage{
     
     let app: XCUIApplication
     let test: XCTestCase
@@ -117,16 +117,26 @@ class BasePage {
     /// - Parameter link: (String, not String?) Optional String parameter that represents a DeepLink. If String is given it will paste that string into the URL bar.
     private func scanQRCodeWithSafari(qrCodeLink: String = ""){
         // Open iMessage app
-        let safari = Safari.launch()
         if(qrCodeLink == ""){
             //If this line crashes, then there is no String saved into the clipboard
-            Safari.open(URLString: UIPasteboard.general.string!, safariApp: safari)
+			
+			if let url = URL(string: UIPasteboard.general.string!) {
+				UIApplication.shared.open(url)
+			}
         }
         else{
-            Safari.open(URLString: qrCodeLink, safariApp: safari)
+			if let url = URL(string: qrCodeLink) {
+				UIApplication.shared.open(url)
+			}
         }
     }
 	
+	func clearTextField(textField: XCUIElement) {
+		for _ in 1...(textField.value as! String).count {
+			app.keys["delete"].tap()
+		}
+	}
+    
 }
 
 

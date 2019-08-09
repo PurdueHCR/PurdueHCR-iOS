@@ -21,10 +21,12 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	var filteredPoints = [PointLog]()
 	var activityIndicator = UIActivityIndicatorView()
 	
+	let myGreen = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
+	
 	override func viewDidLoad() {
         
 		self.navigationItem.hidesBackButton = true
-    self.activityIndicator.startAnimating()
+    	self.activityIndicator.startAnimating()
 		super.viewDidLoad()
 
 		activityIndicator.center = self.view.center
@@ -92,22 +94,22 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 		cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
 		if(isFiltering()){
             if (filteredPoints[indexPath.row].wasRejected() == true) {
-                cell.activeView.backgroundColor = UIColor.red
+                cell.activeView.backgroundColor = DefinedValues.red
             } else {
-                cell.activeView.backgroundColor = UIColor.green
+                cell.activeView.backgroundColor = DefinedValues.green
             }
 			cell.descriptionLabel.text = filteredPoints[indexPath.row].pointDescription
 			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointDescription
-			cell.nameLabel.text = filteredPoints[indexPath.row].resident
+			cell.nameLabel.text = filteredPoints[indexPath.row].firstName + " " + filteredPoints[indexPath.row].lastName
 		}
 		else{
             if (displayedLogs[indexPath.row].wasRejected() == true) {
-                cell.activeView.backgroundColor = UIColor.red
+                cell.activeView.backgroundColor = DefinedValues.red
             } else {
-                cell.activeView.backgroundColor = UIColor.green
+                cell.activeView.backgroundColor = DefinedValues.green
             }
 			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
-			cell.nameLabel?.text = displayedLogs[indexPath.row].resident
+			cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
 			cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
 		}
 		return cell
@@ -134,7 +136,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 				}
 				
 			})
-			approveAction.backgroundColor = .green
+			approveAction.backgroundColor = DefinedValues.green
 			approveAction.title = "Approve"
 			action.append(approveAction)
 		}
@@ -272,10 +274,11 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	func filterContentForSearchText(_ searchText: String, scope: String = "All") {
 		filteredPoints = displayedLogs.filter({( point : PointLog) -> Bool in
 			let searched = searchText.lowercased()
-			let inName = point.resident.lowercased().contains(searched)
+			let inFirstName = point.firstName.lowercased().contains(searched)
+			let inLastName = point.lastName.lowercased().contains(searched)
 			let inReason = point.type.pointDescription.lowercased().contains(searched)
 			let inDescription = point.pointDescription.lowercased().contains(searched)
-			return (inName || inReason || inDescription)
+			return (inFirstName || inLastName || inReason || inDescription)
 		})
 		tableView.reloadData()
 	}

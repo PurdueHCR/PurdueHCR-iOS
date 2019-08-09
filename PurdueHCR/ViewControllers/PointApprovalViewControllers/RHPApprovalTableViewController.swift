@@ -19,7 +19,9 @@ class RHPApprovalTableViewController: UITableViewController {
     var refresher: UIRefreshControl?
     var displayedLogs = [PointLog]()
 	var index: IndexPath?
-    
+	
+	let green = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         displayedLogs = DataManager.sharedManager.getUnconfirmedPointLogs() ?? [PointLog]()
@@ -79,7 +81,7 @@ class RHPApprovalTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ApprovalCell
         
         cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
-        cell.nameLabel?.text = displayedLogs[indexPath.row].resident
+        cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
         cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
 
         return cell
@@ -119,7 +121,7 @@ class RHPApprovalTableViewController: UITableViewController {
 				}
 				
 			})
-			approveAction.backgroundColor = .green
+			approveAction.backgroundColor = green
 			approveAction.title = "Approve"
 			action.append(approveAction)
 		}

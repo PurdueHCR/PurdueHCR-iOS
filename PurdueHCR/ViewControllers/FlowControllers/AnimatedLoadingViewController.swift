@@ -78,14 +78,16 @@ class AnimatedLoadingViewController: UIViewController {
 				self.addChild(alertController)
 				
 			} else if (error!.code == 2) {
-				let alertController = UIAlertController.init(title: "Failure to Find Account", message: "Please create a new account.", preferredStyle: .alert)
+				/*let alertController = UIAlertController.init(title: "Failure to Find Account", message: "Please create a new account.", preferredStyle: .alert)
 				
 				let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: { (alert) in
 					try! Auth.auth().signOut()
 					Cely.logout()
 				})
 				alertController.addAction(okAction)
-				self.addChild(alertController)
+				self.addChild(alertController)*/
+				
+				self.performSegue(withIdentifier: "test_push", sender: self)
 			}
         })
     }
