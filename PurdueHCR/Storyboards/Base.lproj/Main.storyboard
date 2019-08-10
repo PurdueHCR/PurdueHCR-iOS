@@ -101,58 +101,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
-                    <connections>
-                        <segue destination="L4Q-mG-SWQ" kind="presentation" identifier="showSplashScreen" modalPresentationStyle="currentContext" modalTransitionStyle="coverVertical" id="is6-Lf-ldj"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1722" y="-269"/>
-        </scene>
-        <!--Splash Screen View Controller-->
-        <scene sceneID="Hf4-uM-xE2">
-            <objects>
-                <viewController id="L4Q-mG-SWQ" customClass="SplashScreenViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="q3z-5S-vXv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's New" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8m-rb-uhH">
-                                <rect key="frame" x="20" y="95" width="335" height="39"/>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1IE-UA-QE4">
-                                <rect key="frame" x="75" y="597" width="225" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="sTo-ml-kFo"/>
-                                </constraints>
-                                <state key="normal" title="Done"/>
-                                <connections>
-                                    <action selector="doneAction:" destination="L4Q-mG-SWQ" eventType="touchUpInside" id="Y0h-Fi-FWU"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="H8m-rb-uhH" firstAttribute="leading" secondItem="Ywg-kw-3K4" secondAttribute="leading" constant="20" id="0ZU-Tg-kPF"/>
-                            <constraint firstItem="Ywg-kw-3K4" firstAttribute="bottom" secondItem="1IE-UA-QE4" secondAttribute="bottom" constant="20" id="15H-XD-tSI"/>
-                            <constraint firstItem="1IE-UA-QE4" firstAttribute="centerX" secondItem="q3z-5S-vXv" secondAttribute="centerX" id="DAl-Vw-N93"/>
-                            <constraint firstItem="1IE-UA-QE4" firstAttribute="leading" secondItem="Ywg-kw-3K4" secondAttribute="leading" constant="75" id="FOm-Kk-Qef"/>
-                            <constraint firstItem="H8m-rb-uhH" firstAttribute="top" secondItem="Ywg-kw-3K4" secondAttribute="top" constant="75" id="FSG-ro-eNB"/>
-                            <constraint firstItem="Ywg-kw-3K4" firstAttribute="trailing" secondItem="H8m-rb-uhH" secondAttribute="trailing" constant="20" id="VZd-eM-HRV"/>
-                            <constraint firstItem="Ywg-kw-3K4" firstAttribute="trailing" secondItem="1IE-UA-QE4" secondAttribute="trailing" constant="75" id="hV6-dH-YLR"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Ywg-kw-3K4"/>
-                    </view>
-                    <connections>
-                        <outlet property="doneButton" destination="1IE-UA-QE4" id="9be-0x-0v6"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Jdv-y4-rt4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1722" y="489"/>
         </scene>
     </scenes>
 </document>

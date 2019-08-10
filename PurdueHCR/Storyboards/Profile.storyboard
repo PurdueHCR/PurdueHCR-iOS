@@ -119,10 +119,10 @@
             </objects>
             <point key="canvasLocation" x="1485.5999999999999" y="-271.664167916042"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Submitted Points-->
         <scene sceneID="YF4-kF-k5v">
             <objects>
-                <tableViewController storyboardIdentifier="UserPointsController" id="rKx-so-4qo" customClass="UserPointsTableViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="UserPointsController" title="Submitted Points" id="rKx-so-4qo" customClass="UserPointsTableViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="bOb-uw-mC8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -222,10 +222,10 @@
             </objects>
             <point key="canvasLocation" x="2867" y="-409"/>
         </scene>
-        <!--Notifications View Controller-->
+        <!--Notifications-->
         <scene sceneID="c3K-dR-ZGZ">
             <objects>
-                <tableViewController id="69o-Cx-E5f" customClass="NotificationsViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Notifications" id="69o-Cx-E5f" customClass="NotificationsViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="US5-fF-vhr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

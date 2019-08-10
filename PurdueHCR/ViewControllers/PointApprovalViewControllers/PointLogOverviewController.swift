@@ -200,10 +200,11 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			let verticalConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 35)
 			let widthConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
 			
+			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
 			// TODO: Rename
 			let thistest = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: pointDescriptionView, attribute: .height, multiplier: 1, constant: 45)
+			NSLayoutConstraint.activate([thistest])
 			
-			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, thistest])
 			
 		} else {
 		
@@ -214,6 +215,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			messageView.layer.shadowOffset = CGSize.zero
 			messageView.layer.shadowRadius = 5
 			messageView.setLog(messageLog: mess[indexPath.row - 1])
+			messageView.sizeToFit()
 			cell.addSubview(messageView)
 			
 			messageView.translatesAutoresizingMaskIntoConstraints = false
@@ -221,10 +223,10 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			let verticalConstraint = NSLayoutConstraint(item: messageView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 35)
 			let widthConstraint = NSLayoutConstraint(item: messageView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
 			
+			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
 			// TODO: Rename
 			let thistest = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: messageView, attribute: .height, multiplier: 1, constant: 45)
-			
-			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, thistest])
+			NSLayoutConstraint.activate([thistest])
 			
 		}
 		

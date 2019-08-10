@@ -123,61 +123,7 @@ class UserPointsTableViewController: UITableViewController, UISearchResultsUpdat
 		}
 		return cell
 	}
-	
-	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		var action : [UIContextualAction] = []
-		var log : PointLog
-		if (isFiltering()) {
-			log = self.filteredPoints[indexPath.row]
-		} else {
-			log = self.displayedLogs[indexPath.row]
-		}
-		if ((log.wasHandled && log.wasRejected()) || (!log.wasHandled && !log.wasRejected())) {
-			let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-				self.updatePointLogStatus(log: log, approve: true, updating: true, indexPath: indexPath)
-				if(self.displayedLogs.count == 0){
-					let indexSet = NSMutableIndexSet()
-					indexSet.add(0)
-					success(true)
-				}
-				else{
-					success(true)
-				}
-				
-			})
-			approveAction.backgroundColor = green
-			approveAction.title = "Approve"
-			action.append(approveAction)
-		}
-		return UISwipeActionsConfiguration(actions: action)
-	}
-	
-	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		var action : [UIContextualAction] = []
-		var log : PointLog
-		if (isFiltering()) {
-			log = self.filteredPoints[indexPath.row]
-		} else {
-			log = self.displayedLogs[indexPath.row]
-		}
-		if (!log.wasRejected()) {
-			let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-				self.updatePointLogStatus(log: log, approve: false, updating: true, indexPath: indexPath)
-				if(self.displayedLogs.count == 0){
-					let indexSet = NSMutableIndexSet()
-					indexSet.add(0)
-					success(true)
-				}
-				else{
-					success(true)
-				}
-			})
-			rejectAction.backgroundColor = .red
-			rejectAction.title = "Reject"
-			action.append(rejectAction)
-		}
-		return UISwipeActionsConfiguration(actions: action)
-	}
+
 	
 	func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
