@@ -10,16 +10,41 @@ import Foundation
 import UIKit
 import Firebase
 
+class DefinedValues {
+	
+	// Colors
+	
+	static let blue = UIColor.init(red: 0.00/255.0, green: 122.0/255.0, blue: 1.00, alpha: 1.0)
+	static let yellow = UIColor.init(red: 1.00, green: 204.0/255.0, blue: 0.0, alpha: 1.0)
+	static let red = UIColor.init(red: 1.00, green: 59.0/255.0, blue: 48.0/255.0, alpha: 1.0)
+	static let green = UIColor.init(red: 52.0/255.0, green: 199.0/255.0, blue: 89.0/255.0, alpha: 1.0)
+	
+	// Raw Values
+	
+	static let radius : CGFloat = 10.0
+	
+}
+
 class PointType {
+	
+	enum PermissionLevel: Int {
+		case resident = 0
+		case rhp = 1
+		case rec = 2
+		case fhp = 3
+	}
+	
     var pointValue:Int
+	var pointName:String
     var pointDescription:String
     var residentCanSubmit:Bool
     var pointID:Int
-    var permissionLevel:Int
+    var permissionLevel:PermissionLevel
     var isEnabled:Bool
     
-    init(pv:Int,pd:String,rcs:Bool,pid:Int, permissionLevel:Int, isEnabled:Bool){
+	init(pv:Int,pn:String,pd:String,rcs:Bool,pid:Int, permissionLevel:PermissionLevel, isEnabled:Bool){
         self.pointValue = pv
+		self.pointName = pn
         self.pointDescription = pd
         self.residentCanSubmit = rcs
         self.pointID = pid
@@ -33,13 +58,11 @@ class House {
     var houseID: String
     var totalPoints: Int
     var hexColor: String
-    var numberOfResidents: Int
     var topScoreUsers : [UserModel]?
-    init(id:String, points:Int,hexColor:String, numberOfResidents:Int ){
+    init(id:String, points:Int, hexColor:String){
         self.houseID = id
         self.totalPoints = points
         self.hexColor = hexColor
-        self.numberOfResidents = numberOfResidents
     }
     
     
@@ -73,17 +96,20 @@ class PointLog {
     //Values stored in Firebase
     var approvedBy:String?
     var approvedOn:Timestamp?
-    var pointDescription:String;
-    var floorID:String;
-    var type:PointType;
-    var resident:String;
-    var residentRef:DocumentReference
-    var residentReportTime:Timestamp?
-    var logID:String? = nil;
+    var pointDescription:String
+    var floorID:String
+    var type:PointType
+	var firstName:String
+	var lastName:String
+	var residentId:String
+    var dateSubmitted:Timestamp?
+	var dateOccurred:Timestamp?
+    var logID:String? = nil
+	var rhpNotifications:Int
+	var residentNotifications:Int
     
     //Values stayed local
-    var wasHandled:Bool;
-    
+    var wasHandled:Bool
     
     /// Initialization for newly created points. If the points are being pulled from Firebase database, use the other init method.
     ///
@@ -93,16 +119,21 @@ class PointLog {
     ///   - type: PointType for which the point is being submitted for
     ///   - floorID: Id of the floor for who submitted it
     ///   - residentRef: Firebase reference to the resident who submitted it
-    init(pointDescription:String, resident:String, type:PointType, floorID:String, residentRef:DocumentReference){
+	init(pointDescription:String, firstName:String, lastName:String, type:PointType, floorID:String, residentId:String, dateOccurred:Timestamp = Timestamp.init()){
         self.pointDescription = pointDescription
         self.floorID = floorID
         self.type = type
-        self.resident = resident
-        self.residentRef = residentRef
-        self.residentReportTime = Timestamp.init()
+        self.firstName = firstName
+		self.lastName = lastName
+		self.residentId = residentId
+        self.dateOccurred = dateOccurred
+		self.dateSubmitted = Timestamp.init()
         self.wasHandled = false
+		// TODO: Fix
+		self.rhpNotifications = 0
+		self.residentNotifications = 0
     }
-    
+	
     /// Initialization method for points pulled from Firebase Database
     ///
     /// - Parameters:
@@ -114,13 +145,16 @@ class PointLog {
         
         self.floorID = document["FloorID"] as! String
         self.pointDescription = document["Description"] as! String
-        self.resident = document["Resident"] as! String
-        self.residentRef = document["ResidentRef"] as! DocumentReference
+		self.firstName = document["ResidentFirstName"] as! String
+		self.lastName = document["ResidentLastName"] as! String
+		self.residentId = document["ResidentId"] as! String
         self.approvedBy = document["ApprovedBy"] as! String?
         self.approvedOn = document["ApprovedOn"] as! Timestamp?
-        self.residentReportTime = document["ResidentReportTime"] as! Timestamp?
-        
-        
+        self.dateOccurred = document["DateOccurred"] as! Timestamp?
+		self.dateSubmitted = document["DateSubmitted"] as! Timestamp?
+		self.rhpNotifications = document["RHPNotifications"] as! Int
+		self.residentNotifications = document["ResidentNotifications"] as! Int
+		
         let idValue = (document["PointTypeID"] as! Int)
         if(idValue < 1){
             self.wasHandled = false
@@ -130,8 +164,10 @@ class PointLog {
         }
         self.type = DataManager.sharedManager.getPointType(value: abs(idValue))
         if(floorID == "Shreve"){
-            resident = SHREVE_RESIDENT+resident
+            firstName = SHREVE_RESIDENT + firstName
         }
+		
+		// TODO: Is the above Shreve part actually working???
     }
     
     func wasRejected() -> Bool {
@@ -144,7 +180,7 @@ class PointLog {
     /// - Parameters:
     ///   - approved: Bool Point is approved
     ///   - preapproved: Bool Point was preapproved
-    func updateApprovalStatus( approved:Bool,preapproved:Bool = false){
+    func updateApprovalStatus(approved:Bool, preapproved:Bool = false){
         wasHandled = true
         if(approved){
             //Approve the point
@@ -157,7 +193,9 @@ class PointLog {
                 self.approvedBy = "Preapproved"
             }
             else{
-                self.approvedBy = User.get(.name) as! String?
+				let firstName = User.get(.firstName) as! String
+				let lastName = User.get(.lastName) as! String
+				self.approvedBy = firstName + " " + lastName
             }
             
             self.approvedOn = Timestamp.init()
@@ -167,7 +205,9 @@ class PointLog {
             if(!wasRejected()){
                 //Point was not already rejected
                 self.pointDescription = REJECTED_STRING + self.pointDescription
-                self.approvedBy = User.get(.name) as! String?
+				let firstName = User.get(.firstName) as! String
+				let lastName = User.get(.lastName) as! String
+				self.approvedBy = firstName + " " + lastName
                 self.approvedOn = Timestamp.init()
             }
             //else point was already rejected so it does not need ot be updated
@@ -179,19 +219,22 @@ class PointLog {
         if(!wasHandled){
             pointTypeIDValue = pointTypeIDValue * -1
         }
-        var residentName = self.resident
-        if(floorID == "Shreve"){
-            residentName = String(residentName.dropFirst(SHREVE_RESIDENT.count))
-            
-        }
+        var firstName = self.firstName
+        if(firstName.contains(SHREVE_RESIDENT)){
+            firstName = String(firstName.dropFirst(SHREVE_RESIDENT.count))
+		}
 
         var dict: [String : Any] = [
             "Description":self.pointDescription,
             "FloorID":self.floorID,
             "PointTypeID":pointTypeIDValue,
-            "Resident":residentName,
-            "ResidentRef":self.residentRef,
-            "ResidentReportTime":self.residentReportTime!
+            "ResidentFirstName":firstName,
+			"ResidentLastName":self.lastName,
+            "ResidentId":self.residentId,
+            "DateOccurred":self.dateOccurred!,
+			"DateSubmitted":self.dateSubmitted!,
+			"ResidentNotifications":0,
+			"RHPNotifications":0
         ]
         if(self.approvedBy != nil){
             dict["ApprovedBy"] = self.approvedBy!
@@ -212,10 +255,66 @@ extension PointLog: Equatable, CustomStringConvertible {
     static func == (lhs: PointLog, rhs: PointLog) -> Bool {
         return
             lhs.type.pointID == rhs.type.pointID &&
-                lhs.resident == rhs.resident &&
+                lhs.firstName == rhs.firstName &&
+				lhs.lastName == rhs.lastName &&
                 lhs.pointDescription == rhs.pointDescription &&
                 lhs.logID == rhs.logID
     }
+}
+
+class MessageLog {
+	
+	enum MessageType: String {
+		case comment = "comment"
+		case approve = "approve"
+		case reject = "reject"
+	}
+	
+	var creationDate: Timestamp
+	var message: String
+	var senderFirstName: String
+	var senderLastName: String
+	var senderPermissionLevel: PointType.PermissionLevel
+	var messageType: MessageType
+	
+	init(creationDate: Timestamp, message: String, senderFirstName: String, senderLastName: String, senderPermissionLevel: PointType.PermissionLevel, messageType: MessageType) {
+		self.creationDate = creationDate
+		self.message = message
+		self.senderFirstName = senderFirstName
+		self.senderLastName = senderLastName
+		self.senderPermissionLevel = senderPermissionLevel
+		self.messageType = messageType
+	}
+	
+	/// Initialization method for points pulled from Firebase Database
+	///
+	/// - Parameters:
+	///   - id: FirebaseId of the log
+	///   - document: Dictionary that was returned from the database
+	init(document:[String:Any]){
+		
+		self.creationDate = document["CreationDate"] as! Timestamp
+		self.message = document["Message"] as! String
+		self.senderFirstName = document["SenderFirstName"] as! String
+		self.senderLastName = document["SenderLastName"] as! String
+		self.senderPermissionLevel = document["SenderPermissionLevel"] as! PointType.PermissionLevel
+		self.messageType = MessageType(rawValue: document["MessageType"] as! String)!
+	}
+	
+	func convertToDict()->[String:Any]{
+		
+		let dict: [String : Any] = [
+			"CreationDate":self.creationDate,
+			"Message":self.message,
+			"SenderFirstName":senderFirstName,
+			"SenderLastName":self.senderLastName,
+			"SenderPermissionLevel":self.senderPermissionLevel.rawValue,
+			"MessageType":self.messageType.rawValue
+		]
+		
+		return dict
+	}
+	
 }
 
 class Reward {
@@ -233,14 +332,50 @@ class Reward {
 }
 
 class HouseCode {
+	
+	// TODO: Make house and floor ids optional bc of REC and FHP
+	
     var code:String
+	var codeName:String
+	var permissionLevel:Int
     var house:String
     var floorID:String
-    init(code:String,house:String, floorID:String){
+	init(code:String, codeName:String = "", permissionLevel:Int = 0, house:String = "", floorID:String = ""){
         self.code = code
+		self.codeName = codeName
+		self.permissionLevel = permissionLevel
         self.house = house
         self.floorID = floorID
     }
+	
+	/// Initialization method for house codes pulled from Firebase Database
+	///
+	/// - Parameters:
+	///   - id: FirebaseId of the log
+	///   - document: Dictionary that was returned from the database
+	init(id:String,document:[String:Any]){
+		
+		self.code = document["Code"] as! String
+		self.codeName = document["CodeName"] as! String
+		self.permissionLevel = document["PermissionLevel"] as! Int
+		self.floorID = document["FloorID"] as! String
+		self.house = document["House"] as! String
+		
+	}
+	
+	func convertToDict()->[String:Any]{
+		
+		let dict: [String : Any] = [
+			"Code":self.code,
+			"CodeName":self.codeName,
+			"PermissionLevel":permissionLevel,
+			"FloorID":self.floorID,
+			"House":self.house,
+		]
+		
+		return dict
+	}
+	
 }
 
 class Link {
@@ -267,6 +402,15 @@ class Link {
         self.pointTypeID = pointTypeID
         self.enabled = false
         self.archived = false
+    }
+    
+    func getIOSDeepLink() -> String {
+        return "hcrpoint://addpoints/"+id
+        
+    }
+    
+    func getAndroidDeepLink() -> String {
+        return "intent://addpoints/"+id+"#Intent;scheme=hcrpoint;package=com.hcrpurdue.jason.hcrhousepoints;end"
     }
 }
 
@@ -316,5 +460,14 @@ class SystemPreferences {
 		self.isHouseEnabled = isHouseEnabled
 		self.houseEnabledMessage = houseEnabledMessage
 	}
+	
+	func convertToDictionary() -> [String:Any] {
+		let dict : [String:Any] = [
+			"isHouseEnabled":isHouseEnabled,
+			"houseEnabledMessage":houseEnabledMessage
+		]
+		return dict
+	}
+	
 }
 

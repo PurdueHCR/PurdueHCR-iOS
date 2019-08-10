@@ -28,7 +28,7 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
         }
-        else if( p == 1){
+        else if (p == 1){
             //RHP Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
@@ -36,7 +36,7 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkQRCodeViewController())
 
         }
-        else if( p == 2){
+        else if (p == 2){
             //REA/REC Controllers
             viewControllers.append(linkRECHouseViewController())
             viewControllers.append(linkQRCodeViewController())
@@ -44,9 +44,18 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkRECRewardsViewController())
 
         }
+		else if (p == 3) {
+			//FHP Controllers
+			viewControllers.append(linkProfileViewController())
+			viewControllers.append(linkQRCodeViewController())
+		}
         // Do any additional setup after loading the view.
         self.setViewControllers(viewControllers, animated: false)
     }
+	
+	override func viewDidAppear(_ animated: Bool) {
+		//self.performSegue(withIdentifier: "showSplashScreen", sender: nil)
+	}
     
     func linkPointSubmissionViewController() -> UIViewController {
         let pointSubmissionViewController = UIStoryboard(name: "PointSubmission", bundle: nil).instantiateViewController(withIdentifier: "Point_Submission_Initial") as! UINavigationController

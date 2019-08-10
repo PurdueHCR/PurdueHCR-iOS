@@ -13,8 +13,11 @@ import Cely
 class AnimatedLoadingViewController: UIViewController {
 
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var retryButton: UIButton!
+    @IBOutlet var signOutButton: UIButton!
     
     let images = [#imageLiteral(resourceName: "Platinum"),#imageLiteral(resourceName: "Copper"),#imageLiteral(resourceName: "Titanium"),#imageLiteral(resourceName: "Silver"),#imageLiteral(resourceName: "Palladium")]
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +42,16 @@ class AnimatedLoadingViewController: UIViewController {
 			self.imageView.layer.shadowRadius = 2
 			self.imageView.layer.shadowOpacity = 100
 			self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+            
+            signOutButton.layer.borderWidth = 1.0
+            signOutButton.layer.borderColor = UIColor.black.cgColor
+            signOutButton.layer.cornerRadius = 5.0
+            
+            retryButton.layer.borderWidth = 1.0
+            retryButton.layer.borderColor = UIColor.black.cgColor
+            retryButton.layer.cornerRadius = 5.0
+            
+            Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(displayTimeoutButtons), userInfo: nil, repeats: false)
             finishLoadinng()
 
         }
@@ -49,8 +62,10 @@ class AnimatedLoadingViewController: UIViewController {
     }
     
     func finishLoadinng(){
+        resetCount()
         DataManager.sharedManager.initializeData(finished: {(error) in
 			if (error == nil) {
+                self.activityIndicator.stopAnimating()
 				self.performSegue(withIdentifier: "doneWithInit", sender: nil)
 			} else if (error!.code == 1) {
 				let alertController = UIAlertController.init(title: "Error", message: "Data could not be loaded.", preferredStyle: .alert)
@@ -63,14 +78,16 @@ class AnimatedLoadingViewController: UIViewController {
 				self.addChild(alertController)
 				
 			} else if (error!.code == 2) {
-				let alertController = UIAlertController.init(title: "Failure to Find Account", message: "Please create a new account.", preferredStyle: .alert)
+				/*let alertController = UIAlertController.init(title: "Failure to Find Account", message: "Please create a new account.", preferredStyle: .alert)
 				
 				let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: { (alert) in
 					try! Auth.auth().signOut()
 					Cely.logout()
 				})
 				alertController.addAction(okAction)
-				self.addChild(alertController)
+				self.addChild(alertController)*/
+				
+				self.performSegue(withIdentifier: "test_push", sender: self)
 			}
         })
     }
@@ -86,34 +103,41 @@ class AnimatedLoadingViewController: UIViewController {
         self.imageView.image = toImage
     }
     
-    //This will be for showing announcements
-	/*
-	func createNewLaunchAlert(){
-        let alert = UIAlertController(title: "Are you interested in joining Development Committee?", message: "Development Committee is looking for software developers, marketers, and designers to help with the future of Purdue HCR. If you are interested in helping, checkout our Discord channel!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Take me to the Discord", style: UIAlertAction.Style.default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            UIApplication.shared.open(URL(string: "https://discord.gg/jptXrYG")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-            self.finishLoadinng()
-        }))
-        alert.addAction(UIAlertAction(title: "No thanks", style: UIAlertAction.Style.default, handler: {(action)in
-            alert.dismiss(animated: true, completion: self.finishLoadinng)
-            self.finishLoadinng()
-        }))
-        self.present(alert, animated: true, completion: nil)
+
+    @objc func displayTimeoutButtons() {
+        if (self.isViewLoaded && ((self.view?.window) != nil)) {
+            // viewController is visible
+            retryButton.isHidden = false
+            signOutButton.isHidden = false
+        }
     }
-	*/
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func hideTimeoutButtons() {
+        retryButton.isHidden = true
+        signOutButton.isHidden = true
+        
     }
-    */
+    
+    private func resetCount(){
+        let counter = AppUtils.AtomicCounter(identifier: "initializeData")
+        counter.reset()
+    }
 
+    
+    @IBAction func retryAction(_ sender: Any) {
+        resetCount()
+        hideTimeoutButtons()
+        Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(displayTimeoutButtons), userInfo: nil, repeats: false)
+        finishLoadinng()
+    }
+    
+    @IBAction func signOutAction(_ sender: Any) {
+        resetCount()
+        hideTimeoutButtons()
+        try! Auth.auth().signOut() // Sign out from firebase
+        Cely.logout()
+    }
+    
 }
 
 // Helper function inserted by Swift 4.2 migrator.

@@ -51,6 +51,12 @@ class AppUtils {
                 value += 1
             }
         }
+        
+        func reset(){
+            queue.sync {
+                value = 0
+            }
+        }
     }
     
 }
@@ -79,6 +85,7 @@ extension UITableViewController {
         let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
         let messageLabel = UILabel(frame: rect)
         messageLabel.text = message
+		messageLabel.accessibilityIdentifier = "Empty Message"
         messageLabel.textColor = UIColor.black
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = .center;

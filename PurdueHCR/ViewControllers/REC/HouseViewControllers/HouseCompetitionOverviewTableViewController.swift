@@ -10,12 +10,14 @@ import UIKit
 import FirebaseAuth
 import Cely
 import PopupKit
+import NotificationBannerSwift
 
 class HouseCompetitionOverviewTableViewController: UITableViewController {
 
     @IBOutlet var houseGraph: HousePointsCompareView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
-    
+	@IBOutlet weak var competitionSwitch: UISwitch!
+	
     let houses = ["Copper","Palladium","Platinum","Silver","Titanium"]
     @IBOutlet var houseSelectionControl: UISegmentedControl!
     @IBOutlet var firstPlaceLabel: UILabel!
@@ -42,6 +44,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refresher
         setPlaceLabels(house: getHouseWithName(name: "Copper")!)
+		competitionSwitch.isOn = DataManager.sharedManager.systemPreferences!.isHouseEnabled
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -94,6 +97,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         let distance = 20
         let buttonWidth = width - (distance * 2)
         let borderWidth : CGFloat = 2
+		let color = UIColor.lightGray
         
         let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
         contentView.backgroundColor = UIColor.white
@@ -106,7 +110,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         let reportButton = UIButton.init(frame: CGRect.init(x: distance, y: 115, width: buttonWidth, height: 75))
         reportButton.layer.cornerRadius = radius
         reportButton.layer.borderWidth = borderWidth
-        reportButton.layer.borderColor = UIColor.darkGray.cgColor
+        reportButton.layer.borderColor = color.cgColor
         reportButton.setTitleColor(UIColor.black, for: .normal)
         reportButton.setTitle("Report a bug", for: .normal)
         //button.backgroundColor = color
@@ -115,7 +119,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         let logoutButton = UIButton.init(frame: CGRect.init(x: distance, y: 25, width: buttonWidth, height: 75))
         logoutButton.layer.cornerRadius = radius
         logoutButton.layer.borderWidth = borderWidth
-        logoutButton.layer.borderColor = UIColor.darkGray.cgColor
+        logoutButton.layer.borderColor = color.cgColor
         logoutButton.setTitleColor(UIColor.black, for: .normal)
         logoutButton.setTitle("Logout", for: .normal)
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
@@ -123,7 +127,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 45, y: height - 75, width: 90, height: 50))
         closeButton.layer.cornerRadius = 25
         closeButton.setTitle("Cancel", for: .normal)
-        closeButton.backgroundColor = UIColor.darkGray
+        closeButton.backgroundColor = color
         closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         contentView.addSubview(reportButton)
@@ -163,7 +167,60 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
     @objc func reportBug(sender: UIButton!) {
         UIApplication.shared.open(URL(string: "https://sites.google.com/view/hcr-points/home")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
-    
+	
+	@IBAction func changeHouseEnabledStatus(_ sender: Any) {
+		if (competitionSwitch.isOn) {
+			let alertController = UIAlertController(title: "Enable House Competition", message: "Are you sure you want to enable the House Competition?", preferredStyle: .alert)
+			let confirm = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+				DataManager.sharedManager.systemPreferences?.isHouseEnabled = self.competitionSwitch.isOn
+				DataManager.sharedManager.updateSystemPreferences(withCompletion: { (err) in
+					if (err == nil) {
+						self.notify(title: "House Competition Enabled", subtitle: "The House Competition was successfully enabled.", style: .success)
+					} else {
+						self.notify(title: "House Competition was not updated.", subtitle: "There was an error.", style: .success)
+						self.competitionSwitch.setOn(false, animated: true)
+						DataManager.sharedManager.systemPreferences?.isHouseEnabled = self.competitionSwitch.isOn
+					}
+				})
+			})
+			let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+				self.competitionSwitch.setOn(false, animated: true)
+			}
+			alertController.addAction(confirm)
+			alertController.addAction(cancel)
+			present(alertController, animated: true, completion: nil)
+		}
+		else {
+			var loginTextField: UITextField?
+			//var disabledMessage : String?
+			let alertController = UIAlertController(title: "Disable House Competition", message: "Enter a message explaining why the house competition is suspended.", preferredStyle: .alert)
+			alertController.addTextField { (textField) -> Void in
+				// Enter the textfield customization code here.
+				loginTextField = textField
+				loginTextField?.placeholder = "Enter a message"
+			}
+			let confirm = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+				DataManager.sharedManager.systemPreferences?.isHouseEnabled = self.competitionSwitch.isOn
+				DataManager.sharedManager.systemPreferences?.houseEnabledMessage = loginTextField!.text!
+				DataManager.sharedManager.updateSystemPreferences(withCompletion: { (err) in
+					if (err == nil) {
+						self.notify(title: "House Competition Disabled", subtitle: "The House Competition was successfully disabled.", style: .success)
+					} else {
+						self.notify(title: "House Competition was not updated.", subtitle: "There was an error.", style: .success)
+						self.competitionSwitch.setOn(true, animated: true)
+						DataManager.sharedManager.systemPreferences?.isHouseEnabled = self.competitionSwitch.isOn
+					}
+				})
+			})
+			let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+				self.competitionSwitch.setOn(true, animated: true)
+			}
+			alertController.addAction(confirm)
+			alertController.addAction(cancel)
+			present(alertController, animated: true, completion: nil)
+		}
+	}
+	
     // This function is called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "show_point_breakdown"){

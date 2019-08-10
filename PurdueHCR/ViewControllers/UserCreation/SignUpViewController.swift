@@ -14,10 +14,8 @@ import Cely
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var emailField: UITextField!
-    @IBOutlet var nameField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var verifyPasswordField: UITextField!
-    @IBOutlet var codeField: UITextField!
     @IBOutlet var signUpButton: UIButton!
 	@IBOutlet weak var imageView: UIImageView!
 	
@@ -50,35 +48,31 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         fortyPercent = self.view.frame.size.height * 0.4
         self.emailField.delegate = self
-        self.nameField.delegate = self
         self.passwordField.delegate = self
         self.verifyPasswordField.delegate = self
-        self.codeField.delegate = self
-        
-        emailField.layer.cornerRadius = 5
+		
+		// Actually use system colors once iOS 13 drops
+		let systemGray5 = UIColor.init(red: 229.0/255.0, green: 229.0/255.0, blue: 234.0/255.0, alpha: 1.0)
+		
+        emailField.layer.cornerRadius = 10
         emailField.layer.masksToBounds = true
-        emailField.layer.borderWidth = 1
-        emailField.layer.borderColor = UIColor.black.cgColor
-        nameField.layer.cornerRadius = 5
-        nameField.layer.masksToBounds = true
-        nameField.layer.borderWidth = 1
-        nameField.layer.borderColor = UIColor.black.cgColor
-        passwordField.layer.cornerRadius = 5
+		emailField.backgroundColor = systemGray5
+        //emailField.layer.borderWidth = 1
+        //emailField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordField.layer.cornerRadius = 10
         passwordField.layer.masksToBounds = true
-        passwordField.layer.borderWidth = 1
-        passwordField.layer.borderColor = UIColor.black.cgColor
-        verifyPasswordField.layer.cornerRadius = 5
+		passwordField.backgroundColor = systemGray5
+        //passwordField.layer.borderWidth = 1
+        //passwordField.layer.borderColor = UIColor.lightGray.cgColor
+        verifyPasswordField.layer.cornerRadius = 10
         verifyPasswordField.layer.masksToBounds = true
-        verifyPasswordField.layer.borderWidth = 1
-        verifyPasswordField.layer.borderColor = UIColor.black.cgColor
-        codeField.layer.cornerRadius = 5
-        codeField.layer.masksToBounds = true
-        codeField.layer.borderWidth = 1
-        codeField.layer.borderColor = UIColor.black.cgColor
-        signUpButton.layer.cornerRadius = 5
+		verifyPasswordField.backgroundColor = systemGray5
+        //verifyPasswordField.layer.borderWidth = 1
+        //verifyPasswordField.layer.borderColor = UIColor.lightGray.cgColor
+        signUpButton.layer.cornerRadius = 10
         signUpButton.layer.masksToBounds = true
-        signUpButton.layer.borderWidth = 1
-        signUpButton.layer.borderColor = UIColor.black.cgColor
+        //signUpButton.layer.borderWidth = 1
+        //signUpButton.layer.borderColor = UIColor.black.cgColor
         
         
     }
@@ -89,33 +83,25 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let email = emailField.text
         let password = passwordField.text
         let verifyPassword = verifyPasswordField.text
-        let name = nameField.text
-        let code = codeField.text
         
         
-        
-        if( hasEmptyFields(emailOptional: email, passwordOptional: password, verifyPasswordOptional: verifyPassword, nameOptional: name, codeOptional: code)){
+        if( hasEmptyFields(emailOptional: email, passwordOptional: password, verifyPasswordOptional: verifyPassword)){
             self.notify(title: "Failed to Sign Up", subtitle: "Please enter all information.", style: .danger)
             self.signUpButton.isEnabled = true
             self.activityIndicator.stopAnimating()
         }
+		else if (password?.split(separator: " ").count != 1) {
+			self.notify(title: "Failed to Sign Up", subtitle: "Password contains invalid characters.", style: .danger)
+			self.signUpButton.isEnabled = true
+			self.activityIndicator.stopAnimating()
+		}
         else if ( password! != verifyPassword){
             self.notify(title: "Failed to Sign Up", subtitle: "Please verify your passwords are the same.", style: .danger)
             self.signUpButton.isEnabled = true
             self.activityIndicator.stopAnimating()
         }
-        else if ( name?.split(separator: " ").count != 2){
-            self.notify(title: "Failed to Sign Up", subtitle: "Please enter your preferred first and last name.", style: .danger)
-            self.signUpButton.isEnabled = true
-            self.activityIndicator.stopAnimating()
-        }
         else if ( !isValidEmail(testStr: email!)){
             self.notify(title: "Failed to Sign Up", subtitle: "Please enter a valid Purdue email address.", style: .danger)
-            self.signUpButton.isEnabled = true
-            self.activityIndicator.stopAnimating()
-        }
-        else if(!codeIsValid(code:code!)){
-            self.notify(title: "Failed to Sign Up", subtitle: "Code is Invalid.", style: .danger)
             self.signUpButton.isEnabled = true
             self.activityIndicator.stopAnimating()
         }
@@ -130,70 +116,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     return
                 }
                 //they are signed in
-                // find the house that their code matches and go to the database and create their user
-                //
-                User.save(name as Any, as: .name)
-                User.save(user.uid, as: .id)
-                DataManager.sharedManager.createUser(onDone: ({ (err:Error?) in
-                    if err != nil {
-                        self.notify(title: "Failed to Sign Up", subtitle: "Failed to create user.", style: .danger)
-                        self.signUpButton.isEnabled = true
-                        self.activityIndicator.stopAnimating()
-                        try! Auth.auth().signOut()
-                    } else {
-						self.initializeData()
-                    }
-                }))
+				User.save(user.uid, as: .id)
+				self.performSegue(withIdentifier: "code_push", sender: self)
             }
-        }
-        
+			
+		}
+		
         
     }
 	
-	func initializeData() {
-		DataManager.sharedManager.initializeData(finished:{(initError) in
-		if (initError == nil) {
-			Cely.changeStatus(to: .loggedIn)
-			self.activityIndicator.stopAnimating()
-		} else if (initError!.code == 1) {
-			let alertController = UIAlertController.init(title: "Error", message: "Data could not be loaded.", preferredStyle: .alert)
-			
-			let retryOption = UIAlertAction.init(title: "Try Again", style: .default, handler: { (alert) in
-				self.initializeData()
-			})
-			
-			alertController.addAction(retryOption)
-			self.addChild(alertController)
-			
-		} else if (initError!.code == 2) {
-			let alertController = UIAlertController.init(title: "Failure to Find Account", message: "Please create a new account.", preferredStyle: .alert)
-			
-			let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: { (alert) in
-				try! Auth.auth().signOut()
-				Cely.logout()
-			})
-			alertController.addAction(okAction)
-			self.addChild(alertController)
-		}
-		})
-	}
-    
-    
-    // code is format [houseIdentifier:roomNumber]
-    func codeIsValid(code:String)-> Bool{
-        let codes = DataManager.sharedManager.getHouseCodes()!
-        for houseCode in codes {
-            if(code == houseCode.code){
-                User.save(houseCode.house, as: .house)
-                User.save(houseCode.floorID, as: .floorID)
-                User.save(0 as Any, as: .permissionLevel)
-                User.save(0 as Any, as: .points)
-                return true
-            }
-        }
-        return false
-    }
-    
+	
     func isValidEmail(testStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@purdue.edu"
         
@@ -201,10 +133,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return emailTest.evaluate(with: testStr)
     }
     
-    func hasEmptyFields(emailOptional:String?, passwordOptional:String?, verifyPasswordOptional:String?, nameOptional:String?, codeOptional:String?) -> Bool{
-        if let email = emailOptional, let password = passwordOptional, let verifyPassword = verifyPasswordOptional, let name = nameOptional, let code = codeOptional {
+    func hasEmptyFields(emailOptional:String?, passwordOptional:String?, verifyPasswordOptional:String? ) -> Bool{
+        if let email = emailOptional, let password = passwordOptional, let verifyPassword = verifyPasswordOptional {
             
-            return (email == "" || password == "" || verifyPassword == "" || name == "" || code == "" )
+            return (email == "" || password == "" || verifyPassword == "" )
         }
         return false
     }
@@ -212,8 +144,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func back(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

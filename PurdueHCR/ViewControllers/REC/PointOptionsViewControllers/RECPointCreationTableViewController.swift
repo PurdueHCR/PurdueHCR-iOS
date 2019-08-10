@@ -31,14 +31,14 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
         
         if(type == nil){
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Create", style: .done, target: self, action: #selector(createPointType))
-            setPermissionLevel(value: 2)
+            setPermissionLevel(value: PointType.PermissionLevel.rec)
         }
         else{
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .done, target: self, action: #selector(updatePointType))
             descriptionsTextView.text = type!.pointDescription
             residentsCanSubmitSwitch.isOn = type!.residentCanSubmit
-            setPermissionLevel(value: abs(type!.permissionLevel))
-            permissionSlider.value = Float(abs(type!.permissionLevel))
+            setPermissionLevel(value: type!.permissionLevel)
+            permissionSlider.value = Float(abs(type!.permissionLevel.rawValue))
             enabledSwitch.isOn = type!.isEnabled
             pointsField.text = type!.pointValue.description
             
@@ -66,10 +66,11 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
             return
         }
         let residentsCanSubmit = residentsCanSubmitSwitch.isOn
-        let permissionLevel = Int(permissionSlider.value)
+        let permissionLevel = PointType.PermissionLevel(rawValue: Int(permissionSlider.value))!
         let isEnabled = enabledSwitch.isOn
-        
-        let newType = PointType(pv: pointValue, pd: description, rcs: residentsCanSubmit, pid: 0, permissionLevel: permissionLevel, isEnabled:isEnabled)
+		
+		// TODO: Update this so they enter description
+		let newType = PointType(pv: pointValue, pn: "", pd: description, rcs: residentsCanSubmit, pid: 0, permissionLevel: permissionLevel, isEnabled:isEnabled)
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         DataManager.sharedManager.createPointType(pointType: newType) { (error) in
             if(error == nil){
@@ -96,7 +97,7 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
         let permissionLevel = Int(permissionSlider.value)
         let isEnabled = enabledSwitch.isOn
         
-        type!.permissionLevel = permissionLevel
+		type!.permissionLevel = PointType.PermissionLevel(rawValue: permissionLevel)!
         type!.residentCanSubmit = residentsCanSubmit
         type!.pointValue = pointValue
         type!.pointDescription = description
@@ -115,15 +116,19 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
     }
     
     @IBAction func valueChanged(_ sender: Any) {
-        if(self.permissionSlider.value < 1.5){
-             setPermissionLevel(value: 1)
+        if (self.permissionSlider.value <= 0.5) {
+			setPermissionLevel(value: .resident)
         }
+		else if ((self.permissionSlider.value > 0.5) && (self.permissionSlider.value <= 1.5)) {
+			setPermissionLevel(value: .rhp)
+		}
+		else if ((self.permissionSlider.value > 1.5) && (self.permissionSlider.value <= 2.5)) {
+			setPermissionLevel(value: .rec)
+		}
         else if(self.permissionSlider.value > 2.5){
-            setPermissionLevel(value: 3)
+            setPermissionLevel(value: .fhp)
         }
-        else{
-            setPermissionLevel(value: 2)
-        }
+
     }
     
     @IBAction func editingEnd(_ sender: Any) {
@@ -140,20 +145,20 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
     
 
     
-    func setPermissionLevel(value:Int){
+    func setPermissionLevel(value:PointType.PermissionLevel){
         let recString = NSMutableAttributedString(string: "REA/RECs")
         recString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12) ]))
         let rhpString = NSMutableAttributedString(string: "REA/REC/RHPs")
         rhpString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12) ]))
         let facultyString = NSMutableAttributedString(string: "REA/REC/RHP/Faculty")
         facultyString.append(NSMutableAttributedString(string: "\nCan use to create QR codes.", attributes: [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12) ]))
-        if(value == 1){
+		if(value == PointType.PermissionLevel.rec){
             permissionLabel.attributedText = recString
         }
-        else if(value == 2){
+        else if(value == PointType.PermissionLevel.rhp){
             permissionLabel.attributedText = rhpString
         }
-        else if(value == 3){
+        else if(value == PointType.PermissionLevel.fhp){
             permissionLabel.attributedText = facultyString
         }
         else{

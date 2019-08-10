@@ -16,7 +16,8 @@ import Cely
 struct User: CelyUser {
     
     enum Property: CelyProperty {
-        case name = "name"
+        case firstName = "firstName"
+		case lastName = "lastName"
         case email = "email"
         case id = "id"
         case house = "house"
@@ -36,8 +37,10 @@ struct User: CelyUser {
         
         func persisted() -> Bool {
             switch self {
-            case .name:
+            case .firstName:
                 return true
+			case .lastName:
+				return true
             case .house:
                 return true
             case .permissionLevel:

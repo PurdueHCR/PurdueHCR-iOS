@@ -19,7 +19,9 @@ class RHPApprovalTableViewController: UITableViewController {
     var refresher: UIRefreshControl?
     var displayedLogs = [PointLog]()
 	var index: IndexPath?
-    
+	
+	let green = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         displayedLogs = DataManager.sharedManager.getUnconfirmedPointLogs() ?? [PointLog]()
@@ -27,10 +29,11 @@ class RHPApprovalTableViewController: UITableViewController {
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
         tableView.refreshControl = refresher
+		resfreshData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        resfreshData()
+		
 		
     }
     
@@ -78,7 +81,7 @@ class RHPApprovalTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ApprovalCell
         
         cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
-        cell.nameLabel?.text = displayedLogs[indexPath.row].resident
+        cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
         cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
 
         return cell
@@ -118,7 +121,7 @@ class RHPApprovalTableViewController: UITableViewController {
 				}
 				
 			})
-			approveAction.backgroundColor = .green
+			approveAction.backgroundColor = green
 			approveAction.title = "Approve"
 			action.append(approveAction)
 		}
@@ -196,9 +199,9 @@ class RHPApprovalTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         // Segue to the second view controller
         self.performSegue(withIdentifier: "cell_push", sender: self)
+		tableView.deselectRow(at: indexPath, animated: true)
         
     }
     

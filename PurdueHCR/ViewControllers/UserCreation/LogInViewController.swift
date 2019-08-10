@@ -12,7 +12,7 @@ import FirebaseAuth
 
 extension UIViewController {
 	func hideKeyboardWhenTappedAround() {
-		let tap: UITapGestureRecognizer =     UITapGestureRecognizer(target: self, action:    #selector(UIViewController.dismissKeyboard))
+		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:    #selector(UIViewController.dismissKeyboard))
 		tap.cancelsTouchesInView = false
 		self.view.addGestureRecognizer(tap)
 	}
@@ -52,20 +52,26 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         self.username.delegate = self
         self.password.delegate = self
         fortyPercent = self.view.frame.size.height * CGFloat(0.4)
+		
+		// Actually use system colors once iOS 13 drops
+		let systemGray5 = UIColor.init(red: 229.0/255.0, green: 229.0/255.0, blue: 234.0/255.0, alpha: 1.0)
+		
         username.layer.cornerRadius = 10
         username.layer.masksToBounds = true
-        username.layer.borderWidth = 1
-        username.layer.borderColor = UIColor.lightGray.cgColor
+		username.backgroundColor = systemGray5
+        //username.layer.borderWidth = 1
+        //username.layer.borderColor = UIColor.lightGray.cgColor
 		username.tag = 0
         password.layer.cornerRadius = 10
         password.layer.masksToBounds = true
-        password.layer.borderWidth = 1
-        password.layer.borderColor = UIColor.lightGray.cgColor
+		password.backgroundColor = systemGray5
+        //password.layer.borderWidth = 1
+        //password.layer.borderColor = UIColor.lightGray.cgColor
 		password.tag = 1
         logInButton.layer.cornerRadius = 10
         logInButton.layer.masksToBounds = true
-        logInButton.layer.borderWidth = 1
-        logInButton.layer.borderColor = UIColor.darkGray.cgColor
+        //logInButton.layer.borderWidth = 1
+        //logInButton.layer.borderColor = UIColor.darkGray.cgColor
 		
         // Do any additional setup after loading the view.
     }
@@ -131,9 +137,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 				else{
 					self.logInButton.isEnabled = true
 					self.activityIndicator.stopAnimating()
-					try! Auth.auth().signOut()
-					self.notify(title: "Could Not Find User", subtitle: "Please create a new account.", style: .danger)
-					return
+					self.performSegue(withIdentifier: "code_push", sender: self)
+//					try! Auth.auth().signOut()
+//					self.notify(title: "Could Not Find User", subtitle: "Please create a new account.", style: .danger)
+//					return
 				}
 			})
 		}

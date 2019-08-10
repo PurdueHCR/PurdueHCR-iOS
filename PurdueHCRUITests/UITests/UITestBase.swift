@@ -1,36 +1,46 @@
 //
-//  Platinum_PointsUITests.swift
-//  Platinum PointsUITests
+//  UITestBase.swift
+//  PurdueHCRUITests
 //
-//  Created by Brian Johncox on 6/23/18.
-//  Copyright © 2018 DecodeProgramming. All rights reserved.
+//  Created by Brian Johncox on 3/27/19.
+//  Copyright © 2019 DecodeProgramming. All rights reserved.
 //
 
 import XCTest
 
-class Platinum_PointsUITests: XCTestCase {
-        
+class UITestBase: XCTestCase {
+    
+    let app = XCUIApplication()
+
     override func setUp() {
-        super.setUp()
-        
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
+
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
+
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
+        
+        app.launch()
+		getStartingPage().waitForLoadingToComplete().logout()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    /// Generate a random String
+    ///
+    /// - Parameter length: Number of charaters
+    /// - Returns: Generated String
+    func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0...length-1).map{ _ in letters.randomElement()! })
     }
     
+    func getStartingPage() -> SignInPage {
+        return SignInPage(app: app, test: self)
+    }
+
 }
