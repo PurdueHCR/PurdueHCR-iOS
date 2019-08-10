@@ -199,9 +199,9 @@ class RHPApprovalTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         // Segue to the second view controller
         self.performSegue(withIdentifier: "cell_push", sender: self)
+		tableView.deselectRow(at: indexPath, animated: true)
         
     }
     

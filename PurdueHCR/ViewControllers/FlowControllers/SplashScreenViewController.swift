@@ -9,7 +9,7 @@
 import UIKit
 
 class SplashScreenViewController: UIViewController {
-
+	
 	@IBOutlet weak var doneButton: UIButton!
 	
 	override func viewDidLoad() {
@@ -21,9 +21,6 @@ class SplashScreenViewController: UIViewController {
 		
         // Do any additional setup after loading the view.
     }
-	
-	@IBAction func doneAction(_ sender: Any) {
-		dismiss(animated: true, completion: nil)
-	}
+
 	
 }

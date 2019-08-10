@@ -50,7 +50,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         return pointTypes.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pointTypes[row].pointDescription
+        return pointTypes[row].pointName
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
@@ -80,6 +80,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         self.descriptionTextView.resignFirstResponder()
     }
+	
     @IBAction func generateQRCodes(_ sender: Any) {
         self.generateButton.isEnabled = false;
         if(descriptionTextView.text == "" || descriptionTextView.text == "Enter point description here."){

@@ -201,7 +201,8 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 	
 	func goToNextScene() {
 		let storyboard = UIStoryboard(name: "Profile", bundle: nil)
-		let vc = storyboard.instantiateViewController(withIdentifier: "UserPointsController") 
+		let vc = storyboard.instantiateViewController(withIdentifier: "UserPointsController")
+		vc.title = "Submitted Points"
 		self.navigationController?.pushViewController(vc, animated: true)
 	}
 		

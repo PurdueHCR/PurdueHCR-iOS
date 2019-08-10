@@ -83,7 +83,7 @@ class NotificationsViewController: UITableViewController, UISearchResultsUpdatin
 				return 1
 			}
 			else {
-				emptyMessage(message: "No submitted points")
+				emptyMessage(message: "No notifications")
 				navigationItem.searchController = nil
 				return 0
 			}
