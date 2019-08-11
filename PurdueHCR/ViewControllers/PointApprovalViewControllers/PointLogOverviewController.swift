@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 	
 	@IBOutlet var backgroundView: UIView!
 	@IBOutlet weak var tableView: UITableView!
@@ -56,30 +56,41 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		
 		// If the user is an RHP add approve/reject buttons to the view
 		if (User.get(.permissionLevel) as! Int == 1) {
-			approveButton = UIButton.init(type: .custom)
-			approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
-			rejectButton = UIButton.init(type: .custom)
-			rejectButton?.frame = CGRect.init(origin: rejectOrigin, size: buttonSize)
+			if let navController = self.navigationController, navController.viewControllers.count >= 2 {
+				let viewController = navController.viewControllers[navController.viewControllers.count - 2]
+				// TODO: Update this implementation. Could break if title of viewcontroller changes and it probably is not efficient
+				if (viewController.title! != "Submitted Points") {
+					approveButton = UIButton.init(type: .custom)
+					approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
+					rejectButton = UIButton.init(type: .custom)
+					rejectButton?.frame = CGRect.init(origin: rejectOrigin, size: buttonSize)
+					
+					approveButton?.setTitle("Approve", for: .normal)
+					approveButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
+					approveButton?.layer.cornerRadius = 10
+					/*if #available(iOS 13, *) {
+					approveButton?.backgroundColor = UIColor.get
+					} else {
+					
+					}*/
+					approveButton?.backgroundColor = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
+					approveButton?.addTarget(self, action: #selector(approvePointLog), for: .touchUpInside)
+					
+					rejectButton?.setTitle("Reject", for: .normal)
+					rejectButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
+					rejectButton?.layer.cornerRadius = 10
+					rejectButton?.backgroundColor = UIColor.red
+					rejectButton?.addTarget(self, action: #selector(rejectPointLog), for: .touchUpInside)
+					
+					self.backgroundView.addSubview(approveButton!)
+					self.backgroundView.addSubview(rejectButton!)
+				} else {
+					// TODO: Better if layout implementation so that code is not repeated twice
+					bottomConstraint.constant = -60
+					self.tableView.layoutIfNeeded()
+				}
+			}
 			
-			approveButton?.setTitle("Approve", for: .normal)
-			approveButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
-			approveButton?.layer.cornerRadius = 10
-			/*if #available(iOS 13, *) {
-			approveButton?.backgroundColor = UIColor.get
-			} else {
-			
-			}*/
-			approveButton?.backgroundColor = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
-			approveButton?.addTarget(self, action: #selector(approvePointLog), for: .touchUpInside)
-			
-			rejectButton?.setTitle("Reject", for: .normal)
-			rejectButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
-			rejectButton?.layer.cornerRadius = 10
-			rejectButton?.backgroundColor = UIColor.red
-			rejectButton?.addTarget(self, action: #selector(rejectPointLog), for: .touchUpInside)
-			
-			self.backgroundView.addSubview(approveButton!)
-			self.backgroundView.addSubview(rejectButton!)
 		} else {
 			bottomConstraint.constant = -60
 			self.tableView.layoutIfNeeded()
@@ -91,6 +102,8 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
 		tableView.refreshControl = refresher
 		resfreshData()
+		
+		self.typeMessageField.delegate = self
 		
     }
 	
@@ -151,25 +164,16 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			DataManager.sharedManager.addMessageToPointLog(message: message, messageType: .comment, pointID: pointLog!.logID!)
 			typeMessageField.text! = ""
 			resfreshData()
+				
+			// TODO: Fix this so it actually runs after the textfield has added the new log
+			scrollToBottom()
 		}
 	}
 	
 	// MARK: - Table view data source
 	
+	// Todo: Does this function need to be implemented?
 	func numberOfSections(in tableView: UITableView) -> Int {
-		// #warning Incomplete implementation, return the number of sections
-		/*if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
-			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
-			emptyMessage(message: message)
-			return 0
-		}
-		else if mess.count > 0 {
-			killEmptyMessage()
-			return 1
-		} else {
-			emptyMessage(message: "You don't have any to approve. Good job!")
-			return 0
-		}*/
 		return 1
 	}
 	
@@ -267,5 +271,21 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		
 		self.tableView.layoutIfNeeded()
 	}
-
+	
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		scrollToBottom()
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		self.view.endEditing(true)
+		return false
+	}
+	
+	
+	// TODO: This should probably be an extension to the textview
+	func scrollToBottom() {
+		let bottomOffset = CGPoint(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.size.height)
+		self.tableView.setContentOffset(bottomOffset, animated: true)
+	}
+	
 }

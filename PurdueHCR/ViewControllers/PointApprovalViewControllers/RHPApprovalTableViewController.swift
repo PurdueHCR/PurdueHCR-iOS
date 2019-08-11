@@ -101,7 +101,7 @@ class RHPApprovalTableViewController: UITableViewController {
     }
 
     
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    /*override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		var action : [UIContextualAction] = []
 		let logs = self.displayedLogs[indexPath.row]
 		if ((logs.wasHandled && logs.wasRejected()) || (!logs.wasHandled && !logs.wasRejected())) {
@@ -152,7 +152,7 @@ class RHPApprovalTableViewController: UITableViewController {
 			action.append(rejectAction)
 		}
         return UISwipeActionsConfiguration(actions: action)
-    }
+    }*/
     
     
 	func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = false, indexPath: IndexPath) {
