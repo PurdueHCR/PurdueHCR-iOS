@@ -132,24 +132,17 @@ class FirebaseHelper {
         if(documentID == "")
         {
             // write the document to the HOUSE table and save the reference
-            ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: log.convertToDict()){ err in
+			let data = log.convertToDict()
+				self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: data, completion: { err in
                 if ( err == nil){
-                    //add a document to the table for the user with the reference to the point
-                    //log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
-                    /*{err in
-                        if(err == nil && preApproved)
-                        {
-                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
-                        }
-                        else{
-                            onDone(err)
-                        }
-                    }*/
-                }
-                else{
+					if (preApproved) {
+						self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+					}
+				} else{
                     onDone(err)
                 }
-            }
+			})
+			
         }
         else
         {
@@ -161,17 +154,13 @@ class FirebaseHelper {
                 } else {
                     ref!.setData(log.convertToDict()){ err in
                         if ( err == nil){
-                            //add a document to the table for the user with the reference to the point
-                            //log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
-                            /*{err in
-                                if(err == nil && preApproved)
-                                {
-                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
-                                }
-                                else{
-                                    onDone(err)
-                                }
-                            }*/
+							if(preApproved)
+							{
+								self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+							}
+							else{
+								onDone(err)
+							}
                         }
                         else{
                             onDone(err)

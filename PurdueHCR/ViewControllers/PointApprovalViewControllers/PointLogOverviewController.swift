@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 	
 	@IBOutlet var backgroundView: UIView!
 	@IBOutlet weak var tableView: UITableView!
@@ -54,8 +54,11 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		sendButton.tintColor = UIColor.white
 		sendButton.layer.cornerRadius = sendButton.frame.height / 2
 		
+		let isRHP : Bool = User.get(.permissionLevel) as! Int == 1
+		let isNotUsersPoint : Bool = User.get(.id) as! String != pointLog?.residentId
 		// If the user is an RHP add approve/reject buttons to the view
-		if (User.get(.permissionLevel) as! Int == 1) {
+		if (isRHP && isNotUsersPoint) {
+			// TODO: Update this implementation. Could break if title of viewcontroller changes and it probably is not efficient
 			approveButton = UIButton.init(type: .custom)
 			approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
 			rejectButton = UIButton.init(type: .custom)
@@ -91,6 +94,8 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
 		tableView.refreshControl = refresher
 		resfreshData()
+		
+		self.typeMessageField.delegate = self
 		
     }
 	
@@ -151,25 +156,16 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			DataManager.sharedManager.addMessageToPointLog(message: message, messageType: .comment, pointID: pointLog!.logID!)
 			typeMessageField.text! = ""
 			resfreshData()
+				
+			// TODO: Fix this so it actually runs after the textfield has added the new log
+			scrollToBottom()
 		}
 	}
 	
 	// MARK: - Table view data source
 	
+	// Todo: Does this function need to be implemented?
 	func numberOfSections(in tableView: UITableView) -> Int {
-		// #warning Incomplete implementation, return the number of sections
-		/*if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
-			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
-			emptyMessage(message: message)
-			return 0
-		}
-		else if mess.count > 0 {
-			killEmptyMessage()
-			return 1
-		} else {
-			emptyMessage(message: "You don't have any to approve. Good job!")
-			return 0
-		}*/
 		return 1
 	}
 	
@@ -248,8 +244,10 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	@objc func keyboardWillShow(notification: NSNotification) {
 		if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
 			if (User.get(.permissionLevel) as! Int == 1) {
-				approveButton!.isHidden = true
-				rejectButton!.isHidden = true
+				if (approveButton != nil && rejectButton != nil) {
+					approveButton!.isHidden = true
+					rejectButton!.isHidden = true
+				}
 			}
 			bottomConstraint.constant = -1 * (60 + keyboardSize.height - (self.tabBarController?.tabBar.frame.size.height)!)
 			self.tableView.layoutIfNeeded()
@@ -257,7 +255,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	}
 	
 	@objc func keyboardWillHide(notification: NSNotification) {
-		if (User.get(.permissionLevel) as! Int != 1) {
+		if (User.get(.permissionLevel) as! Int != 1 || (approveButton == nil && rejectButton == nil)) {
 			bottomConstraint.constant = -60
 		} else {
 			bottomConstraint.constant = -145
@@ -267,5 +265,23 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		
 		self.tableView.layoutIfNeeded()
 	}
-
+	
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		scrollToBottom()
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		self.view.endEditing(true)
+		return false
+	}
+	
+	
+	// TODO: This should probably be an extension to the textview
+	func scrollToBottom() {
+		if (self.tableView.visibleCells.count > 1) {
+			let bottomOffset = CGPoint(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.size.height)
+			self.tableView.setContentOffset(bottomOffset, animated: true)
+		}
+	}
+	
 }

@@ -115,7 +115,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 		return cell
 	}
 	
-	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+	/*override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		var action : [UIContextualAction] = []
         var log : PointLog
         if (isFiltering()) {
@@ -168,7 +168,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 			action.append(rejectAction)
 		}
 		return UISwipeActionsConfiguration(actions: action)
-	}
+	} */
 	
 	override func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
@@ -243,6 +243,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Segue to the second view controller
 		self.performSegue(withIdentifier: "cell_push", sender: self)
+		self.tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 	// This function is called before the segue

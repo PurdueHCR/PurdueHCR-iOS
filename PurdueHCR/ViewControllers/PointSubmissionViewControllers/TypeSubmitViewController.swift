@@ -107,7 +107,7 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		
 		let firstName = User.get(.firstName) as! String
 		let lastName = User.get(.lastName) as! String
-        let preApproved = ((User.get(.permissionLevel) as! Int) == 1 )
+        let preApproved = ((User.get(.permissionLevel) as! Int) == 1)
         let floor = User.get(.floorID) as! String
 		let residentId = User.get(.id) as! String
 		
@@ -147,6 +147,11 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 	
 	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
 		
+		if text == "\n" {
+			textView.resignFirstResponder()
+			return false
+		}
+		
 		let currentText:String = textView.text
 		let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
 		
@@ -169,12 +174,5 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         self.descriptionField.resignFirstResponder()
     }
-/*    // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destinationViewController.
- // Pass the selected object to the new view controller.
- }
- */
+
 }

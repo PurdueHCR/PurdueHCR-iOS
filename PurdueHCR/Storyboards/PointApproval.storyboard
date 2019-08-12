@@ -43,7 +43,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="leftSpacer">
                                         <real key="value" value="10"/>
@@ -56,7 +56,7 @@
                                     <constraint firstAttribute="height" constant="40" id="D82-iq-Cu9"/>
                                     <constraint firstAttribute="width" constant="40" id="ZFe-cn-aqp"/>
                                 </constraints>
-                                <state key="normal" title="Send"/>
+                                <state key="normal" backgroundImage="Send"/>
                                 <connections>
                                     <action selector="sendMessage:" destination="v84-jY-ASU" eventType="touchUpInside" id="cHv-Od-hsD"/>
                                 </connections>
@@ -80,7 +80,7 @@
                         <outlet property="backgroundView" destination="TDD-db-bPi" id="hr0-xD-5jg"/>
                         <outlet property="bottomConstraint" destination="2aH-lo-koq" id="ydy-Ym-Yap"/>
                         <outlet property="sendButton" destination="YV1-Pd-R6G" id="T4Y-RC-JwH"/>
-                        <outlet property="tableView" destination="Guh-2G-5nC" id="xAg-Jr-p4n"/>
+                        <outlet property="tableView" destination="Guh-2G-5nC" id="IR9-TJ-EUY"/>
                         <outlet property="typeMessageField" destination="jmt-qn-nZ3" id="lZw-tc-eY4"/>
                     </connections>
                 </viewController>
@@ -169,10 +169,10 @@
             </objects>
             <point key="canvasLocation" x="-90.400000000000006" y="502.39880059970017"/>
         </scene>
-        <!--Points Submitted View Controller-->
+        <!--History-->
         <scene sceneID="csl-6a-YeJ">
             <objects>
-                <tableViewController wantsFullScreenLayout="YES" id="Yyz-RD-CqG" customClass="PointsSubmittedViewController" customModule="PurdueHCR" sceneMemberID="viewController">
+                <tableViewController title="History" wantsFullScreenLayout="YES" id="Yyz-RD-CqG" customClass="PointsSubmittedViewController" customModule="PurdueHCR" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0Ml-rZ-5bg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -281,7 +281,10 @@
             <point key="canvasLocation" x="-874" y="504"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Send" width="536" height="536"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vd2-Hg-7bX"/>
+        <segue reference="0Cb-0I-gSI"/>
     </inferredMetricsTieBreakers>
 </document>
