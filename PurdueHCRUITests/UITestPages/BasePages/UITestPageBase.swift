@@ -117,7 +117,7 @@ class BasePage{
     /// - Parameter link: (String, not String?) Optional String parameter that represents a DeepLink. If String is given it will paste that string into the URL bar.
     private func scanQRCodeWithSafari(qrCodeLink: String = ""){
         // Open iMessage app
-        if(qrCodeLink == ""){
+        if (qrCodeLink == ""){
             //If this line crashes, then there is no String saved into the clipboard
 			
 			if let url = URL(string: UIPasteboard.general.string!) {

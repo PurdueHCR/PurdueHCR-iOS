@@ -54,43 +54,35 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		sendButton.tintColor = UIColor.white
 		sendButton.layer.cornerRadius = sendButton.frame.height / 2
 		
+		let isRHP : Bool = User.get(.permissionLevel) as! Int == 1
+		let isNotUsersPoint : Bool = User.get(.id) as! String != pointLog?.residentId
 		// If the user is an RHP add approve/reject buttons to the view
-		if (User.get(.permissionLevel) as! Int == 1) {
-			if let navController = self.navigationController, navController.viewControllers.count >= 2 {
-				let viewController = navController.viewControllers[navController.viewControllers.count - 2]
-				// TODO: Update this implementation. Could break if title of viewcontroller changes and it probably is not efficient
-				if (viewController.title! != "Submitted Points") {
-					approveButton = UIButton.init(type: .custom)
-					approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
-					rejectButton = UIButton.init(type: .custom)
-					rejectButton?.frame = CGRect.init(origin: rejectOrigin, size: buttonSize)
-					
-					approveButton?.setTitle("Approve", for: .normal)
-					approveButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
-					approveButton?.layer.cornerRadius = 10
-					/*if #available(iOS 13, *) {
-					approveButton?.backgroundColor = UIColor.get
-					} else {
-					
-					}*/
-					approveButton?.backgroundColor = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
-					approveButton?.addTarget(self, action: #selector(approvePointLog), for: .touchUpInside)
-					
-					rejectButton?.setTitle("Reject", for: .normal)
-					rejectButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
-					rejectButton?.layer.cornerRadius = 10
-					rejectButton?.backgroundColor = UIColor.red
-					rejectButton?.addTarget(self, action: #selector(rejectPointLog), for: .touchUpInside)
-					
-					self.backgroundView.addSubview(approveButton!)
-					self.backgroundView.addSubview(rejectButton!)
-				} else {
-					// TODO: Better if layout implementation so that code is not repeated twice
-					bottomConstraint.constant = -60
-					self.tableView.layoutIfNeeded()
-				}
-			}
+		if (isRHP && isNotUsersPoint) {
+			// TODO: Update this implementation. Could break if title of viewcontroller changes and it probably is not efficient
+			approveButton = UIButton.init(type: .custom)
+			approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
+			rejectButton = UIButton.init(type: .custom)
+			rejectButton?.frame = CGRect.init(origin: rejectOrigin, size: buttonSize)
 			
+			approveButton?.setTitle("Approve", for: .normal)
+			approveButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
+			approveButton?.layer.cornerRadius = 10
+			/*if #available(iOS 13, *) {
+			approveButton?.backgroundColor = UIColor.get
+			} else {
+			
+			}*/
+			approveButton?.backgroundColor = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
+			approveButton?.addTarget(self, action: #selector(approvePointLog), for: .touchUpInside)
+			
+			rejectButton?.setTitle("Reject", for: .normal)
+			rejectButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
+			rejectButton?.layer.cornerRadius = 10
+			rejectButton?.backgroundColor = UIColor.red
+			rejectButton?.addTarget(self, action: #selector(rejectPointLog), for: .touchUpInside)
+			
+			self.backgroundView.addSubview(approveButton!)
+			self.backgroundView.addSubview(rejectButton!)
 		} else {
 			bottomConstraint.constant = -60
 			self.tableView.layoutIfNeeded()
@@ -252,8 +244,10 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	@objc func keyboardWillShow(notification: NSNotification) {
 		if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
 			if (User.get(.permissionLevel) as! Int == 1) {
-				approveButton!.isHidden = true
-				rejectButton!.isHidden = true
+				if (approveButton != nil && rejectButton != nil) {
+					approveButton!.isHidden = true
+					rejectButton!.isHidden = true
+				}
 			}
 			bottomConstraint.constant = -1 * (60 + keyboardSize.height - (self.tabBarController?.tabBar.frame.size.height)!)
 			self.tableView.layoutIfNeeded()
@@ -261,7 +255,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	}
 	
 	@objc func keyboardWillHide(notification: NSNotification) {
-		if (User.get(.permissionLevel) as! Int != 1) {
+		if (User.get(.permissionLevel) as! Int != 1 || (approveButton == nil && rejectButton == nil)) {
 			bottomConstraint.constant = -60
 		} else {
 			bottomConstraint.constant = -145
@@ -284,8 +278,10 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	
 	// TODO: This should probably be an extension to the textview
 	func scrollToBottom() {
-		let bottomOffset = CGPoint(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.size.height)
-		self.tableView.setContentOffset(bottomOffset, animated: true)
+		if (self.tableView.visibleCells.count > 1) {
+			let bottomOffset = CGPoint(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.size.height)
+			self.tableView.setContentOffset(bottomOffset, animated: true)
+		}
 	}
 	
 }

@@ -354,14 +354,15 @@ class DataManager {
 				let lastName = User.get(.lastName) as! String
                 let floorID = User.get(.floorID) as! String
 				let residentId = User.get(.id) as! String
-                let log = PointLog(pointDescription: link.description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId, dateOccurred: Timestamp.init())
+                let log = PointLog(pointDescription: link.description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
                 var documentID = ""
                 if(link.singleUse){
                     documentID = id
                 }
+				
                 //NOTE: preApproved is now changed to SingleUseCodes || RHP
                 self.fbh.addPointLog(log: log, documentID: documentID, preApproved: (link.singleUse || (User.get(.permissionLevel) as! Int) == 1) , onDone: {(err:Error?) in
-                    if(err == nil){
+                    if (err == nil){
                         DispatchQueue.main.async {
                             let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
                             banner.duration = 2
