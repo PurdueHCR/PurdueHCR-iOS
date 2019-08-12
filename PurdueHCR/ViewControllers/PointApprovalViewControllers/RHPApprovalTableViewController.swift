@@ -80,7 +80,7 @@ class RHPApprovalTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ApprovalCell
         
-        cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
+        cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointName
         cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
         cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
 

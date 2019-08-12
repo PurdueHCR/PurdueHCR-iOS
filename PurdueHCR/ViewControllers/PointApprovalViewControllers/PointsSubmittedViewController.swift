@@ -99,7 +99,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
                 cell.activeView.backgroundColor = DefinedValues.green
             }
 			cell.descriptionLabel.text = filteredPoints[indexPath.row].pointDescription
-			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointDescription
+			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointName
 			cell.nameLabel.text = filteredPoints[indexPath.row].firstName + " " + filteredPoints[indexPath.row].lastName
 		}
 		else{
@@ -108,7 +108,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
             } else {
                 cell.activeView.backgroundColor = DefinedValues.green
             }
-			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
+			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointName
 			cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
 			cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
 		}
