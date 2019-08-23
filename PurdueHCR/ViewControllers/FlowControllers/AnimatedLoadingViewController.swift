@@ -90,6 +90,7 @@ class AnimatedLoadingViewController: UIViewController {
 				self.performSegue(withIdentifier: "test_push", sender: self)
 			}
         })
+		
     }
 
     override func didReceiveMemoryWarning() {

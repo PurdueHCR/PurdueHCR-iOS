@@ -20,11 +20,13 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 	@IBOutlet weak var descriptionLabel: UILabel!
 	@IBOutlet weak var datePicker: UIDatePicker!
 	@IBOutlet weak var topView: UIView!
-	
+    @IBOutlet weak var scrollView: UIScrollView!
+    
 	
     var type:PointType?
     var user:User?
-	
+    var fortyPercent = CGFloat(0.0)
+    var lastChange = 0.0
 	let placeholder = "Tell us what you did!"
     
     override func viewDidLoad() {
@@ -42,12 +44,16 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		descriptionField.becomeFirstResponder()
 		submitButton.layer.cornerRadius = 10
 		
+        fortyPercent = self.view.frame.size.height * 0.45
+        
 		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
 		self.topView.layer.shadowOpacity = 0.5
 		self.topView.layer.shadowOffset = CGSize.zero
 		self.topView.layer.shadowRadius = 7
 		self.topView.sizeToFit()
 		
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
 		let houseName = User.get(.house) as! String
@@ -175,4 +181,32 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         self.descriptionField.resignFirstResponder()
     }
 
+    @objc func keyboardWillShow(notification: NSNotification) {
+        moveTextView(textView: self.descriptionField, up: true)
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        moveTextView(textView: self.descriptionField, up: false)
+    }
+    
+    func moveTextView(textView:UITextView, up:Bool){
+        if(up && textView.frame.minY > self.fortyPercent){
+            let movement = self.fortyPercent - textView.frame.minY
+            self.lastChange = Double(movement)
+            UIView.beginAnimations("TextFieldMove", context: nil)
+            UIView.setAnimationBeginsFromCurrentState(true)
+            UIView.setAnimationDuration(0.3)
+            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+            UIView.commitAnimations()
+        }
+        else if(!up && self.lastChange != 0.0){
+            let movement = CGFloat(self.lastChange * -1.0)
+            self.lastChange = 0.0
+            UIView.beginAnimations("TextFieldMove", context: nil)
+            UIView.setAnimationBeginsFromCurrentState(true)
+            UIView.setAnimationDuration(0.3)
+            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+            UIView.commitAnimations()
+        }
+    }
 }

@@ -51,22 +51,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.passwordField.delegate = self
         self.verifyPasswordField.delegate = self
 		
-		// Actually use system colors once iOS 13 drops
-		let systemGray5 = UIColor.init(red: 229.0/255.0, green: 229.0/255.0, blue: 234.0/255.0, alpha: 1.0)
-		
         emailField.layer.cornerRadius = 10
         emailField.layer.masksToBounds = true
-		emailField.backgroundColor = systemGray5
+		emailField.backgroundColor = DefinedValues.systemGray5
         //emailField.layer.borderWidth = 1
         //emailField.layer.borderColor = UIColor.lightGray.cgColor
         passwordField.layer.cornerRadius = 10
         passwordField.layer.masksToBounds = true
-		passwordField.backgroundColor = systemGray5
+		passwordField.backgroundColor = DefinedValues.systemGray5
         //passwordField.layer.borderWidth = 1
         //passwordField.layer.borderColor = UIColor.lightGray.cgColor
         verifyPasswordField.layer.cornerRadius = 10
         verifyPasswordField.layer.masksToBounds = true
-		verifyPasswordField.backgroundColor = systemGray5
+		verifyPasswordField.backgroundColor = DefinedValues.systemGray5
         //verifyPasswordField.layer.borderWidth = 1
         //verifyPasswordField.layer.borderColor = UIColor.lightGray.cgColor
         signUpButton.layer.cornerRadius = 10

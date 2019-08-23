@@ -19,9 +19,7 @@ class RHPApprovalTableViewController: UITableViewController {
     var refresher: UIRefreshControl?
     var displayedLogs = [PointLog]()
 	var index: IndexPath?
-	
-	let green = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
-	
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         displayedLogs = DataManager.sharedManager.getUnconfirmedPointLogs() ?? [PointLog]()
@@ -30,11 +28,6 @@ class RHPApprovalTableViewController: UITableViewController {
         refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
         tableView.refreshControl = refresher
 		resfreshData()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-		
-		
     }
     
     @objc func resfreshData(){

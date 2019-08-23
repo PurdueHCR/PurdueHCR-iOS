@@ -26,7 +26,7 @@ class HousePointsView: UIView {
     override init(frame: CGRect){
         var houses = DataManager.sharedManager.getHouses()!
         self.rewards = DataManager.sharedManager.getRewards()!
-        self.house = houses.remove(at: houses.firstIndex(of: House(id: User.get(.house) as! String, points: 0,hexColor:""))!)
+        self.house = houses.remove(at: houses.firstIndex(of: House(id: User.get(.house) as! String, points: 0, hexColor:""))!)
         super.init(frame: frame)
         commonInit()
     }
@@ -61,10 +61,10 @@ class HousePointsView: UIView {
         if(reward != nil){
 			nextRewardLabel.text = reward!.rewardName
             rewardImageView?.image = reward!.image
-            circleProgress.angle = (Double(self.house.totalPoints - prevRewardValue) / Double(reward!.requiredValue - prevRewardValue)) * 360.0
-			let pointsToGo = reward!.requiredValue - self.house.totalPoints
+            circleProgress.angle = (Double(self.house.totalPoints - prevRewardValue) / Double(reward!.requiredPPR - prevRewardValue)) * 360.0
+			let pointsToGo = reward!.requiredPPR - (self.house.totalPoints / self.house.numResidents)
 			pointsRemainingLabel.text? = pointsToGo.description
-			pointsTotalLabel.text = "(" + reward!.requiredValue.description + " points total)"
+			pointsTotalLabel.text = "(" + reward!.requiredPPR.description + " total)"
         }
         else{
             nextRewardLabel.text = "Eternal Glory"
@@ -92,7 +92,7 @@ class HousePointsView: UIView {
     func getCurrentReward() -> Reward?{
         var i = 0
         while( i < rewards.count){
-            if(rewards[i].requiredValue > self.house.totalPoints){
+            if(rewards[i].requiredPPR > (self.house.totalPoints / self.house.numResidents)){
                 return rewards[i]
             }
             i += 1
@@ -103,9 +103,9 @@ class HousePointsView: UIView {
 	func getPrevRewardValue() -> Int {
 		var i = 0
 		while( i < rewards.count){
-			if(rewards[i].requiredValue > self.house.totalPoints){
+			if (rewards[i].requiredPPR > (self.house.totalPoints / self.house.numResidents)){
 				if (i > 0) {
-					return rewards[i - 1].requiredValue
+					return rewards[i - 1].requiredPPR
 				}
 				return 0;
 			}

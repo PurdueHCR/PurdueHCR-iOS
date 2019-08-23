@@ -33,7 +33,7 @@ class RECRewardCreationTableViewController: UITableViewController,UINavigationCo
         }
         else{
             nameField.text = reward!.rewardName
-            valueField.text = reward!.requiredValue.description
+            valueField.text = reward!.requiredPPR.description
             imageView.image = reward!.image!
         }
         
@@ -76,7 +76,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             topBarButton?.isEnabled = true
             return
         }
-        let reward = Reward(requiredValue: value, fileName: rewardName+".png", rewardName: rewardName)
+        let reward = Reward(requiredPPR: value, fileName: rewardName+".png", rewardName: rewardName)
         DataManager.sharedManager.createReward(reward: reward, image: image) { (error) in
             if(error == nil){
                 self.notify(title: "Success", subtitle: "Reward Created", style: .success)

@@ -235,6 +235,7 @@
                         <outlet property="descriptionLabel" destination="N1k-ec-IwP" id="1tT-NQ-n7F"/>
                         <outlet property="houseImage" destination="t0X-Nm-FtR" id="W4a-wu-i3P"/>
                         <outlet property="nameLabel" destination="nlS-gv-ON8" id="pIV-1V-1wp"/>
+                        <outlet property="scrollView" destination="YGC-eD-Xkz" id="glB-rp-6X5"/>
                         <outlet property="submitButton" destination="PEb-3G-mB8" id="24y-lN-i6Y"/>
                         <outlet property="topView" destination="p5A-ge-pS3" id="qwb-y8-T58"/>
                         <outlet property="typeLabel" destination="zbW-t0-8sl" id="5AD-vX-Zb4"/>

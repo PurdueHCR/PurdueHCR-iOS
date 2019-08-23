@@ -301,7 +301,7 @@
                                     <constraint firstAttribute="height" constant="50" id="1zM-pM-0A4"/>
                                 </constraints>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="leftSpacer">
@@ -454,7 +454,7 @@
         <image name="emblem" width="1000" height="1000"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fz4-dE-SKe"/>
+        <segue reference="yTX-dg-aIZ"/>
         <segue reference="VrF-dY-ied"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -25,11 +25,14 @@ class MessageView: UIView {
 		messageView.frame = self.bounds
 		self.messageView.layer.cornerRadius = 10
 		messageView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+		messageLabel.autoresizingMask = [.flexibleHeight]
 		messageIcon.image = #imageLiteral(resourceName: "approve")
 		messageIcon.backgroundColor = UIColor.green
 		messageIcon.layer.cornerRadius = messageIcon.layer.frame.height / 2
 		grayView.layer.cornerRadius = DefinedValues.radius
 		grayView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+		messageLabel.sizeToFit()
+		messageView.sizeToFit()
 	}
 	
 	required init(coder aDecoder: NSCoder){
@@ -41,17 +44,19 @@ class MessageView: UIView {
 		messageLabel.text = messageLog.message
 		let type = messageLog.messageType
 		if (type == .approve) {
-			messageIcon.backgroundColor = DefinedValues.green
+			messageIcon.backgroundColor = DefinedValues.systemGreen
 			messageIcon.image = #imageLiteral(resourceName: "approve")
 		}
 		else if (type == .reject) {
-			messageIcon.backgroundColor = DefinedValues.red
+			messageIcon.backgroundColor = DefinedValues.systemRed
 			messageIcon.image = #imageLiteral(resourceName: "reject")
 		}
 		else if (type == .comment) {
-			messageIcon.backgroundColor = DefinedValues.yellow
+			messageIcon.backgroundColor = DefinedValues.systemYellow
 			messageIcon.image = #imageLiteral(resourceName: "comment")
 		}
+		messageLabel.sizeToFit()
+		messageView.sizeToFit()
 	}
 	
 }

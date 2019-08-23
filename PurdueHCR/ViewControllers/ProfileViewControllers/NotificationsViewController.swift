@@ -8,16 +8,11 @@
 
 import UIKit
 
-class NotificationsViewController: UITableViewController, UISearchResultsUpdating {
+class NotificationsViewController: RHPApprovalTableViewController, UISearchResultsUpdating {
 
 	let searchController = UISearchController(searchResultsController: nil)
-	var refresher: UIRefreshControl?
-	var displayedLogs = [PointLog]()
-	var index: IndexPath?
 	var filteredPoints = [PointLog]()
 	var activityIndicator = UIActivityIndicatorView()
-	
-	let green = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
 	
 	override func viewDidLoad() {
 		
@@ -41,7 +36,7 @@ class NotificationsViewController: UITableViewController, UISearchResultsUpdatin
 		definesPresentationContext = true
 	}
 	
-	@objc func resfreshData(){
+	@objc override func resfreshData(){
 		DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
 			self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
@@ -103,9 +98,9 @@ class NotificationsViewController: UITableViewController, UISearchResultsUpdatin
 		cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
 		if(isFiltering()){
 			if (filteredPoints[indexPath.row].wasRejected() == true) {
-				cell.activeView.backgroundColor = UIColor.red
+				cell.activeView.backgroundColor = DefinedValues.systemRed
 			} else {
-				cell.activeView.backgroundColor = green
+				cell.activeView.backgroundColor = DefinedValues.systemGreen
 			}
 			cell.descriptionLabel.text = filteredPoints[indexPath.row].pointDescription
 			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointName
@@ -113,9 +108,9 @@ class NotificationsViewController: UITableViewController, UISearchResultsUpdatin
 		}
 		else{
 			if (displayedLogs[indexPath.row].wasRejected() == true) {
-				cell.activeView.backgroundColor = UIColor.red
+				cell.activeView.backgroundColor = DefinedValues.systemRed
 			} else {
-				cell.activeView.backgroundColor = green
+				cell.activeView.backgroundColor = DefinedValues.systemGreen
 			}
 			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointName
 			cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
@@ -124,62 +119,7 @@ class NotificationsViewController: UITableViewController, UISearchResultsUpdatin
 		return cell
 	}
 	
-	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		var action : [UIContextualAction] = []
-		var log : PointLog
-		if (isFiltering()) {
-			log = self.filteredPoints[indexPath.row]
-		} else {
-			log = self.displayedLogs[indexPath.row]
-		}
-		if ((log.wasHandled && log.wasRejected()) || (!log.wasHandled && !log.wasRejected())) {
-			let approveAction = UIContextualAction(style: .normal, title:  "Approve", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-				self.updatePointLogStatus(log: log, approve: true, updating: true, indexPath: indexPath)
-				if(self.displayedLogs.count == 0){
-					let indexSet = NSMutableIndexSet()
-					indexSet.add(0)
-					success(true)
-				}
-				else{
-					success(true)
-				}
-				
-			})
-			approveAction.backgroundColor = green
-			approveAction.title = "Approve"
-			action.append(approveAction)
-		}
-		return UISwipeActionsConfiguration(actions: action)
-	}
-	
-	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		var action : [UIContextualAction] = []
-		var log : PointLog
-		if (isFiltering()) {
-			log = self.filteredPoints[indexPath.row]
-		} else {
-			log = self.displayedLogs[indexPath.row]
-		}
-		if (!log.wasRejected()) {
-			let rejectAction = UIContextualAction(style: .normal, title:  "Reject", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-				self.updatePointLogStatus(log: log, approve: false, updating: true, indexPath: indexPath)
-				if(self.displayedLogs.count == 0){
-					let indexSet = NSMutableIndexSet()
-					indexSet.add(0)
-					success(true)
-				}
-				else{
-					success(true)
-				}
-			})
-			rejectAction.backgroundColor = .red
-			rejectAction.title = "Reject"
-			action.append(rejectAction)
-		}
-		return UISwipeActionsConfiguration(actions: action)
-	}
-	
-	func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
+	override func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
@@ -267,7 +207,7 @@ class NotificationsViewController: UITableViewController, UISearchResultsUpdatin
 			} else {
 				nextViewController.pointLog = self.displayedLogs[(indexPath?.row)!]
 			}
-			//nextViewController.preViewContr = self
+			nextViewController.preViewContr = self
 			nextViewController.indexPath = indexPath
 		}
 	}
