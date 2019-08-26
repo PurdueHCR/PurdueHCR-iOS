@@ -10,12 +10,13 @@ import UIKit
 
 class RECPointCreationTableViewController: UITableViewController, UITextViewDelegate{
 
-    @IBOutlet var descriptionsTextView: UITextView!
+    @IBOutlet var nameTextView: UITextView!
     @IBOutlet var residentsCanSubmitSwitch: UISwitch!
     @IBOutlet var permissionLabel: UILabel!
     @IBOutlet var permissionSlider: UISlider!
     @IBOutlet var pointsField: UITextField!
     @IBOutlet var enabledSwitch: UISwitch!
+    @IBOutlet weak var descriptionTextView: UITextView!
     
     
     
@@ -24,8 +25,10 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        descriptionsTextView.layer.borderColor = UIColor.black.cgColor
-        descriptionsTextView.layer.borderWidth = 1
+        nameTextView.layer.borderColor = UIColor.lightGray.cgColor
+        nameTextView.layer.borderWidth = 1
+        descriptionTextView.layer.borderColor = UIColor.lightGray.cgColor
+        descriptionTextView.layer.borderWidth = 1
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
         
@@ -35,7 +38,7 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
         }
         else{
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .done, target: self, action: #selector(updatePointType))
-            descriptionsTextView.text = type!.pointDescription
+            nameTextView.text = type!.pointDescription
             residentsCanSubmitSwitch.isOn = type!.residentCanSubmit
             setPermissionLevel(value: type!.permissionLevel)
             permissionSlider.value = Float(abs(type!.permissionLevel.rawValue))
@@ -54,10 +57,15 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
     }
     
     @objc func createPointType() {
-        //Check Description
-        //Check value
+        // Check Name
+        // Check Description
+        // Check value
         
-        guard let description = descriptionsTextView.text, !description.isEmpty, description != "What is this point for?" else {
+        guard let name = nameTextView.text, !name.isEmpty, name != "What is this point for?" else {
+            self.notify(title: "Failure", subtitle: "Please add a name", style: .danger)
+            return
+        }
+        guard let description = descriptionTextView.text, !description.isEmpty, description != "What is this point for?" else {
             self.notify(title: "Failure", subtitle: "Please add a description", style: .danger)
             return
         }
@@ -69,8 +77,7 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
         let permissionLevel = PointType.PermissionLevel(rawValue: Int(permissionSlider.value))!
         let isEnabled = enabledSwitch.isOn
 		
-		// TODO: Update this so they enter description
-		let newType = PointType(pv: pointValue, pn: "", pd: description, rcs: residentsCanSubmit, pid: 0, permissionLevel: permissionLevel, isEnabled:isEnabled)
+		let newType = PointType(pv: pointValue, pn: name, pd: description, rcs: residentsCanSubmit, pid: 0, permissionLevel: permissionLevel, isEnabled:isEnabled)
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         DataManager.sharedManager.createPointType(pointType: newType) { (error) in
             if(error == nil){
@@ -85,7 +92,11 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
     }
     
     @objc func updatePointType(){
-        guard let description = descriptionsTextView.text, !description.isEmpty, description != "What is this point for?" else {
+        guard let name = nameTextView.text, !name.isEmpty, name != "What do you want to call this point?" else {
+            self.notify(title: "Failure", subtitle: "Please add a name", style: .danger)
+            return
+        }
+        guard let description = descriptionTextView.text, !description.isEmpty, description != "What is this point for?" else {
             self.notify(title: "Failure", subtitle: "Please add a description", style: .danger)
             return
         }
@@ -100,6 +111,7 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
 		type!.permissionLevel = PointType.PermissionLevel(rawValue: permissionLevel)!
         type!.residentCanSubmit = residentsCanSubmit
         type!.pointValue = pointValue
+        type!.pointName = name
         type!.pointDescription = description
         type!.isEnabled = isEnabled
         self.navigationItem.rightBarButtonItem?.isEnabled = false
@@ -167,21 +179,33 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if(textView.text == "What is this point for?"){
-            textView.text = ""
+        if (textView == nameTextView) {
+            if(textView.text == "What do you want to call this point?"){
+                textView.text = ""
+            }
+        } else if (textView == descriptionTextView) {
+            if(textView.text == "What is this point for?"){
+                textView.text = ""
+            }
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if(textView.text == ""){
-            textView.text = "What is this point for?"
+        if (textView == nameTextView) {
+            if(textView.text == ""){
+                textView.text = "What do you want to call this point?"
+            }
+        } else if (textView == descriptionTextView) {
+            if(textView.text == ""){
+                textView.text = "What is this point for?"
+            }
         }
     }
     
     
     
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
-        self.descriptionsTextView.resignFirstResponder()
+        self.nameTextView.resignFirstResponder()
         self.pointsField.resignFirstResponder()
     }
 

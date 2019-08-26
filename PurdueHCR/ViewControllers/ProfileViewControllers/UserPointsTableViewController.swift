@@ -34,6 +34,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 		self.searchController.searchBar.placeholder = "Search Points"
 		self.navigationItem.searchController = searchController*/
 		definesPresentationContext = true
+        resfreshData()
 	}
     
 
@@ -41,7 +42,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 	@objc override func resfreshData(){
 		DataManager.sharedManager.getAllPointLogsForUser(residentID: (User).get(.id) as! String, house: (User).get(.house) as! String, onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
-			self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() < $1.dateSubmitted!.dateValue()})
+            self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
 			DispatchQueue.main.async { [unowned self] in
 				self.tableView.reloadData()
 			}
@@ -58,8 +59,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		if let index = self.tableView.indexPathForSelectedRow {
 			self.tableView.deselectRow(at: index, animated: true)
-		}
-		resfreshData()
+        }
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {

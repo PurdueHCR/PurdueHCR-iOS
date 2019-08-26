@@ -35,13 +35,16 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		typeLabel.sizeToFit()
 		descriptionLabel.text = type!.pointDescription
 		descriptionLabel.sizeToFit()
-		let firstName = User.get(.firstName) as! String
+        descriptionLabel.textColor = UIColor.darkGray
+        let firstName = User.get(.firstName) as! String
 		let lastName = User.get(.lastName) as! String
 		nameLabel.text = firstName + " " + lastName
 		descriptionField.text = placeholder
 		descriptionField.textColor = UIColor.lightGray
 		descriptionField.selectedTextRange = descriptionField.textRange(from: descriptionField.beginningOfDocument, to: descriptionField.beginningOfDocument)
-		descriptionField.becomeFirstResponder()
+        descriptionField.layer.borderColor = UIColor.lightGray.cgColor
+        descriptionField.layer.borderWidth = 1
+		//descriptionField.becomeFirstResponder()
 		submitButton.layer.cornerRadius = 10
 		
         fortyPercent = self.view.frame.size.height * 0.45

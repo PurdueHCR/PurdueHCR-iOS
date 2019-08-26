@@ -358,6 +358,8 @@ class DataManager {
                 var documentID = ""
                 if(link.singleUse){
                     documentID = id
+                } else {
+                    documentID = residentId + id
                 }
 				
                 //NOTE: preApproved is now changed to SingleUseCodes || RHP

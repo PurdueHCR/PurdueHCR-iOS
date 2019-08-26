@@ -49,15 +49,15 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reward Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GvT-81-cZj">
-                                            <rect key="frame" x="88" y="11" width="134" height="64"/>
+                                            <rect key="frame" x="88" y="11" width="213" height="64"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GwT-HT-lpu">
-                                            <rect key="frame" x="230" y="11" width="129" height="64"/>
+                                            <rect key="frame" x="309" y="11" width="50" height="64"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="129" id="eec-rk-twZ"/>
+                                                <constraint firstAttribute="width" constant="50" id="eec-rk-twZ"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>

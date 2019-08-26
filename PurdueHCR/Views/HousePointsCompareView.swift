@@ -14,7 +14,8 @@ class MyValueFormatter: IValueFormatter {
     
     
     func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
-        return Int(value).description
+        // Round to two decimal places
+        return Double(round(100*value)/100).description
     }
 
 }

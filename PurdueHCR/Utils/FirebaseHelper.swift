@@ -774,12 +774,14 @@ class FirebaseHelper {
 							let idType = (document.data()["PointTypeID"] as! Int)
 							var firstName = document.data()["ResidentFirstName"] as! String
 							let lastName = document.data()["ResidentLastName"] as! String
+                            let dateSubmitted = document.data()["DateSubmitted"] as! Timestamp
 							if(floorID == "Shreve"){
 								firstName = "(Shreve) " + firstName
 							}
 							let residentId = document.data()["ResidentId"] as! String
 							let pointType = DataManager.sharedManager.getPointType(value: idType)
 							let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
+                            pointLog.dateSubmitted = dateSubmitted
 							pointLog.logID = id
 							if (idType >= 0) {
 								pointLog.wasHandled = true
@@ -846,8 +848,9 @@ class FirebaseHelper {
                 onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
             } else {
                 ref.setData([
+                    "Name" : pointType.pointName,
                     "Description" : pointType.pointDescription,
-                    "PermissionLevel" : pointType.permissionLevel,
+                    "PermissionLevel" : pointType.permissionLevel.rawValue,
                     "ResidentsCanSubmit"    : pointType.residentCanSubmit,
                     "Value"  : pointType.pointValue,
                     "Enabled" : pointType.isEnabled
