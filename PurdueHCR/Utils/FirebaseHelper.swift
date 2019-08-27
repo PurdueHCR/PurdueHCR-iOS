@@ -439,7 +439,7 @@ class FirebaseHelper {
 					let house = codeDoc.data()["House"]
 					let floorID = codeDoc.data()["FloorId"]
 					if (house == nil || floorID == nil) {
-						
+						houseCodes.append(HouseCode.init(code: code, codeName: codeName, permissionLevel: permissionLevel, house: "", floorID: ""))
 					} else {
 						houseCodes.append(HouseCode.init(code: code, codeName: codeName, permissionLevel: permissionLevel, house: house as! String, floorID: floorID as! String))
 					}

@@ -51,8 +51,8 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         
 		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
 		self.topView.layer.shadowOpacity = 0.5
-		self.topView.layer.shadowOffset = CGSize.zero
-		self.topView.layer.shadowRadius = 7
+		self.topView.layer.shadowOffset = .init(width: 0, height: 5)
+		self.topView.layer.shadowRadius = 3
 		self.topView.sizeToFit()
 		
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
