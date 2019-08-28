@@ -20,7 +20,6 @@
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
 		B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599D98122F62F030033173C /* NotificationsViewController.swift */; };
 		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
-		B5FFFC5E2309E8780087FCC4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FFFC5D2309E8780087FCC4 /* GoogleService-Info.plist */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -40,6 +39,7 @@
 		D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F43B0210AA00700D3982D /* PointDescriptionView.swift */; };
 		D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */; };
 		D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */; };
+		D38A31C12310C9F00096276A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D38A31C02310C9F00096276A /* GoogleService-Info.plist */; };
 		D3912A6A219CE77B0002E7C7 /* HouseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */; };
 		D3912A6B219CE77B0002E7C7 /* SubmitGrantedAwardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A66219CE77A0002E7C7 /* SubmitGrantedAwardViewController.swift */; };
 		D3912A6C219CE77B0002E7C7 /* GrantAwardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A67219CE77A0002E7C7 /* GrantAwardTableViewController.swift */; };
@@ -67,6 +67,7 @@
 		D3BCD397224C984E0041AB2D /* UITestRHPApprovalPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD396224C984E0041AB2D /* UITestRHPApprovalPage.swift */; };
 		D3BCD399224C98680041AB2D /* UITestRHPQRPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD398224C98680041AB2D /* UITestRHPQRPage.swift */; };
 		D3BCD39B224CA0AD0041AB2D /* UITestRHPSubmitPointsTablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD39A224CA0AD0041AB2D /* UITestRHPSubmitPointsTablePage.swift */; };
+		D3BE46D423120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BE46D323120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift */; };
 		D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C42103D65A00B88F03 /* HousePointsView.swift */; };
 		D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */; };
 		D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */; };
@@ -111,7 +112,6 @@
 		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		B599D98122F62F030033173C /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
-		B5FFFC5D2309E8780087FCC4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -136,6 +136,7 @@
 		D36DFEBB220F2EF40062184C /* PurdueHCRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PurdueHCRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D36DFEBF220F2EF40062184C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		D38A31C02310C9F00096276A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Firestore Files/Test/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HouseTableViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/HouseTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		D3912A66219CE77A0002E7C7 /* SubmitGrantedAwardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitGrantedAwardViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/SubmitGrantedAwardViewController.swift; sourceTree = SOURCE_ROOT; };
 		D3912A67219CE77A0002E7C7 /* GrantAwardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GrantAwardTableViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/GrantAwardTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -163,6 +164,7 @@
 		D3BCD396224C984E0041AB2D /* UITestRHPApprovalPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPApprovalPage.swift; sourceTree = "<group>"; };
 		D3BCD398224C98680041AB2D /* UITestRHPQRPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPQRPage.swift; sourceTree = "<group>"; };
 		D3BCD39A224CA0AD0041AB2D /* UITestRHPSubmitPointsTablePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPSubmitPointsTablePage.swift; sourceTree = "<group>"; };
+		D3BE46D323120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPPointLogOverviewPage.swift; sourceTree = "<group>"; };
 		D3CC77C42103D65A00B88F03 /* HousePointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsView.swift; sourceTree = "<group>"; };
 		D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsCompareView.xib; sourceTree = "<group>"; };
 		D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsCompareView.swift; sourceTree = "<group>"; };
@@ -301,8 +303,8 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
+				D38A31C02310C9F00096276A /* GoogleService-Info.plist */,
 				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
-				B5FFFC5D2309E8780087FCC4 /* GoogleService-Info.plist */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
 				D3355C90214A25BF0037556C /* ViewXIB */,
@@ -503,6 +505,7 @@
 				D3BCD39A224CA0AD0041AB2D /* UITestRHPSubmitPointsTablePage.swift */,
 				D3CF6BD9224FEF1B00D97A0F /* UITestRHPPointSubmissionPage.swift */,
 				D3BCD396224C984E0041AB2D /* UITestRHPApprovalPage.swift */,
+				D3BE46D323120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift */,
 				D3BCD398224C98680041AB2D /* UITestRHPQRPage.swift */,
 				D3CF6BDD2250264D00D97A0F /* UITestRHPHistoryPage.swift */,
 			);
@@ -620,7 +623,7 @@
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
-				B5FFFC5E2309E8780087FCC4 /* GoogleService-Info.plist in Resources */,
+				D38A31C12310C9F00096276A /* GoogleService-Info.plist in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
@@ -832,6 +835,7 @@
 				D3BCD397224C984E0041AB2D /* UITestRHPApprovalPage.swift in Sources */,
 				D3CF6BDE2250264D00D97A0F /* UITestRHPHistoryPage.swift in Sources */,
 				D3BCD383224BE5120041AB2D /* UITestPageBase.swift in Sources */,
+				D3BE46D423120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift in Sources */,
 				B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */,
 				D3BCD387224C28910041AB2D /* UITestSignInPage.swift in Sources */,
 				D3BCD391224C6F0C0041AB2D /* UITestHouseOverviewPage.swift in Sources */,

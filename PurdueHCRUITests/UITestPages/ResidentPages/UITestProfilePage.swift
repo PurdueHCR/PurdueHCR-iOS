@@ -13,10 +13,12 @@ class ProfilePage: BasePage, UITestPageProtocol, UITestTabBarProtocol {
     
     let totalUserPointsText:XCUIElement
     let housePointsText:XCUIElement
+    let rewardPPRTotalText:XCUIElement
     
     override init(app: XCUIApplication, test: XCTestCase) {
-        totalUserPointsText = app.staticTexts.element(matching:.any, identifier: "Resident Points")
-        housePointsText = app.staticTexts.element(matching: .any, identifier: "TotalHousePoints")
+        totalUserPointsText = app.staticTexts.element(matching:.any, identifier: "Total User Points Label")
+        housePointsText = app.staticTexts.element(matching: .any, identifier: "House Points Per Resident Label")
+        rewardPPRTotalText = app.staticTexts.element(matching: .any, identifier: "Reward Points Per Resident Total Label")
         
         super.init(app: app, test: test)
     }
@@ -43,13 +45,9 @@ class ProfilePage: BasePage, UITestPageProtocol, UITestTabBarProtocol {
     @discardableResult
     func getTotalHousePointsText() -> Int {
         print(app.debugDescription)
-        let label = housePointsText.label
-        var stringParts = label.split(separator: "\n")
-        
-        let houseRemaining = String(stringParts[0][...stringParts[0].firstIndex(of: " ")!])
-        let rewardTotal = String(stringParts[1][stringParts[1].index(stringParts[1].firstIndex(of: "(")!, offsetBy: 1) ... stringParts[1].firstIndex(of: " ")!])
-        let remaining = (rewardTotal as NSString).integerValue - (houseRemaining as NSString).integerValue
-        return remaining
+        let housePPRTotal = (housePointsText.label as NSString).integerValue
+        let rewardPPRTotal = (rewardPPRTotalText.label as NSString).integerValue
+        return rewardPPRTotal - housePPRTotal
     }
     
     
@@ -64,6 +62,7 @@ class TabBarContainer:BasePage {
     }
     
     func tapSubmitPointsTab() -> SubmitPointsTablePage {
+        app.tabBars.buttons["Submit Points"].tap()
         app.tabBars.buttons["Submit Points"].tap()
 		waitForLoading()
         return SubmitPointsTablePage(app: app, test: test)

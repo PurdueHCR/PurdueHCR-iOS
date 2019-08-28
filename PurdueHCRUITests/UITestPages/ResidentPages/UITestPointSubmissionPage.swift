@@ -15,7 +15,7 @@ class PointSubmissionPage: BasePage, UITestTabBarProtocol, UITestPageProtocol {
     let submissionField:XCUIElement
     
     override init(app: XCUIApplication, test: XCTestCase) {
-        submitButton = app.navigationBars["Create Submission"].buttons["Submit"]
+        submitButton = app.buttons["Submit"]
         submissionField = app.textViews["descriptionField"]
         super.init(app: app, test: test)
     }

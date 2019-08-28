@@ -47,7 +47,8 @@ class UITestPointSubmission: UITestBase {
             .getTabBarContainer()
             .tapApproveTab()
             .waitForLoadingToComplete()
-            .swipeApproveOnPoint(testPointDescription: testPointDescription)
+            .selectPoint(testPointDescription: testPointDescription)
+            .tapApprove()
             .getTabBarContainer().tapProfileTab()
         
         let residentPage = page.logout().logInResident()

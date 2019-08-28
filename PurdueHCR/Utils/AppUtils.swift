@@ -71,6 +71,13 @@ extension UIViewController {
     }
 }
 
+extension UIView{
+    func setIdentifiers(identifier:String){
+        self.accessibilityIdentifier = identifier;
+        self.restorationIdentifier = identifier;
+    }
+}
+
 extension Double {
     /// Rounds the double to decimal places value
     func rounded(toPlaces places:Int) -> Double {

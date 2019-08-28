@@ -173,9 +173,10 @@
                                                     <!--2016-08-01 10:00:00 +0000-->
                                                 </date>
                                             </datePicker>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEb-3G-mB8">
+                                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="Submit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEb-3G-mB8" userLabel="Submit">
                                                 <rect key="frame" x="90" y="500" width="195" height="50"/>
                                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Submit" label="Submit"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Tla-lc-y32"/>
                                                     <constraint firstAttribute="height" constant="50" id="dbo-hc-oh3"/>

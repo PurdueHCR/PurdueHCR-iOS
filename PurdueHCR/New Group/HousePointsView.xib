@@ -24,8 +24,9 @@
             <rect key="frame" x="0.0" y="0.0" width="439" height="280"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points Away" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4JU-e9-e5w">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="House Points Per Resident Label" text="Points Away" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4JU-e9-e5w" userLabel="House Points Per Resident Label">
                     <rect key="frame" x="257.5" y="115" width="176.5" height="30"/>
+                    <accessibility key="accessibilityConfiguration" identifier="House Points Per Resident Label" label="House Points Per Resident Label"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="yHd-dH-0g0"/>
                     </constraints>
@@ -74,8 +75,9 @@ AWAY</string>
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfK-Uj-R03">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="Reward Points Per Resident Total Label" text="Points Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfK-Uj-R03" userLabel="Reward Points Per Resident Total Label">
                     <rect key="frame" x="257.5" y="145" width="176.5" height="20"/>
+                    <accessibility key="accessibilityConfiguration" identifier="Reward Points Per Resident Total Label" label="Reward Points Per Resident Total Label"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Fqk-FN-Ym2"/>
                     </constraints>

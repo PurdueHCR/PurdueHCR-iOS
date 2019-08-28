@@ -79,13 +79,15 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			}*/
 			approveButton?.backgroundColor = DefinedValues.systemGreen
 			approveButton?.addTarget(self, action: #selector(approvePointLog), for: .touchUpInside)
-			
+			approveButton?.setIdentifiers(identifier: "Approve Point")
+            
 			rejectButton?.setTitle("Reject", for: .normal)
 			rejectButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
 			rejectButton?.layer.cornerRadius = 10
 			rejectButton?.backgroundColor = DefinedValues.systemRed
 			rejectButton?.addTarget(self, action: #selector(rejectPointLog), for: .touchUpInside)
-			
+            rejectButton?.setIdentifiers(identifier: "Reject");
+            
 			self.backgroundView.addSubview(approveButton!)
 			self.backgroundView.addSubview(rejectButton!)
 		} else {

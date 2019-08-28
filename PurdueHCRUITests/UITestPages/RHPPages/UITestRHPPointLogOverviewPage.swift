@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class RHPApprovalPage: BasePage, UITestPageProtocol, UITestTabBarProtocol {
+class RHPPointLogOverviewPage: BasePage, UITestPageProtocol, UITestTabBarProtocol {
     
     override init(app: XCUIApplication, test: XCTestCase) {
         
@@ -17,22 +17,19 @@ class RHPApprovalPage: BasePage, UITestPageProtocol, UITestTabBarProtocol {
     }
     
     @discardableResult
-    func tapHistoryButton() -> RHPHistoryPage {
-        app.navigationBars["Approvals"].buttons["History"].tap()
-        waitForLoading()
-        return RHPHistoryPage(app: app, test: test)
-    }
-    
-    @discardableResult
-    func selectPoint(testPointDescription: String) -> RHPPointLogOverviewPage {
-        let cells = app.tables.cells
-        cells.staticTexts[testPointDescription].tap()
-        return RHPPointLogOverviewPage(app: app,test: test)
+    func tapApprove(waitForDismissal: Bool = true) -> RHPApprovalPage {
+        app.buttons["Approve Point"].tap()
+        waitForDropDownNotification(message: "Point approved")
+        if(waitForDismissal){
+            waitForDropDownDismissal(message: "Point approved")
+        }
+        return RHPApprovalPage(app: app, test: test)
     }
     
     
+    
     @discardableResult
-    func waitForLoadingToComplete() -> RHPApprovalPage {
+    func waitForLoadingToComplete() -> RHPPointLogOverviewPage {
         waitForLoading()
         return self
     }
