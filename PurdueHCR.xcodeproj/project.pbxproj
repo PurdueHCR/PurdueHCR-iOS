@@ -20,7 +20,6 @@
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
 		B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599D98122F62F030033173C /* NotificationsViewController.swift */; };
 		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
-		B5FFFC5E2309E8780087FCC4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FFFC5D2309E8780087FCC4 /* GoogleService-Info.plist */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -30,6 +29,7 @@
 		D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FC90520DF35D800201E74 /* HouseProfileViewController.swift */; };
 		D30FC90920DF35D800201E74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90720DF35D800201E74 /* Main.storyboard */; };
 		D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D30FC90A20DF35D900201E74 /* Assets.xcassets */; };
+		D32BC82B23166BFE00C08BEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D32BC82A23166BFE00C08BEC /* GoogleService-Info.plist */; };
 		D3355C8D214A253D0037556C /* PointSubmission.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C8C214A253D0037556C /* PointSubmission.storyboard */; };
 		D3355C8F214A25B10037556C /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C8E214A25B10037556C /* Profile.storyboard */; };
 		D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3355C92214A267E0037556C /* PointApproval.storyboard */; };
@@ -111,7 +111,6 @@
 		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		B599D98122F62F030033173C /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
-		B5FFFC5D2309E8780087FCC4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -123,6 +122,7 @@
 		D30FC90820DF35D800201E74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D30FC90A20DF35D900201E74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D30FC90F20DF35D900201E74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D32BC82A23166BFE00C08BEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Firestore Files/Prod/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3355C8C214A253D0037556C /* PointSubmission.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PointSubmission.storyboard; sourceTree = "<group>"; };
 		D3355C8E214A25B10037556C /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		D3355C92214A267E0037556C /* PointApproval.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PointApproval.storyboard; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
-				B5FFFC5D2309E8780087FCC4 /* GoogleService-Info.plist */,
+				D32BC82A23166BFE00C08BEC /* GoogleService-Info.plist */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
 				D3355C90214A25BF0037556C /* ViewXIB */,
@@ -620,7 +620,7 @@
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
-				B5FFFC5E2309E8780087FCC4 /* GoogleService-Info.plist in Resources */,
+				D32BC82B23166BFE00C08BEC /* GoogleService-Info.plist in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
@@ -991,14 +991,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 72BQNS7NEU;
+				DEVELOPMENT_TEAM = 5N596YY333;
 				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = BenHardin.HCRPoint;
+				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1011,14 +1011,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 72BQNS7NEU;
+				DEVELOPMENT_TEAM = 5N596YY333;
 				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = BenHardin.HCRPoint;
+				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

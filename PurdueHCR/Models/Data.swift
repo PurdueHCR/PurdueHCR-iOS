@@ -68,6 +68,10 @@ class House {
 		self.numResidents = numResidents
     }
     
+    func getPPR() -> Double {
+        return Double(totalPoints) / Double(numResidents)
+    }
+    
     
 }
 extension House:Equatable {
