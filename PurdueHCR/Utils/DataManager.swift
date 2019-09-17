@@ -356,9 +356,9 @@ class DataManager {
 				let residentId = User.get(.id) as! String
                 let log = PointLog(pointDescription: link.description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
                 var documentID = ""
+                //If the QR code is single use, set the id of the point log to residentID+LinkID. This prevents the same user from submitting it twice
+                //If the QR Code is multiple use, do not set a documentID. Firestore will auto generate a random one.
                 if(link.singleUse){
-                    documentID = id
-                } else {
                     documentID = residentId + id
                 }
 				
@@ -368,6 +368,8 @@ class DataManager {
 						DispatchQueue.main.async {
                             let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
                             banner.duration = 2
+                            print("Call this")
+                            banner.show()
                         }
                         
                     }

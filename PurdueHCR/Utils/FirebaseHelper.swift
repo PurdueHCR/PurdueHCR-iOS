@@ -137,12 +137,14 @@ class FirebaseHelper {
 			ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: data, completion: { err in
                 if ( err == nil){
 					if (preApproved) {
-						
+						//OnDone will be called in updateHouseAndUserPoints
 						self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+                        //Add message to pointLog does not require us to wait
 						self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref!.documentID)
-						onDone(nil)
 					}
-					onDone(nil)
+                    else{
+                        onDone(nil)
+                    }
 				} else{
                     onDone(err)
                 }

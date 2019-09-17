@@ -61,7 +61,9 @@ class HousePointsView: UIView {
         if(reward != nil){
 			nextRewardLabel.text = reward!.rewardName
             rewardImageView?.image = reward!.image
-            circleProgress.angle = (Double(self.house.totalPoints - prevRewardValue) / Double(reward!.requiredPPR - prevRewardValue)) * 360.0
+            print("House PPR: ",self.house.getPPR())
+            print("Reward PPR: ",reward!.requiredPPR)
+            circleProgress.angle = ((self.house.getPPR() - Double(prevRewardValue)) / Double(reward!.requiredPPR - prevRewardValue)) * 360.0
             var pointsToGo = Double(reward!.requiredPPR) - (Double(self.house.totalPoints) / Double(self.house.numResidents))
             // Round to two decimal places
             pointsToGo = Double(round(100*pointsToGo)/100)
@@ -103,6 +105,10 @@ class HousePointsView: UIView {
         return nil
     }
 	
+    
+    /// Sketchy return type atm, because we do not know if the ppr will be a double
+    ///
+    /// - Returns: <#return value description#>
 	func getPrevRewardValue() -> Int {
 		var i = 0
 		while( i < rewards.count){
