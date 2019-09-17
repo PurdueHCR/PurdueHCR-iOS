@@ -57,7 +57,8 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
         self.housePointsCompareView.layer.shadowOffset = CGSize.zero
         self.housePointsCompareView.layer.shadowRadius = 5
 		self.housePointsCompareView.layer.cornerRadius = radius
-		
+        
+        
 		let permission = User.get(.permissionLevel) as! Int
 		if (permission != 0 && permission != 1) {
 			self.navigationItem.rightBarButtonItems = nil

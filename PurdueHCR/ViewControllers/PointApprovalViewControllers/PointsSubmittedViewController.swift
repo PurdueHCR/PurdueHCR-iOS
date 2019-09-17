@@ -45,7 +45,11 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	
 	@objc override func resfreshData(){
         DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
+            
             self.displayedLogs = pointLogs
+            self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
+            
+            
             DispatchQueue.main.async { [unowned self] in
                 self.tableView.reloadData()
             }
@@ -265,6 +269,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	func updateSearchResults(for searchController: UISearchController) {
 		filterContentForSearchText(searchController.searchBar.text!)
     }
+    
 	func searchBarIsEmpty() -> Bool {
 		// Returns true if the text is empty or nil
 		return searchController.searchBar.text?.isEmpty ?? true
@@ -275,12 +280,13 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 			let searched = searchText.lowercased()
 			let inFirstName = point.firstName.lowercased().contains(searched)
 			let inLastName = point.lastName.lowercased().contains(searched)
-			let inReason = point.type.pointDescription.lowercased().contains(searched)
-			let inDescription = point.pointDescription.lowercased().contains(searched)
-			return (inFirstName || inLastName || inReason || inDescription)
+			let inReason = point.pointDescription.lowercased().contains(searched)
+            let inName = point.type.pointName.lowercased().contains(searched)
+			return (inFirstName || inLastName || inReason || inName)
 		})
 		tableView.reloadData()
 	}
+    
 	func isFiltering() -> Bool {
 		return searchController.isActive && !searchBarIsEmpty()
 	}
