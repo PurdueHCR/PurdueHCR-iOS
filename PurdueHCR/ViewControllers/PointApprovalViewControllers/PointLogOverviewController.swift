@@ -167,8 +167,6 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		}
 	}
 	
-	// MARK: - Table view data source
-	
 	// Todo: Does this function need to be implemented?
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1

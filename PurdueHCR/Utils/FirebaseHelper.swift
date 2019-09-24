@@ -424,7 +424,7 @@ class FirebaseHelper {
 					let numResidents = houseDocument.data()["NumberOfResidents"] as! Int
                     houseArray.append(House(id: id, points: points, hexColor:hex, numResidents: numResidents))
                 }
-                houseArray.sort(by: {$0.totalPoints > $1.totalPoints})
+                houseArray.sort(by: {$0.getPPR() > $1.getPPR()})
 				
             }
 			
