@@ -62,14 +62,26 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
-        if(isFiltering()){
-            cell.typeLabel.text = filteredPoints[indexPath.row].pointName
-            cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
-        }
-        else{
-            cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
-            cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
+        if (indexPath.row == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "suggested_points", for: indexPath) as! PointTypeCell
+            if(isFiltering()) {
+                cell.typeLabel.text = filteredPoints[indexPath.row].pointName
+                cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
+            }
+            else {
+                cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+                cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
+            }
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
+            if(isFiltering()){
+                cell.typeLabel.text = filteredPoints[indexPath.row].pointName
+                cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
+            }
+            else {
+                cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+                cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
+            }
         }
         return(cell)
     }
