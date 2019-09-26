@@ -132,24 +132,24 @@ class FirebaseHelper {
         if(documentID == "")
         {
             // write the document to the HOUSE table and save the reference
-            ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: log.convertToDict()){ err in
+			let data = log.convertToDict()
+			var ref: DocumentReference? = nil
+			ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: data, completion: { err in
                 if ( err == nil){
-                    //add a document to the table for the user with the reference to the point
-                    //log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
-                    /*{err in
-                        if(err == nil && preApproved)
-                        {
-                            self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
-                        }
-                        else{
-                            onDone(err)
-                        }
-                    }*/
-                }
-                else{
+					if (preApproved) {
+						//OnDone will be called in updateHouseAndUserPoints
+						self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+                        //Add message to pointLog does not require us to wait
+						self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref!.documentID)
+					}
+                    else{
+                        onDone(nil)
+                    }
+				} else{
                     onDone(err)
                 }
-            }
+			})
+			
         }
         else
         {
@@ -161,17 +161,13 @@ class FirebaseHelper {
                 } else {
                     ref!.setData(log.convertToDict()){ err in
                         if ( err == nil){
-                            //add a document to the table for the user with the reference to the point
-                            //log.residentRef.collection("Points").document(ref!.documentID).setData(["Point":ref!])
-                            /*{err in
-                                if(err == nil && preApproved)
-                                {
-                                    self.updateHouseAndUserPoints(log: log, userRef: log.residentRef, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
-                                }
-                                else{
-                                    onDone(err)
-                                }
-                            }*/
+							if(preApproved)
+							{
+								self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+							}
+							else{
+								onDone(err)
+							}
                         }
                         else{
                             onDone(err)
@@ -388,7 +384,7 @@ class FirebaseHelper {
 			if (permissionLevel == .resident) {
 				ref.setData(["RHPNotifications":(rhpNotif + 1)], merge: true)
 			}
-			else if (permissionLevel == .rhp) {
+			else if (permissionLevel == .rhp && document?.data()!["ResidentId"] as! String != User.get(.id) as! String) {
 				ref.setData(["ResidentNotifications":(resNotif + 1)], merge: true)
 			}
 		}
@@ -425,9 +421,10 @@ class FirebaseHelper {
                     let points = houseDocument.data()[self.TOTAL_POINTS] as! Int
                     let hex = houseDocument.data()["Color"] as! String
                     let id = houseDocument.documentID
-                    houseArray.append(House(id: id, points: points, hexColor:hex))
+					let numResidents = houseDocument.data()["NumberOfResidents"] as! Int
+                    houseArray.append(House(id: id, points: points, hexColor:hex, numResidents: numResidents))
                 }
-                houseArray.sort(by: {$0.totalPoints > $1.totalPoints})
+                houseArray.sort(by: {$0.getPPR() > $1.getPPR()})
 				
             }
 			
@@ -444,7 +441,7 @@ class FirebaseHelper {
 					let house = codeDoc.data()["House"]
 					let floorID = codeDoc.data()["FloorId"]
 					if (house == nil || floorID == nil) {
-						
+						houseCodes.append(HouseCode.init(code: code, codeName: codeName, permissionLevel: permissionLevel, house: "", floorID: ""))
 					} else {
 						houseCodes.append(HouseCode.init(code: code, codeName: codeName, permissionLevel: permissionLevel, house: house as! String, floorID: floorID as! String))
 					}
@@ -466,12 +463,12 @@ class FirebaseHelper {
             } else {
                 for rewardDocument in querySnapshot!.documents
                 {
-                    let requiredPoints = rewardDocument.data()["RequiredValue"] as! Int
+                    let requiredPPR = rewardDocument.data()["RequiredPPR"] as! Int
                     let fileName = rewardDocument.data()["FileName"] as! String
                     let name = rewardDocument.documentID
-                    rewardArray.append(Reward(requiredValue: requiredPoints, fileName: fileName, rewardName: name))
+                    rewardArray.append(Reward(requiredPPR: requiredPPR, fileName: fileName, rewardName: name))
                 }
-                rewardArray.sort(by: {$0.requiredValue < $1.requiredValue})
+                rewardArray.sort(by: {$0.requiredPPR < $1.requiredPPR})
                 onDone(rewardArray)
             }
         }
@@ -741,15 +738,8 @@ class FirebaseHelper {
                         firstName = "(Shreve) " + firstName
                     }
 					
-					// TODO: this part about hard-coding a reference may need to be re-added
-					
-                    /*let residentRefMaybe = document.data()["ResidentRef"]
-                    var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1") // Hard code a ref for when a code doesnt have one. (IE points were Given by REC to no specific user)*/
 					let residentId = User.get(.id) as! String
-                    /*if(residentRefMaybe != nil ){
-                        residentRef = residentRefMaybe as! DocumentReference
-                    }*/
-                    let pointType = DataManager.sharedManager.getPointType(value: idType)
+                    let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
                     let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId, dateOccurred: dateOccurred)
                     pointLog.logID = id
                     pointLogs.append(pointLog)
@@ -779,19 +769,18 @@ class FirebaseHelper {
 							let idType = (document.data()["PointTypeID"] as! Int)
 							var firstName = document.data()["ResidentFirstName"] as! String
 							let lastName = document.data()["ResidentLastName"] as! String
+                            let dateSubmitted = document.data()["DateSubmitted"] as! Timestamp
 							if(floorID == "Shreve"){
 								firstName = "(Shreve) " + firstName
 							}
-							// TODO: The commented out part about hard-coding a ref might need to be reimplemented
-							/*let residentRefMaybe = document.data()["ResidentRef"]
-							var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1") // Hard code a ref for when a code doesnt have one. (IE points were Given by REC to no specific user)
-							if (residentRefMaybe != nil){
-								residentRef = residentRefMaybe as! DocumentReference
-							}*/
 							let residentId = document.data()["ResidentId"] as! String
-							let pointType = DataManager.sharedManager.getPointType(value: idType)
+							let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
 							let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
+                            pointLog.dateSubmitted = dateSubmitted
 							pointLog.logID = id
+							if (idType >= 0) {
+								pointLog.wasHandled = true
+							}
 							pointLogs.append(pointLog)
 						}
 					}
@@ -832,7 +821,7 @@ class FirebaseHelper {
 					let firstName = document.data()["ResidentFirstName"] as! String
 					let lastName = document.data()["ResidentLastName"] as! String
 					let idType = document.data()["PointTypeID"] as! Int
-					let pointType = DataManager.sharedManager.getPointType(value: idType)
+					let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
 					let floorID = document.data()["FloorID"] as! String
 					let residentId = document.data()["ResidentId"] as! String
 					let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
@@ -854,8 +843,9 @@ class FirebaseHelper {
                 onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
             } else {
                 ref.setData([
+                    "Name" : pointType.pointName,
                     "Description" : pointType.pointDescription,
-                    "PermissionLevel" : pointType.permissionLevel,
+                    "PermissionLevel" : pointType.permissionLevel.rawValue,
                     "ResidentsCanSubmit"    : pointType.residentCanSubmit,
                     "Value"  : pointType.pointValue,
                     "Enabled" : pointType.isEnabled
@@ -961,7 +951,7 @@ class FirebaseHelper {
             } else {
                 ref!.setData([
                     "FileName" : reward.fileName,
-                    "RequiredValue" : reward.requiredValue
+                    "RequiredPPR" : reward.requiredPPR
                 ]){ err in
                     onDone(err)
                 }
@@ -978,7 +968,8 @@ class FirebaseHelper {
 			if let document = document, document.exists {
 				let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
 				let houseEnabledMessage = document.data()!["houseEnabledMessage"] as! String
-				let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage)
+				let iosVersion = document.data()!["iOS_Version"] as! String
+				let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, iosVersion: iosVersion)
 				onDone(systemPreferences)
 			} else {
 				print("Error: Unabled to retrieve SystemPreferences information")

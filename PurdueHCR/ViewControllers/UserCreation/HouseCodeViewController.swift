@@ -100,6 +100,7 @@ class HouseCodeViewController: UIViewController, UITextFieldDelegate {
 	func initializeData() {
 		DataManager.sharedManager.initializeData(finished:{(initError) in
 			if (initError == nil) {
+				
 				Cely.changeStatus(to: .loggedIn)
 				self.activityIndicator.stopAnimating()
 			} else if (initError!.code == 1) {

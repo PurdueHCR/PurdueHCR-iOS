@@ -10,7 +10,8 @@ import UIKit
 
 class PointDescriptionView: UIView {
     @IBOutlet var residentLabel: UILabel!
-    @IBOutlet var pointTypeDescriptionLabel: UILabel!
+	@IBOutlet weak var dateLabel: UILabel!
+	@IBOutlet var pointTypeDescriptionLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
 	@IBOutlet weak var grayView: UIView!
@@ -33,7 +34,7 @@ class PointDescriptionView: UIView {
         backgroundView.frame = self.bounds
 		self.backgroundView.layer.cornerRadius = 10
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-		icon.backgroundColor = DefinedValues.blue
+		icon.backgroundColor = DefinedValues.systemBlue
 		icon.layer.cornerRadius = icon.layer.frame.height / 2
 		icon.image = #imageLiteral(resourceName: "Send")
 		grayView.layer.cornerRadius = DefinedValues.radius
@@ -42,8 +43,11 @@ class PointDescriptionView: UIView {
     
     func setLog(pointLog:PointLog) {
         residentLabel.text = pointLog.firstName + " " + pointLog.lastName
-        pointTypeDescriptionLabel.text = pointLog.type.pointDescription
+        pointTypeDescriptionLabel.text = pointLog.type.pointName
         descriptionLabel.text = pointLog.pointDescription
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "MMM dd, yyyy"
+		dateLabel.text = dateFormatter.string(for: pointLog.dateOccurred?.dateValue())
     }
     
 

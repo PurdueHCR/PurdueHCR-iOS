@@ -8,20 +8,14 @@
 
 import UIKit
 
-class UserPointsTableViewController: UITableViewController, UISearchResultsUpdating {
+class UserPointsTableViewController: RHPApprovalTableViewController {
 
-	let searchController = UISearchController(searchResultsController: nil)
-	var refresher: UIRefreshControl?
-	var displayedLogs = [PointLog]()
-	var index: IndexPath?
+	//let searchController = UISearchController(searchResultsController: nil)
 	var filteredPoints = [PointLog]()
 	var activityIndicator = UIActivityIndicatorView()
 	
-	let green = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
-	
 	override func viewDidLoad() {
 		
-		//self.navigationItem.hidesBackButton = true
 		self.activityIndicator.startAnimating()
 		super.viewDidLoad()
 		
@@ -30,21 +24,25 @@ class UserPointsTableViewController: UITableViewController, UISearchResultsUpdat
 		activityIndicator.hidesWhenStopped = true
 		view.addSubview(activityIndicator)
 		
-		refresher = UIRefreshControl()
-		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
-		tableView.refreshControl = refresher
-		searchController.searchResultsUpdater = self
-		searchController.obscuresBackgroundDuringPresentation = false
-		searchController.searchBar.placeholder = "Search Points"
-		navigationItem.searchController = searchController
+		self.refresher = UIRefreshControl()
+		self.refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+		self.refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+		tableView.refreshControl = self.refresher
+		
+        /*self.searchController.searchResultsUpdater = self
+		self.searchController.obscuresBackgroundDuringPresentation = false
+		self.searchController.searchBar.placeholder = "Search Points"
+		self.navigationItem.searchController = searchController*/
 		definesPresentationContext = true
+        resfreshData()
 	}
+    
+
 	
-	@objc func resfreshData(){
+	@objc override func resfreshData(){
 		DataManager.sharedManager.getAllPointLogsForUser(residentID: (User).get(.id) as! String, house: (User).get(.house) as! String, onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
-			self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
+            self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
 			DispatchQueue.main.async { [unowned self] in
 				self.tableView.reloadData()
 			}
@@ -54,20 +52,19 @@ class UserPointsTableViewController: UITableViewController, UISearchResultsUpdat
 		})
 	}
 
-	func updateSearchResults(for searchController: UISearchController) {
-	
-	}
+    /*func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }*/
 	
 	override func viewWillAppear(_ animated: Bool) {
 		if let index = self.tableView.indexPathForSelectedRow {
 			self.tableView.deselectRow(at: index, animated: true)
-		}
-		resfreshData()
+        }
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
-		if isFiltering() {
+		/*if isFiltering() {
 			if(filteredPoints.count > 0){
 				killEmptyMessage()
 				return 1
@@ -77,55 +74,64 @@ class UserPointsTableViewController: UITableViewController, UISearchResultsUpdat
 				return 0
 			}
 		}
-		else{
+		else{*/
 			if(displayedLogs.count > 0){
 				killEmptyMessage()
+                //navigationItem.searchController = searchController
 				return 1
 			}
 			else {
 				emptyMessage(message: "No submitted points")
-				navigationItem.searchController = nil
+				//navigationItem.searchController = nil
 				return 0
 			}
-		}
+		//}
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		if (isFiltering()) {
+		/*if (isFiltering()) {
 			return filteredPoints.count
-		}
+		}*/
 		return displayedLogs.count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResolvedCell
 		cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
-		if(isFiltering()){
-			if (filteredPoints[indexPath.row].wasRejected() == true) {
-				cell.activeView.backgroundColor = UIColor.red
+		/*if(isFiltering()){
+			if (filteredPoints[indexPath.row].wasHandled) {
+				if (filteredPoints[indexPath.row].wasRejected() == true) {
+					cell.activeView.backgroundColor = DefinedValues.systemRed
+				} else {
+					cell.activeView.backgroundColor = DefinedValues.systemGreen
+				}
 			} else {
-				cell.activeView.backgroundColor = green
+				cell.activeView.backgroundColor = DefinedValues.systemYellow
 			}
 			cell.descriptionLabel.text = filteredPoints[indexPath.row].pointDescription
-			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointDescription
+			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointName
 			cell.nameLabel.text = filteredPoints[indexPath.row].firstName + " " + filteredPoints[indexPath.row].lastName
 		}
-		else{
-			if (displayedLogs[indexPath.row].wasRejected() == true) {
-				cell.activeView.backgroundColor = UIColor.red
+		else{*/
+			if (displayedLogs[indexPath.row].wasHandled) {
+				if (displayedLogs[indexPath.row].wasRejected() == true) {
+					cell.activeView.backgroundColor = DefinedValues.systemRed
+				} else {
+					cell.activeView.backgroundColor = DefinedValues.systemGreen
+				}
 			} else {
-				cell.activeView.backgroundColor = green
+				cell.activeView.backgroundColor = DefinedValues.systemYellow
 			}
-			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
+			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointName
 			cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
 			cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
-		}
+		//}
 		return cell
 	}
 
 	
-	func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
+	override func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
@@ -166,12 +172,12 @@ class UserPointsTableViewController: UITableViewController, UISearchResultsUpdat
 					DispatchQueue.main.async {
 						//This is a work around because sometimes when transistioning back from PointLogOverviewViewController, the
 						//cell would not update the value properly. Even though it should be getting set already, we are doing in again.
-						if(self.isFiltering()){
+						/*if(self.isFiltering()){
 							self.filteredPoints[indexPath.row].updateApprovalStatus(approved: approve)
 						}
-						else{
+						else{*/
 							self.displayedLogs[indexPath.row].updateApprovalStatus(approved: approve)
-						}
+						//}
 						self.tableView.setEditing(false, animated: true)
 						self.tableView.reloadRows(at: [indexPath], with: .fade)
 					}
@@ -181,12 +187,12 @@ class UserPointsTableViewController: UITableViewController, UISearchResultsUpdat
 					DispatchQueue.main.async {
 						//This is a work around because sometimes when transistioning back from PointLogOverviewViewController, the
 						//cell would not update the value properly. Even though it should be getting set already, we are doing in again.
-						if(self.isFiltering()){
+						/*if(self.isFiltering()){
 							self.filteredPoints[indexPath.row].updateApprovalStatus(approved: approve)
 						}
-						else{
+						else{*/
 							self.displayedLogs[indexPath.row].updateApprovalStatus(approved: approve)
-						}
+						//}
 						self.tableView.setEditing(false, animated: true)
 						self.tableView.reloadRows(at: [indexPath], with: .fade)
 					}
@@ -208,20 +214,20 @@ class UserPointsTableViewController: UITableViewController, UISearchResultsUpdat
 			let nextViewController = segue.destination as! PointLogOverviewController
 			let indexPath = tableView.indexPathForSelectedRow
 
-			if(isFiltering()) {
+			/*if(isFiltering()) {
 				nextViewController.pointLog = self.filteredPoints[(indexPath?.row)!]
-			} else {
+			} else {*/
 				nextViewController.pointLog = self.displayedLogs[(indexPath?.row)!]
-			}
-			//nextViewController.preViewContr = self
+			//}
 			nextViewController.indexPath = indexPath
+			nextViewController.preViewContr = self
 		}
 	}
 	
-	func searchBarIsEmpty() -> Bool {
+	/*func searchBarIsEmpty() -> Bool {
 		// Returns true if the text is empty or nil
 		return searchController.searchBar.text?.isEmpty ?? true
-	}
+	}*/
 	
 	func filterContentForSearchText(_ searchText: String, scope: String = "All") {
 		filteredPoints = displayedLogs.filter({( point : PointLog) -> Bool in
@@ -235,8 +241,8 @@ class UserPointsTableViewController: UITableViewController, UISearchResultsUpdat
 		tableView.reloadData()
 	}
 	
-	func isFiltering() -> Bool {
+	/*func isFiltering() -> Bool {
 		return searchController.isActive && !searchBarIsEmpty()
-	}
+	}*/
 
 }

@@ -342,7 +342,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="House Overview" id="Te7-qH-YSk">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="Settings" id="3km-Es-eeM">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="Settings" id="3km-Es-eeM">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="openSettings:" destination="qQL-ih-pe3" id="2di-MI-TUB"/>

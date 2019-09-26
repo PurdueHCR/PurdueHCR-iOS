@@ -57,7 +57,8 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
         self.housePointsCompareView.layer.shadowOffset = CGSize.zero
         self.housePointsCompareView.layer.shadowRadius = 5
 		self.housePointsCompareView.layer.cornerRadius = radius
-		
+        
+        
 		let permission = User.get(.permissionLevel) as! Int
 		if (permission != 0 && permission != 1) {
 			self.navigationItem.rightBarButtonItems = nil
@@ -75,6 +76,19 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
 				}
 			})
+		}
+		
+		var sysPref : SystemPreferences?
+		DataManager.sharedManager.refreshSystemPreferences { (systemPreferences) in
+			sysPref = systemPreferences
+			// Error checking here
+			let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+			if (sysPref?.iosVersion != appVersion) {
+				let alertController = UIAlertController.init(title: "Update Available", message: "It looks like you do not have the newest version of PurdueHCR. Please update as soon as posible to ensure you get all the latest and greatest features!", preferredStyle: .alert)
+				let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: .none)
+				alertController.addAction(okAction)
+				self.present(alertController, animated: true, completion: .none)
+			}
 		}
 		
     }

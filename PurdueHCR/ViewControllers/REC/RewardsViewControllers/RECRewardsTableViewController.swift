@@ -54,7 +54,7 @@ class RECRewardsTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.nameLabel.text = rewards![indexPath.row].rewardName
-        cell.pointsLabel.text = rewards![indexPath.row].requiredValue.description
+        cell.pointsLabel.text = rewards![indexPath.row].requiredPPR.description
         cell.rewardImageView.image = rewards![indexPath.row].image!
         return cell
     }

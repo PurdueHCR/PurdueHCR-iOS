@@ -21,8 +21,6 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	var filteredPoints = [PointLog]()
 	var activityIndicator = UIActivityIndicatorView()
 	
-	let myGreen = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
-	
 	override func viewDidLoad() {
         
 		self.navigationItem.hidesBackButton = true
@@ -47,7 +45,11 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	
 	@objc override func resfreshData(){
         DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
+            
             self.displayedLogs = pointLogs
+            self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
+            
+            
             DispatchQueue.main.async { [unowned self] in
                 self.tableView.reloadData()
             }
@@ -94,28 +96,28 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 		cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
 		if(isFiltering()){
             if (filteredPoints[indexPath.row].wasRejected() == true) {
-                cell.activeView.backgroundColor = DefinedValues.red
+                cell.activeView.backgroundColor = DefinedValues.systemRed
             } else {
-                cell.activeView.backgroundColor = DefinedValues.green
+                cell.activeView.backgroundColor = DefinedValues.systemGreen
             }
 			cell.descriptionLabel.text = filteredPoints[indexPath.row].pointDescription
-			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointDescription
+			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointName
 			cell.nameLabel.text = filteredPoints[indexPath.row].firstName + " " + filteredPoints[indexPath.row].lastName
 		}
 		else{
             if (displayedLogs[indexPath.row].wasRejected() == true) {
-                cell.activeView.backgroundColor = DefinedValues.red
+                cell.activeView.backgroundColor = DefinedValues.systemRed
             } else {
-                cell.activeView.backgroundColor = DefinedValues.green
+                cell.activeView.backgroundColor = DefinedValues.systemGreen
             }
-			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointDescription
+			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointName
 			cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
 			cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
 		}
 		return cell
 	}
 	
-	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+	/*override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		var action : [UIContextualAction] = []
         var log : PointLog
         if (isFiltering()) {
@@ -168,7 +170,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 			action.append(rejectAction)
 		}
 		return UISwipeActionsConfiguration(actions: action)
-	}
+	} */
 	
 	override func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
@@ -243,6 +245,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Segue to the second view controller
 		self.performSegue(withIdentifier: "cell_push", sender: self)
+		self.tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 	// This function is called before the segue
@@ -266,6 +269,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 	func updateSearchResults(for searchController: UISearchController) {
 		filterContentForSearchText(searchController.searchBar.text!)
     }
+    
 	func searchBarIsEmpty() -> Bool {
 		// Returns true if the text is empty or nil
 		return searchController.searchBar.text?.isEmpty ?? true
@@ -276,12 +280,13 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 			let searched = searchText.lowercased()
 			let inFirstName = point.firstName.lowercased().contains(searched)
 			let inLastName = point.lastName.lowercased().contains(searched)
-			let inReason = point.type.pointDescription.lowercased().contains(searched)
-			let inDescription = point.pointDescription.lowercased().contains(searched)
-			return (inFirstName || inLastName || inReason || inDescription)
+			let inReason = point.pointDescription.lowercased().contains(searched)
+            let inName = point.type.pointName.lowercased().contains(searched)
+			return (inFirstName || inLastName || inReason || inName)
 		})
 		tableView.reloadData()
 	}
+    
 	func isFiltering() -> Bool {
 		return searchController.isActive && !searchBarIsEmpty()
 	}

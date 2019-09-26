@@ -14,10 +14,11 @@ class DefinedValues {
 	
 	// Colors
 	
-	static let blue = UIColor.init(red: 0.00/255.0, green: 122.0/255.0, blue: 1.00, alpha: 1.0)
-	static let yellow = UIColor.init(red: 1.00, green: 204.0/255.0, blue: 0.0, alpha: 1.0)
-	static let red = UIColor.init(red: 1.00, green: 59.0/255.0, blue: 48.0/255.0, alpha: 1.0)
-	static let green = UIColor.init(red: 52.0/255.0, green: 199.0/255.0, blue: 89.0/255.0, alpha: 1.0)
+	static let systemBlue = UIColor.init(red: 0.00/255.0, green: 122.0/255.0, blue: 1.00, alpha: 1.0)
+	static let systemYellow = UIColor.init(red: 1.00, green: 204.0/255.0, blue: 0.0, alpha: 1.0)
+	static let systemRed = UIColor.init(red: 1.00, green: 59.0/255.0, blue: 48.0/255.0, alpha: 1.0)
+	static let systemGreen = UIColor.init(red: 52.0/255.0, green: 199.0/255.0, blue: 89.0/255.0, alpha: 1.0)
+	static let systemGray5 = UIColor.init(red: 229.0/255.0, green: 229.0/255.0, blue: 234.0/255.0, alpha: 1.0)
 	
 	// Raw Values
 	
@@ -59,10 +60,16 @@ class House {
     var totalPoints: Int
     var hexColor: String
     var topScoreUsers : [UserModel]?
-    init(id:String, points:Int, hexColor:String){
+	var numResidents : Int
+	init(id:String, points:Int, hexColor:String, numResidents:Int=0){
         self.houseID = id
         self.totalPoints = points
         self.hexColor = hexColor
+		self.numResidents = numResidents
+    }
+    
+    func getPPR() -> Double {
+        return Double(totalPoints) / Double(numResidents)
     }
     
     
@@ -181,7 +188,7 @@ class PointLog {
     ///   - approved: Bool Point is approved
     ///   - preapproved: Bool Point was preapproved
     func updateApprovalStatus(approved:Bool, preapproved:Bool = false){
-        wasHandled = true
+        self.wasHandled = true
         if(approved){
             //Approve the point
             if(wasRejected()){
@@ -210,7 +217,7 @@ class PointLog {
 				self.approvedBy = firstName + " " + lastName
                 self.approvedOn = Timestamp.init()
             }
-            //else point was already rejected so it does not need ot be updated
+            //else point was already rejected so it does not need to be updated
         }
     }
     
@@ -318,13 +325,13 @@ class MessageLog {
 }
 
 class Reward {
-    var requiredValue: Int
+    var requiredPPR: Int
     var rewardName: String
     var fileName: String
     var image: UIImage?
     
-    init(requiredValue:Int, fileName:String, rewardName:String){
-        self.requiredValue = requiredValue
+    init(requiredPPR:Int, fileName:String, rewardName:String){
+        self.requiredPPR = requiredPPR
         self.fileName = fileName
         self.rewardName = rewardName
     }
@@ -455,16 +462,19 @@ class UserModel {
 class SystemPreferences {
 	var isHouseEnabled : Bool
 	var houseEnabledMessage : String
+	var iosVersion : String
 	
-	init(isHouseEnabled: Bool, houseEnabledMessage: String) {
+	init(isHouseEnabled: Bool, houseEnabledMessage: String, iosVersion: String) {
 		self.isHouseEnabled = isHouseEnabled
 		self.houseEnabledMessage = houseEnabledMessage
+		self.iosVersion = iosVersion
 	}
 	
 	func convertToDictionary() -> [String:Any] {
 		let dict : [String:Any] = [
 			"isHouseEnabled":isHouseEnabled,
-			"houseEnabledMessage":houseEnabledMessage
+			"houseEnabledMessage":houseEnabledMessage,
+			"iOS_Version":iosVersion
 		]
 		return dict
 	}

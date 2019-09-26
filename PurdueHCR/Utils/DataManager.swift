@@ -39,13 +39,12 @@ class DataManager {
     
     
     func getPointType(value:Int)->PointType{
-        for pt in self.pointTypes{
-            if(pt.pointID == value){
+        for pt in self.pointTypes {
+            if (pt.pointID == value){
                 return pt
             }
         }
-		// TODO: Update pn field and permission level
-		return PointType(pv: 0, pn: "", pd: "Unkown Point Type", rcs: false, pid: -1, permissionLevel: .rec, isEnabled:false) // The famous this should never happen comment
+		return PointType(pv: 0, pn: "Unknown Point Type", pd: "This point type does not appear to be a valid point type.", rcs: false, pid: -1, permissionLevel: .rec, isEnabled:false) // The famous this should never happen comment
     }
     
 
@@ -354,17 +353,21 @@ class DataManager {
 				let lastName = User.get(.lastName) as! String
                 let floorID = User.get(.floorID) as! String
 				let residentId = User.get(.id) as! String
-                let log = PointLog(pointDescription: link.description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId, dateOccurred: Timestamp.init())
+                let log = PointLog(pointDescription: link.description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
                 var documentID = ""
+                //If the QR code is single use, set the id of the point log to residentID+LinkID. This prevents the same user from submitting it twice
+                //If the QR Code is multiple use, do not set a documentID. Firestore will auto generate a random one.
                 if(link.singleUse){
-                    documentID = id
+                    documentID = residentId + id
                 }
+				
                 //NOTE: preApproved is now changed to SingleUseCodes || RHP
                 self.fbh.addPointLog(log: log, documentID: documentID, preApproved: (link.singleUse || (User.get(.permissionLevel) as! Int) == 1) , onDone: {(err:Error?) in
-                    if(err == nil){
-                        DispatchQueue.main.async {
+                    if (err == nil){
+						DispatchQueue.main.async {
                             let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
                             banner.duration = 2
+                            print("Call this")
                             banner.show()
                         }
                         

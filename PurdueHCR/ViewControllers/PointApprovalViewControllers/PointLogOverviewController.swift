@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 	
 	@IBOutlet var backgroundView: UIView!
 	@IBOutlet weak var tableView: UITableView!
@@ -20,7 +20,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	var rejectButton : UIButton?
     var pointLog: PointLog?
 	let radius : CGFloat = 10
-	let systemGray5 = UIColor.init(red: 229.0/255.0, green: 229.0/255.0, blue: 234.0/255.0, alpha: 1.0)
+	
 	// TODO: Fix this since this view is referenced from more than one location
 	var preViewContr: RHPApprovalTableViewController?
 	// TODO: Rename
@@ -30,11 +30,17 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		refresher = UIRefreshControl()
+		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+		tableView.refreshControl = refresher
+		resfreshData()
+		
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 		
-		tableView.separatorColor = systemGray5
-		tableView.backgroundColor = systemGray5
+		tableView.separatorColor = DefinedValues.systemGray5
+		tableView.backgroundColor = DefinedValues.systemGray5
 		let height : CGFloat = 60
 		let width : CGFloat = (self.view.frame.width - 60) / 2
 		let offset : CGFloat = 20
@@ -54,8 +60,9 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		sendButton.tintColor = UIColor.white
 		sendButton.layer.cornerRadius = sendButton.frame.height / 2
 		
+		let isRHP : Bool = User.get(.permissionLevel) as! Int == 1
 		// If the user is an RHP add approve/reject buttons to the view
-		if (User.get(.permissionLevel) as! Int == 1) {
+		if (isRHP) {
 			approveButton = UIButton.init(type: .custom)
 			approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
 			rejectButton = UIButton.init(type: .custom)
@@ -69,13 +76,13 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			} else {
 			
 			}*/
-			approveButton?.backgroundColor = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
+			approveButton?.backgroundColor = DefinedValues.systemGreen
 			approveButton?.addTarget(self, action: #selector(approvePointLog), for: .touchUpInside)
 			
 			rejectButton?.setTitle("Reject", for: .normal)
 			rejectButton?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
 			rejectButton?.layer.cornerRadius = 10
-			rejectButton?.backgroundColor = UIColor.red
+			rejectButton?.backgroundColor = DefinedValues.systemRed
 			rejectButton?.addTarget(self, action: #selector(rejectPointLog), for: .touchUpInside)
 			
 			self.backgroundView.addSubview(approveButton!)
@@ -85,18 +92,20 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			self.tableView.layoutIfNeeded()
 		}
 		
-	
-		refresher = UIRefreshControl()
-		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
-		tableView.refreshControl = refresher
-		resfreshData()
+		self.typeMessageField.delegate = self
 		
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
 		DataManager.sharedManager.getMessagesForPointLog(pointLog: pointLog!, onDone: { (messageLogs:[MessageLog]) in
 			self.mess = messageLogs
+			self.resfreshData()
 		})
 	}
 	
@@ -107,28 +116,28 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @objc func approvePointLog() {
-        approveButton?.isEnabled = false
-        //preViewContr?.displayedLogs.remove(at:index!.row)
-		if (pointLog?.wasHandled == true) {
-			if let pointSubmittedViewContr = (preViewContr as! PointsSubmittedViewController?) {
-				pointSubmittedViewContr.updatePointLogStatus(log: pointLog!, approve: true, updating: true, indexPath: indexPath!)
-			}
-		} else {
-			preViewContr?.updatePointLogStatus(log: pointLog!, approve: true, updating: false, indexPath: indexPath!)
-		}
-		
-        self.navigationController?.popViewController(animated: true)
+        updatePointLog(approve: true)
+    }
+    
+    @objc func rejectPointLog() {
+        updatePointLog(approve: false)
     }
 	
-    @objc func rejectPointLog() {
+    @objc func updatePointLog(approve:Bool) {
         rejectButton?.isEnabled = false
-        //preViewContr?.displayedLogs.remove(at: index!.row)
 		if (pointLog?.wasHandled == true) {
-			if let pointSubmittedViewContr = (preViewContr as! PointsSubmittedViewController?) {
-				pointSubmittedViewContr.updatePointLogStatus(log: pointLog!, approve: false, updating: true, indexPath: indexPath!)
-			}
+            if (preViewContr is PointsSubmittedViewController) {
+                if let pointSubmittedViewContr = (preViewContr as! PointsSubmittedViewController?) {
+                    pointSubmittedViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: true, indexPath: indexPath!)
+                }
+            }
+            else if (preViewContr is UserPointsTableViewController) {
+                if let userPointsViewContr = (preViewContr as! UserPointsTableViewController?){
+                    userPointsViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: true, indexPath: indexPath!)
+                }
+            }
 		} else {
-			preViewContr?.updatePointLogStatus(log: pointLog!, approve: false, updating: false, indexPath: indexPath!)
+			preViewContr?.updatePointLogStatus(log: pointLog!, approve: approve, updating: false, indexPath: indexPath!)
 		}
         self.navigationController?.popViewController(animated: true)
     }
@@ -137,12 +146,12 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		DataManager.sharedManager.getMessagesForPointLog(pointLog: pointLog!, onDone: { (messageLogs:[MessageLog]) in
 			// TODO: Probably a cleaner implementation of this??
 			self.mess = messageLogs
-			DispatchQueue.main.async { [unowned self] in
-				self.tableView.reloadData()
-			}
+//			DispatchQueue.main.async { [unowned self] in
+//				self.tableView.reloadData()
+//			}
+			self.tableView.reloadData()
 			self.tableView.refreshControl?.endRefreshing()
 		})
-		self.tableView.reloadData()
 	}
 
 	@IBAction func sendMessage(_ sender: Any) {
@@ -150,26 +159,15 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			if (message != "") {
 			DataManager.sharedManager.addMessageToPointLog(message: message, messageType: .comment, pointID: pointLog!.logID!)
 			typeMessageField.text! = ""
+				
+			// TODO: Fix this so it actually runs after the textfield has added the new log
+			scrollToBottom()
 			resfreshData()
 		}
 	}
 	
-	// MARK: - Table view data source
-	
+	// Todo: Does this function need to be implemented?
 	func numberOfSections(in tableView: UITableView) -> Int {
-		// #warning Incomplete implementation, return the number of sections
-		/*if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
-			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
-			emptyMessage(message: message)
-			return 0
-		}
-		else if mess.count > 0 {
-			killEmptyMessage()
-			return 1
-		} else {
-			emptyMessage(message: "You don't have any to approve. Good job!")
-			return 0
-		}*/
 		return 1
 	}
 	
@@ -183,7 +181,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		for view in cell.subviews {
 			view.removeFromSuperview()
 		}
-		cell.backgroundColor = systemGray5
+		cell.backgroundColor = DefinedValues.systemGray5
 		
 		if (indexPath.row == 0) {
 			let pointDescriptionView = PointDescriptionView()
@@ -201,20 +199,22 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			let widthConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
 			
 			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
-			// TODO: Rename
-			let thistest = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: pointDescriptionView, attribute: .height, multiplier: 1, constant: 45)
-			NSLayoutConstraint.activate([thistest])
+			
+			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: pointDescriptionView, attribute: .height, multiplier: 1, constant: 45)
+			NSLayoutConstraint.activate([cellHeight])
 			
 			
 		} else {
 		
 			let messageView = MessageView.init()
+			messageView.setLog(messageLog: mess[indexPath.row - 1])
 			messageView.layer.cornerRadius = radius
 			messageView.layer.shadowColor = UIColor.darkGray.cgColor
 			messageView.layer.shadowOpacity = 0.5
 			messageView.layer.shadowOffset = CGSize.zero
 			messageView.layer.shadowRadius = 5
-			messageView.setLog(messageLog: mess[indexPath.row - 1])
+			messageView.messageLabel.autoresizingMask = [.flexibleHeight]
+			messageView.autoresizingMask = [.flexibleHeight]
 			messageView.sizeToFit()
 			cell.addSubview(messageView)
 			
@@ -224,9 +224,8 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			let widthConstraint = NSLayoutConstraint(item: messageView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
 			
 			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
-			// TODO: Rename
-			let thistest = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: messageView, attribute: .height, multiplier: 1, constant: 45)
-			NSLayoutConstraint.activate([thistest])
+			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: messageView, attribute: .height, multiplier: 1, constant: 45)
+			NSLayoutConstraint.activate([cellHeight])
 			
 		}
 		
@@ -244,12 +243,14 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	}
 	
 	// TODO: Update this implementation. I can't imagine it being very efficient or scalable. Plus it doesn't use constants so changing constraints elsewhere would completely throw this off
-	
+    
 	@objc func keyboardWillShow(notification: NSNotification) {
 		if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
 			if (User.get(.permissionLevel) as! Int == 1) {
-				approveButton!.isHidden = true
-				rejectButton!.isHidden = true
+				if (approveButton != nil && rejectButton != nil) {
+					approveButton!.isHidden = true
+					rejectButton!.isHidden = true
+				}
 			}
 			bottomConstraint.constant = -1 * (60 + keyboardSize.height - (self.tabBarController?.tabBar.frame.size.height)!)
 			self.tableView.layoutIfNeeded()
@@ -257,7 +258,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	}
 	
 	@objc func keyboardWillHide(notification: NSNotification) {
-		if (User.get(.permissionLevel) as! Int != 1) {
+		if (User.get(.permissionLevel) as! Int != 1 || (approveButton == nil && rejectButton == nil)) {
 			bottomConstraint.constant = -60
 		} else {
 			bottomConstraint.constant = -145
@@ -267,5 +268,23 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		
 		self.tableView.layoutIfNeeded()
 	}
-
+	
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		scrollToBottom()
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		self.view.endEditing(true)
+		return false
+	}
+	
+	
+	// TODO: This should probably be an extension to the textview
+	func scrollToBottom() {
+		if (self.tableView.visibleCells.count > 1) {
+			let bottomOffset = CGPoint(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.size.height)
+			self.tableView.setContentOffset(bottomOffset, animated: true)
+		}
+	}
+	
 }
