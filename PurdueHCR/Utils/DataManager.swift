@@ -39,13 +39,12 @@ class DataManager {
     
     
     func getPointType(value:Int)->PointType{
-        for pt in self.pointTypes{
-            if(pt.pointID == value){
+        for pt in self.pointTypes {
+            if (pt.pointID == value){
                 return pt
             }
         }
-		// TODO: Update pn field and permission level
-		return PointType(pv: 0, pn: "", pd: "Unkown Point Type", rcs: false, pid: -1, permissionLevel: .rec, isEnabled:false) // The famous this should never happen comment
+		return PointType(pv: 0, pn: "Unknown Point Type", pd: "This point type does not appear to be a valid point type.", rcs: false, pid: -1, permissionLevel: .rec, isEnabled:false) // The famous this should never happen comment
     }
     
 

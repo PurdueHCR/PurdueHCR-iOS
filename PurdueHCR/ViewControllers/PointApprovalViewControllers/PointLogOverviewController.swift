@@ -63,7 +63,6 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		let isRHP : Bool = User.get(.permissionLevel) as! Int == 1
 		// If the user is an RHP add approve/reject buttons to the view
 		if (isRHP) {
-			// TODO: Update this implementation. Could break if title of viewcontroller changes and it probably is not efficient
 			approveButton = UIButton.init(type: .custom)
 			approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
 			rejectButton = UIButton.init(type: .custom)
