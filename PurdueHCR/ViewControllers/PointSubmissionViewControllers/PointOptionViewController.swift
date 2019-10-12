@@ -15,6 +15,12 @@ class PointTypeCell: UITableViewCell {
 
 class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 
+    @IBOutlet weak var suggestedPointsView: UIView!
+    @IBOutlet weak var suggested1: UIButton!
+    @IBOutlet weak var suggested2: UIButton!
+    @IBOutlet weak var suggested3: UIButton!
+    @IBOutlet weak var suggested4: UIButton!
+    
     var refresher: UIRefreshControl?
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -34,6 +40,12 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         searchController.searchBar.placeholder = "Search Points"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        let radius: CGFloat = 10.0
+        suggested1.layer.cornerRadius = radius
+        suggested2.layer.cornerRadius = radius
+        suggested3.layer.cornerRadius = radius
+        suggested4.layer.cornerRadius = radius
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,27 +74,27 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath.row == 0) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "suggested_points", for: indexPath) as! PointTypeCell
-            if(isFiltering()) {
-                cell.typeLabel.text = filteredPoints[indexPath.row].pointName
-                cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
-            }
-            else {
-                cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
-                cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
-            }
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
-            if(isFiltering()){
-                cell.typeLabel.text = filteredPoints[indexPath.row].pointName
-                cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
-            }
-            else {
-                cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
-                cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
-            }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PointTypeCell
+        if(isFiltering()){
+            cell.typeLabel.text = filteredPoints[indexPath.row].pointName
+            cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
         }
+        else {
+            if (pointSystem[indexPath.section].points[indexPath.row].pointID == 7) {
+                suggested1.titleLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+                suggested1.titleLabel?.sizeToFit()
+            } else if (pointSystem[indexPath.section].points[indexPath.row].pointID == 45) {
+                suggested2.titleLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+            } else if (pointSystem[indexPath.section].points[indexPath.row].pointID == 9) {
+                suggested3.titleLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+            } else if (pointSystem[indexPath.section].points[indexPath.row].pointID == 10) {
+                suggested4.titleLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+            }
+            
+            cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+            cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
+        }
+        //suggestedPointsView.setNeedsDisplay()
         return(cell)
     }
     
@@ -153,11 +165,11 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 			if (sysPref != nil) {
 				DataManager.sharedManager.refreshPointTypes(onDone: {(types:[PointType]) in
 					self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: types)
-					DispatchQueue.main.async { [weak self] in
-						if(self != nil){
-							self?.tableView.reloadData()
-						}
-					}
+					//DispatchQueue.main.async { [weak self] in
+					//	if(self != nil){
+                    self.tableView.reloadData()
+					//	}
+					//}
 					self.tableView.refreshControl?.endRefreshing()
 				})
 			} else {
