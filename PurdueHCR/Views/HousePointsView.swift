@@ -61,8 +61,6 @@ class HousePointsView: UIView {
         if(reward != nil){
 			nextRewardLabel.text = reward!.rewardName
             rewardImageView?.image = reward!.image
-            print("House PPR: ",self.house.getPPR())
-            print("Reward PPR: ",reward!.requiredPPR)
             circleProgress.angle = ((self.house.getPPR() - Double(prevRewardValue)) / Double(reward!.requiredPPR - prevRewardValue)) * 360.0
             var pointsToGo = Double(reward!.requiredPPR) - (Double(self.house.totalPoints) / Double(self.house.numResidents))
             // Round to two decimal places

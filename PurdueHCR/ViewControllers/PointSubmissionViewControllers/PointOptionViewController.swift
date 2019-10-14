@@ -46,10 +46,16 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         suggested2.layer.cornerRadius = radius
         suggested3.layer.cornerRadius = radius
         suggested4.layer.cornerRadius = radius
+        
+        suggested1.backgroundColor = UIColor.systemTeal
+        suggested2.backgroundColor = UIColor.systemRed
+        suggested3.backgroundColor = UIColor.systemGreen
+        suggested4.backgroundColor = UIColor.systemOrange
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //self.title = nil//"Submit Points"
+        
         if let index = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: index, animated: true)
         }
@@ -80,21 +86,25 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
         }
         else {
-            if (pointSystem[indexPath.section].points[indexPath.row].pointID == 7) {
-                suggested1.titleLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+            let pointID = pointSystem[indexPath.section].points[indexPath.row].pointID
+            let pointName = pointSystem[indexPath.section].points[indexPath.row].pointName
+            if (pointID == 7) {
+                suggested1.setTitle(pointName, for: .normal)
                 suggested1.titleLabel?.sizeToFit()
-            } else if (pointSystem[indexPath.section].points[indexPath.row].pointID == 45) {
-                suggested2.titleLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointName
-            } else if (pointSystem[indexPath.section].points[indexPath.row].pointID == 9) {
-                suggested3.titleLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointName
-            } else if (pointSystem[indexPath.section].points[indexPath.row].pointID == 10) {
-                suggested4.titleLabel?.text = pointSystem[indexPath.section].points[indexPath.row].pointName
+            } else if (pointID == 45) {
+                suggested2.setTitle(pointName, for: .normal)
+                suggested2.titleLabel?.sizeToFit()
+            } else if (pointID == 9) {
+                suggested3.setTitle(pointName, for: .normal)
+                suggested3.titleLabel?.sizeToFit()
+            } else if (pointID == 10) {
+                suggested4.setTitle(pointName, for: .normal)
+                suggested4.titleLabel?.sizeToFit()
             }
             
             cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
             cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
         }
-        //suggestedPointsView.setNeedsDisplay()
         return(cell)
     }
     
@@ -165,11 +175,11 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 			if (sysPref != nil) {
 				DataManager.sharedManager.refreshPointTypes(onDone: {(types:[PointType]) in
 					self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: types)
-					//DispatchQueue.main.async { [weak self] in
-					//	if(self != nil){
-                    self.tableView.reloadData()
-					//	}
-					//}
+					DispatchQueue.main.async { [weak self] in
+						if(self != nil){
+                            self!.tableView.reloadData()
+						}
+                    }
 					self.tableView.refreshControl?.endRefreshing()
 				})
 			} else {
