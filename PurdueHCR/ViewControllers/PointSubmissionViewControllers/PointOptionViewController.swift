@@ -20,6 +20,10 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     @IBOutlet weak var suggested2: UIButton!
     @IBOutlet weak var suggested3: UIButton!
     @IBOutlet weak var suggested4: UIButton!
+    var suggested1Index: IndexPath?
+    var suggested2Index: IndexPath?
+    var suggested3Index: IndexPath?
+    var suggested4Index: IndexPath?
     
     var refresher: UIRefreshControl?
     let searchController = UISearchController(searchResultsController: nil)
@@ -51,6 +55,12 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         suggested2.backgroundColor = UIColor.systemRed
         suggested3.backgroundColor = UIColor.systemGreen
         suggested4.backgroundColor = UIColor.systemOrange
+        
+        suggested1.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+        suggested2.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+        suggested3.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+        suggested4.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+
         
     }
     
@@ -91,15 +101,19 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             if (pointID == 7) {
                 suggested1.setTitle(pointName, for: .normal)
                 suggested1.titleLabel?.sizeToFit()
+                suggested1Index = indexPath
             } else if (pointID == 45) {
                 suggested2.setTitle(pointName, for: .normal)
                 suggested2.titleLabel?.sizeToFit()
+                suggested2Index = indexPath
             } else if (pointID == 9) {
                 suggested3.setTitle(pointName, for: .normal)
                 suggested3.titleLabel?.sizeToFit()
+                suggested3Index = indexPath
             } else if (pointID == 10) {
                 suggested4.setTitle(pointName, for: .normal)
                 suggested4.titleLabel?.sizeToFit()
+                suggested4Index = indexPath
             }
             
             cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
@@ -154,21 +168,52 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         self.performSegue(withIdentifier: "cell_push", sender: self)
     }
     
-    // This function is called before the segue
+    //Runs when one of the four suggested points buttons are selected
+    @objc func openSuggestedPoint(sender: UIButton!) {
+        var index: IndexPath
+        if (sender.tag == 1) {
+            if (suggested1Index! == nil) {
+                return
+            }
+            index = suggested1Index!
+        } else if (sender.tag == 2) {
+            if (suggested2Index! == nil) {
+                return
+            }
+            index = suggested2Index!
+        } else if (sender.tag == 3) {
+            if (suggested3Index! == nil) {
+                return
+            }
+            index = suggested3Index!
+        } else {
+            if (suggested4Index! == nil) {
+                return
+            }
+            index = suggested4Index!
+        }
+        
+        self.tableView.selectRow(at: index, animated: true, scrollPosition: UITableView.ScrollPosition.none)
+        
+        self.performSegue(withIdentifier: "cell_push", sender: self)
+    }
+    
+    // This function is called before the segue from selected ROW
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // get a reference to the second view controller
         let nextViewController = segue.destination as! TypeSubmitViewController
         
-        let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
-        if(isFiltering()){
-            nextViewController.type = filteredPoints[(indexPath?.row)!]
-        }
-        else{
-          	nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
-        }
-        
+            let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+            if(isFiltering()){
+                nextViewController.type = filteredPoints[(indexPath?.row)!]
+            }
+            else{
+                nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
+            }
     }
+    
+    
     
     @objc func resfreshData(){
 		DataManager.sharedManager.refreshSystemPreferences { (sysPref) in
