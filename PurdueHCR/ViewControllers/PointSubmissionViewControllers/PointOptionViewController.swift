@@ -20,6 +20,11 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     @IBOutlet weak var suggested2: UIButton!
     @IBOutlet weak var suggested3: UIButton!
     @IBOutlet weak var suggested4: UIButton!
+    @IBOutlet weak var suggestedValue1: UILabel!
+    @IBOutlet weak var suggestedValue2: UILabel!
+    @IBOutlet weak var suggestedValue3: UILabel!
+    @IBOutlet weak var suggestedValue4: UILabel!
+    
     var suggested1Index: IndexPath?
     var suggested2Index: IndexPath?
     var suggested3Index: IndexPath?
@@ -98,21 +103,26 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         else {
             let pointID = pointSystem[indexPath.section].points[indexPath.row].pointID
             let pointName = pointSystem[indexPath.section].points[indexPath.row].pointName
+            let pointValue = pointSystem[indexPath.section].points[indexPath.row].pointValue
             if (pointID == 7) {
                 suggested1.setTitle(pointName, for: .normal)
                 suggested1.titleLabel?.sizeToFit()
+                suggestedValue1.text = String(pointValue)
                 suggested1Index = indexPath
             } else if (pointID == 45) {
                 suggested2.setTitle(pointName, for: .normal)
                 suggested2.titleLabel?.sizeToFit()
+                suggestedValue2.text = String(pointValue)
                 suggested2Index = indexPath
             } else if (pointID == 9) {
                 suggested3.setTitle(pointName, for: .normal)
                 suggested3.titleLabel?.sizeToFit()
+                suggestedValue3.text = String(pointValue)
                 suggested3Index = indexPath
             } else if (pointID == 10) {
                 suggested4.setTitle(pointName, for: .normal)
                 suggested4.titleLabel?.sizeToFit()
+                suggestedValue4.text = String(pointValue)
                 suggested4Index = indexPath
             }
             
@@ -172,30 +182,31 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     @objc func openSuggestedPoint(sender: UIButton!) {
         var index: IndexPath
         if (sender.tag == 1) {
-            if (suggested1Index! == nil) {
+            if (suggested1Index == nil) {
                 return
             }
             index = suggested1Index!
         } else if (sender.tag == 2) {
-            if (suggested2Index! == nil) {
+            if (suggested2Index == nil) {
                 return
             }
             index = suggested2Index!
         } else if (sender.tag == 3) {
-            if (suggested3Index! == nil) {
+            if (suggested3Index == nil) {
                 return
             }
             index = suggested3Index!
         } else {
-            if (suggested4Index! == nil) {
+            if (suggested4Index == nil) {
                 return
             }
             index = suggested4Index!
         }
-        
+        tableView.cellForRow(at: index)?.selectionStyle = .none
         self.tableView.selectRow(at: index, animated: true, scrollPosition: UITableView.ScrollPosition.none)
         
         self.performSegue(withIdentifier: "cell_push", sender: self)
+        tableView.cellForRow(at: index)?.selectionStyle = .default
     }
     
     // This function is called before the segue from selected ROW
@@ -221,7 +232,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 				DataManager.sharedManager.refreshPointTypes(onDone: {(types:[PointType]) in
 					self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: types)
 					DispatchQueue.main.async { [weak self] in
-						if(self != nil){
+						if (self != nil){
                             self!.tableView.reloadData()
 						}
                     }
@@ -242,6 +253,14 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 //    }
     
     func updateSearchResults(for searchController: UISearchController) {
+        if (isFiltering()) {
+            suggestedPointsView.frame.size.height = 0
+            suggestedPointsView.isHidden = true
+        }
+        else {
+            suggestedPointsView.frame.size.height = 230
+            suggestedPointsView.isHidden = false
+        }
         filterContentForSearchText(searchController.searchBar.text!)
     }
 	
@@ -263,7 +282,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     
     private func sortIntoPointGroupsWithPermission(arr:[PointType]) -> [PointGroup]{
         var pointGroups = [PointGroup]()
-        if(!arr.isEmpty){
+        if (!arr.isEmpty){
             var currentValue = 0
             var pg = PointGroup(val: 0)
             for i in 0..<arr.count {
