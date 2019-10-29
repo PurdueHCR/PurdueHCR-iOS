@@ -56,10 +56,36 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         suggested3.layer.cornerRadius = radius
         suggested4.layer.cornerRadius = radius
         
-        suggested1.backgroundColor = UIColor.systemTeal
-        suggested2.backgroundColor = UIColor.systemRed
-        suggested3.backgroundColor = UIColor.systemGreen
-        suggested4.backgroundColor = UIColor.systemOrange
+        suggested1.titleLabel?.textAlignment = NSTextAlignment.center
+        suggested2.titleLabel?.textAlignment = NSTextAlignment.center
+        suggested3.titleLabel?.textAlignment = NSTextAlignment.center
+        suggested4.titleLabel?.textAlignment = NSTextAlignment.center
+        
+        suggested1.layer.shadowColor = UIColor.lightGray.cgColor
+        suggested1.layer.shadowOpacity = 0.5
+        suggested1.layer.shadowOffset = CGSize.zero
+        suggested1.layer.shadowRadius = 7
+        suggested2.layer.shadowColor = UIColor.lightGray.cgColor
+        suggested2.layer.shadowOpacity = 0.5
+        suggested2.layer.shadowOffset = CGSize.zero
+        suggested2.layer.shadowRadius = 7
+        suggested3.layer.shadowColor = UIColor.lightGray.cgColor
+        suggested3.layer.shadowOpacity = 0.5
+        suggested3.layer.shadowOffset = CGSize.zero
+        suggested3.layer.shadowRadius = 7
+        suggested4.layer.shadowColor = UIColor.lightGray.cgColor
+        suggested4.layer.shadowOpacity = 0.5
+        suggested4.layer.shadowOffset = CGSize.zero
+        suggested4.layer.shadowRadius = 7
+        
+        suggestedValue1.layer.cornerRadius = suggestedValue1.frame.height / 2
+        suggestedValue2.layer.cornerRadius = suggestedValue2.frame.height / 2
+        suggestedValue3.layer.cornerRadius = suggestedValue3.frame.height / 2
+        suggestedValue4.layer.cornerRadius = suggestedValue4.frame.height / 2
+        suggestedValue1.layer.backgroundColor = UIColor.systemGreen.cgColor
+        suggestedValue2.layer.backgroundColor = UIColor.systemGreen.cgColor
+        suggestedValue3.layer.backgroundColor = UIColor.systemRed.cgColor
+        suggestedValue4.layer.backgroundColor = UIColor.systemRed.cgColor
         
         suggested1.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
         suggested2.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
