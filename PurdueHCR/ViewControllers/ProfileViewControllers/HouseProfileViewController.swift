@@ -19,7 +19,8 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 	@IBOutlet weak var housePointsCompareView: HousePointsCompareView!
 	@IBOutlet weak var housePointsView: HousePointsView!
 	@IBOutlet weak var notificationsButton: UIButton!
-	
+    @IBOutlet weak var topScorersView: TopScorersView!
+    
     var refresher: UIRefreshControl?
     var refreshCount = 0
 	var p : PopupView?
@@ -33,7 +34,6 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         scrollView.refreshControl = refresher
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
 		
         self.profileView.layer.shadowColor = UIColor.darkGray.cgColor
         self.profileView.layer.shadowOpacity = 0.5
@@ -41,9 +41,6 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
         self.profileView.layer.shadowRadius = 5
         self.profileView.layer.cornerRadius = radius
 		self.profileView.delegate = self
-		
-		//let myCustomView = Bundle.main.loadNibNamed("UserPoi", owner: self, options: nil)?[0] as! ProfileView
-		//myCustomView.delegate = self
 		
         self.housePointsView.layer.shadowColor = UIColor.darkGray.cgColor
         self.housePointsView.layer.shadowOpacity = 0.5
