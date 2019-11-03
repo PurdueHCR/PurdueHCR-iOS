@@ -777,6 +777,7 @@ class FirebaseHelper {
 							var firstName = document.data()["ResidentFirstName"] as! String
 							let lastName = document.data()["ResidentLastName"] as! String
                             let dateSubmitted = document.data()["DateSubmitted"] as! Timestamp
+                            let dateOccurred = document.data()["DateOccurred"] as! Timestamp
 							if(floorID == "Shreve"){
 								firstName = "(Shreve) " + firstName
 							}
@@ -784,6 +785,7 @@ class FirebaseHelper {
 							let pointType = DataManager.sharedManager.getPointType(value: idType)
 							let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
                             pointLog.dateSubmitted = dateSubmitted
+                            pointLog.dateOccurred = dateOccurred
 							pointLog.logID = id
 							if (idType >= 0) {
 								pointLog.wasHandled = true

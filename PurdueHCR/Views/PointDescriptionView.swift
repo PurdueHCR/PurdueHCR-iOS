@@ -45,9 +45,11 @@ class PointDescriptionView: UIView {
         residentLabel.text = pointLog.firstName + " " + pointLog.lastName
         pointTypeDescriptionLabel.text = pointLog.type.pointName
         descriptionLabel.text = pointLog.pointDescription
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "MMM dd, yyyy"
-		dateLabel.text = dateFormatter.string(for: pointLog.dateOccurred?.dateValue())
+
+        let dateValue = pointLog.dateOccurred!.dateValue()
+        let dateFormatter = DateFormatter.init()
+        dateFormatter.dateFormat = "MMM dd, yyyy"
+        dateLabel.text = dateFormatter.string(from: dateValue)
     }
     
 
