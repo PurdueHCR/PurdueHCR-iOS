@@ -50,7 +50,9 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        let radius: CGFloat = 10.0
+        let pointRadius: CGFloat = suggestedValue1.frame.height / 2
+        let radius: CGFloat = pointRadius + 3
+        
         suggested1.layer.cornerRadius = radius
         suggested2.layer.cornerRadius = radius
         suggested3.layer.cornerRadius = radius
@@ -78,14 +80,17 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         suggested4.layer.shadowOffset = CGSize.zero
         suggested4.layer.shadowRadius = 7
         
-        suggestedValue1.layer.cornerRadius = suggestedValue1.frame.height / 2
-        suggestedValue2.layer.cornerRadius = suggestedValue2.frame.height / 2
-        suggestedValue3.layer.cornerRadius = suggestedValue3.frame.height / 2
-        suggestedValue4.layer.cornerRadius = suggestedValue4.frame.height / 2
-        suggestedValue1.layer.backgroundColor = UIColor.systemGreen.cgColor
-        suggestedValue2.layer.backgroundColor = UIColor.systemGreen.cgColor
-        suggestedValue3.layer.backgroundColor = UIColor.systemRed.cgColor
-        suggestedValue4.layer.backgroundColor = UIColor.systemRed.cgColor
+        suggestedValue1.layer.cornerRadius = pointRadius
+        suggestedValue2.layer.cornerRadius = pointRadius
+        suggestedValue3.layer.cornerRadius = pointRadius
+        suggestedValue4.layer.cornerRadius = pointRadius
+        
+        var houses = DataManager.sharedManager.getHouses()!
+        let house = houses.remove(at: houses.firstIndex(of: House(id: User.get(.house) as! String, points: 0,hexColor:""))!)
+        suggestedValue1.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
+        suggestedValue2.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
+        suggestedValue3.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
+        suggestedValue4.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
         
         suggested1.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
         suggested2.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
