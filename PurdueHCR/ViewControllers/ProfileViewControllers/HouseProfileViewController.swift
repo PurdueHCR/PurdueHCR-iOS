@@ -19,7 +19,8 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 	@IBOutlet weak var housePointsCompareView: HousePointsCompareView!
 	@IBOutlet weak var housePointsView: HousePointsView!
 	@IBOutlet weak var notificationsButton: UIButton!
-    @IBOutlet weak var topScorersView: TopScorersView!
+    @IBOutlet weak var topScorersView: UITableView!
+    
     
     var refresher: UIRefreshControl?
     var refreshCount = 0
@@ -60,6 +61,13 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 		if (permission != 0 && permission != 1) {
 			self.navigationItem.rightBarButtonItems = nil
 		}
+        if (permission == 3) {
+            // Set up the top scorer's view for FHPs
+            let cell = topScorersView.dequeueReusableCell(withIdentifier: "top_scorer_cell")
+            cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
+        } else {
+            topScorersView.isHidden = true
+        }
 		
 		
 		// TODO: A separate method should probably be created for this so that it doesn't have to pass around as much data but instead just returns a boolean whether or not the user has a notification

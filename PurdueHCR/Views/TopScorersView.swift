@@ -10,8 +10,4 @@ import UIKit
 
 class TopScorersView: UITableView {
 
-    override init(frame: CGRect, style: UITableView.Style) {
-        <#code#>
-    }
-
 }
