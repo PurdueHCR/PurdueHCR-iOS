@@ -26,7 +26,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="nOi-a4-TS1"/>
                                     </constraints>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </state>
@@ -37,7 +37,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="enY-fe-bcA"/>
                                     </constraints>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </state>
@@ -48,7 +48,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="ivQ-e7-stZ"/>
                                     </constraints>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </state>
@@ -59,7 +59,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="jCp-KT-0Iy"/>
                                     </constraints>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </state>

@@ -58,11 +58,6 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         suggested3.layer.cornerRadius = radius
         suggested4.layer.cornerRadius = radius
         
-//        suggested1.titleLabel?.textAlignment = NSTextAlignment.center
-//        suggested2.titleLabel?.textAlignment = NSTextAlignment.center
-//        suggested3.titleLabel?.textAlignment = NSTextAlignment.center
-//        suggested4.titleLabel?.textAlignment = NSTextAlignment.center
-        
         suggested1.layer.shadowColor = UIColor.lightGray.cgColor
         suggested1.layer.shadowOpacity = 0.5
         suggested1.layer.shadowOffset = CGSize.zero
