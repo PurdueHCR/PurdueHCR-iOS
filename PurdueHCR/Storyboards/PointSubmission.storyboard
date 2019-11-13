@@ -23,7 +23,7 @@
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="cxG-nO-IHC">
                                     <rect key="frame" x="10" y="40.000000000000007" width="192" height="97.666666666666686"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="10"/>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="5" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </state>
@@ -34,7 +34,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="enY-fe-bcA"/>
                                     </constraints>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="10"/>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="5" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </state>
@@ -45,7 +45,18 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="ivQ-e7-stZ"/>
                                     </constraints>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="10"/>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="5" maxY="10"/>
+                                    <state key="normal">
+                                        <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Nr-zoQ">
+                                    <rect key="frame" x="212" y="147.66666666666666" width="192" height="97.333333333333343"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="jCp-KT-0Iy"/>
+                                    </constraints>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="5" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </state>
@@ -81,6 +92,15 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeL-by-2gK">
+                                    <rect key="frame" x="10" y="7.6666666666666679" width="197" height="25.000000000000004"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="25" id="d9L-uR-zol"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dS8-We-Tx5">
                                     <rect key="frame" x="217" y="152.66666666666666" width="30" height="30"/>
                                     <constraints>
@@ -91,26 +111,6 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeL-by-2gK">
-                                    <rect key="frame" x="10" y="7.6666666666666679" width="197" height="25.000000000000004"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="25" id="d9L-uR-zol"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Nr-zoQ">
-                                    <rect key="frame" x="212" y="147.66666666666666" width="192" height="97.333333333333343"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="100" id="jCp-KT-0Iy"/>
-                                    </constraints>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="10"/>
-                                    <state key="normal">
-                                        <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    </state>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
