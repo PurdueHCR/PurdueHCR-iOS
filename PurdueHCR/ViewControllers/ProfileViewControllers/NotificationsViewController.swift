@@ -40,9 +40,11 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 		DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
 			self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
-			DispatchQueue.main.async { [unowned self] in
-				self.tableView.reloadData()
-			}
+            if (self.displayedLogs.count > 0) {
+                DispatchQueue.main.async { [unowned self] in
+                    self.tableView.reloadData()
+                }
+            }
 			self.tableView.refreshControl?.endRefreshing()
 			self.activityIndicator.stopAnimating()
 			self.navigationItem.hidesBackButton = false
