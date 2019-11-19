@@ -738,15 +738,8 @@ class FirebaseHelper {
                         firstName = "(Shreve) " + firstName
                     }
 					
-					// TODO: this part about hard-coding a reference may need to be re-added
-					
-                    /*let residentRefMaybe = document.data()["ResidentRef"]
-                    var residentRef = self.db.collection(self.USERS).document("ypT6K68t75hqX6OubFO0HBBTHoy1") // Hard code a ref for when a code doesnt have one. (IE points were Given by REC to no specific user)*/
 					let residentId = User.get(.id) as! String
-                    /*if(residentRefMaybe != nil ){
-                        residentRef = residentRefMaybe as! DocumentReference
-                    }*/
-                    let pointType = DataManager.sharedManager.getPointType(value: idType)
+                    let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
                     let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId, dateOccurred: dateOccurred)
                     pointLog.logID = id
                     pointLogs.append(pointLog)
@@ -781,7 +774,7 @@ class FirebaseHelper {
 								firstName = "(Shreve) " + firstName
 							}
 							let residentId = document.data()["ResidentId"] as! String
-							let pointType = DataManager.sharedManager.getPointType(value: idType)
+							let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
 							let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
                             pointLog.dateSubmitted = dateSubmitted
 							pointLog.logID = id
@@ -828,7 +821,7 @@ class FirebaseHelper {
 					let firstName = document.data()["ResidentFirstName"] as! String
 					let lastName = document.data()["ResidentLastName"] as! String
 					let idType = document.data()["PointTypeID"] as! Int
-					let pointType = DataManager.sharedManager.getPointType(value: idType)
+					let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
 					let floorID = document.data()["FloorID"] as! String
 					let residentId = document.data()["ResidentId"] as! String
 					let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
