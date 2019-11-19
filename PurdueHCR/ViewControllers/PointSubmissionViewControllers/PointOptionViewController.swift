@@ -194,7 +194,11 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         if(isFiltering()){
             return nil
         }
-        return pointSystem[section].pointValue.description + " Points" ;
+        let pointValue = pointSystem[section].pointValue
+        if (pointValue == 1) {
+            return pointValue.description + " Point"
+        }
+        return pointValue.description + " Points"
     }
     
     // Runs when table view cell is tapped
