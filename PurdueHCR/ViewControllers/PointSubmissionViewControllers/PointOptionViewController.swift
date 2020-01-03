@@ -91,6 +91,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         suggested2.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
         suggested3.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
         suggested4.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+        self.tableView.backgroundColor = DefinedValues.systemGray5
 
         
     }
@@ -160,12 +161,16 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     
     override func numberOfSections(in tableView: UITableView) -> Int {
 		if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
+            suggestedPointsView.frame.size.height = 0
+            suggestedPointsView.isHidden = true
 			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
 			emptyMessage(message: message)
 			navigationItem.searchController = nil
 			return 0
 		}
 		else if isFiltering() {
+            suggestedPointsView.frame.size.height = 0
+            suggestedPointsView.isHidden = true
             if(filteredPoints.count > 0){
                 killEmptyMessage()
                 return 1
@@ -176,10 +181,14 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             }
 		} else {
 			if pointSystem.count > 0 {
+                suggestedPointsView.frame.size.height = 230
+                suggestedPointsView.isHidden = false
 				killEmptyMessage()
 				navigationItem.searchController = searchController
 				return (pointSystem.count)
 			} else {
+                suggestedPointsView.frame.size.height = 0
+                suggestedPointsView.isHidden = true
 				emptyMessage(message: "There are no point types enabled for submitting.")
 				navigationItem.searchController = nil
 				return 0
@@ -187,8 +196,6 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
 		}
 		
     }
-
-    
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if(isFiltering()){
