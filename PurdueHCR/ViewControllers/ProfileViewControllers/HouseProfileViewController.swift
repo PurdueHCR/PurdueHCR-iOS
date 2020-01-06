@@ -11,15 +11,12 @@ import FirebaseAuth
 import Cely
 import PopupKit
 
-class HouseProfileViewController: UIViewController, UIScrollViewDelegate, CustomViewDelegate {
+// Custom view delegate allows for XIB views inside of the controller to
+// use segues to other ViewControllers
+class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
-    @IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var settingsButton: UIBarButtonItem!
-    @IBOutlet var profileView: ProfileView!
-	@IBOutlet weak var housePointsCompareView: HousePointsCompareView!
-	@IBOutlet weak var housePointsView: HousePointsView!
 	@IBOutlet weak var notificationsButton: UIButton!
-    @IBOutlet weak var topScorersView: UITableView!
     
     
     var refresher: UIRefreshControl?
@@ -28,14 +25,16 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 	var house : House?
     let radius : CGFloat = 10
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
 	
         refresher = UIRefreshControl()
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        scrollView.refreshControl = refresher
-		
+        tableView.refreshControl = refresher
+        /*scrollView.refreshControl = refresher
+        
         self.profileView.layer.shadowColor = UIColor.darkGray.cgColor
         self.profileView.layer.shadowOpacity = 0.5
         self.profileView.layer.shadowOffset = CGSize.zero
@@ -62,12 +61,11 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 			self.navigationItem.rightBarButtonItems = nil
 		}
         if (permission == 3) {
-            // Set up the top scorer's view for FHPs
-            let cell = topScorersView.dequeueReusableCell(withIdentifier: "top_scorer_cell")
-            cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
+            topScorersView.layer.cornerRadius = radius
+           
         } else {
             topScorersView.isHidden = true
-        }
+        }*/
 		
 		
 		// TODO: A separate method should probably be created for this so that it doesn't have to pass around as much data but instead just returns a boolean whether or not the user has a notification
@@ -96,21 +94,24 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 			}
 		}
 		
+        
+        refreshData()
+
     }
-	
-	override func viewWillAppear(_ animated: Bool) {
-		refreshData()
-	}
 	
     @objc func refreshData(){
 		refreshCount = 0
         DataManager.sharedManager.refreshUser(onDone: {(err:Error?) in
-            self.profileView.reloadData()
+            //self.profileView.reloadData()
             self.handleRefresher()
         })
         DataManager.sharedManager.refreshHouses(onDone: {(hs:[House]) in
-            self.housePointsView.refresh()
-            self.housePointsCompareView.refreshDataSet()
+            //self.housePointsView.refresh()
+            //self.housePointsCompareView.refreshDataSet()
+            DataManager.sharedManager.getHouseScorers {
+                
+            }
+           // self.topScorersView.refreshControl?.beginRefreshing()
             self.handleRefresher()
         })
 		if (navigationItem.rightBarButtonItems != nil) {
@@ -225,6 +226,67 @@ class HouseProfileViewController: UIViewController, UIScrollViewDelegate, Custom
 		self.navigationController?.pushViewController(vc, animated: true)
 	}
 		
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Set up the top scorer's view for FHPs
+        //for user in (house?.topScoreUsers!)! {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        for view in cell.subviews {
+            view.removeFromSuperview()
+        }
+        cell.backgroundColor = DefinedValues.systemGray5
+        
+        switch indexPath.row {
+        case 0:
+            let profileView = ProfileView.init()
+            profileView.layer.shadowColor = UIColor.darkGray.cgColor
+            profileView.layer.shadowOpacity = 0.5
+            profileView.layer.shadowOffset = CGSize.zero
+            profileView.layer.shadowRadius = 5
+            profileView.layer.cornerRadius = radius
+            profileView.backgroundColor = UIColor.white
+            cell.addSubview(profileView)
+            
+            profileView.translatesAutoresizingMaskIntoConstraints = false
+            let horizontalConstraint = NSLayoutConstraint(item: profileView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
+            let verticalConstraint = NSLayoutConstraint(item: profileView, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 100)
+            let widthConstraint = NSLayoutConstraint(item: profileView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
+            
+            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
+            
+            let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: profileView, attribute: .height, multiplier: 1, constant: 45)
+            NSLayoutConstraint.activate([cellHeight])
+            
+        default:
+            break
+        }
+        
+        
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        let permission = User.get(.permissionLevel) as! Int
+        if (permission == 3) {
+            return 4
+        } else {
+            return 3
+        }
+    }
+    
+    // Support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
 }
 
 // Helper function inserted by Swift 4.2 migrator.

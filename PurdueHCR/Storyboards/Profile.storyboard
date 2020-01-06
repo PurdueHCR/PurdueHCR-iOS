@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VqF-NJ-TsV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VqF-NJ-TsV">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,91 +28,21 @@
         <scene sceneID="BY3-8N-yXh">
             <objects>
                 <viewController title="Point Overview" id="zGs-DW-f3U" customClass="HouseProfileViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="6CA-bv-9bg">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7UZ-lD-f9b">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="970"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vFy-4D-Lcd">
-                                <rect key="frame" x="0.0" y="44" width="375" height="926"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhe-Cn-9Q8" customClass="ProfileView" customModule="PurdueHCR" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="8" width="359" height="150"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="Fe1-pH-pvq"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2EP-Vu-eK9" customClass="HousePointsCompareView" customModule="PurdueHCR" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="166" width="359" height="361"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="361" id="31i-3A-Uy0"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dGl-5f-Wyl" customClass="HousePointsView" customModule="PurdueHCR" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="535" width="359" height="190"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="190" id="ODR-bd-aFf"/>
-                                        </constraints>
-                                    </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TTm-8v-1e8">
-                                        <rect key="frame" x="8" y="735" width="359" height="200"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="vRz-41-lTX"/>
-                                        </constraints>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="top_scorer_cell" rowHeight="75" id="yKN-KU-ulx">
-                                                <rect key="frame" x="0.0" y="28" width="359" height="75"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yKN-KU-ulx" id="Tr2-q0-x6j">
-                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="75"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="None" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBu-k6-7T1">
-                                                            <rect key="frame" x="15" y="27" width="41" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </tableViewCellContentView>
-                                            </tableViewCell>
-                                        </prototypes>
-                                    </tableView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="vhe-Cn-9Q8" firstAttribute="trailing" secondItem="vFy-4D-Lcd" secondAttribute="trailingMargin" id="3ok-hK-2cl"/>
-                                    <constraint firstItem="vhe-Cn-9Q8" firstAttribute="trailing" secondItem="2EP-Vu-eK9" secondAttribute="trailing" id="55r-6K-mzP"/>
-                                    <constraint firstItem="vhe-Cn-9Q8" firstAttribute="centerX" secondItem="vFy-4D-Lcd" secondAttribute="centerX" id="5xU-xV-yHF"/>
-                                    <constraint firstItem="vhe-Cn-9Q8" firstAttribute="leading" secondItem="2EP-Vu-eK9" secondAttribute="leading" id="BCd-UI-JBO"/>
-                                    <constraint firstItem="2EP-Vu-eK9" firstAttribute="top" secondItem="vhe-Cn-9Q8" secondAttribute="bottom" constant="8" symbolic="YES" id="EfZ-N8-hv9"/>
-                                    <constraint firstItem="2EP-Vu-eK9" firstAttribute="trailing" secondItem="dGl-5f-Wyl" secondAttribute="trailing" id="Us0-G1-2ze"/>
-                                    <constraint firstItem="dGl-5f-Wyl" firstAttribute="top" secondItem="2EP-Vu-eK9" secondAttribute="bottom" constant="8" symbolic="YES" id="WHL-GW-Jnj"/>
-                                    <constraint firstItem="TTm-8v-1e8" firstAttribute="top" secondItem="dGl-5f-Wyl" secondAttribute="bottom" constant="10" id="Y4v-eg-1Yq"/>
-                                    <constraint firstItem="vhe-Cn-9Q8" firstAttribute="leading" secondItem="vFy-4D-Lcd" secondAttribute="leadingMargin" id="YzR-rh-YPF"/>
-                                    <constraint firstItem="vhe-Cn-9Q8" firstAttribute="top" secondItem="vFy-4D-Lcd" secondAttribute="topMargin" id="ZcH-0M-KBm"/>
-                                    <constraint firstItem="2EP-Vu-eK9" firstAttribute="leading" secondItem="dGl-5f-Wyl" secondAttribute="leading" id="j1R-WA-nI8"/>
-                                    <constraint firstItem="TTm-8v-1e8" firstAttribute="leading" secondItem="dGl-5f-Wyl" secondAttribute="leading" id="jcO-IK-X6I"/>
-                                    <constraint firstItem="TTm-8v-1e8" firstAttribute="trailing" secondItem="dGl-5f-Wyl" secondAttribute="trailing" id="l7x-mg-Aty"/>
-                                    <constraint firstAttribute="bottom" secondItem="dGl-5f-Wyl" secondAttribute="bottom" constant="10" id="o5C-t0-sLA"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="delegate" destination="zGs-DW-f3U" id="z1T-px-obX"/>
-                                </connections>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="vFy-4D-Lcd" secondAttribute="trailing" id="XYm-yZ-75g"/>
-                            <constraint firstItem="vFy-4D-Lcd" firstAttribute="leading" secondItem="6CA-bv-9bg" secondAttribute="leading" id="eCS-a6-ccy"/>
-                            <constraint firstItem="vFy-4D-Lcd" firstAttribute="top" secondItem="QII-wG-4Zx" secondAttribute="top" id="l7U-BM-EIt"/>
-                            <constraint firstItem="vFy-4D-Lcd" firstAttribute="bottom" secondItem="QII-wG-4Zx" secondAttribute="bottom" id="vZ2-Ce-gX5"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="QII-wG-4Zx"/>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="C8d-sO-bH4">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="C8d-sO-bH4" id="oOr-T0-UwF">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile" selectedImage="profile" id="JSU-7P-lap"/>
                     <navigationItem key="navigationItem" title="Profile" id="2Xh-z0-fiO">
                         <barButtonItem key="leftBarButtonItem" title="Sign Out" image="Settings" id="jct-kF-pzl">
@@ -135,12 +64,8 @@
                     </navigationItem>
                     <size key="freeformSize" width="375" height="970"/>
                     <connections>
-                        <outlet property="housePointsCompareView" destination="2EP-Vu-eK9" id="2Zq-YB-rw1"/>
-                        <outlet property="housePointsView" destination="dGl-5f-Wyl" id="bGB-uW-bPQ"/>
                         <outlet property="notificationsButton" destination="l6y-qp-6I1" id="M40-WM-rNk"/>
-                        <outlet property="profileView" destination="vhe-Cn-9Q8" id="Y1U-xG-8uY"/>
-                        <outlet property="scrollView" destination="vFy-4D-Lcd" id="EnM-T6-l03"/>
-                        <outlet property="topScorersView" destination="TTm-8v-1e8" id="svu-08-9is"/>
+                        <outlet property="tableView" destination="7UZ-lD-f9b" id="708-6f-IPu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyd-ge-ozp" sceneMemberID="firstResponder"/>
