@@ -18,9 +18,10 @@
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
-		B56710FB2367AC9900F66B4E /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56710FA2367AC9900F66B4E /* TopScorersView.swift */; };
 		B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599D98122F62F030033173C /* NotificationsViewController.swift */; };
 		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
+		B5D88D5523C395DC007A19D0 /* TopScorersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D88D5423C395DC007A19D0 /* TopScorersView.xib */; };
+		B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D88D5623C39688007A19D0 /* TopScorersView.swift */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -112,9 +113,10 @@
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
 		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
-		B56710FA2367AC9900F66B4E /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
 		B599D98122F62F030033173C /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
+		B5D88D5423C395DC007A19D0 /* TopScorersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopScorersView.xib; sourceTree = "<group>"; };
+		B5D88D5623C39688007A19D0 /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				D30FBEF020FC0B24000DD221 /* ProfileView.xib */,
 				B50E6C8F22F10E0B00505AA3 /* MessageView.xib */,
 				D749F37523399F0600410434 /* SuggestedPointsView.xib */,
+				B5D88D5423C395DC007A19D0 /* TopScorersView.xib */,
 			);
 			name = ViewXIB;
 			path = "New Group";
@@ -479,7 +482,7 @@
 				D33F43B0210AA00700D3982D /* PointDescriptionView.swift */,
 				B50E6C9122F1202A00505AA3 /* MessageView.swift */,
 				D749F3772339A24B00410434 /* SuggestedPointsView.swift */,
-				B56710FA2367AC9900F66B4E /* TopScorersView.swift */,
+				B5D88D5623C39688007A19D0 /* TopScorersView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				D749F37423399E2700410434 /* GoogleService-Info.plist in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */,
+				B5D88D5523C395DC007A19D0 /* TopScorersView.xib in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				D749F37623399F0600410434 /* SuggestedPointsView.xib in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
@@ -831,7 +835,7 @@
 				D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */,
 				D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */,
 				B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */,
-				B56710FB2367AC9900F66B4E /* TopScorersView.swift in Sources */,
+				B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */,
 				D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1010,6 +1014,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1030,6 +1035,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

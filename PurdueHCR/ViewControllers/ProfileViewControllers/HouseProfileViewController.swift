@@ -250,14 +250,74 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             
             profileView.translatesAutoresizingMaskIntoConstraints = false
             let horizontalConstraint = NSLayoutConstraint(item: profileView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
-            let verticalConstraint = NSLayoutConstraint(item: profileView, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 100)
+            let verticalConstraint = NSLayoutConstraint(item: profileView, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 150)
+            let centeredVertically = NSLayoutConstraint(item: profileView, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 10)
             let widthConstraint = NSLayoutConstraint(item: profileView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
             
-            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
+            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, centeredVertically])
             
             let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: profileView, attribute: .height, multiplier: 1, constant: 45)
             NSLayoutConstraint.activate([cellHeight])
+        case 1:
+            let compareView = HousePointsCompareView.init()
+            compareView.layer.shadowColor = UIColor.darkGray.cgColor
+            compareView.layer.shadowOpacity = 0.5
+            compareView.layer.shadowOffset = CGSize.zero
+            compareView.layer.shadowRadius = 5
+            compareView.layer.cornerRadius = radius
+            compareView.backgroundColor = UIColor.white
+            cell.addSubview(compareView)
             
+            compareView.translatesAutoresizingMaskIntoConstraints = false
+            let horizontalConstraint = NSLayoutConstraint(item: compareView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
+            let verticalConstraint = NSLayoutConstraint(item: compareView, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 361)
+           let centeredVertically = NSLayoutConstraint(item: compareView, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 10)
+            let widthConstraint = NSLayoutConstraint(item: compareView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
+            
+            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, centeredVertically])
+            
+            let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: compareView, attribute: .height, multiplier: 1, constant: 45)
+            NSLayoutConstraint.activate([cellHeight])
+        case 2:
+            let houseView = HousePointsView.init()
+            houseView.layer.shadowColor = UIColor.darkGray.cgColor
+            houseView.layer.shadowOpacity = 0.5
+            houseView.layer.shadowOffset = CGSize.zero
+            houseView.layer.shadowRadius = 5
+            houseView.layer.cornerRadius = radius
+            houseView.backgroundColor = UIColor.white
+            cell.addSubview(houseView)
+            
+            houseView.translatesAutoresizingMaskIntoConstraints = false
+            let horizontalConstraint = NSLayoutConstraint(item: houseView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
+            let verticalConstraint = NSLayoutConstraint(item: houseView, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 190)
+            let centeredVertically = NSLayoutConstraint(item: houseView, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 10)
+            let widthConstraint = NSLayoutConstraint(item: houseView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
+            
+            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, centeredVertically])
+            
+            let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: houseView, attribute: .height, multiplier: 1, constant: 20)
+            NSLayoutConstraint.activate([cellHeight])
+        case 3:
+            let topScorersView = TopScorersView.init()
+            topScorersView.layer.shadowColor = UIColor.darkGray.cgColor
+            topScorersView.layer.shadowOpacity = 0.5
+            topScorersView.layer.shadowOffset = CGSize.zero
+            topScorersView.layer.shadowRadius = 5
+            topScorersView.layer.cornerRadius = radius
+            topScorersView.backgroundColor = UIColor.white
+            cell.addSubview(topScorersView)
+            
+            topScorersView.translatesAutoresizingMaskIntoConstraints = false
+            let horizontalConstraint = NSLayoutConstraint(item: topScorersView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
+            let verticalConstraint = NSLayoutConstraint(item: topScorersView, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 250)
+            let centeredVertically = NSLayoutConstraint(item: topScorersView, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 10)
+            let widthConstraint = NSLayoutConstraint(item: topScorersView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
+            
+            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, centeredVertically])
+            
+            let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: topScorersView, attribute: .height, multiplier: 1, constant: 20)
+            NSLayoutConstraint.activate([cellHeight])
         default:
             break
         }
