@@ -83,6 +83,7 @@ class HouseTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LogCountCell", for: indexPath) as! LogCountCell
+        
         cell.nameLabel.text = logCount[indexPath.row].name
         cell.countLable.text = logCount[indexPath.row].count.description
         return cell
@@ -106,7 +107,7 @@ class HouseTableViewController: UITableViewController {
             }
             var countOfLogs = [LogCount]()
             for type in pointTypes{
-                countOfLogs.append(LogCount(nm: type.pointDescription, id: type.pointID))
+                countOfLogs.append(LogCount(nm: type.pointName, id: type.pointID))
             }
             countOfLogs.sort(by: { (a, b) -> Bool in
                 return a.typeId < b.typeId

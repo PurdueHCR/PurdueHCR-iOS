@@ -50,48 +50,51 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        let pointRadius: CGFloat = suggestedValue1.frame.height / 2
-        let radius: CGFloat = pointRadius + 3
-        
-        suggested1.layer.cornerRadius = radius
-        suggested2.layer.cornerRadius = radius
-        suggested3.layer.cornerRadius = radius
-        suggested4.layer.cornerRadius = radius
-        
-        suggested1.layer.shadowColor = UIColor.lightGray.cgColor
-        suggested1.layer.shadowOpacity = 0.5
-        suggested1.layer.shadowOffset = CGSize.zero
-        suggested1.layer.shadowRadius = 7
-        suggested2.layer.shadowColor = UIColor.lightGray.cgColor
-        suggested2.layer.shadowOpacity = 0.5
-        suggested2.layer.shadowOffset = CGSize.zero
-        suggested2.layer.shadowRadius = 7
-        suggested3.layer.shadowColor = UIColor.lightGray.cgColor
-        suggested3.layer.shadowOpacity = 0.5
-        suggested3.layer.shadowOffset = CGSize.zero
-        suggested3.layer.shadowRadius = 7
-        suggested4.layer.shadowColor = UIColor.lightGray.cgColor
-        suggested4.layer.shadowOpacity = 0.5
-        suggested4.layer.shadowOffset = CGSize.zero
-        suggested4.layer.shadowRadius = 7
-        
-        suggestedValue1.layer.cornerRadius = pointRadius
-        suggestedValue2.layer.cornerRadius = pointRadius
-        suggestedValue3.layer.cornerRadius = pointRadius
-        suggestedValue4.layer.cornerRadius = pointRadius
-        
-        var houses = DataManager.sharedManager.getHouses()!
-        let house = houses.remove(at: houses.firstIndex(of: House(id: User.get(.house) as! String, points: 0,hexColor:""))!)
-        suggestedValue1.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
-        suggestedValue2.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
-        suggestedValue3.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
-        suggestedValue4.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
-        
-        suggested1.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
-        suggested2.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
-        suggested3.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
-        suggested4.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
-        self.tableView.backgroundColor = DefinedValues.systemGray5
+        let permissionLevel = User.get(.permissionLevel) as! Int
+        if (permissionLevel == 0 || permissionLevel == 1) {
+            let pointRadius: CGFloat = suggestedValue1.frame.height / 2
+            let radius: CGFloat = pointRadius + 3
+            
+            suggested1.layer.cornerRadius = radius
+            suggested2.layer.cornerRadius = radius
+            suggested3.layer.cornerRadius = radius
+            suggested4.layer.cornerRadius = radius
+            
+            suggested1.layer.shadowColor = UIColor.lightGray.cgColor
+            suggested1.layer.shadowOpacity = 0.5
+            suggested1.layer.shadowOffset = CGSize.zero
+            suggested1.layer.shadowRadius = 7
+            suggested2.layer.shadowColor = UIColor.lightGray.cgColor
+            suggested2.layer.shadowOpacity = 0.5
+            suggested2.layer.shadowOffset = CGSize.zero
+            suggested2.layer.shadowRadius = 7
+            suggested3.layer.shadowColor = UIColor.lightGray.cgColor
+            suggested3.layer.shadowOpacity = 0.5
+            suggested3.layer.shadowOffset = CGSize.zero
+            suggested3.layer.shadowRadius = 7
+            suggested4.layer.shadowColor = UIColor.lightGray.cgColor
+            suggested4.layer.shadowOpacity = 0.5
+            suggested4.layer.shadowOffset = CGSize.zero
+            suggested4.layer.shadowRadius = 7
+            
+            suggestedValue1.layer.cornerRadius = pointRadius
+            suggestedValue2.layer.cornerRadius = pointRadius
+            suggestedValue3.layer.cornerRadius = pointRadius
+            suggestedValue4.layer.cornerRadius = pointRadius
+            
+            var houses = DataManager.sharedManager.getHouses()!
+            let house = houses.remove(at: houses.firstIndex(of: House(id: User.get(.house) as! String, points: 0, hexColor:""))!)
+            suggestedValue1.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
+            suggestedValue2.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
+            suggestedValue3.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
+            suggestedValue4.layer.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor).cgColor
+            
+            suggested1.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+            suggested2.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+            suggested3.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+            suggested4.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+            self.tableView.backgroundColor = DefinedValues.systemGray5
+        }
 
         
     }
@@ -161,16 +164,20 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     
     override func numberOfSections(in tableView: UITableView) -> Int {
 		if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
-            suggestedPointsView.frame.size.height = 0
-            suggestedPointsView.isHidden = true
+            if (suggestedPointsView != nil) {
+                suggestedPointsView.frame.size.height = 0
+                suggestedPointsView.isHidden = true
+            }
 			let message = DataManager.sharedManager.systemPreferences!.houseEnabledMessage
 			emptyMessage(message: message)
 			navigationItem.searchController = nil
 			return 0
 		}
 		else if isFiltering() {
-            suggestedPointsView.frame.size.height = 0
-            suggestedPointsView.isHidden = true
+            if (suggestedPointsView != nil) {
+                suggestedPointsView.frame.size.height = 0
+                suggestedPointsView.isHidden = true
+            }
             if(filteredPoints.count > 0){
                 killEmptyMessage()
                 return 1
@@ -181,14 +188,18 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             }
 		} else {
 			if pointSystem.count > 0 {
-                suggestedPointsView.frame.size.height = 230
-                suggestedPointsView.isHidden = false
+                if (suggestedPointsView != nil) {
+                    suggestedPointsView.frame.size.height = 230
+                    suggestedPointsView.isHidden = false
+                }
 				killEmptyMessage()
 				navigationItem.searchController = searchController
 				return (pointSystem.count)
 			} else {
-                suggestedPointsView.frame.size.height = 0
-                suggestedPointsView.isHidden = true
+                if (suggestedPointsView != nil) {
+                    suggestedPointsView.frame.size.height = 0
+                    suggestedPointsView.isHidden = true
+                }
 				emptyMessage(message: "There are no point types enabled for submitting.")
 				navigationItem.searchController = nil
 				return 0
