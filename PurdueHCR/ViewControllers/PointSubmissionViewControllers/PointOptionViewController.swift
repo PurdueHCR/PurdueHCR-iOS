@@ -50,8 +50,8 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        let permissionLevel = User.get(.permissionLevel) as! Int
-        if (permissionLevel == 0 || permissionLevel == 1) {
+        // Check if REC account which does not have suggested points view.
+        if (suggestedPointsView != nil) {
             let pointRadius: CGFloat = suggestedValue1.frame.height / 2
             let radius: CGFloat = pointRadius + 3
             
@@ -134,28 +134,29 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             let pointID = pointSystem[indexPath.section].points[indexPath.row].pointID
             let pointName = pointSystem[indexPath.section].points[indexPath.row].pointName
             let pointValue = pointSystem[indexPath.section].points[indexPath.row].pointValue
-            if (pointID == 7) {
-                suggested1.setTitle(pointName, for: .normal)
-                suggested1.titleLabel?.sizeToFit()
-                suggestedValue1.text = String(pointValue)
-                suggested1Index = indexPath
-            } else if (pointID == 45) {
-                suggested2.setTitle(pointName, for: .normal)
-                suggested2.titleLabel?.sizeToFit()
-                suggestedValue2.text = String(pointValue)
-                suggested2Index = indexPath
-            } else if (pointID == 9) {
-                suggested3.setTitle(pointName, for: .normal)
-                suggested3.titleLabel?.sizeToFit()
-                suggestedValue3.text = String(pointValue)
-                suggested3Index = indexPath
-            } else if (pointID == 10) {
-                suggested4.setTitle(pointName, for: .normal)
-                suggested4.titleLabel?.sizeToFit()
-                suggestedValue4.text = String(pointValue)
-                suggested4Index = indexPath
+            if (suggestedPointsView != nil) {
+                if (pointID == 7) {
+                    suggested1.setTitle(pointName, for: .normal)
+                    suggested1.titleLabel?.sizeToFit()
+                    suggestedValue1.text = String(pointValue)
+                    suggested1Index = indexPath
+                } else if (pointID == 45) {
+                    suggested2.setTitle(pointName, for: .normal)
+                    suggested2.titleLabel?.sizeToFit()
+                    suggestedValue2.text = String(pointValue)
+                    suggested2Index = indexPath
+                } else if (pointID == 9) {
+                    suggested3.setTitle(pointName, for: .normal)
+                    suggested3.titleLabel?.sizeToFit()
+                    suggestedValue3.text = String(pointValue)
+                    suggested3Index = indexPath
+                } else if (pointID == 10) {
+                    suggested4.setTitle(pointName, for: .normal)
+                    suggested4.titleLabel?.sizeToFit()
+                    suggestedValue4.text = String(pointValue)
+                    suggested4Index = indexPath
+                }
             }
-            
             cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
             cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
         }
@@ -163,7 +164,8 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-		if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled) {
+        let permission = User.get(.permissionLevel) as! Int
+        if (!DataManager.sharedManager.systemPreferences!.isHouseEnabled && permission != 2) {
             if (suggestedPointsView != nil) {
                 suggestedPointsView.frame.size.height = 0
                 suggestedPointsView.isHidden = true
