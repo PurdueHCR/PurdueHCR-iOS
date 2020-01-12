@@ -93,9 +93,14 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             suggested2.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
             suggested3.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
             suggested4.addTarget(self, action: #selector(openSuggestedPoint), for: .touchUpInside)
+            
+        }
+        
+        if #available(iOS 13.0, *) {
+            self.tableView.backgroundColor = UIColor.systemGray5
+        } else {
             self.tableView.backgroundColor = DefinedValues.systemGray5
         }
-
         
     }
     

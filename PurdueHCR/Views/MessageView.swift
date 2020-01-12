@@ -21,7 +21,7 @@ class MessageView: UIView {
 		super.init(frame: frame)
 		Bundle.main.loadNibNamed("MessageView", owner: self, options: nil)
 		addSubview(messageView)
-		nameLabel.text = "Hello, world!"
+		nameLabel.text = ""
 		messageView.frame = self.bounds
 		self.messageView.layer.cornerRadius = 10
 		messageView.autoresizingMask = [.flexibleHeight, .flexibleWidth]

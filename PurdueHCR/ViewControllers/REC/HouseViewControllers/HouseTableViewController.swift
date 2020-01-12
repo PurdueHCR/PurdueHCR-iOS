@@ -8,8 +8,37 @@
 
 import UIKit
 import AZDropdownMenu
+import PopupKit
 
-class LogCountCell :UITableViewCell{
+class RECPointDescriptionView: UIView {
+
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet var descriptionView: UIView!
+    @IBOutlet weak var doneButton: UIButton!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        Bundle.main.loadNibNamed("RECPointDescriptionView", owner: self, options: nil)
+        addSubview(descriptionView)
+        descriptionView.frame = self.bounds
+        
+        descriptionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        nameLabel.autoresizingMask = [.flexibleHeight]
+        descriptionLabel.autoresizingMask = [.flexibleHeight]
+        
+        doneButton.layer.cornerRadius = DefinedValues.radius
+        descriptionView.layer.cornerRadius = DefinedValues.radius
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+class LogCountCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var countLable: UILabel!
     
@@ -20,6 +49,8 @@ class HouseTableViewController: UITableViewController {
     var houseName:String?
     var logCount = [LogCount]()
     var refresher: UIRefreshControl?
+    
+    var p : PopupView?
     
     var activityIndicator = UIActivityIndicatorView()
     
@@ -51,7 +82,8 @@ class HouseTableViewController: UITableViewController {
         refresher?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refresher
         resfreshData()
-        self.tableView.allowsSelection = false
+        
+        //self.tableView.allowsSelection = false
         floorIds = codes[houseName!] ?? [String]()
         dropDownOptions = floorIds
         dropDownOptions.append("Total")
@@ -107,7 +139,7 @@ class HouseTableViewController: UITableViewController {
             }
             var countOfLogs = [LogCount]()
             for type in pointTypes{
-                countOfLogs.append(LogCount(nm: type.pointName, id: type.pointID))
+                countOfLogs.append(LogCount(nm: type.pointName, desc: type.pointDescription, id: type.pointID))
             }
             countOfLogs.sort(by: { (a, b) -> Bool in
                 return a.typeId < b.typeId
@@ -137,18 +169,55 @@ class HouseTableViewController: UITableViewController {
         }
     }
     
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let width = self.view.frame.width - 20
+        
+        let contentView = RECPointDescriptionView.init()
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        let widthConstraint = NSLayoutConstraint.init(item: contentView, attribute: .width, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: width)
+        NSLayoutConstraint.activate([widthConstraint])
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = UIColor.white
+        contentView.layer.cornerRadius = DefinedValues.radius
+        contentView.nameLabel?.text = logCount[indexPath.row].name
+        contentView.descriptionLabel?.text = logCount[indexPath.row].description
+        contentView.doneButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
+        
+        contentView.nameLabel.sizeToFit()
+        contentView.descriptionLabel.sizeToFit()
+        contentView.descriptionView.sizeToFit()
+        contentView.sizeToFit()
+        
+        p = PopupView.init(contentView: contentView)
+        p?.maskType = .dimmed
+        p?.layer.cornerRadius = DefinedValues.radius
+        
+        let xPos = self.view.frame.width / 2
+        let yPos = self.view.frame.height / 2
+        let location = CGPoint.init(x: xPos, y: yPos)
+        p?.showType = .slideInFromBottom
+        p?.maskType = .dimmed
+        p?.dismissType = .slideOutToBottom
+        p?.show(at: location, in: (self.tabBarController?.view)!)
+    }
+
+    @objc func dismiss(sender: UIButton!) {
+        p?.dismissType = .slideOutToBottom
+        p?.dismiss(animated: true)
+    }
 
 }
 
 
 class LogCount {
     var name:String
+    var description:String
     var typeId:Int
     var count = 0
     
-    init(nm:String, id:Int){
+    init(nm:String, desc:String, id:Int){
         name=nm
+        description=desc
         typeId=id
     }
     
