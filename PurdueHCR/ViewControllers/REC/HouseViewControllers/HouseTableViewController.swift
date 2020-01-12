@@ -14,8 +14,10 @@ class RECPointDescriptionView: UIView {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
     @IBOutlet var descriptionView: UIView!
     @IBOutlet weak var doneButton: UIButton!
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -181,6 +183,7 @@ class HouseTableViewController: UITableViewController {
         contentView.layer.cornerRadius = DefinedValues.radius
         contentView.nameLabel?.text = logCount[indexPath.row].name
         contentView.descriptionLabel?.text = logCount[indexPath.row].description
+        contentView.countLabel?.text = logCount[indexPath.row].count.description
         contentView.doneButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
         
         contentView.nameLabel.sizeToFit()
