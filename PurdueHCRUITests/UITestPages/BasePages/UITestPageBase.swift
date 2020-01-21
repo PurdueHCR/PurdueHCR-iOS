@@ -58,8 +58,10 @@ class BasePage{
     ///   - message: Message that will be displayed on the drop down. Better results will be had if you pass in the message of the notification and not the title.
     func waitForDropDownNotification(message:String){
         let element = app.staticTexts[message]
-        let expectation = test.expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: element, handler: nil)
-        test.wait(for: [expectation], timeout: 10);
+        while(!element.waitForExistence(timeout: 10)){
+            print()
+            continue
+        }
     }
     
     /// Pause the XCTestCase until the dropdown notification has dismissed.
@@ -119,16 +121,37 @@ class BasePage{
         // Open iMessage app
         if (qrCodeLink == ""){
             //If this line crashes, then there is no String saved into the clipboard
-			
-			if let url = URL(string: UIPasteboard.general.string!) {
-				UIApplication.shared.open(url)
-			}
+            openSafariForLink(link: UIPasteboard.general.string!)
         }
         else{
-			if let url = URL(string: qrCodeLink) {
-				UIApplication.shared.open(url)
-			}
+			openSafariForLink(link: qrCodeLink)
         }
+    }
+    
+    
+    /// Open Safari with a link
+    ///
+    /// - Parameter link: link to open
+    private func openSafariForLink(link: String){
+        // Get the safari app using its bundle identifier
+        let safari = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
+        // Launch safari
+        safari.launch()
+        // Ensure that safari is running in foreground before we continue
+        _ = safari.wait(for: .runningForeground, timeout: 30)
+        
+        // Access the address bar component and tap it
+        safari.buttons["URL"].tap()
+        // You will now have a cursor in the address field. So lets type in the text for our URL
+        safari.typeText(link)
+        // Make a new line character to simulate that the user taps the return key
+        safari.typeText("\n")
+        // An pop-up will open and ask you to launch the application. Tap it's "Open" button to confirm
+        safari.buttons["Open"].tap()
+        
+        // Wait for your application to be the one in foreground
+        _ = app.wait(for: .runningForeground, timeout: 5)
+        
     }
 	
 	func clearTextField(textField: XCUIElement) {

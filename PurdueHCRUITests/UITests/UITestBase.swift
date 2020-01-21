@@ -42,5 +42,9 @@ class UITestBase: XCTestCase {
     func getStartingPage() -> SignInPage {
         return SignInPage(app: app, test: self)
     }
+    
+    func getCurrentTabBarContainer() -> TabBarContainer {
+        return TabBarContainer(app: app, test: self)
+    }
 
 }

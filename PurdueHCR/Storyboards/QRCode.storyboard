@@ -183,7 +183,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Codes" id="3yk-ae-sTd">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cLo-gB-OAO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cLo-gB-OAO" userLabel="Add">
+                            <attributedString key="userComments">
+                                <fragment content="Add"/>
+                            </attributedString>
                             <connections>
                                 <segue destination="j5h-Xp-FXt" kind="show" identifier="QR_Init" id="EIo-8G-der"/>
                             </connections>
@@ -226,8 +229,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6XC-f3-CXh">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="Enable Code Switch" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6XC-f3-CXh" userLabel="Enable Code Switch">
                                         <rect key="frame" x="337" y="510" width="71" height="31"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Enable Code Switch" label="Enable Code Switch"/>
                                         <connections>
                                             <action selector="setActivationStatus:" destination="oaG-gE-l7h" eventType="valueChanged" id="OVS-nC-AWS"/>
                                         </connections>
@@ -250,15 +254,19 @@
                                             <action selector="setArchiveStatus:" destination="oaG-gE-l7h" eventType="valueChanged" id="tlz-Xz-bIr"/>
                                         </connections>
                                     </switch>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ev4-ze-7Yc">
+                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="Copy Link Button" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ev4-ze-7Yc" userLabel="Copy Link Button">
                                         <rect key="frame" x="8" y="389" width="398" height="45"/>
                                         <color key="backgroundColor" red="0.81014880150000002" green="0.79813140849999997" blue="0.86967431750000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Copy Link Button" label="Copy Link Button"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="svK-yr-hHz"/>
                                         </constraints>
                                         <state key="normal" title="Copy QR Link">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <attributedString key="userComments">
+                                            <fragment content="Copy Link Button"/>
+                                        </attributedString>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
@@ -366,6 +374,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dzV-p3-AiX"/>
+        <segue reference="wz4-yh-41l"/>
     </inferredMetricsTieBreakers>
 </document>

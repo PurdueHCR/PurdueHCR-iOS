@@ -68,6 +68,8 @@
 		D3BCD399224C98680041AB2D /* UITestRHPQRPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD398224C98680041AB2D /* UITestRHPQRPage.swift */; };
 		D3BCD39B224CA0AD0041AB2D /* UITestRHPSubmitPointsTablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCD39A224CA0AD0041AB2D /* UITestRHPSubmitPointsTablePage.swift */; };
 		D3BE46D423120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BE46D323120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift */; };
+		D3C6FD9123186F74003B4FC1 /* UITestRHPQROverviewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C6FD9023186F74003B4FC1 /* UITestRHPQROverviewPage.swift */; };
+		D3C6FD9323187031003B4FC1 /* UITestRHPQRCodeCreationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C6FD9223187031003B4FC1 /* UITestRHPQRCodeCreationPage.swift */; };
 		D3CC77C52103D65A00B88F03 /* HousePointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C42103D65A00B88F03 /* HousePointsView.swift */; };
 		D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */; };
 		D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */; };
@@ -165,6 +167,8 @@
 		D3BCD398224C98680041AB2D /* UITestRHPQRPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPQRPage.swift; sourceTree = "<group>"; };
 		D3BCD39A224CA0AD0041AB2D /* UITestRHPSubmitPointsTablePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPSubmitPointsTablePage.swift; sourceTree = "<group>"; };
 		D3BE46D323120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPPointLogOverviewPage.swift; sourceTree = "<group>"; };
+		D3C6FD9023186F74003B4FC1 /* UITestRHPQROverviewPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPQROverviewPage.swift; sourceTree = "<group>"; };
+		D3C6FD9223187031003B4FC1 /* UITestRHPQRCodeCreationPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRHPQRCodeCreationPage.swift; sourceTree = "<group>"; };
 		D3CC77C42103D65A00B88F03 /* HousePointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsView.swift; sourceTree = "<group>"; };
 		D3CC77C62103EFAF00B88F03 /* HousePointsCompareView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HousePointsCompareView.xib; sourceTree = "<group>"; };
 		D3CC77C82103EFED00B88F03 /* HousePointsCompareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousePointsCompareView.swift; sourceTree = "<group>"; };
@@ -508,6 +512,8 @@
 				D3BE46D323120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift */,
 				D3BCD398224C98680041AB2D /* UITestRHPQRPage.swift */,
 				D3CF6BDD2250264D00D97A0F /* UITestRHPHistoryPage.swift */,
+				D3C6FD9023186F74003B4FC1 /* UITestRHPQROverviewPage.swift */,
+				D3C6FD9223187031003B4FC1 /* UITestRHPQRCodeCreationPage.swift */,
 			);
 			path = RHPPages;
 			sourceTree = "<group>";
@@ -836,12 +842,14 @@
 				D3CF6BDE2250264D00D97A0F /* UITestRHPHistoryPage.swift in Sources */,
 				D3BCD383224BE5120041AB2D /* UITestPageBase.swift in Sources */,
 				D3BE46D423120D65004AE8D9 /* UITestRHPPointLogOverviewPage.swift in Sources */,
+				D3C6FD9323187031003B4FC1 /* UITestRHPQRCodeCreationPage.swift in Sources */,
 				B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */,
 				D3BCD387224C28910041AB2D /* UITestSignInPage.swift in Sources */,
 				D3BCD391224C6F0C0041AB2D /* UITestHouseOverviewPage.swift in Sources */,
 				D3CF6BE22250867E00D97A0F /* UITestQRCode.swift in Sources */,
 				D3BCD395224C97E00041AB2D /* UITestSubmitPointsTablePage.swift in Sources */,
 				D3BCD385224BE5760041AB2D /* UITestBase.swift in Sources */,
+				D3C6FD9123186F74003B4FC1 /* UITestRHPQROverviewPage.swift in Sources */,
 				D3BCD399224C98680041AB2D /* UITestRHPQRPage.swift in Sources */,
 				D3CF6BDC224FF3EC00D97A0F /* UITestPointSubmission.swift in Sources */,
 				D3BCD38F224C65330041AB2D /* UITestForgotPasswordPage.swift in Sources */,

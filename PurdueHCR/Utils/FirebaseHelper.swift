@@ -422,6 +422,7 @@ class FirebaseHelper {
 					let numResidents = houseDocument.data()["NumberOfResidents"] as! Int
                     houseArray.append(House(id: id, points: points, hexColor:hex, numResidents: numResidents))
                 }
+                //Should sort houses by Points Per Resident instead of Total Points
                 houseArray.sort(by: {$0.totalPoints > $1.totalPoints})
 				
             }
