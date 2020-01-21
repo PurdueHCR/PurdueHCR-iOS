@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,8 +45,6 @@
                 <constraint firstItem="3nX-Mm-X6q" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="8mH-Mb-Dec"/>
                 <constraint firstItem="mwZ-hi-O9j" firstAttribute="leading" secondItem="RKc-JF-Nh8" secondAttribute="leading" id="8rH-Sl-mba"/>
                 <constraint firstItem="RKc-JF-Nh8" firstAttribute="top" secondItem="mwZ-hi-O9j" secondAttribute="bottom" constant="3" id="QbP-Iv-e3r"/>
-                <constraint firstItem="mwZ-hi-O9j" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="VOP-Pv-PPg"/>
-                <constraint firstItem="mwZ-hi-O9j" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="aMg-DM-iIL"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="3nX-Mm-X6q" secondAttribute="trailing" constant="16" id="iEb-iD-Ldh"/>
                 <constraint firstItem="3nX-Mm-X6q" firstAttribute="top" secondItem="RKc-JF-Nh8" secondAttribute="bottom" constant="9" id="rOR-d6-LXy"/>
                 <constraint firstItem="mwZ-hi-O9j" firstAttribute="trailing" secondItem="RKc-JF-Nh8" secondAttribute="trailing" id="y4D-aT-EGY"/>

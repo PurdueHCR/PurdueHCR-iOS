@@ -48,6 +48,7 @@ class HousePointsView: UIView {
         
         rewardImageView = createImageView()
         pointsRemainingLabel.accessibilityIdentifier = "TotalHousePoints"
+        refresh()
     }
     
     func refresh(){
@@ -75,18 +76,22 @@ class HousePointsView: UIView {
             circleProgress.angle = 180.0
             pointsRemainingLabel.text? = "Victory"
         }
+        self.addSubview(rewardImageView!)
         
-        rewardImageView?.center = self.circleProgress.convert(self.circleProgress.center, from: self.circleProgress)
-        addSubview(rewardImageView!)
+        self.rewardImageView?.translatesAutoresizingMaskIntoConstraints = false
+        let xConstraint = NSLayoutConstraint.init(item: rewardImageView, attribute: .centerX, relatedBy: .equal, toItem: self.circleProgress, attribute: .centerX, multiplier: 1, constant: 0)
+        let yConstraint = NSLayoutConstraint.init(item: rewardImageView, attribute: .centerY, relatedBy: .equal, toItem: self.circleProgress, attribute: .centerY, multiplier: 1, constant: 0)
+        let heightConstraint = NSLayoutConstraint.init(item: rewardImageView, attribute: .height, relatedBy: .equal, toItem: self.circleProgress, attribute: .height, multiplier: 1, constant: -115)
+        let widthConstraint = NSLayoutConstraint.init(item: rewardImageView, attribute: .width, relatedBy: .equal, toItem: rewardImageView, attribute: .height, multiplier: 1, constant: 0)
+        NSLayoutConstraint.activate([xConstraint, yConstraint, heightConstraint, widthConstraint])
+        
     }
     
     func createImageView() -> UIImageView {
-        if(rewardImageView == nil){
+        if (rewardImageView == nil) {
 			// TODO: Fix this mess please :)
-            let size = self.circleProgress.frame.size.width * 0.28
-            return UIImageView(frame: CGRect(x: self.circleProgress.center.x - size/2, y: self.circleProgress.center.y - size/2, width: size, height: size))
-        }
-        else{
+            return UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        } else {
             return rewardImageView!
         }
         

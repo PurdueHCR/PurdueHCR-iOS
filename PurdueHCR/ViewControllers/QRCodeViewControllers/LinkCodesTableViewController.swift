@@ -21,7 +21,7 @@ class LinkCodesTableViewController: UITableViewController, UISearchResultsUpdati
     var filteredLinks = [Link]()
     let searchController = UISearchController(searchResultsController: nil)
 
-	let green = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
+	//let green = UIColor.init(red: 52/255, green: 199/255, blue: 89/255, alpha: 1.00)
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,23 +142,22 @@ class LinkCodesTableViewController: UITableViewController, UISearchResultsUpdati
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "link_cell", for: indexPath) as! LinkCell
-        if(isFiltering()){
+        if (isFiltering()){
             cell.descriptionLabel.text = self.filteredLinks[indexPath.row].description
             cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
-            cell.activeView.backgroundColor = UIColor.red
-            if(self.filteredLinks[indexPath.row].enabled){
-                cell.activeView.backgroundColor = green
+            cell.activeView.backgroundColor = UIColor.systemRed
+            if (self.filteredLinks[indexPath.row].enabled) {
+                cell.activeView.backgroundColor = UIColor.systemGreen
             }
         }
         else {
             cell.descriptionLabel.text = self.links.unarchivedLinks[indexPath.row].description
             cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
-            cell.activeView.backgroundColor = UIColor.red
-            if(self.links.unarchivedLinks[indexPath.row].enabled){
-                cell.activeView.backgroundColor = green
+            cell.activeView.backgroundColor = UIColor.systemRed
+            if (self.links.unarchivedLinks[indexPath.row].enabled) {
+                cell.activeView.backgroundColor = UIColor.systemGreen
             }
         }
-        // Configure the cell...
         return cell
     }
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

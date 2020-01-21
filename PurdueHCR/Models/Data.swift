@@ -33,6 +33,7 @@ class PointType {
 		case rhp = 1
 		case rec = 2
 		case fhp = 3
+        case priv = 4
 	}
 	
     var pointValue:Int
