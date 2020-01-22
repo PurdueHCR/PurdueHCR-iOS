@@ -8,12 +8,14 @@
 
 import UIKit
 
-class UserPointsTableViewController: RHPApprovalTableViewController {
+class UserPointsTableViewController: UITableViewController {
 
 	//let searchController = UISearchController(searchResultsController: nil)
+    var notificationLogs = [PointLog]()
 	var filteredPoints = [PointLog]()
 	var activityIndicator = UIActivityIndicatorView()
-	
+    var refresher: UIRefreshControl?
+    
 	override func viewDidLoad() {
 		
 		self.activityIndicator.startAnimating()
@@ -39,10 +41,10 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
     
 
 	
-	@objc override func resfreshData(){
+	@objc func resfreshData(){
 		DataManager.sharedManager.getAllPointLogsForUser(residentID: (User).get(.id) as! String, house: (User).get(.house) as! String, onDone: { (pointLogs:[PointLog]) in
-			self.displayedLogs = pointLogs
-            self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
+			self.notificationLogs = pointLogs
+            self.notificationLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
 			DispatchQueue.main.async { [unowned self] in
 				self.tableView.reloadData()
 			}
@@ -75,7 +77,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 			}
 		}
 		else{*/
-			if(displayedLogs.count > 0){
+			if(notificationLogs.count > 0){
 				killEmptyMessage()
                 //navigationItem.searchController = searchController
 				return 1
@@ -93,7 +95,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 		/*if (isFiltering()) {
 			return filteredPoints.count
 		}*/
-		return displayedLogs.count
+		return notificationLogs.count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,8 +116,8 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 			cell.nameLabel.text = filteredPoints[indexPath.row].firstName + " " + filteredPoints[indexPath.row].lastName
 		}
 		else{*/
-			if (displayedLogs[indexPath.row].wasHandled) {
-				if (displayedLogs[indexPath.row].wasRejected() == true) {
+			if (notificationLogs[indexPath.row].wasHandled) {
+				if (notificationLogs[indexPath.row].wasRejected() == true) {
 					cell.activeView.backgroundColor = DefinedValues.systemRed
 				} else {
 					cell.activeView.backgroundColor = DefinedValues.systemGreen
@@ -123,15 +125,15 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 			} else {
 				cell.activeView.backgroundColor = DefinedValues.systemYellow
 			}
-			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointName
-			cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
-			cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
+			cell.reasonLabel?.text = notificationLogs[indexPath.row].type.pointName
+			cell.nameLabel?.text = notificationLogs[indexPath.row].firstName + " " + notificationLogs[indexPath.row].lastName
+			cell.descriptionLabel?.text = notificationLogs[indexPath.row].pointDescription
 		//}
 		return cell
 	}
 
 	
-	override func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
+    func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
@@ -154,9 +156,9 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 				}
 				else {
 					self.notify(title: "Failed", subtitle: "Failed to update point request.", style: .danger)
-					self.displayedLogs.append(log)
+					self.notificationLogs.append(log)
 					DispatchQueue.main.async { [unowned self] in
-						if(self.displayedLogs.count == 0 && self.tableView.numberOfSections != 0){
+						if(self.notificationLogs.count == 0 && self.tableView.numberOfSections != 0){
 							let indexSet = NSMutableIndexSet()
 							indexSet.add(0)
 							self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
@@ -176,7 +178,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 							self.filteredPoints[indexPath.row].updateApprovalStatus(approved: approve)
 						}
 						else{*/
-							self.displayedLogs[indexPath.row].updateApprovalStatus(approved: approve)
+							self.notificationLogs[indexPath.row].updateApprovalStatus(approved: approve)
 						//}
 						self.tableView.setEditing(false, animated: true)
 						self.tableView.reloadRows(at: [indexPath], with: .fade)
@@ -191,7 +193,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 							self.filteredPoints[indexPath.row].updateApprovalStatus(approved: approve)
 						}
 						else{*/
-							self.displayedLogs[indexPath.row].updateApprovalStatus(approved: approve)
+							self.notificationLogs[indexPath.row].updateApprovalStatus(approved: approve)
 						//}
 						self.tableView.setEditing(false, animated: true)
 						self.tableView.reloadRows(at: [indexPath], with: .fade)
@@ -217,7 +219,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 			/*if(isFiltering()) {
 				nextViewController.pointLog = self.filteredPoints[(indexPath?.row)!]
 			} else {*/
-				nextViewController.pointLog = self.displayedLogs[(indexPath?.row)!]
+				nextViewController.pointLog = self.notificationLogs[(indexPath?.row)!]
 			//}
 			nextViewController.indexPath = indexPath
 			nextViewController.preViewContr = self
@@ -230,7 +232,7 @@ class UserPointsTableViewController: RHPApprovalTableViewController {
 	}*/
 	
 	func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-		filteredPoints = displayedLogs.filter({( point : PointLog) -> Bool in
+		filteredPoints = notificationLogs.filter({( point : PointLog) -> Bool in
 			let searched = searchText.lowercased()
 			let inFirstName = point.firstName.lowercased().contains(searched)
 			let inLastName = point.lastName.lowercased().contains(searched)

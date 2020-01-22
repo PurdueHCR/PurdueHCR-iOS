@@ -8,14 +8,16 @@
 
 import UIKit
 
-class NotificationsViewController: RHPApprovalTableViewController, UISearchResultsUpdating {
+class NotificationsTableViewController: UITableViewController, UISearchResultsUpdating {
 
-	let searchController = UISearchController(searchResultsController: nil)
+	//let searchController = UISearchController(searchResultsController: nil)
 	var filteredPoints = [PointLog]()
 	var activityIndicator = UIActivityIndicatorView()
+    var displayedLogs = [PointLog]()
+    var refresher: UIRefreshControl?
 	
 	override func viewDidLoad() {
-		
+    
 		//self.navigationItem.hidesBackButton = true
 		self.activityIndicator.startAnimating()
 		super.viewDidLoad()
@@ -29,21 +31,19 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
 		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
 		tableView.refreshControl = refresher
-		searchController.searchResultsUpdater = self
-		searchController.obscuresBackgroundDuringPresentation = false
-		searchController.searchBar.placeholder = "Search Points"
-		navigationItem.searchController = searchController
+		//searchController.searchResultsUpdater = self
+		//searchController.obscuresBackgroundDuringPresentation = false
+		//searchController.searchBar.placeholder = "Search Points"
+		//navigationItem.searchController = searchController
 		definesPresentationContext = true
 	}
 	
-	@objc override func resfreshData(){
+	@objc func resfreshData(){
 		DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
 			self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
-            if (self.displayedLogs.count > 0) {
-                DispatchQueue.main.async { [unowned self] in
-                    self.tableView.reloadData()
-                }
+            DispatchQueue.main.async { [unowned self] in
+                self.tableView.reloadData()
             }
 			self.tableView.refreshControl?.endRefreshing()
 			self.activityIndicator.stopAnimating()
@@ -61,7 +61,7 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 		}
 		resfreshData()
 	}
-	
+    
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
 		if isFiltering() {
@@ -92,7 +92,7 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 		if (isFiltering()) {
 			return filteredPoints.count
 		}
-		return displayedLogs.count
+        return displayedLogs.count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -121,7 +121,7 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 		return cell
 	}
 	
-	override func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
+    func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
@@ -183,8 +183,8 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 						else{
 							self.displayedLogs[indexPath.row].updateApprovalStatus(approved: approve)
 						}
-						self.tableView.setEditing(false, animated: true)
-						self.tableView.reloadRows(at: [indexPath], with: .fade)
+						//self.tableView.setEditing(false, animated: true)
+                        self.tableView.reloadRows(at: [indexPath], with: .fade)
 					}
 				}
 			}
@@ -192,8 +192,9 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		// Segue to the second view controller
-		self.performSegue(withIdentifier: "notification_push", sender: self)
+		// Segue to the second view controlleh
+        self.performSegue(withIdentifier: "notification_push", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 	// This function is called before the segue
@@ -201,8 +202,8 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 		
 		if (segue.identifier == "notification_push") {
 			// get a reference to the second view controller
+            let indexPath = tableView.indexPathForSelectedRow
 			let nextViewController = segue.destination as! PointLogOverviewController
-			let indexPath = tableView.indexPathForSelectedRow
 			
 			if(isFiltering()) {
 				nextViewController.pointLog = self.filteredPoints[(indexPath?.row)!]
@@ -216,7 +217,7 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 	
 	func searchBarIsEmpty() -> Bool {
 		// Returns true if the text is empty or nil
-		return searchController.searchBar.text?.isEmpty ?? true
+		return true//searchController.searchBar.text?.isEmpty ?? true
 	}
 	
 	func filterContentForSearchText(_ searchText: String, scope: String = "All") {
@@ -232,7 +233,7 @@ class NotificationsViewController: RHPApprovalTableViewController, UISearchResul
 	}
 	
 	func isFiltering() -> Bool {
-		return searchController.isActive && !searchBarIsEmpty()
+        return false //searchController.isActive && !searchBarIsEmpty()
 	}
 	
 }

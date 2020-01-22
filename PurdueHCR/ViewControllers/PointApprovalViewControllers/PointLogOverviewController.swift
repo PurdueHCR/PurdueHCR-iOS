@@ -22,7 +22,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	let radius : CGFloat = 10
 	
 	// TODO: Fix this since this view is referenced from more than one location
-	var preViewContr: RHPApprovalTableViewController?
+	var preViewContr: UITableViewController?
 	// TODO: Rename
 	var mess = [MessageLog]()
 	var refresher: UIRefreshControl?
@@ -125,9 +125,14 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	
     @objc func updatePointLog(approve:Bool) {
         rejectButton?.isEnabled = false
+        /*
+            Previous view controllers could be PointsSubmittedViewController,
+            RHPApproveTableViewController, UserPointsTableViewController, or
+            NotificationsTableViewController
+         */
 		if (pointLog?.wasHandled == true) {
-            if (preViewContr is PointsSubmittedViewController) {
-                if let pointSubmittedViewContr = (preViewContr as! PointsSubmittedViewController?) {
+            if (preViewContr is HousePointsHistoryViewController) {
+                if let pointSubmittedViewContr = (preViewContr as! HousePointsHistoryViewController?) {
                     pointSubmittedViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: true, indexPath: indexPath!)
                 }
             }
@@ -136,8 +141,15 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
                     userPointsViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: true, indexPath: indexPath!)
                 }
             }
+            else if (preViewContr is NotificationsTableViewController) {
+                if let notificationsViewContr = (preViewContr as! NotificationsTableViewController?){
+                    notificationsViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: true, indexPath: indexPath!)
+                }
+            }
 		} else {
-			preViewContr?.updatePointLogStatus(log: pointLog!, approve: approve, updating: false, indexPath: indexPath!)
+            if let rhpApprovalViewContr = (preViewContr as! RHPApprovalTableViewController?){
+                rhpApprovalViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: false, indexPath: indexPath!)
+            }
 		}
         self.navigationController?.popViewController(animated: true)
     }

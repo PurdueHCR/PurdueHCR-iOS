@@ -15,11 +15,13 @@ class ResolvedCell: UITableViewCell {
 	@IBOutlet weak var reasonLabel: UILabel!
 }
 
-class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchResultsUpdating {
+class HousePointsHistoryViewController: UITableViewController, UISearchResultsUpdating {
 	
 	let searchController = UISearchController(searchResultsController: nil)
 	var filteredPoints = [PointLog]()
 	var activityIndicator = UIActivityIndicatorView()
+    var displayedLogs = [PointLog]()
+    var refresher: UIRefreshControl?
 	
 	override func viewDidLoad() {
         
@@ -31,7 +33,6 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 		activityIndicator.style = .gray
 		activityIndicator.hidesWhenStopped = true
 		view.addSubview(activityIndicator)
-		displayedLogs = DataManager.sharedManager.getResolvedPointLogs() ?? [PointLog]()
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
 		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
@@ -41,9 +42,10 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 		searchController.searchBar.placeholder = "Search Points"
 		navigationItem.searchController = searchController
 		definesPresentationContext = true
+        resfreshData()
 	}
 	
-	@objc override func resfreshData(){
+	@objc func resfreshData(){
         DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
             
             self.displayedLogs = pointLogs
@@ -52,6 +54,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
             
             DispatchQueue.main.async { [unowned self] in
                 self.tableView.reloadData()
+                self.refresher?.endRefreshing()
             }
             self.tableView.refreshControl?.endRefreshing()
             self.activityIndicator.stopAnimating()
@@ -172,7 +175,7 @@ class PointsSubmittedViewController: RHPApprovalTableViewController, UISearchRes
 		return UISwipeActionsConfiguration(actions: action)
 	} */
 	
-	override func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
+    func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
 		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){

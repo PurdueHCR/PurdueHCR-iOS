@@ -33,9 +33,7 @@ class RHPApprovalTableViewController: UITableViewController {
     @objc func resfreshData(){
         DataManager.sharedManager.refreshUnconfirmedPointLogs(onDone: { (pointLogs:[PointLog]) in
             self.displayedLogs = pointLogs
-            DispatchQueue.main.async { [unowned self] in
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         })
     }
