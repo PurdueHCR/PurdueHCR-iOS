@@ -817,15 +817,17 @@ class FirebaseHelper {
 					}
 				}
 				if (getData) {
-					let description = document.data()["Description"] as! String
+                    let idType = document.data()["PointTypeID"] as! Int
+                    let pointLog = PointLog.init(id: document.documentID, document: document.data())
+                    /*let description = document.data()["Description"] as! String
 					let firstName = document.data()["ResidentFirstName"] as! String
 					let lastName = document.data()["ResidentLastName"] as! String
-					let idType = document.data()["PointTypeID"] as! Int
+					
 					let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
 					let floorID = document.data()["FloorID"] as! String
 					let residentId = document.data()["ResidentId"] as! String
 					let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
-					pointLog.logID = document.documentID
+					pointLog.logID = document.documentID*/
 					pointLogs.append(pointLog)
 				}
 			}

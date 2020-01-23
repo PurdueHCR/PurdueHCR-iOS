@@ -21,10 +21,8 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
     var pointLog: PointLog?
 	let radius : CGFloat = 10
 	
-	// TODO: Fix this since this view is referenced from more than one location
 	var preViewContr: UITableViewController?
-	// TODO: Rename
-	var mess = [MessageLog]()
+	var messageLogs = [MessageLog]()
 	var refresher: UIRefreshControl?
 	
     override func viewDidLoad() {
@@ -104,7 +102,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	
 	override func viewWillAppear(_ animated: Bool) {
 		DataManager.sharedManager.getMessagesForPointLog(pointLog: pointLog!, onDone: { (messageLogs:[MessageLog]) in
-			self.mess = messageLogs
+			self.messageLogs = messageLogs
 			self.resfreshData()
 		})
 	}
@@ -123,7 +121,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
         updatePointLog(approve: false)
     }
 	
-    @objc func updatePointLog(approve:Bool) {
+    @objc func updatePointLog(approve: Bool) {
         rejectButton?.isEnabled = false
         /*
             Previous view controllers could be PointsSubmittedViewController,
@@ -157,7 +155,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	@objc func resfreshData(){
 		DataManager.sharedManager.getMessagesForPointLog(pointLog: pointLog!, onDone: { (messageLogs:[MessageLog]) in
 			// TODO: Probably a cleaner implementation of this??
-			self.mess = messageLogs
+			self.messageLogs = messageLogs
 //			DispatchQueue.main.async { [unowned self] in
 //				self.tableView.reloadData()
 //			}
@@ -185,7 +183,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		return mess.count + 1 // Account for the first cell that is the point description
+		return messageLogs.count + 1 // Account for the first cell that is the point description
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -219,7 +217,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		} else {
 		
 			let messageView = MessageView.init()
-			messageView.setLog(messageLog: mess[indexPath.row - 1])
+			messageView.setLog(messageLog: messageLogs[indexPath.row - 1])
 			messageView.layer.cornerRadius = radius
 			messageView.layer.shadowColor = UIColor.darkGray.cgColor
 			messageView.layer.shadowOpacity = 0.5

@@ -115,7 +115,7 @@ class PointLog {
 	var rhpNotifications:Int
 	var residentNotifications:Int
     
-    //Values stayed local
+    // Values stayed local
     var wasHandled:Bool
     
     /// Initialization for newly created points. If the points are being pulled from Firebase database, use the other init method.
@@ -136,7 +136,6 @@ class PointLog {
         self.dateOccurred = dateOccurred
 		self.dateSubmitted = Timestamp.init()
         self.wasHandled = false
-		// TODO: Fix
 		self.rhpNotifications = 0
 		self.residentNotifications = 0
     }
@@ -170,9 +169,9 @@ class PointLog {
             self.wasHandled = true
         }
         self.type = DataManager.sharedManager.getPointType(value: abs(idValue))
-        if(floorID == "Shreve"){
+        /*if(floorID == "Shreve"){
             firstName = SHREVE_RESIDENT + firstName
-        }
+        }*/
 		
 		// TODO: Is the above Shreve part actually working???
     }

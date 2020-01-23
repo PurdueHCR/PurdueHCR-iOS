@@ -151,29 +151,23 @@ class RHPApprovalTableViewController: UITableViewController {
             if let error = err {
                 if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
                     self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
-//                    DispatchQueue.main.async {
-//                        self.resfreshData()
-//                    }
                     return
                 }
                 else if( error.localizedDescription == "The operation couldn’t be completed. (Document does not exist error 2.)"){
                     self.notify(title: "Failure", subtitle: "Point request no longer exists.", style: .danger)
-//                    DispatchQueue.main.async {
-//                        self.resfreshData()
-//                    }
                     return
                 }
                 else{
                     self.notify(title: "Failed", subtitle: "Failed to update point request.", style: .danger)
-                    self.displayedLogs.append(log)
-                    DispatchQueue.main.async { [unowned self] in
-                        if(self.displayedLogs.count == 0 && self.tableView.numberOfSections != 0){
-                            let indexSet = NSMutableIndexSet()
-                            indexSet.add(0)
-                            self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-                        }
-                        self.tableView.reloadData()
-                    }
+//                    self.displayedLogs.append(log)
+//                    DispatchQueue.main.async { [unowned self] in
+//                        if(self.displayedLogs.count == 0 && self.tableView.numberOfSections != 0){
+//                            let indexSet = NSMutableIndexSet()
+//                            indexSet.add(0)
+//                            self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+//                        }
+//                        self.tableView.reloadData()
+//                    }
                 }
                 
             }
@@ -184,7 +178,8 @@ class RHPApprovalTableViewController: UITableViewController {
                 else{
                     self.notify(title: "Success", subtitle: "Point rejected", style: .success)
                 }
-                self.resfreshData()
+                self.displayedLogs.remove(at: indexPath.row)
+                self.tableView.reloadData()
             }
         })
     }
@@ -192,7 +187,6 @@ class RHPApprovalTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Segue to the second view controller
         self.performSegue(withIdentifier: "cell_push", sender: self)
-		tableView.deselectRow(at: indexPath, animated: true)
         
     }
     

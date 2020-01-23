@@ -36,6 +36,7 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 		//searchController.searchBar.placeholder = "Search Points"
 		//navigationItem.searchController = searchController
 		definesPresentationContext = true
+        resfreshData()
 	}
 	
 	@objc func resfreshData(){
@@ -53,13 +54,13 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 	
 	func updateSearchResults(for searchController: UISearchController) {
 		
-	}
-	
-	override func viewWillAppear(_ animated: Bool) {
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
 		if let index = self.tableView.indexPathForSelectedRow {
-			self.tableView.deselectRow(at: index, animated: true)
+            self.displayedLogs.remove(at: index.row)
+            self.tableView.reloadData()
 		}
-		resfreshData()
 	}
     
 	override func numberOfSections(in tableView: UITableView) -> Int {
@@ -126,16 +127,10 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
 					self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
-					//                    DispatchQueue.main.async {
-					//                        self.resfreshData()
-					//                    }
 					return
 				}
 				else if( error.localizedDescription == "The operation couldn’t be completed. (Document does not exist error 2.)"){
 					self.notify(title: "Failure", subtitle: "Point request no longer exists.", style: .danger)
-					//                    DispatchQueue.main.async {
-					//                        self.resfreshData()
-					//                    }
 					return
 				}
 				else if (error.localizedDescription == "The operation couldn’t be completed. (Point request was already changed. error 1.)"){
@@ -144,48 +139,24 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 				}
 				else {
 					self.notify(title: "Failed", subtitle: "Failed to update point request.", style: .danger)
-					self.displayedLogs.append(log)
-					DispatchQueue.main.async { [unowned self] in
-						if(self.displayedLogs.count == 0 && self.tableView.numberOfSections != 0){
-							let indexSet = NSMutableIndexSet()
-							indexSet.add(0)
-							self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
-						}
-						self.tableView.reloadData()
-					}
+//					self.displayedLogs.append(log)
+//					DispatchQueue.main.async { [unowned self] in
+//						if(self.displayedLogs.count == 0 && self.tableView.numberOfSections != 0){
+//							let indexSet = NSMutableIndexSet()
+//							indexSet.add(0)
+//							self.tableView.deleteSections(indexSet as IndexSet, with: .automatic)
+//						}
+//						self.tableView.reloadData()
+//					}
 				}
 				
 			}
-			else{
+			else {
 				if(approve){
 					self.notify(title: "Success", subtitle: "Point approved", style: .success)
-					DispatchQueue.main.async {
-						//This is a work around because sometimes when transistioning back from PointLogOverviewViewController, the
-						//cell would not update the value properly. Even though it should be getting set already, we are doing in again.
-						if(self.isFiltering()){
-							self.filteredPoints[indexPath.row].updateApprovalStatus(approved: approve)
-						}
-						else{
-							self.displayedLogs[indexPath.row].updateApprovalStatus(approved: approve)
-						}
-						self.tableView.setEditing(false, animated: true)
-						self.tableView.reloadRows(at: [indexPath], with: .fade)
-					}
 				}
 				else{
 					self.notify(title: "Success", subtitle: "Point rejected", style: .success)
-					DispatchQueue.main.async {
-						//This is a work around because sometimes when transistioning back from PointLogOverviewViewController, the
-						//cell would not update the value properly. Even though it should be getting set already, we are doing in again.
-						if(self.isFiltering()){
-							self.filteredPoints[indexPath.row].updateApprovalStatus(approved: approve)
-						}
-						else{
-							self.displayedLogs[indexPath.row].updateApprovalStatus(approved: approve)
-						}
-						//self.tableView.setEditing(false, animated: true)
-                        self.tableView.reloadRows(at: [indexPath], with: .fade)
-					}
 				}
 			}
 		})
@@ -194,7 +165,6 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Segue to the second view controlleh
         self.performSegue(withIdentifier: "notification_push", sender: self)
-        tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 	// This function is called before the segue
