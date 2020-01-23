@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -92,19 +91,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Bell"/>
                                 <connections>
-                                    <segue destination="69o-Cx-E5f" kind="show" id="pKV-E1-mOf"/>
+                                    <segue destination="69o-Cx-E5f" kind="show" identifier="show_notifications" id="pKV-E1-mOf"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <size key="freeformSize" width="375" height="970"/>
                     <connections>
-                        <outlet property="housePointsCompareView" destination="2EP-Vu-eK9" id="2Zq-YB-rw1"/>
-                        <outlet property="housePointsView" destination="dGl-5f-Wyl" id="bGB-uW-bPQ"/>
                         <outlet property="backgroundTable" destination="7UZ-lD-f9b" id="Ju5-Iu-5uq"/>
                         <outlet property="notificationsButton" destination="l6y-qp-6I1" id="M40-WM-rNk"/>
-                        <outlet property="profileView" destination="vhe-Cn-9Q8" id="Y1U-xG-8uY"/>
-                        <outlet property="scrollView" destination="vFy-4D-Lcd" id="EnM-T6-l03"/>
                         <outlet property="tableView" destination="7UZ-lD-f9b" id="708-6f-IPu"/>
                     </connections>
                 </viewController>

@@ -367,35 +367,15 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         p?.show(at: location, in: (self.tabBarController?.view)!)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "show_notifications") {
+            self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+        }
+    }
+    
     @objc func buttonAction(sender: UIButton!) {
         p?.dismissType = .slideOutToBottom
         p?.dismiss(animated: true)
-    }
-    
-    func setTopScorersArray(house:House){
-        /*for i in 0...house.topScoreUsers!.count {
-            topScorers[0] = house.topScoreUsers![i].userName
-        }
-        if(house.topScoreUsers!.count > 0){
-            topScorers[0] = house.topScoreUsers![0].userName
-        }
-        if(house.topScoreUsers!.count > 1){
-            secondPlaceLabel.text = house.topScoreUsers![1].userName
-            secondPointsLabel.text = house.topScoreUsers![1].totalPoints.description
-        }
-        if(house.topScoreUsers!.count > 2){
-            thirdPlaceLabel.text = house.topScoreUsers![2].userName
-            thirdPointsLabel.text = house.topScoreUsers![2].totalPoints.description
-        }
-        if(house.topScoreUsers!.count > 3){
-            fourthPlaceLabel.text = house.topScoreUsers![3].userName
-            fourthPointsLabel.text = house.topScoreUsers![3].totalPoints.description
-        }
-        if(house.topScoreUsers!.count > 4){
-            fifthPlaceLabel.text = house.topScoreUsers![4].userName
-            fifthPointsLabel.text = house.topScoreUsers![4].totalPoints.description
-        }*/
-        
     }
     
     // TODO: This function and it's counterpart in the REC controllers
