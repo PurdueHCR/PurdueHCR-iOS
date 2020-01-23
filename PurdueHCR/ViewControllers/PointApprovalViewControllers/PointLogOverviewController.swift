@@ -176,10 +176,10 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		}
 	}
 	
-	// Todo: Does this function need to be implemented?
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
+//	// Todo: Does this function need to be implemented?
+//	func numberOfSections(in tableView: UITableView) -> Int {
+//		return 1
+//	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows

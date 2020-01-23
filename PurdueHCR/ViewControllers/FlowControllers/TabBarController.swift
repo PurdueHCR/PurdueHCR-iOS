@@ -24,12 +24,12 @@ class TabBarController: UITabBarController {
         let p = permission as! Int
         var viewControllers : [UIViewController] = []
         if (p == 0){
-            //Resident Controllers
+            // Resident Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
         }
         else if (p == 1){
-            //RHP Controllers
+            // RHP Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
             viewControllers.append(linkPointApprovalViewController())
@@ -37,7 +37,7 @@ class TabBarController: UITabBarController {
 
         }
         else if (p == 2){
-            //REA/REC Controllers
+            // REA/REC Controllers
             viewControllers.append(linkRECHouseViewController())
             viewControllers.append(linkQRCodeViewController())
             viewControllers.append(linkRECPointOptionsViewController())
@@ -49,6 +49,12 @@ class TabBarController: UITabBarController {
 			viewControllers.append(linkProfileViewController())
 			viewControllers.append(linkQRCodeViewController())
 		}
+        else if (p == 4) {
+            // Priviledged Resident Controllers
+            viewControllers.append(linkProfileViewController())
+            viewControllers.append(linkPointSubmissionViewController())
+            viewControllers.append(linkQRCodeViewController())
+        }
         // Do any additional setup after loading the view.
         self.setViewControllers(viewControllers, animated: false)
     }
