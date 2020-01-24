@@ -56,21 +56,16 @@ class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBAction func createNewEvent(_ sender: Any) {
 
         let name = newEventName.text!
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
         let time = dateFormatter.string(from: newEventDate.date)
-        dateFormatter.dateFormat = "HH"
-        let hour = Int(dateFormatter.string(from: newEventDate.date))!
-        dateFormatter.dateFormat = "mm"
-        let minute = Int(dateFormatter.string(from: newEventDate.date))!
-        dateFormatter.dateFormat = "dd"
-        let day = Int(dateFormatter.string(from: newEventDate.date))!
-        dateFormatter.dateFormat = "MM"
-        let month = Int(dateFormatter.string(from: newEventDate.date))!
-        dateFormatter.dateFormat = "yyyy"
-        let year = Int(dateFormatter.string(from: newEventDate.date))!
+        
         dateFormatter.dateFormat = "E, MMM d yyyy"
         let fullDate = dateFormatter.string(from: newEventDate.date)
+        
+        
+        let date = newEventDate.date
         
         let location = newEventLocation.text!
         
@@ -96,7 +91,7 @@ class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPic
         let ownerID = "0987654321"
         
 
-        events.append(Event(name: name, time: time, hour: hour, minute: minute, location: location, points: points, house: houseI, description: description, day: day, month: month, year: year, fullDate: fullDate, ownerID: ownerID))
+        events.append(Event(name: name, location: location, points: points, house: houseI, description: description, fullDate: fullDate, time: time, ownerID: ownerID))
     }
     
     /*

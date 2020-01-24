@@ -12,12 +12,8 @@ class Event {
     
     var name: String
     var time: String
-    var hour: Int //24 Hour, not 12AM,12PM
-    var minute: Int
-    var day: Int
-    var month: Int
-    var year: Int
     var fullDate: String
+    var date: Date
     var location: String
     var points: Int
     var house: Int
@@ -26,36 +22,19 @@ class Event {
     
     @IBOutlet weak var newEventDescription: UITextField!
     
-    init (name: String, time: String, hour: Int, minute: Int, location: String, points: Int, house: Int, description: String, day: Int, month: Int, year: Int, fullDate: String, ownerID: String) {
+    init (name: String, location: String, points: Int, house: Int, description: String, fullDate: String, time: String, ownerID: String) {
         self.name = name;
-        self.time = time;
-        self.hour = hour
-        self.minute = minute
         self.location = location
         self.points = points
         self.house = house
         self.description = description
         
-        self.day = day
-        self.month = month
-        self.year = year
         self.fullDate = fullDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, MMM d yyyy"
+        self.date = dateFormatter.date(from: fullDate)!
+        self.time = time
         
         self.ownerId = ownerID
     }
-    
-    func bubbleSwitch(event: Event) {
-        self.name = event.name
-        self.time = event.time
-        self.location = event.location
-        self.points = event.points
-        self.house = event.house
-        self.description = event.description
-        self.day = event.day
-        self.month = event.month
-        self.year = event.year
-        
-    }
-    
-    
 }

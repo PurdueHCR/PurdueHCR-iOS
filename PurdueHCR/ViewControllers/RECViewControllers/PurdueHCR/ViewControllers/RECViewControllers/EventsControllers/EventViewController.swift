@@ -11,7 +11,7 @@
 
 import UIKit
 
-var events: [Event] = [Event(name: "Snack and Chat", time: "5:00 PM", hour: 17, minute: 0, location: "Innovation Forum", points: 1, house: 1, description: "Eat snacks and chat with students and faculty", day: 15, month: 09, year: 2019, fullDate: "Sun, Sep 15 2019", ownerID: "1234567890")]
+var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", points: 1, house: 1, description: "Eat snacks and chat with students and faculty", fullDate: "Sun, Sep 15 2019", time: "5:00 PM", ownerID: "1234567890")]
 
 var makeSection: Bool = true
 
@@ -49,52 +49,29 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
             while (!done) {
                 change = false
                 for i in 0...events.count-2 {
-                    if events[i].year == events[i+1].year {
-                        if events[i].month == events[i+1].month {
-                            if events[i].day == events[i+1].day {
-                                if events[i].hour == events[i+1].hour{
-                                    if events[i].minute > events[i+1].minute {
-                                        change = true
-                                        let temp: Event = events[i]
-                                        events[i] = events[i+1]
-                                        events[i+1] = temp
-                                    }
-                                }
-                                if events[i].hour > events[i+1].hour {
-                                    change = true
-                                    let temp: Event = events[i]
-                                    events[i] = events[i+1]
-                                    events[i+1] = temp
-                                }
-                            }
-                            if events[i].day > events[i+1].day {
-                                change = true
-                                let temp: Event = events[i]
-                                events[i] = events[i+1]
-                                events[i+1] = temp
-                            }
-                        }
-                        else if events[i].month > events[i+1].month {
+                    if (events[i].date > events[i+1].date) {
+                        change = true
+                        let temp: Event = events[i]
+                        events[i] = events[i+1]
+                        events[i+1] = temp
+                    }
+                    if (events[i].date == events[i+1].date) {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "h:mm a"
+                        let date0 = dateFormatter.date(from: events[i].time)!
+                        let date1 = dateFormatter.date(from: events[i+1].time)!
+                        if (date0 > date1) {
                             change = true
                             let temp: Event = events[i]
                             events[i] = events[i+1]
                             events[i+1] = temp
                         }
                     }
-                    else if events[i].year > events[i+1].year {
-                        change = true
-                        let temp: Event = events[i]
-                        events[i] = events[i+1]
-                        events[i+1] = temp
-                    }
                 }
                 if change == false { done = true }
             }
         }
 //End of bubble sort
-
-        //Need to remove when putting this into actual HCR App, it will go back to house competition screen
-        navigationItem.hidesBackButton = true
     }
     
     
@@ -106,7 +83,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
             header = events[section].fullDate
         }
         else {
-            if events[section].year == events[section-1].year && events[section].month == events[section-1].month && events[section].day == events[section-1].day { //If it's the same date, don't use a header
+            if events[section].date == events[section - 1].date { //If same date as previous event, don't print date.
                 makeSection = false
                 print("should be false now")
                 return nil
@@ -133,7 +110,10 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.layer.masksToBounds = true
         
         cell.eventName.text = events[indexPath.section].name
+                
         cell.eventDate.text = events[indexPath.section].time
+        
+        
         cell.eventLocation.text = events[indexPath.section].location        
         if events[indexPath.section].points == 1 {
             cell.eventPoints.text = "1 Point"
