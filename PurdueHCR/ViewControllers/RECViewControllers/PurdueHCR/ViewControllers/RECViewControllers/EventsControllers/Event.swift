@@ -19,13 +19,14 @@ class Event {
     var year: Int
     var fullDate: String
     var location: String
-    var points: String
+    var points: Int
     var house: Int
     var description: String
+    var ownerId: String
     
     @IBOutlet weak var newEventDescription: UITextField!
     
-    init (name: String, time: String, hour: Int, minute: Int, location: String, points: String, house: Int, description: String, day: Int, month: Int, year: Int, fullDate: String) {
+    init (name: String, time: String, hour: Int, minute: Int, location: String, points: Int, house: Int, description: String, day: Int, month: Int, year: Int, fullDate: String, ownerID: String) {
         self.name = name;
         self.time = time;
         self.hour = hour
@@ -39,6 +40,8 @@ class Event {
         self.month = month
         self.year = year
         self.fullDate = fullDate
+        
+        self.ownerId = ownerID
     }
     
     func bubbleSwitch(event: Event) {

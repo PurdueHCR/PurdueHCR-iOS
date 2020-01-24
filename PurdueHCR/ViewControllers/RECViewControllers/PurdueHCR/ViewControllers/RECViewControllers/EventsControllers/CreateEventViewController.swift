@@ -73,24 +73,30 @@ class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPic
         let fullDate = dateFormatter.string(from: newEventDate.date)
         
         let location = newEventLocation.text!
+        
+        // Points may be something we want to change from this to a text input.
         let pointsI = newEventPoints.selectedSegmentIndex
-        var points = ""
+        var points = 0
         if pointsI == 0 {
-            points = "1 Point"
+            points = 1
         }
         else if pointsI == 1 {
-            points = "3 Points"
+            points = 3
         }
         else if pointsI == 2 {
-            points = "5 Points"
+            points = 5
         }
         else if pointsI == 3 {
-            points = "10 Points"
+            points = 10
         }
+        
         let description = newEventDescription.text!
         
+        // This is something to be implemented once we connect the database!
+        let ownerID = "0987654321"
+        
 
-        events.append(Event(name: name, time: time, hour: hour, minute: minute, location: location, points: points, house: houseI, description: description, day: day, month: month, year: year, fullDate: fullDate))
+        events.append(Event(name: name, time: time, hour: hour, minute: minute, location: location, points: points, house: houseI, description: description, day: day, month: month, year: year, fullDate: fullDate, ownerID: ownerID))
     }
     
     /*

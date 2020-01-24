@@ -11,7 +11,7 @@
 
 import UIKit
 
-var events: [Event] = [Event(name: "Snack and Chat", time: "5:00 PM", hour: 17, minute: 0, location: "Innovation Forum", points: "1 Point", house: 1, description: "Eat snacks and chat with students and faculty", day: 15, month: 09, year: 2019, fullDate: "Sun, Sep 15 2019")]
+var events: [Event] = [Event(name: "Snack and Chat", time: "5:00 PM", hour: 17, minute: 0, location: "Innovation Forum", points: 1, house: 1, description: "Eat snacks and chat with students and faculty", day: 15, month: 09, year: 2019, fullDate: "Sun, Sep 15 2019", ownerID: "1234567890")]
 
 var makeSection: Bool = true
 
@@ -135,7 +135,11 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.eventName.text = events[indexPath.section].name
         cell.eventDate.text = events[indexPath.section].time
         cell.eventLocation.text = events[indexPath.section].location        
-        cell.eventPoints.text = events[indexPath.section].points
+        if events[indexPath.section].points == 1 {
+            cell.eventPoints.text = "1 Point"
+        } else {
+            cell.eventPoints.text = "\(events[indexPath.section].points) Points"
+        }
         
         //Setting background color based on who the event is for (by house)
         let color = events[indexPath.section].house
