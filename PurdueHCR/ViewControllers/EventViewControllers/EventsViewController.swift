@@ -18,8 +18,9 @@ var makeSection: Bool = true
 class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
 
-    @IBOutlet weak var whatsHappning: UILabel!
+    @IBOutlet weak var whatsHappening: UILabel!
     @IBOutlet weak var eventsTableView: UITableView!
+
     
     let cellSpacing: CGFloat = 35
     
