@@ -28,7 +28,7 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
             
-            viewControllers.append(linkEventsViewController())
+            viewControllers.append(linkEventViewController())
         }
         else if (p == 1){
             // RHP Controllers
@@ -112,11 +112,11 @@ class TabBarController: UITabBarController {
 		return rewardsViewController
     }
     
-    func linkEventsViewController() -> UIViewController {
-        let eventsViewController = UIStoryboard(name: "Events", bundle: nil).instantiateViewController(withIdentifier: "Events_Initial") as! UINavigationController
-        eventsViewController.tabBarItem = UITabBarItem(title: "Events", image: #imageLiteral(resourceName: "RewardIcon"), selectedImage: #imageLiteral(resourceName: "RewardIcon"))
+    func linkEventViewController() -> UIViewController {
+        let eventViewController = UIStoryboard(name: "Events", bundle: nil).instantiateViewController(withIdentifier: "Events_Initial") as! UINavigationController
+        eventViewController.tabBarItem = UITabBarItem(title: "Events", image: #imageLiteral(resourceName: "RewardIcon"), selectedImage: #imageLiteral(resourceName: "RewardIcon"))
         //eventsViewController.tabBarItem.imageInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
-        return eventsViewController
+        return eventViewController
     }
     
     override func didReceiveMemoryWarning() {

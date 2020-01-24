@@ -15,12 +15,11 @@ var events: [Event] = [Event(name: "Snack and Chat", time: "5:00 PM", hour: 17, 
 
 var makeSection: Bool = true
 
-class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class EventViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
-    @IBOutlet weak var whatsHappening: UILabel!
-    @IBOutlet weak var eventsTableView: UITableView!
-
+    
+    @IBOutlet weak var eventTableView: UITableView!
+    
     
     let cellSpacing: CGFloat = 35
     
@@ -30,16 +29,16 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        eventsTableView.delegate = self
-        eventsTableView.dataSource = self
-        eventsTableView.reloadData()
+        eventTableView.delegate = self
+        eventTableView.dataSource = self
+        eventTableView.reloadData()
 
-   //     eventsTableView.tableHeaderView!.frame = CGRectMake(0,0,200,300)
-        self.eventsTableView.tableHeaderView = self.eventsTableView.tableHeaderView
+   //     eventTableView.tableHeaderView!.frame = CGRectMake(0,0,200,300)
+        self.eventTableView.tableHeaderView = self.eventTableView.tableHeaderView
         
-        eventsTableView.rowHeight = 133
-        eventsTableView.sectionHeaderHeight = 2000
-        eventsTableView.estimatedSectionHeaderHeight = 2000
+        eventTableView.rowHeight = 133
+        eventTableView.sectionHeaderHeight = 2000
+        eventTableView.estimatedSectionHeaderHeight = 2000
 
         
 //Bubble Sort events array
@@ -171,9 +170,9 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let myLabel = UILabel()
-        myLabel.frame = CGRect(x: 0, y: 0, width: 320, height: self.tableView(eventsTableView, heightForHeaderInSection: section))
+        myLabel.frame = CGRect(x: 0, y: 0, width: 320, height: self.tableView(eventTableView, heightForHeaderInSection: section))
         myLabel.font = UIFont.boldSystemFont(ofSize: 26)
-        myLabel.text = self.tableView(eventsTableView, titleForHeaderInSection: section)
+        myLabel.text = self.tableView(eventTableView, titleForHeaderInSection: section)
         
         let headerView = UIView()
         headerView.addSubview(myLabel)

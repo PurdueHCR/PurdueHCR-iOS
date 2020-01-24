@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
-		AA19657A23DA7876008B6B1E /* EventViewControllers in Resources */ = {isa = PBXBuildFile; fileRef = AA19657923DA7876008B6B1E /* EventViewControllers */; };
-		AA19657C23DA78BB008B6B1E /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA19657B23DA78BB008B6B1E /* Events.storyboard */; };
 		AA19658323DA7F3A008B6B1E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA19658223DA7F3A008B6B1E /* GoogleService-Info.plist */; };
+		AA27A11B23DAA297007017F1 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA27A11A23DAA297007017F1 /* Events.storyboard */; };
+		AA27A11F23DAA497007017F1 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A11E23DAA497007017F1 /* EventViewController.swift */; };
+		AA27A12123DAA4A3007017F1 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12023DAA4A3007017F1 /* CreateEventViewController.swift */; };
+		AA27A12323DAA4A5007017F1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12223DAA4A5007017F1 /* Event.swift */; };
+		AA27A12523DAA4A7007017F1 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */; };
+		AA27A12723DAA4A9007017F1 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */; };
 		AFFF5C517BE37CA63E769D79 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
 		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
@@ -106,9 +110,13 @@
 		172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.release.xcconfig"; sourceTree = "<group>"; };
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		AA19657923DA7876008B6B1E /* EventViewControllers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EventViewControllers; sourceTree = "<group>"; };
-		AA19657B23DA78BB008B6B1E /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		AA19658223DA7F3A008B6B1E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		AA27A11A23DAA297007017F1 /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
+		AA27A11E23DAA497007017F1 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		AA27A12023DAA4A3007017F1 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		AA27A12223DAA4A5007017F1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
@@ -236,6 +244,19 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		AA27A12823DAA4BF007017F1 /* EventsControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AA27A11E23DAA497007017F1 /* EventViewController.swift */,
+				AA27A12023DAA4A3007017F1 /* CreateEventViewController.swift */,
+				AA27A12223DAA4A5007017F1 /* Event.swift */,
+				AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */,
+				AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */,
+			);
+			name = EventsControllers;
+			path = RECViewControllers/PurdueHCR/ViewControllers/RECViewControllers/EventsControllers;
+			sourceTree = "<group>";
+		};
 		AB577E93D3B4B5BCEA137EE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,7 +269,7 @@
 		D30FBEE020FC0403000DD221 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AA19657923DA7876008B6B1E /* EventViewControllers */,
+				AA27A12823DAA4BF007017F1 /* EventsControllers */,
 				D3912A63219CE75D0002E7C7 /* RECViewControllers */,
 				D39D442F210E73FB0030F424 /* FlowControllers */,
 				D39D4430210E74090030F424 /* UserCreation */,
@@ -291,7 +312,7 @@
 		D30FBEE520FC046F000DD221 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				AA19657B23DA78BB008B6B1E /* Events.storyboard */,
+				AA27A11A23DAA297007017F1 /* Events.storyboard */,
 				D30FC90720DF35D800201E74 /* Main.storyboard */,
 				D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */,
 				D33F43AC2108362D00D3982D /* LaunchScreen.storyboard */,
@@ -640,9 +661,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA27A11B23DAA297007017F1 /* Events.storyboard in Resources */,
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
 				D3355C8F214A25B10037556C /* Profile.storyboard in Resources */,
-				AA19657C23DA78BB008B6B1E /* Events.storyboard in Resources */,
 				B551BDD321B1004F00CF4F6C /* Register in Resources */,
 				D3355C8D214A253D0037556C /* PointSubmission.storyboard in Resources */,
 				D33F43AD2108362D00D3982D /* LaunchScreen.storyboard in Resources */,
@@ -659,7 +680,6 @@
 				AA19658323DA7F3A008B6B1E /* GoogleService-Info.plist in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				D749F37623399F0600410434 /* SuggestedPointsView.xib in Resources */,
-				AA19657A23DA7876008B6B1E /* EventViewControllers in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
@@ -820,6 +840,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D30FBEF3210380F3000DD221 /* PointLogOverviewController.swift in Sources */,
+				AA27A12323DAA4A5007017F1 /* Event.swift in Sources */,
 				D3912A6D219CE77B0002E7C7 /* HouseCompetitionOverviewTableViewController.swift in Sources */,
 				B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */,
 				D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */,
@@ -830,12 +851,15 @@
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
 				D3912A74219CE7960002E7C7 /* RECPointOptionTableViewController.swift in Sources */,
 				B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */,
+				AA27A12523DAA4A7007017F1 /* EventTableViewCell.swift in Sources */,
 				D3CC77CB210428B600B88F03 /* TabBarController.swift in Sources */,
 				B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */,
 				D3912A73219CE7960002E7C7 /* RECPointCreationTableViewController.swift in Sources */,
 				B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */,
 				B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */,
+				AA27A12723DAA4A9007017F1 /* VerifyViewController.swift in Sources */,
 				D3D062BD20E816AB00E8B3A3 /* User.swift in Sources */,
+				AA27A12123DAA4A3007017F1 /* CreateEventViewController.swift in Sources */,
 				D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */,
 				D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */,
 				B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */,
@@ -847,6 +871,7 @@
 				D3912A6C219CE77B0002E7C7 /* GrantAwardTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,
 				D3912A6B219CE77B0002E7C7 /* SubmitGrantedAwardViewController.swift in Sources */,
+				AA27A11F23DAA497007017F1 /* EventViewController.swift in Sources */,
 				D33F43AA2106982100D3982D /* AnimatedLoadingViewController.swift in Sources */,
 				D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */,
 				D3912A6A219CE77B0002E7C7 /* HouseTableViewController.swift in Sources */,
