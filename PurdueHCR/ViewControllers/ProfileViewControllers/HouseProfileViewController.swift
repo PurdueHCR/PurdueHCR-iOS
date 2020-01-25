@@ -25,24 +25,78 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 	var house : House?
     let padding : CGFloat = 12
     var permission: PointType.PermissionLevel?
+    var houseImageView: UIImageView!
    
+    /// WARNING: Change these constants according to your project's design
+    private struct Const {
+        /// Image height/width for Large NavBar state
+        static let ImageSizeForLargeState: CGFloat = 40
+        /// Margin from right anchor of safe area to right anchor of Image
+        static let ImageRightMargin: CGFloat = 16
+        /// Margin from bottom anchor of NavBar to bottom anchor of Image for Large NavBar state
+        static let ImageBottomMarginForLargeState: CGFloat = 12
+        /// Margin from bottom anchor of NavBar to bottom anchor of Image for Small NavBar state
+        static let ImageBottomMarginForSmallState: CGFloat = 6
+        /// Image height/width for Small NavBar state
+        static let ImageSizeForSmallState: CGFloat = 32
+        /// Height of NavBar for Small state. Usually it's just 44
+        static let NavBarHeightSmallState: CGFloat = 44
+        /// Height of NavBar for Large state. Usually it's just 96.5 but if you have a custom font for the title, please make sure to edit this value since it changes the height for Large state of NavBar
+        static let NavBarHeightLargeState: CGFloat = 96.5
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 	
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let firstName = User.get(.firstName) as! String
+        let lastName = User.get(.lastName) as! String
+        self.title = firstName + " " + lastName
+        
         refresher = UIRefreshControl()
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refresher
         
         permission = PointType.PermissionLevel.init(rawValue: User.get(.permissionLevel) as! Int)!
-        if (permission != PointType.PermissionLevel.resident && permission != PointType.PermissionLevel.rhp) {
+        if (permission == PointType.PermissionLevel.fhp) {
+            let navigationBar = navigationController!.navigationBar
 			self.navigationItem.rightBarButtonItems = nil
+            let houseName = User.get(.house) as! String
+            houseImageView = UIImageView()
+            if(houseName == "Platinum"){
+                houseImageView.image = #imageLiteral(resourceName: "Platinum")
+            }
+            else if(houseName == "Copper"){
+                houseImageView.image = #imageLiteral(resourceName: "Copper")
+            }
+            else if(houseName == "Palladium"){
+                houseImageView.image = #imageLiteral(resourceName: "Palladium")
+            }
+            else if(houseName == "Silver"){
+                houseImageView.image = #imageLiteral(resourceName: "Silver")
+            }
+            else if(houseName == "Titanium"){
+                houseImageView.image = #imageLiteral(resourceName: "Titanium")
+            }
+            navigationBar.addSubview(houseImageView)
+            houseImageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
+            houseImageView.clipsToBounds = true
+            houseImageView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                houseImageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
+                houseImageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
+                houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
+                houseImageView.widthAnchor.constraint(equalTo: houseImageView.heightAnchor)
+                ])
 		}
-        if #available(iOS 13.0, *) {
+        /*if #available(iOS 13.0, *) {
             backgroundTable.backgroundColor = UIColor.systemGray5
         } else {
             backgroundTable.backgroundColor = DefinedValues.systemGray5
-        }
+        }*/
+        backgroundTable.backgroundColor = UIColor.white
 		
 		// TODO: A separate method should probably be created for this so that it doesn't have to pass around as much data but instead just returns a boolean whether or not the user has a notification
 		
@@ -101,7 +155,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         if (permission == PointType.PermissionLevel.fhp) {
             DataManager.sharedManager.getHouseScorers {
                 self.house = self.getHouseWithName(name: User.get(.house) as! String)
-                let path = IndexPath.init(row: 3, section: 0)
+                let path = IndexPath.init(row: 2, section: 0)
                 self.tableView.reloadRows(at: [path], with: .none)
             }
         }
@@ -165,8 +219,9 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 view.removeFromSuperview()
             }
             
-            switch indexPath.row {
-            case 0:
+            let row = indexPath.row
+            
+            if (row == 0 && permission != PointType.PermissionLevel.fhp) {
                 let profileView = ProfileView.init()
                 profileView.layer.shadowColor = UIColor.darkGray.cgColor
                 profileView.layer.shadowOpacity = 0.5
@@ -179,14 +234,15 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 profileView.translatesAutoresizingMaskIntoConstraints = false
                 let horizontalConstraint = NSLayoutConstraint(item: profileView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
                 let verticalConstraint = NSLayoutConstraint(item: profileView, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 150)
-                let centeredVertically = NSLayoutConstraint(item: profileView, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 0)
+                let centeredVertically = NSLayoutConstraint(item: profileView, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 5)
                 let widthConstraint = NSLayoutConstraint(item: profileView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
                 
                 NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, centeredVertically])
                 
-                let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: profileView, attribute: .height, multiplier: 1, constant: padding)
+                let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: profileView, attribute: .height, multiplier: 1, constant: padding+5)
                 NSLayoutConstraint.activate([cellHeight])
-            case 1:
+            }
+            else if ((permission != PointType.PermissionLevel.fhp && row == 1) || (permission == PointType.PermissionLevel.fhp && row == 0)) {
                 let compareView = HousePointsCompareView.init()
                 compareView.layer.shadowColor = UIColor.darkGray.cgColor
                 compareView.layer.shadowOpacity = 0.5
@@ -206,7 +262,8 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 
                 let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: compareView, attribute: .height, multiplier: 1, constant: padding)
                 NSLayoutConstraint.activate([cellHeight])
-            case 2:
+            }
+            else if ((permission != PointType.PermissionLevel.fhp && row == 2) || (permission == PointType.PermissionLevel.fhp && row == 1)) {
                 let houseView = HousePointsView.init()
                 houseView.layer.shadowColor = UIColor.darkGray.cgColor
                 houseView.layer.shadowOpacity = 0.5
@@ -226,7 +283,8 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 
                 let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: houseView, attribute: .height, multiplier: 1, constant: padding)
                 NSLayoutConstraint.activate([cellHeight])
-            case 3:
+            }
+            else if (permission == PointType.PermissionLevel.fhp && row == 2) {
                 cell = tableView.dequeueReusableCell(withIdentifier: "top_scorers_table_cell", for: indexPath)
                 
                 cell.contentView.layer.cornerRadius = DefinedValues.radius
@@ -266,10 +324,8 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 
                 let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: cell.contentView, attribute: .height, multiplier: 1, constant: padding)
                 NSLayoutConstraint.activate([cellHeight])
-            default:
-                break
             }
-            cell.backgroundColor = DefinedValues.systemGray5
+            cell.backgroundColor = UIColor.white//DefinedValues.systemGray5
         }
         else {
             cell = tableView.dequeueReusableCell(withIdentifier: "top_scorers_cell", for: indexPath)
@@ -295,11 +351,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if (tableView.tag == 1) {
-            if (permission == PointType.PermissionLevel.fhp) {
-                return 4
-            } else {
-                return 3
-            }
+            return 3
         } else {
             return 5
         }
@@ -388,6 +440,43 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         }
         return nil
     }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (permission == PointType.PermissionLevel.fhp) {
+            guard let height = navigationController?.navigationBar.frame.height else { return }
+            moveAndResizeImage(for: height)
+        }
+    }
+    
+    private func moveAndResizeImage(for height: CGFloat) {
+        let coeff: CGFloat = {
+            let delta = height - Const.NavBarHeightSmallState
+            let heightDifferenceBetweenStates = (Const.NavBarHeightLargeState - Const.NavBarHeightSmallState)
+            return delta / heightDifferenceBetweenStates
+        }()
+
+        let factor = Const.ImageSizeForSmallState / Const.ImageSizeForLargeState
+
+        let scale: CGFloat = {
+            let sizeAddendumFactor = coeff * (1.0 - factor)
+            return min(1.0, sizeAddendumFactor + factor)
+        }()
+
+        // Value of difference between icons for large and small states
+        let sizeDiff = Const.ImageSizeForLargeState * (1.0 - factor) // 8.0
+        let yTranslation: CGFloat = {
+            /// This value = 14. It equals to difference of 12 and 6 (bottom margin for large and small states). Also it adds 8.0 (size difference when the image gets smaller size)
+            let maxYTranslation = Const.ImageBottomMarginForLargeState - Const.ImageBottomMarginForSmallState + sizeDiff
+            return max(0, min(maxYTranslation, (maxYTranslation - coeff * (Const.ImageBottomMarginForSmallState + sizeDiff))))
+        }()
+
+        let xTranslation = max(0, sizeDiff - coeff * sizeDiff)
+
+        houseImageView.transform = CGAffineTransform.identity
+            .scaledBy(x: scale, y: scale)
+            .translatedBy(x: xTranslation, y: yTranslation)
+    }
+    
     
 }
 

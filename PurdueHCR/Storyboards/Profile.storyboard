@@ -78,7 +78,7 @@
                         </prototypes>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile" selectedImage="profile" id="JSU-7P-lap"/>
-                    <navigationItem key="navigationItem" title="Profile" id="2Xh-z0-fiO">
+                    <navigationItem key="navigationItem" title="Profile" largeTitleDisplayMode="always" id="2Xh-z0-fiO">
                         <barButtonItem key="leftBarButtonItem" title="Sign Out" image="Settings" id="jct-kF-pzl">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>

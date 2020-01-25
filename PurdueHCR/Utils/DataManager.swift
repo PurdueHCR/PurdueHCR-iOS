@@ -463,6 +463,10 @@ class DataManager {
         }
     }
     
+    func getHouseRank(residentID: String, house: String, onDone:@escaping (Int)->Void) {
+        fbh.getHouseRank(residentID: residentID, house: house, onDone: onDone)
+    }
+    
     func createReward(reward:Reward, image:UIImage, onDone:@escaping(_ err:Error?) ->Void){
         fbh.uploadImageWithFilename(filename: reward.fileName, img: image) { (err) in
             if(err == nil){

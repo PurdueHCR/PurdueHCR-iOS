@@ -19,12 +19,15 @@
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
 		B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599D98122F62F030033173C /* NotificationsViewController.swift */; };
+		B5AE2D4723DCA07100B2323C /* FirebaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4623DCA07100B2323C /* FirebaseListener.swift */; };
+		B5AE2D4923DCA34F00B2323C /* FirebaseCollectionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4823DCA34F00B2323C /* FirebaseCollectionListener.swift */; };
+		B5AE2D4B23DCA35D00B2323C /* FirebaseDocumentListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4A23DCA35D00B2323C /* FirebaseDocumentListener.swift */; };
+		B5AE2D4D23DCA68C00B2323C /* FirebaseListenerUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4C23DCA68C00B2323C /* FirebaseListenerUtil.swift */; };
 		B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */; };
 		B5BD40B723C6847200E8D48F /* RECPointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */; };
-		B5D88D5923C51E69007A19D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */; };
-		B5B8236121EA8203009E6750 /* PointsSubmittedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */; };
 		B5D88D5523C395DC007A19D0 /* TopScorersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D88D5423C395DC007A19D0 /* TopScorersView.xib */; };
 		B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D88D5623C39688007A19D0 /* TopScorersView.swift */; };
+		B5D88D5923C51E69007A19D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -116,12 +119,15 @@
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
 		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		B599D98122F62F030033173C /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		B5AE2D4623DCA07100B2323C /* FirebaseListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseListener.swift; sourceTree = "<group>"; };
+		B5AE2D4823DCA34F00B2323C /* FirebaseCollectionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCollectionListener.swift; sourceTree = "<group>"; };
+		B5AE2D4A23DCA35D00B2323C /* FirebaseDocumentListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDocumentListener.swift; sourceTree = "<group>"; };
+		B5AE2D4C23DCA68C00B2323C /* FirebaseListenerUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseListenerUtil.swift; sourceTree = "<group>"; };
 		B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HousePointsHistoryViewController.swift; path = PurdueHCR/ViewControllers/ProfileViewControllers/HousePointsHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RECPointDescriptionView.xib; sourceTree = "<group>"; };
-		B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B5B8236021EA8203009E6750 /* PointsSubmittedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSubmittedViewController.swift; sourceTree = "<group>"; };
 		B5D88D5423C395DC007A19D0 /* TopScorersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopScorersView.xib; sourceTree = "<group>"; };
 		B5D88D5623C39688007A19D0 /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
+		B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -264,6 +270,10 @@
 				D3D062B620E7F73C00E8B3A3 /* DataManager.swift */,
 				D3CC77CD21052CEF00B88F03 /* AppUtils.swift */,
 				B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */,
+				B5AE2D4623DCA07100B2323C /* FirebaseListener.swift */,
+				B5AE2D4823DCA34F00B2323C /* FirebaseCollectionListener.swift */,
+				B5AE2D4A23DCA35D00B2323C /* FirebaseDocumentListener.swift */,
+				B5AE2D4C23DCA68C00B2323C /* FirebaseListenerUtil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -809,6 +819,7 @@
 				D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */,
 				D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */,
 				B53EBBE222D5502600475882 /* (null) in Sources */,
+				B5AE2D4923DCA34F00B2323C /* FirebaseCollectionListener.swift in Sources */,
 				D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */,
 				D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
@@ -816,6 +827,7 @@
 				B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */,
 				D3CC77CB210428B600B88F03 /* TabBarController.swift in Sources */,
 				B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */,
+				B5AE2D4B23DCA35D00B2323C /* FirebaseDocumentListener.swift in Sources */,
 				D3912A73219CE7960002E7C7 /* RECPointCreationTableViewController.swift in Sources */,
 				B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */,
 				B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */,
@@ -831,8 +843,10 @@
 				D3912A6C219CE77B0002E7C7 /* GrantAwardTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,
 				D3912A6B219CE77B0002E7C7 /* SubmitGrantedAwardViewController.swift in Sources */,
+				B5AE2D4D23DCA68C00B2323C /* FirebaseListenerUtil.swift in Sources */,
 				D33F43AA2106982100D3982D /* AnimatedLoadingViewController.swift in Sources */,
 				D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */,
+				B5AE2D4723DCA07100B2323C /* FirebaseListener.swift in Sources */,
 				D3912A6A219CE77B0002E7C7 /* HouseTableViewController.swift in Sources */,
 				D3912A7A219CE7A90002E7C7 /* RECRewardCreationTableViewController.swift in Sources */,
 				D3D062C720E82A6500E8B3A3 /* TypeSubmitViewController.swift in Sources */,
