@@ -27,5 +27,13 @@ class EventTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
+    //Creates vertical spacing between each row (event)
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 50, right: 10))
+    }
 
 }

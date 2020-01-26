@@ -25,7 +25,6 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -96,33 +95,41 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return Event.numRowsInSection(section: section, events: events)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return events.count
+        return Event.getNumUniqueDates(events: events)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as! EventTableViewCell
 
-        //cell.bounds = CGRectMake(cell.bounds.origin.x, cell.bounds.origin.y, cell.bounds.size.width - 40, cell.bounds.size.height)
         cell.layer.cornerRadius = 8
+        cell.layer.shadowColor = UIColor.lightGray.cgColor
+        cell.layer.shadowOpacity = 0.5
+        cell.layer.shadowOffset = CGSize.zero
+        cell.layer.shadowRadius = 12
         cell.layer.masksToBounds = true
         
-        cell.eventName.text = events[indexPath.section].name
+        cell.layer.borderWidth = 4
+        cell.layer.borderColor = UIColor.white.cgColor
                 
-        cell.eventDate.text = events[indexPath.section].time
+        let sectionIndex = Event.startingIndexForSection(section: indexPath.section, events: events)
+        
+        cell.eventName.text = events[sectionIndex + indexPath.row].name
+                
+        cell.eventDate.text = events[sectionIndex + indexPath.row].time
         
         
-        cell.eventLocation.text = events[indexPath.section].location        
-        if events[indexPath.section].points == 1 {
+        cell.eventLocation.text = events[sectionIndex + indexPath.row].location
+        if events[sectionIndex + indexPath.row].points == 1 {
             cell.eventPoints.text = "1 Point"
         } else {
-            cell.eventPoints.text = "\(events[indexPath.section].points) Points"
+            cell.eventPoints.text = "\(events[sectionIndex + indexPath.row].points) Points"
         }
         
         //Setting background color based on who the event is for (by house)
-        let color = events[indexPath.section].house
+        let color = events[sectionIndex + indexPath.row].house
         if color == 1 { //All houses
             cell.backgroundColor = UIColor(red: 233/255, green: 188/255, blue: 74/255, alpha: 1.0)
         }
@@ -143,7 +150,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         else if color == 6 { //Copper, Update Floor
             cell.backgroundColor = UIColor(red: 247/255, green: 148/255, blue: 0/255, alpha: 1.0)
         }
-        cell.eventDescription.text = events[indexPath.section].description
+        cell.eventDescription.text = events[sectionIndex + indexPath.row].description
         return cell
     }
     
@@ -160,10 +167,10 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let headerView = UIView()
         headerView.addSubview(myLabel)
+        headerView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
         
         return headerView
     }
-    //Test Comment
 }
 
 
