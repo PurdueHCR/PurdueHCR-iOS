@@ -85,7 +85,10 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
 //        cell.layer.shadowOffset = CGSize.zero
 //        cell.layer.shadowRadius = 12
         
-        cell.layer.cornerRadius = 8
+        
+        let radius: CGFloat = cell.frame.height / 10
+        
+        cell.layer.cornerRadius = radius
         cell.layer.masksToBounds = true
         
         //Creates vertical space between same-day events (no date in between them)
