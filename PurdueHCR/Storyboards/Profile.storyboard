@@ -12,8 +12,8 @@
             <objects>
                 <navigationController storyboardIdentifier="Profile_Initial" id="VqF-NJ-TsV" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="profile" selectedImage="profile" id="VpI-rK-W91"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1cj-4l-3Wv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="1cj-4l-3Wv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -193,14 +193,14 @@
                             <outlet property="delegate" destination="rKx-so-4qo" id="8z0-Nu-DUn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="KYu-F8-wwX"/>
+                    <navigationItem key="navigationItem" title="Submitted Points" largeTitleDisplayMode="never" id="07q-eV-jbb"/>
                     <connections>
                         <segue destination="TpY-DJ-INg" kind="show" identifier="cell_push" id="BDD-9V-dOb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A13-QX-ytm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2194" y="-408"/>
+            <point key="canvasLocation" x="2260" y="-396"/>
         </scene>
         <!--Point Log Overview Controller-->
         <scene sceneID="MdB-iZ-wYK">
@@ -296,6 +296,7 @@
                             <outlet property="delegate" destination="69o-Cx-E5f" id="1UX-gu-CsR"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Notifications" largeTitleDisplayMode="never" id="cJX-BI-Gzb"/>
                     <connections>
                         <segue destination="TpY-DJ-INg" kind="show" identifier="notification_push" id="Jag-4i-NqT"/>
                     </connections>
@@ -311,6 +312,6 @@
         <image name="profile" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Jag-4i-NqT"/>
+        <segue reference="BDD-9V-dOb"/>
     </inferredMetricsTieBreakers>
 </document>

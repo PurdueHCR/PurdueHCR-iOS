@@ -10,20 +10,22 @@ import FirebaseFirestore
 
 public class FirebaseListenerUtil {
     
-    private var userPointLogListener: FirebaseCollectionListener
-    private var rhpNotificationListener: FirebaseCollectionListener
-    private var pointTypeListener: FirebaseCollectionListener
-    private var pointLogListener: FirestoreDocumentListener
-    private var systemPreferenceListener: FirestoreDocumentListener
-    private var userAccountListener: FirestoreDocumentListener
+    let userPointLogListener: FirebaseCollectionListener?
+    let rhpNotificationListener: FirebaseCollectionListener?
+    let pointTypeListener: FirebaseCollectionListener?
+    let pointLogListener: FirebaseDocumentListener?
+    let systemPreferenceListener: FirebaseDocumentListener?
+    let userAccountListener: FirebaseDocumentListener?
     
     func initializeListeners() {}
     
     init() {
-        createPersistantListeners()
-    }
-    
-    func createPersistantListeners() {
+        userPointLogListener = nil
+        rhpNotificationListener = nil
+        pointTypeListener = nil
+        pointLogListener = nil
+        systemPreferenceListener = nil
+        userAccountListener = nil
         createUserPointLogListener()
         createSystemPreferencesListener()
         createPointTypeListener()
@@ -36,12 +38,12 @@ public class FirebaseListenerUtil {
     
     func removeCallbacks(key: String) {
         // FIXME: Some error checking here to determine which one to run
-        userPointLogListener.removeCallback(key: key)
-        rhpNotificationListener.removeCallback(key: key)
-        pointTypeListener.removeCallback(key: key)
-        pointLogListener.removeCallback(key: key)
-        systemPreferenceListener.removeCallback(key: key)
-        userAccountListener.removeCallback(key: key)
+        userPointLogListener?.removeCallback(key: key)
+        rhpNotificationListener?.removeCallback(key: key)
+        pointTypeListener?.removeCallback(key: key)
+        pointLogListener?.removeCallback(key: key)
+        systemPreferenceListener?.removeCallback(key: key)
+        userAccountListener?.removeCallback(key: key)
     }
     
     func resetFirebaseListeners() {
@@ -76,12 +78,12 @@ public class FirebaseListenerUtil {
 
     }
     
-    func getUserAccountListener()->FirebaseCollectionListener {
-        return userAccountListener
+    func getUserAccountListener()->FirebaseDocumentListener {
+        return userAccountListener!
     }
     
     func killUserAccountListener() {
-        userAccountListener.killListener()
+        userAccountListener?.killListener()
     }
     
     /*------------------------USER POINT LOG LISTENER---------------------------------------------*/
@@ -108,11 +110,11 @@ public class FirebaseListenerUtil {
     }
     
     func getUserPointLogListener()->FirebaseCollectionListener {
-        return userPointLogListener
+        return userPointLogListener!
     }
     
     func killUserPointLogListener() {
-        userPointLogListener.killListener()
+        userPointLogListener?.killListener()
     }
     
     /*------------------------RHP NOTIFICATION LISTENER-------------------------------------------*/
@@ -140,11 +142,11 @@ public class FirebaseListenerUtil {
     }
     
     func getRHPNotificationListener()->FirebaseCollectionListener {
-        return getRHPNotificationListener()
+        return rhpNotificationListener!
     }
     
     func killRHPNotificationListener() {
-        rhpNotificationListener.killListener()
+        rhpNotificationListener?.killListener()
     }
     
     /*--------------------------INDIVIDUAL POINT LOG LISTENER-------------------------------------*/
@@ -166,11 +168,11 @@ public class FirebaseListenerUtil {
     }
     
     func getPointLogListener()->FirebaseDocumentListener {
-        return pointLogListener
+        return pointLogListener!
     }
     
     func killPointLogListener() {
-        pointLogListener.killListener()
+        pointLogListener?.killListener()
     }
 
     /*---------------------------SYSTEM PREFERENCES LISTENER--------------------------------------*/
@@ -192,11 +194,11 @@ public class FirebaseListenerUtil {
     }
     
     func getSystemPreferencesListener()->FirebaseDocumentListener {
-        return systemPreferenceListener
+        return systemPreferenceListener!
     }
     
     func killSystemPreferencesListener() {
-        systemPreferenceListener.killListener()
+        systemPreferenceListener?.killListener()
     }
     
     /*------------------------POINT TYPE LISTENER---------------------------------------------*/
@@ -220,11 +222,11 @@ public class FirebaseListenerUtil {
     }
     
     func getPointTypeListener()->FirebaseCollectionListener {
-        return pointTypeListener
+        return pointTypeListener!
     }
     
     func killPointTypeListener() {
-        pointTypeListener.killListener()
+        pointTypeListener?.killListener()
     }
 
 }

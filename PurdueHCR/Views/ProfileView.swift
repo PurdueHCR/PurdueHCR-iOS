@@ -94,8 +94,6 @@ class ProfileView: UIView {
         nameLabel.text = firstName + " " + lastName
         nameLabel.text = ""
         
-        let houseRank = 0
-        
         DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
             self.rankNumberLabel.text = "#" + houseRank.description
         }
@@ -104,8 +102,6 @@ class ProfileView: UIView {
     }
     
     func reloadData() {
-        
-        
         
 		let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
 		if (permissionLevel == PointType.PermissionLevel.fhp) {

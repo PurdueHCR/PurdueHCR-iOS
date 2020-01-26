@@ -47,8 +47,6 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-	
-        self.navigationController?.navigationBar.prefersLargeTitles = true
         
         let firstName = User.get(.firstName) as! String
         let lastName = User.get(.lastName) as! String
@@ -229,6 +227,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 profileView.layer.shadowRadius = 5
                 profileView.layer.cornerRadius = DefinedValues.radius
                 profileView.backgroundColor = UIColor.white
+                profileView.delegate = self
                 cell.addSubview(profileView)
                 
                 profileView.translatesAutoresizingMaskIntoConstraints = false

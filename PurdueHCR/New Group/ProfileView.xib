@@ -42,7 +42,7 @@
                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDB-Of-F4H">
                     <rect key="frame" x="235" y="20.5" width="130" height="130"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="130" id="P59-XZ-ZuZ"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="130" id="P59-XZ-ZuZ"/>
                         <constraint firstAttribute="width" secondItem="cDB-Of-F4H" secondAttribute="height" multiplier="1:1" id="hGb-L6-Xbv"/>
                     </constraints>
                 </button>
@@ -58,26 +58,27 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOUSE RANK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNE-y9-W9O">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOUSE RANK" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNE-y9-W9O">
                     <rect key="frame" x="370" y="75.5" width="225" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rank #" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6c-mF-sol">
-                    <rect key="frame" x="370" y="101" width="225" height="27"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6c-mF-sol">
+                    <rect key="frame" x="370" y="101" width="225" height="0.0"/>
                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="profileView" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jt1-LE-iWS">
-                    <rect key="frame" x="5" y="85.5" width="35" height="35"/>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="profileView" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jt1-LE-iWS">
+                    <rect key="frame" x="557.5" y="7.5" width="35" height="35"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="jt1-LE-iWS" secondAttribute="height" multiplier="1:1" id="DVr-HI-Uh9"/>
                         <constraint firstAttribute="height" constant="35" id="vup-qn-pAa"/>
                     </constraints>
-                    <state key="normal" backgroundImage="list">
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" image="list.bullet" catalog="system">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
@@ -87,9 +88,9 @@
             </subviews>
             <constraints>
                 <constraint firstItem="P6c-mF-sol" firstAttribute="trailing" secondItem="RNE-y9-W9O" secondAttribute="trailing" id="1JX-s7-VzV"/>
-                <constraint firstItem="jt1-LE-iWS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="3BH-4Y-Efd"/>
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="deV-62-o9R" secondAttribute="bottom" constant="5" id="4j0-Z8-Xj1"/>
                 <constraint firstItem="P6c-mF-sol" firstAttribute="top" secondItem="RNE-y9-W9O" secondAttribute="bottom" constant="5" id="59D-Yu-KrX"/>
+                <constraint firstItem="jt1-LE-iWS" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-7.5" id="9sS-fO-dLI"/>
                 <constraint firstItem="Z4b-tF-fZ9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="AFl-e7-Do5"/>
                 <constraint firstItem="cDB-Of-F4H" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Ahj-8l-oUS"/>
                 <constraint firstItem="deV-62-o9R" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="HwK-Tp-CG2"/>
@@ -97,9 +98,10 @@
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="trailing" secondItem="deV-62-o9R" secondAttribute="trailing" id="Iv2-78-u3o"/>
                 <constraint firstItem="cDB-Of-F4H" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="SqJ-uK-Ha3"/>
                 <constraint firstItem="RNE-y9-W9O" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="THv-ls-HMT"/>
-                <constraint firstItem="deV-62-o9R" firstAttribute="top" secondItem="jt1-LE-iWS" secondAttribute="top" constant="-10" id="bmC-Oq-2e5"/>
+                <constraint firstItem="RNE-y9-W9O" firstAttribute="leading" secondItem="cDB-Of-F4H" secondAttribute="trailing" constant="5" id="VGZ-vy-t1u"/>
+                <constraint firstItem="jt1-LE-iWS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7.5" id="XrI-me-00m"/>
                 <constraint firstItem="Z4b-tF-fZ9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fxv-c8-zM7"/>
-                <constraint firstItem="RNE-y9-W9O" firstAttribute="leading" secondItem="cDB-Of-F4H" secondAttribute="trailing" constant="5" id="iHu-8I-ZLZ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cDB-Of-F4H" secondAttribute="trailing" constant="50" id="iHu-8I-ZLZ"/>
                 <constraint firstItem="deV-62-o9R" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="iZH-cE-Dyq"/>
                 <constraint firstItem="Z4b-tF-fZ9" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="jYP-Bn-8b3"/>
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="trailing" secondItem="deV-62-o9R" secondAttribute="trailing" id="leX-0l-7EY"/>
@@ -116,6 +118,6 @@
         </view>
     </objects>
     <resources>
-        <image name="list" width="25" height="25"/>
+        <image name="list.bullet" catalog="system" width="64" height="44"/>
     </resources>
 </document>

@@ -17,11 +17,9 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
     var refresher: UIRefreshControl?
 	
 	override func viewDidLoad() {
-    
-		//self.navigationItem.hidesBackButton = true
 		self.activityIndicator.startAnimating()
 		super.viewDidLoad()
-		
+    
 		activityIndicator.center = self.view.center
 		activityIndicator.style = .gray
 		activityIndicator.hidesWhenStopped = true

@@ -17,10 +17,10 @@ class UserPointsTableViewController: UITableViewController {
     var refresher: UIRefreshControl?
     
 	override func viewDidLoad() {
-		
+        
 		self.activityIndicator.startAnimating()
 		super.viewDidLoad()
-		
+        
 		activityIndicator.center = self.view.center
 		activityIndicator.style = .gray
 		activityIndicator.hidesWhenStopped = true
