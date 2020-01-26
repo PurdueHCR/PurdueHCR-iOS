@@ -16,7 +16,7 @@ class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBOutlet weak var newEventPoints: UISegmentedControl!
     @IBOutlet weak var newEventDescription: UITextField!
     @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var newEventButton: UIButton!
+    @IBOutlet weak var createEventButton: UIButton!
     
     let houses = ["All Houses", "Silver", "Palladium", "Platinum", "Titanium", "Copper"]
     var houseI = 1
@@ -50,7 +50,7 @@ class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPic
         pickerView.delegate = self
         pickerView.dataSource = self
         
-        newEventButton.layer.cornerRadius = 4
+        createEventButton.layer.cornerRadius = 4
     }
     
     @IBAction func createNewEvent(_ sender: Any) {
@@ -92,6 +92,17 @@ class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPic
         
 
         events.append(Event(name: name, location: location, points: points, house: houseI, description: description, fullDate: fullDate, time: time, ownerID: ownerID))
+        
+        print(events.count)
+        performSegueToReturnBack()
+    }
+    
+    func performSegueToReturnBack()  {
+        if let nav = self.navigationController {
+            nav.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     /*

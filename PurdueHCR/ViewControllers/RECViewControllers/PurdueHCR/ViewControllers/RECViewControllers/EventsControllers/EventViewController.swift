@@ -19,8 +19,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     @IBOutlet weak var eventTableView: UITableView!
-    
-    
+        
     let cellSpacing: CGFloat = 35
     
     
@@ -40,37 +39,12 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         eventTableView.estimatedSectionHeaderHeight = 2000
 
         
-//Bubble Sort events array
-        var done: Bool = false
-        var change: Bool = false
-        
-        if (events.count > 1) {
-            while (!done) {
-                change = false
-                for i in 0...events.count-2 {
-                    if (events[i].date > events[i+1].date) {
-                        change = true
-                        let temp: Event = events[i]
-                        events[i] = events[i+1]
-                        events[i+1] = temp
-                    }
-                    if (events[i].date == events[i+1].date) {
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "h:mm a"
-                        let date0 = dateFormatter.date(from: events[i].time)!
-                        let date1 = dateFormatter.date(from: events[i+1].time)!
-                        if (date0 > date1) {
-                            change = true
-                            let temp: Event = events[i]
-                            events[i] = events[i+1]
-                            events[i+1] = temp
-                        }
-                    }
-                }
-                if change == false { done = true }
-            }
-        }
-//End of bubble sort
+        events = Event.sortEvents(events: events)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        eventTableView.reloadData()
+        events = Event.sortEvents(events: events)
     }
     
     
@@ -104,13 +78,17 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as! EventTableViewCell
 
+        
+        // Currently, due to the borderWidth/Color, shadow does not show up.
+//        cell.layer.shadowColor = UIColor.lightGray.cgColor
+//        cell.layer.shadowOpacity = 0.5
+//        cell.layer.shadowOffset = CGSize.zero
+//        cell.layer.shadowRadius = 12
+        
         cell.layer.cornerRadius = 8
-        cell.layer.shadowColor = UIColor.lightGray.cgColor
-        cell.layer.shadowOpacity = 0.5
-        cell.layer.shadowOffset = CGSize.zero
-        cell.layer.shadowRadius = 12
         cell.layer.masksToBounds = true
         
+        //Creates vertical space between same-day events (no date in between them)
         cell.layer.borderWidth = 4
         cell.layer.borderColor = UIColor.white.cgColor
                 

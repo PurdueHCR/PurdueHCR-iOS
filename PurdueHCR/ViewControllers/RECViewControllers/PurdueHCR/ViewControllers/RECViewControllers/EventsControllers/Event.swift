@@ -99,4 +99,39 @@ class Event {
         
         return ret
     }
+    
+    static func sortEvents(events: [Event]) -> [Event] {
+        var done: Bool = false
+        var change: Bool = false
+        
+        var ret = events
+        
+        if (events.count > 1) {
+            while (!done) {
+                change = false
+                for i in 0...ret.count-2 {
+                    if (ret[i].date > ret[i+1].date) {
+                        change = true
+                        let temp: Event = ret[i]
+                        ret[i] = ret[i+1]
+                        ret[i+1] = temp
+                    }
+                    if (ret[i].date == ret[i+1].date) {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "h:mm a"
+                        let date0 = dateFormatter.date(from: ret[i].time)!
+                        let date1 = dateFormatter.date(from: ret[i+1].time)!
+                        if (date0 > date1) {
+                            change = true
+                            let temp: Event = ret[i]
+                            ret[i] = ret[i+1]
+                            ret[i+1] = temp
+                        }
+                    }
+                }
+                if change == false { done = true }
+            }
+        }
+        return ret
+    }
 }
