@@ -27,7 +27,7 @@
 		B5BD40B723C6847200E8D48F /* RECPointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */; };
 		B5D88D5523C395DC007A19D0 /* TopScorersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D88D5423C395DC007A19D0 /* TopScorersView.xib */; };
 		B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D88D5623C39688007A19D0 /* TopScorersView.swift */; };
-		B5D88D5923C51E69007A19D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */; };
+		B5EBB6DE23DF5B8C00EAD0DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5EBB6DD23DF5B8C00EAD0DC /* GoogleService-Info.plist */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -127,7 +127,7 @@
 		B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RECPointDescriptionView.xib; sourceTree = "<group>"; };
 		B5D88D5423C395DC007A19D0 /* TopScorersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopScorersView.xib; sourceTree = "<group>"; };
 		B5D88D5623C39688007A19D0 /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
-		B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5EBB6DD23DF5B8C00EAD0DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -324,7 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				D33F43AB2108043300D3982D /* PurdueHCR.entitlements */,
-				B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */,
+				B5EBB6DD23DF5B8C00EAD0DC /* GoogleService-Info.plist */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
 				D3355C90214A25BF0037556C /* ViewXIB */,
@@ -648,7 +648,6 @@
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
-				B5D88D5923C51E69007A19D0 /* GoogleService-Info.plist in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */,
 				B5D88D5523C395DC007A19D0 /* TopScorersView.xib in Resources */,
@@ -657,6 +656,7 @@
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
+				B5EBB6DE23DF5B8C00EAD0DC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

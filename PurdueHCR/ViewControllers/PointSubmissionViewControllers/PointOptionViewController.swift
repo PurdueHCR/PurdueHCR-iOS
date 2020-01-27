@@ -25,10 +25,17 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     @IBOutlet weak var suggestedValue3: UILabel!
     @IBOutlet weak var suggestedValue4: UILabel!
     
+    // The table row that corresponds to each suggested point
     var suggested1Index: IndexPath?
     var suggested2Index: IndexPath?
     var suggested3Index: IndexPath?
     var suggested4Index: IndexPath?
+    
+    // The suggested pointID from the system preferences
+    var id0: Int?
+    var id1: Int?
+    var id2: Int?
+    var id3: Int?
     
     var refresher: UIRefreshControl?
     let searchController = UISearchController(searchResultsController: nil)
@@ -42,8 +49,9 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
         tableView.refreshControl = refresher
-        // Do any additional setup after loading the view, typically from a nib.
+        
 		self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: DataManager.sharedManager.pointTypes)
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Points"
@@ -59,23 +67,6 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             suggested2.layer.cornerRadius = radius
             suggested3.layer.cornerRadius = radius
             suggested4.layer.cornerRadius = radius
-            
-            suggested1.layer.shadowColor = UIColor.lightGray.cgColor
-            suggested1.layer.shadowOpacity = 0.5
-            suggested1.layer.shadowOffset = CGSize.zero
-            suggested1.layer.shadowRadius = 7
-            suggested2.layer.shadowColor = UIColor.lightGray.cgColor
-            suggested2.layer.shadowOpacity = 0.5
-            suggested2.layer.shadowOffset = CGSize.zero
-            suggested2.layer.shadowRadius = 7
-            suggested3.layer.shadowColor = UIColor.lightGray.cgColor
-            suggested3.layer.shadowOpacity = 0.5
-            suggested3.layer.shadowOffset = CGSize.zero
-            suggested3.layer.shadowRadius = 7
-            suggested4.layer.shadowColor = UIColor.lightGray.cgColor
-            suggested4.layer.shadowOpacity = 0.5
-            suggested4.layer.shadowOffset = CGSize.zero
-            suggested4.layer.shadowRadius = 7
             
             suggestedValue1.layer.cornerRadius = pointRadius
             suggestedValue2.layer.cornerRadius = pointRadius
@@ -100,6 +91,38 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             self.tableView.backgroundColor = UIColor.systemGray5
         } else {
             self.tableView.backgroundColor = DefinedValues.systemGray5
+        }
+        
+        let indexString = DataManager.sharedManager.systemPreferences?.suggestedPointIDs.split(separator: ",")
+        id0 = Int(indexString![0].description)
+        id1 = Int(indexString![1].description)
+        id2 = Int(indexString![2].description)
+        id3 = Int(indexString![3].description)
+        
+        if (suggestedPointsView != nil) {
+            let point1 = DataManager.sharedManager.getPointType(value: id0!)
+            suggested1.setTitle(point1.pointName, for: .normal)
+            suggested1.titleLabel?.sizeToFit()
+            suggestedValue1.text = String(point1.pointValue)
+            //suggested1Index = tableView.index
+            
+            let point2 = DataManager.sharedManager.getPointType(value: id1!)
+            suggested2.setTitle(point2.pointName, for: .normal)
+            suggested2.titleLabel?.sizeToFit()
+            suggestedValue2.text = String(point2.pointValue)
+            //suggested2Index = indexPath
+            
+            let point3 = DataManager.sharedManager.getPointType(value: id2!)
+            suggested3.setTitle(point3.pointName, for: .normal)
+            suggested3.titleLabel?.sizeToFit()
+            suggestedValue3.text = String(point3.pointValue)
+            //suggested3Index = indexPath
+            
+            let point4 = DataManager.sharedManager.getPointType(value: id3!)
+            suggested4.setTitle(point4.pointName, for: .normal)
+            suggested4.titleLabel?.sizeToFit()
+            suggestedValue4.text = String(point4.pointValue)
+            //suggested4Index = indexPath
         }
         
     }
@@ -136,32 +159,6 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             cell.accessibilityIdentifier = filteredPoints[indexPath.row].pointName
         }
         else {
-            let pointID = pointSystem[indexPath.section].points[indexPath.row].pointID
-            let pointName = pointSystem[indexPath.section].points[indexPath.row].pointName
-            let pointValue = pointSystem[indexPath.section].points[indexPath.row].pointValue
-            if (suggestedPointsView != nil) {
-                if (pointID == 7) {
-                    suggested1.setTitle(pointName, for: .normal)
-                    suggested1.titleLabel?.sizeToFit()
-                    suggestedValue1.text = String(pointValue)
-                    suggested1Index = indexPath
-                } else if (pointID == 45) {
-                    suggested2.setTitle(pointName, for: .normal)
-                    suggested2.titleLabel?.sizeToFit()
-                    suggestedValue2.text = String(pointValue)
-                    suggested2Index = indexPath
-                } else if (pointID == 9) {
-                    suggested3.setTitle(pointName, for: .normal)
-                    suggested3.titleLabel?.sizeToFit()
-                    suggestedValue3.text = String(pointValue)
-                    suggested3Index = indexPath
-                } else if (pointID == 10) {
-                    suggested4.setTitle(pointName, for: .normal)
-                    suggested4.titleLabel?.sizeToFit()
-                    suggestedValue4.text = String(pointValue)
-                    suggested4Index = indexPath
-                }
-            }
             cell.typeLabel.text = pointSystem[indexPath.section].points[indexPath.row].pointName
             cell.accessibilityIdentifier = pointSystem[indexPath.section].points[indexPath.row].pointName
         }

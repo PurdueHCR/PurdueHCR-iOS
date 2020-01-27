@@ -999,7 +999,8 @@ class FirebaseHelper {
 				let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
 				let houseEnabledMessage = document.data()!["houseEnabledMessage"] as! String
 				let iosVersion = document.data()!["iOS_Version"] as! String
-				let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, iosVersion: iosVersion)
+                let suggestedPointIDs = document.data()!["suggestedPointIDs"] as! String
+				let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs)
 				onDone(systemPreferences)
 			} else {
 				print("Error: Unabled to retrieve SystemPreferences information")
