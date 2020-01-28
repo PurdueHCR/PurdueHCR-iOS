@@ -19,7 +19,8 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     @IBOutlet weak var eventTableView: UITableView!
-        
+    @IBOutlet weak var AddEventBarButton: UIBarButtonItem!
+    
     let cellSpacing: CGFloat = 35
     
     
@@ -40,6 +41,18 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
 
         
         events = Event.sortEvents(events: events)
+        
+    //Need to uncomment block for production. Disables add event view for resident users.
+    
+//        guard let permission = User.get(.permissionLevel) else{
+//            return
+//        }
+//        let p = permission as! Int
+//
+//        if p == 0 {
+//            AddEventBarButton.isEnabled = false
+//            AddEventBarButton.tintColor = UIColor.clear
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,16 +66,15 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         //makeSection = true
         var header: String = ""
         if section == 0 {
-            header = events[section].fullDate
+            header = "  \(events[section].fullDate)"
         }
         else {
             if events[section].date == events[section - 1].date { //If same date as previous event, don't print date.
                 makeSection = false
-                print("should be false now")
                 return nil
             }
             else {
-                header = events[section].fullDate
+                header = "  \(events[section].fullDate)"
             }
         }
         return header 

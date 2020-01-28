@@ -15,6 +15,7 @@
 		AA27A12323DAA4A5007017F1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12223DAA4A5007017F1 /* Event.swift */; };
 		AA27A12523DAA4A7007017F1 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */; };
 		AA27A12723DAA4A9007017F1 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */; };
+		AAA6D5AD23DFD35D005ADCF7 /* AddEventBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA6D5AC23DFD35D005ADCF7 /* AddEventBarButton.swift */; };
 		AFFF5C517BE37CA63E769D79 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
 		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
@@ -117,6 +118,7 @@
 		AA27A12223DAA4A5007017F1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
+		AAA6D5AC23DFD35D005ADCF7 /* AddEventBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventBarButton.swift; sourceTree = "<group>"; };
 		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				AA27A12223DAA4A5007017F1 /* Event.swift */,
 				AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */,
 				AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */,
+				AAA6D5AC23DFD35D005ADCF7 /* AddEventBarButton.swift */,
 			);
 			name = EventsControllers;
 			path = RECViewControllers/PurdueHCR/ViewControllers/RECViewControllers/EventsControllers;
@@ -881,6 +884,7 @@
 				D3D062C320E8219C00E8B3A3 /* LogInViewController.swift in Sources */,
 				D30FC90220DF35D800201E74 /* AppDelegate.swift in Sources */,
 				D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */,
+				AAA6D5AD23DFD35D005ADCF7 /* AddEventBarButton.swift in Sources */,
 				B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */,
 				B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */,
 				D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */,
