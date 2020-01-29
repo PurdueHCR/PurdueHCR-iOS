@@ -32,10 +32,10 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     var suggested4Index: IndexPath?
     
     // The suggested pointID from the system preferences
-    var id0: Int?
-    var id1: Int?
-    var id2: Int?
-    var id3: Int?
+    var point1: PointType?
+    var point2: PointType?
+    var point3: PointType?
+    var point4: PointType?
     
     var refresher: UIRefreshControl?
     let searchController = UISearchController(searchResultsController: nil)
@@ -94,35 +94,54 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         }
         
         let indexString = DataManager.sharedManager.systemPreferences?.suggestedPointIDs.split(separator: ",")
-        id0 = Int(indexString![0].description)
-        id1 = Int(indexString![1].description)
-        id2 = Int(indexString![2].description)
-        id3 = Int(indexString![3].description)
+        let id0 = Int(indexString![0].description)
+        let id1 = Int(indexString![1].description)
+        let id2 = Int(indexString![2].description)
+        let id3 = Int(indexString![3].description)
         
         if (suggestedPointsView != nil) {
-            let point1 = DataManager.sharedManager.getPointType(value: id0!)
-            suggested1.setTitle(point1.pointName, for: .normal)
-            suggested1.titleLabel?.sizeToFit()
-            suggestedValue1.text = String(point1.pointValue)
-            //suggested1Index = tableView.index
+            // TODO: Add some method to collapse the view if there
+            // are no trending points or only two trending points
             
-            let point2 = DataManager.sharedManager.getPointType(value: id1!)
-            suggested2.setTitle(point2.pointName, for: .normal)
-            suggested2.titleLabel?.sizeToFit()
-            suggestedValue2.text = String(point2.pointValue)
-            //suggested2Index = indexPath
+            point1 = DataManager.sharedManager.getPointType(value: id0!)
+            if (point1?.pointID != -1) {
+                suggested1.setTitle(point1?.pointName, for: .normal)
+                suggested1.titleLabel?.sizeToFit()
+                suggestedValue1.text = String((point1?.pointValue)!)
+            } else {
+                suggested1.isHidden = true
+                suggestedValue1.isHidden = true
+            }
             
-            let point3 = DataManager.sharedManager.getPointType(value: id2!)
-            suggested3.setTitle(point3.pointName, for: .normal)
-            suggested3.titleLabel?.sizeToFit()
-            suggestedValue3.text = String(point3.pointValue)
-            //suggested3Index = indexPath
+            point2 = DataManager.sharedManager.getPointType(value: id1!)
+            if (point2?.pointID != -1) {
+                suggested2.setTitle(point2?.pointName, for: .normal)
+                suggested2.titleLabel?.sizeToFit()
+                suggestedValue2.text = String((point2?.pointValue)!)
+            } else {
+                suggested2.isHidden = true
+                suggestedValue2.isHidden = true
+            }
             
-            let point4 = DataManager.sharedManager.getPointType(value: id3!)
-            suggested4.setTitle(point4.pointName, for: .normal)
-            suggested4.titleLabel?.sizeToFit()
-            suggestedValue4.text = String(point4.pointValue)
-            //suggested4Index = indexPath
+            point3 = DataManager.sharedManager.getPointType(value: id2!)
+            if (point3?.pointID != -1) {
+                suggested3.setTitle(point3?.pointName, for: .normal)
+                suggested3.titleLabel?.sizeToFit()
+                suggestedValue3.text = String((point3?.pointValue)!)
+            } else {
+                suggested3.isHidden = true
+                suggestedValue3.isHidden = true
+            }
+            
+            point4 = DataManager.sharedManager.getPointType(value: id3!)
+            if (point4?.pointID != -1) {
+                suggested4.setTitle(point4?.pointName, for: .normal)
+                suggested4.titleLabel?.sizeToFit()
+                suggestedValue4.text = String((point4?.pointValue)!)
+            } else {
+                suggested4.isHidden = true
+                suggestedValue4.isHidden = true
+            }
         }
         
     }
@@ -232,33 +251,30 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     
     //Runs when one of the four suggested points buttons are selected
     @objc func openSuggestedPoint(sender: UIButton!) {
-        var index: IndexPath
+        // Check if the point has an unknown point type meaning the point
+        // type couldn't be found.
         if (sender.tag == 1) {
-            if (suggested1Index == nil) {
+            if (point1?.pointID == -1) {
                 return
             }
-            index = suggested1Index!
-        } else if (sender.tag == 2) {
-            if (suggested2Index == nil) {
+        } else if (point2?.pointID == -1) {
+            if (point2 == nil) {
                 return
             }
-            index = suggested2Index!
-        } else if (sender.tag == 3) {
-            if (suggested3Index == nil) {
+        } else if (point3?.pointID == -1) {
+            if (point3 == nil) {
                 return
             }
-            index = suggested3Index!
         } else {
-            if (suggested4Index == nil) {
+            if (point4?.pointID == -1) {
                 return
             }
-            index = suggested4Index!
         }
-        tableView.cellForRow(at: index)?.selectionStyle = .none
-        self.tableView.selectRow(at: index, animated: true, scrollPosition: UITableView.ScrollPosition.none)
+//        tableView.cellForRow(at: index)?.selectionStyle = .none
+//        self.tableView.selectRow(at: index, animated: true, scrollPosition: UITableView.ScrollPosition.none)
         
         self.performSegue(withIdentifier: "cell_push", sender: self)
-        tableView.cellForRow(at: index)?.selectionStyle = .default
+//        tableView.cellForRow(at: index)?.selectionStyle = .default
     }
     
     // This function is called before the segue from selected ROW
@@ -267,13 +283,18 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         // get a reference to the second view controller
         let nextViewController = segue.destination as! TypeSubmitViewController
         
-            let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+        let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+        
+        if (indexPath != nil) {
             if(isFiltering()){
                 nextViewController.type = filteredPoints[(indexPath?.row)!]
             }
             else{
                 nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
             }
+        } else {
+            nextViewController.type = point1
+        }
     }
     
     

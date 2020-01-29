@@ -13,7 +13,6 @@
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="kNo-zV-ZBT"/>
                 <outlet property="colorBanner" destination="Z4b-tF-fZ9" id="y44-s6-joE"/>
                 <outlet property="houseEmblem" destination="cDB-Of-F4H" id="duj-gN-saT"/>
-                <outlet property="nameLabel" destination="M3y-Bg-bXw" id="pi8-or-DeP"/>
                 <outlet property="rankNumberLabel" destination="P6c-mF-sol" id="Lhz-h6-462"/>
                 <outlet property="totalPointsLabel" destination="Fdf-wP-pFp" id="7y8-58-xav"/>
                 <outlet property="viewPointsButton" destination="jt1-LE-iWS" id="JfF-sl-gOo"/>
@@ -30,15 +29,6 @@
                         <constraint firstAttribute="height" constant="50" id="CRh-fS-7kP"/>
                     </constraints>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M3y-Bg-bXw">
-                    <rect key="frame" x="0.0" y="5" width="383" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="na6-gg-mOC"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDB-Of-F4H">
                     <rect key="frame" x="235" y="20.5" width="130" height="130"/>
                     <constraints>

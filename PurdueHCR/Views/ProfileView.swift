@@ -18,7 +18,6 @@ class ProfileView: UIView {
 	
     @IBOutlet weak var colorBanner: UIButton!
     @IBOutlet var backgroundView: UIView!
-    @IBOutlet var nameLabel: UILabel!
     @IBOutlet var totalPointsLabel: UILabel!
 	@IBOutlet weak var viewPointsButton: UIButton!
     @IBOutlet weak var rankNumberLabel: UILabel!
@@ -89,16 +88,12 @@ class ProfileView: UIView {
         colorBanner.layer.cornerRadius = DefinedValues.radius
         colorBanner.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
-        let firstName = User.get(.firstName) as! String
-        let lastName = User.get(.lastName) as! String
-        nameLabel.text = firstName + " " + lastName
-        nameLabel.text = ""
-        
         DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
             self.rankNumberLabel.text = "#" + houseRank.description
         }
         
-        reloadData()
+        self.reloadData()
+        
     }
     
     func reloadData() {
