@@ -17,7 +17,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     
     var appendMethod:((_ link:Link)->Void)?
     var pointTypes = [PointType]()
-    var selectedPoint = DataManager.sharedManager.getPoints()![0]
+    var selectedPoint : PointType?// DataManager.sharedManager.getPoints()![0]
     var link:Link?
     
 
@@ -25,6 +25,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         super.viewDidLoad()
         pointTypes = filter(points: DataManager.sharedManager.getPoints()!)
         pickerView.reloadAllComponents()
+        selectedPoint = pointTypes[0]
         descriptionTextView.layer.borderColor = UIColor.black.cgColor
         descriptionTextView.layer.borderWidth = 1
         descriptionTextView.delegate = self
@@ -53,8 +54,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         return pointTypes[row].pointName
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
-    {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedPoint = pointTypes[row]
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -88,7 +88,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
             self.generateButton.isEnabled = true;
         }
         else {
-            let link = Link(description: descriptionTextView.text, singleUse: !(multiUseSwitch.isOn), pointTypeID: selectedPoint.pointID)
+            let link = Link(description: descriptionTextView.text, singleUse: !(multiUseSwitch.isOn), pointTypeID: selectedPoint!.pointID)
             DataManager.sharedManager.createQRCode(link: link, onDone: {(id:String?) in
                 guard let linkID = id else{
                     self.notify(title: "Failure", subtitle: "Could not create QR Code", style: .danger)
