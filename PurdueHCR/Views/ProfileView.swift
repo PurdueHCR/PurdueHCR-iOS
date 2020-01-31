@@ -98,13 +98,8 @@ class ProfileView: UIView {
     
     func reloadData() {
         
-		let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
-		if (permissionLevel == PointType.PermissionLevel.fhp) {
-			totalPointsLabel.text = ""
-		} else {
-			totalPointsLabel.adjustsFontSizeToFitWidth = true
-        	totalPointsLabel.text = (User.get(.points) as! Int).description
-		}
+        totalPointsLabel.adjustsFontSizeToFitWidth = true
+        totalPointsLabel.text = (User.get(.points) as! Int).description
 		
         totalPointsLabel.accessibilityIdentifier = "Resident Points"
         

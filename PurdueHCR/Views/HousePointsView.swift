@@ -44,7 +44,7 @@ class HousePointsView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        backgroundView.layer.cornerRadius = 10
+        backgroundView.layer.cornerRadius = DefinedValues.radius
         
         rewardImageView = createImageView()
         pointsRemainingLabel.accessibilityIdentifier = "TotalHousePoints"
