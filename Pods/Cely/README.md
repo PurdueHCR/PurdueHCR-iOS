@@ -1,11 +1,11 @@
 <div style="text-align:center"><img src ="Images/READMEHeader.png" /></div>
 
-![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)
+![Swift 4.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Cely.svg)](https://cocoapods.org/pods/Cely)
 [![Cookiecutter-Swift](https://img.shields.io/badge/cookiecutter--swift-framework-red.svg)](http://github.com/cookiecutter-swift/Framework)
-![bitrise status](https://www.bitrise.io/app/aff729145cb46dfe.svg?token=YUV0bymd7P_w2tdiKw2xOQ&branch=master)
-[![codecov](https://codecov.io/gh/chaione/cely/branch/master/graph/badge.svg)](https://codecov.io/gh/chaione/cely)
+[![Build Status](https://app.bitrise.io/app/aff729145cb46dfe/status.svg?token=YUV0bymd7P_w2tdiKw2xOQ&branch=master)](https://app.bitrise.io/app/aff729145cb46dfe)
+[![codecov](https://codecov.io/gh/initFabian/Cely/branch/master/graph/badge.svg)](https://codecov.io/gh/initFabian/Cely)
 > Prounounced Cell-Lee
 
 Cely’s goal is to add a login system into your app in under 30 seconds!
@@ -42,8 +42,9 @@ What Cely **does not do** for you?
 
 ## Requirements
 
-- iOS 9.0+ <!-- / Mac OS X 10.10+ / tvOS 9.0+ / watchOS 2.0+ -->
-- Xcode 8.0+
+- iOS 11.0+ <!-- / Mac OS X 10.10+ / tvOS 9.0+ / watchOS 2.0+ -->
+- Xcode 9.0+
+- Swift 4.0+
 
 ## Usage
 
@@ -699,7 +700,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'Cely', '~> 2.0.0'
+pod 'Cely', '~> 2.1'
 ```
 
 Then, run the following command:
@@ -722,7 +723,7 @@ $ brew install carthage
 To integrate Cely into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "chaione/Cely" ~> 2.0.0
+github "initFabian/Cely" ~> 2.1
 ```
 
 ### Manually
@@ -740,7 +741,7 @@ $ git init
 - Add Cely as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following command:
 
 ```bash
-$ git submodule add https://github.com/ChaiOne/Cely.git
+$ git submodule add https://github.com/initFabian/Cely.git
 $ git submodule update --init --recursive
 ```
 
@@ -764,7 +765,7 @@ $ git submodule update --init --recursive
 
 #### Embeded Binaries
 
-- Download the latest release from https://github.com/ChaiOne/Cely/releases
+- Download the latest release from https://github.com/initFabian/Cely/releases
 - Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the "Targets" heading in the sidebar.
 - In the tab bar at the top of that window, open the "General" panel.
 - Click on the `+` button under the "Embedded Binaries" section.

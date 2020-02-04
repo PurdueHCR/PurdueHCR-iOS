@@ -817,7 +817,7 @@ class FirebaseHelper {
 					}
 				}
 				if (getData) {
-                    let idType = document.data()["PointTypeID"] as! Int
+                    //let idType = document.data()["PointTypeID"] as! Int
                     let pointLog = PointLog.init(id: document.documentID, document: document.data())
                     /*let description = document.data()["Description"] as! String
 					let firstName = document.data()["ResidentFirstName"] as! String
@@ -924,7 +924,7 @@ class FirebaseHelper {
             var users = [UserModel]()
             var rank = 0
             for document in querySnapshot!.documents{
-                let resID = document.documentID as! String
+                let resID = document.documentID
                 let points = document.data()["TotalPoints"] as! Int
                 let model = UserModel(name: resID, points: points)
                 users.append(model)

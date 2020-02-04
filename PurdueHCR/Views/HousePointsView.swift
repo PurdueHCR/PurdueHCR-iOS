@@ -79,10 +79,10 @@ class HousePointsView: UIView {
         self.addSubview(rewardImageView!)
         
         self.rewardImageView?.translatesAutoresizingMaskIntoConstraints = false
-        let xConstraint = NSLayoutConstraint.init(item: rewardImageView, attribute: .centerX, relatedBy: .equal, toItem: self.circleProgress, attribute: .centerX, multiplier: 1, constant: 0)
-        let yConstraint = NSLayoutConstraint.init(item: rewardImageView, attribute: .centerY, relatedBy: .equal, toItem: self.circleProgress, attribute: .centerY, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint.init(item: rewardImageView, attribute: .height, relatedBy: .equal, toItem: self.circleProgress, attribute: .height, multiplier: 1, constant: -115)
-        let widthConstraint = NSLayoutConstraint.init(item: rewardImageView, attribute: .width, relatedBy: .equal, toItem: rewardImageView, attribute: .height, multiplier: 1, constant: 0)
+        let xConstraint = NSLayoutConstraint.init(item: rewardImageView!, attribute: .centerX, relatedBy: .equal, toItem: self.circleProgress, attribute: .centerX, multiplier: 1, constant: 0)
+        let yConstraint = NSLayoutConstraint.init(item: rewardImageView!, attribute: .centerY, relatedBy: .equal, toItem: self.circleProgress, attribute: .centerY, multiplier: 1, constant: 0)
+        let heightConstraint = NSLayoutConstraint.init(item: rewardImageView!, attribute: .height, relatedBy: .equal, toItem: self.circleProgress, attribute: .height, multiplier: 1, constant: -115)
+        let widthConstraint = NSLayoutConstraint.init(item: rewardImageView!, attribute: .width, relatedBy: .equal, toItem: rewardImageView, attribute: .height, multiplier: 1, constant: 0)
         NSLayoutConstraint.activate([xConstraint, yConstraint, heightConstraint, widthConstraint])
         
     }

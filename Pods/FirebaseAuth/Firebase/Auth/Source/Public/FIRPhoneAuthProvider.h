@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+#include <TargetConditionals.h>
+#if !TARGET_OS_OSX && !TARGET_OS_TV
+
 #import <Foundation/Foundation.h>
 
 @class FIRAuth;
@@ -38,8 +41,8 @@ extern NSString *const _Nonnull FIRPhoneAuthSignInMethod NS_SWIFT_NAME(PhoneAuth
     @param verificationID On success, the verification ID provided, nil otherwise.
     @param error On error, the error that occurred, nil otherwise.
  */
-typedef void (^FIRVerificationResultCallback)(NSString *_Nullable verificationID,
-                                              NSError *_Nullable error)
+typedef void (^FIRVerificationResultCallback)
+    (NSString *_Nullable verificationID, NSError *_Nullable error)
     NS_SWIFT_NAME(VerificationResultCallback);
 
 /** @class FIRPhoneAuthProvider
@@ -103,3 +106,5 @@ NS_SWIFT_NAME(PhoneAuthProvider)
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif

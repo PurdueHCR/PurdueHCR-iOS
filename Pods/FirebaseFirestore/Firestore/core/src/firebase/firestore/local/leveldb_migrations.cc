@@ -22,8 +22,10 @@
 #include "Firestore/Protos/nanopb/firestore/local/mutation.nanopb.h"
 #include "Firestore/Protos/nanopb/firestore/local/target.nanopb.h"
 #include "Firestore/core/src/firebase/firestore/local/leveldb_key.h"
+#include "Firestore/core/src/firebase/firestore/local/memory_index_manager.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/model/types.h"
+#include "Firestore/core/src/firebase/firestore/nanopb/message.h"
 #include "Firestore/core/src/firebase/firestore/nanopb/reader.h"
 #include "Firestore/core/src/firebase/firestore/nanopb/writer.h"
 #include "absl/strings/match.h"
@@ -36,7 +38,10 @@ using leveldb::Iterator;
 using leveldb::Slice;
 using leveldb::Status;
 using leveldb::WriteOptions;
-using nanopb::Reader;
+using model::DocumentKey;
+using model::ResourcePath;
+using nanopb::Message;
+using nanopb::StringReader;
 using nanopb::Writer;
 
 namespace {
@@ -60,8 +65,9 @@ namespace {
  *   * Migration 4 ensures that every document in the remote document cache
  *     has a sentinel row with a sequence number.
  *   * Migration 5 drops held write acks.
+ *   * Migration 6 populates the collection_parents index.
  */
-const LevelDbMigrations::SchemaVersion kSchemaVersion = 5;
+const LevelDbMigrations::SchemaVersion kSchemaVersion = 6;
 
 /**
  * Save the given version number as the current version of the schema of the
@@ -108,11 +114,9 @@ void ClearQueryCache(leveldb::DB* db) {
   // Reset the target global entry too (to reset the target count).
   firestore_client_TargetGlobal target_global{};
 
-  std::string bytes;
-  Writer writer = Writer::Wrap(&bytes);
-  writer.WriteNanopbMessage(firestore_client_TargetGlobal_fields,
-                            &target_global);
-  transaction.Put(LevelDbTargetGlobalKey::Key(), std::move(bytes));
+  nanopb::StringWriter writer;
+  writer.Write(firestore_client_TargetGlobal_fields, &target_global);
+  transaction.Put(LevelDbTargetGlobalKey::Key(), writer.Release());
 
   SaveVersion(3, &transaction);
   transaction.Commit();
@@ -169,15 +173,14 @@ void RemoveAcknowledgedMutations(leveldb::DB* db) {
   for (; it->Valid() && absl::StartsWith(it->key(), mutation_queue_start);
        it->Next()) {
     HARD_ASSERT(key.Decode(it->key()), "Failed to decode mutation queue key");
-    firestore_client_MutationQueue mutation_queue{};
-    Reader reader = Reader::Wrap(it->value());
-    reader.ReadNanopbMessage(firestore_client_MutationQueue_fields,
-                             &mutation_queue);
+    StringReader reader(it->value());
+    auto mutation_queue =
+        Message<firestore_client_MutationQueue>::TryParse(&reader);
     HARD_ASSERT(reader.status().ok(), "Failed to deserialize MutationQueue");
     RemoveMutationBatches(&transaction, key.user_id(),
-                          mutation_queue.last_acknowledged_batch_id);
+                          mutation_queue->last_acknowledged_batch_id);
     RemoveMutationDocuments(&transaction, key.user_id(),
-                            mutation_queue.last_acknowledged_batch_id);
+                            mutation_queue->last_acknowledged_batch_id);
   }
 
   SaveVersion(5, &transaction);
@@ -192,11 +195,10 @@ model::ListenSequenceNumber GetHighestSequenceNumber(
   std::string bytes;
   transaction->Get(LevelDbTargetGlobalKey::Key(), &bytes);
 
-  firestore_client_TargetGlobal target_global{};
-  Reader reader = Reader::Wrap(bytes);
-  reader.ReadNanopbMessage(firestore_client_TargetGlobal_fields,
-                           &target_global);
-  return target_global.highest_listen_sequence_number;
+  StringReader reader(bytes);
+  auto target_global =
+      Message<firestore_client_TargetGlobal>::TryParse(&reader);
+  return target_global->highest_listen_sequence_number;
 }
 
 /**
@@ -214,6 +216,8 @@ void EnsureSentinelRow(LevelDbTransaction* transaction,
 }
 
 /**
+ * Migration 4.
+ *
  * Ensure each document in the remote document table has a corresponding
  * sentinel row in the document target index.
  */
@@ -241,6 +245,65 @@ void EnsureSentinelRows(leveldb::DB* db) {
   transaction.Commit();
 }
 
+// Helper to add an index entry iff we haven't already written it (as determined
+// by the provided cache).
+void EnsureCollectionParentRow(LevelDbTransaction* transaction,
+                               MemoryCollectionParentIndex* cache,
+                               const DocumentKey& key) {
+  const ResourcePath& collection_path = key.path().PopLast();
+  if (cache->Add(collection_path)) {
+    std::string collection_id = collection_path.last_segment();
+    ResourcePath parent_path = collection_path.PopLast();
+
+    std::string key =
+        LevelDbCollectionParentKey::Key(collection_id, parent_path);
+    std::string empty_buffer;
+    transaction->Put(key, empty_buffer);
+  }
+}
+
+/**
+ * Migration 6.
+ *
+ * Creates appropriate LevelDbCollectionParentKey rows for all collections
+ * of documents in the remote document cache and mutation queue.
+ */
+void EnsureCollectionParentsIndex(leveldb::DB* db) {
+  LevelDbTransaction transaction(db, "Ensure Collection Parents Index");
+
+  MemoryCollectionParentIndex cache;
+
+  // Index existing remote documents.
+  std::string documents_prefix = LevelDbRemoteDocumentKey::KeyPrefix();
+  auto it = transaction.NewIterator();
+  it->Seek(documents_prefix);
+  LevelDbRemoteDocumentKey document_key;
+  for (; it->Valid() && absl::StartsWith(it->key(), documents_prefix);
+       it->Next()) {
+    HARD_ASSERT(document_key.Decode(it->key()),
+                "Failed to decode document key");
+
+    EnsureCollectionParentRow(&transaction, &cache,
+                              document_key.document_key());
+  }
+
+  // Index existing mutations.
+  std::string mutations_prefix = LevelDbDocumentMutationKey::KeyPrefix();
+  it = transaction.NewIterator();
+  it->Seek(mutations_prefix);
+  LevelDbDocumentMutationKey key;
+  for (; it->Valid() && absl::StartsWith(it->key(), mutations_prefix);
+       it->Next()) {
+    HARD_ASSERT(key.Decode(it->key()),
+                "Failed to decode document-mutation key");
+
+    EnsureCollectionParentRow(&transaction, &cache, key.document_key());
+  }
+
+  SaveVersion(6, &transaction);
+  transaction.Commit();
+}
+
 }  // namespace
 
 LevelDbMigrations::SchemaVersion LevelDbMigrations::ReadSchemaVersion(
@@ -252,6 +315,9 @@ LevelDbMigrations::SchemaVersion LevelDbMigrations::ReadSchemaVersion(
   if (status.IsNotFound()) {
     return 0;
   } else {
+    HARD_ASSERT(status.ok(),
+                "Failed to read version string from LevelDB, error: '%s'",
+                status.ToString());
     return stoi(version_string);
   }
 }
@@ -286,6 +352,10 @@ void LevelDbMigrations::RunMigrations(leveldb::DB* db,
 
   if (from_version < 5 && to_version >= 5) {
     RemoveAcknowledgedMutations(db);
+  }
+
+  if (from_version < 6 && to_version >= 6) {
+    EnsureCollectionParentsIndex(db);
   }
 }
 

@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 NS_SWIFT_NAME(CollectionReference)
 @interface FIRCollectionReference : FIRQuery
 
-/**   */
+/** :nodoc: */
 - (id)init __attribute__((unavailable("FIRCollectionReference cannot be created directly.")));
 
 /** ID of the referenced collection. */
@@ -66,7 +66,7 @@ NS_SWIFT_NAME(CollectionReference)
 - (FIRDocumentReference *)documentWithPath:(NSString *)documentPath NS_SWIFT_NAME(document(_:));
 
 /**
- * Add a new document to this collection with the specified data, assigning it  a document ID
+ * Adds a new document to this collection with the specified data, assigning it a document ID
  * automatically.
  *
  * @param data An `NSDictionary` containing the data for the new document.
@@ -77,7 +77,7 @@ NS_SWIFT_NAME(CollectionReference)
     NS_SWIFT_NAME(addDocument(data:));
 
 /**
- * Add a new document to this collection with the specified data, assigning it a document ID
+ * Adds a new document to this collection with the specified data, assigning it a document ID
  * automatically.
  *
  * @param data An `NSDictionary` containing the data for the new document.

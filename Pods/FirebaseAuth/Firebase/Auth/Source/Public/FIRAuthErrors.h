@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** @class FIRAuthErrors
     @remarks Error Codes common to all API Methods:
 
@@ -43,22 +45,28 @@ NS_SWIFT_NAME(AuthErrors)
 extern NSString *const FIRAuthErrorDomain NS_SWIFT_NAME(AuthErrorDomain);
 
 /**
-    @brief The key used to read the updated credential from the userinfo dictionary of the NSError
-        object returned in the case that the credential being linked in already in use.
+    @brief The name of the key for the error short string of an error code.
  */
-extern NSString *const FIRAuthUpdatedCredentialKey NS_SWIFT_NAME(AuthUpdatedCredentialKey);
+extern NSString *const FIRAuthErrorUserInfoNameKey NS_SWIFT_NAME(AuthErrorUserInfoNameKey);
 
 /**
-    @brief The name of the key for the "error_name" string in the NSError userinfo dictionary.
- */
-extern NSString *const FIRAuthErrorNameKey NS_SWIFT_NAME(AuthErrorNameKey);
-
-/**
-    @brief Errors with the code `FIRAuthErrorCodeAccountExistsWithDifferentCredential` may contain
-        an `NSError.userInfo` dictinary object which contains this key. The value associated with
-        this key is an NSString of the email address of the account that already exists.
+    @brief Errors with one of the following three codes:
+          - `FIRAuthErrorCodeAccountExistsWithDifferentCredential`
+          - `FIRAuthErrorCodeCredentialAlreadyInUse`
+          - `FIRAuthErrorCodeEmailAlreadyInUse`
+        may contain  an `NSError.userInfo` dictinary object which contains this key. The value
+        associated with this key is an NSString of the email address of the account that already
+        exists.
  */
 extern NSString *const FIRAuthErrorUserInfoEmailKey NS_SWIFT_NAME(AuthErrorUserInfoEmailKey);
+
+/**
+    @brief The key used to read the updated Auth credential from the userInfo dictionary of the
+        NSError object returned. This is the updated auth credential the developer should use for
+        recovery if applicable.
+ */
+extern NSString *const FIRAuthErrorUserInfoUpdatedCredentialKey
+    NS_SWIFT_NAME(AuthErrorUserInfoUpdatedCredentialKey);
 
 /**
     @brief Error codes used by Firebase Auth.
@@ -291,15 +299,20 @@ typedef NS_ENUM(NSInteger, FIRAuthErrorCode) {
      */
     FIRAuthErrorCodeInvalidClientID = 17060,
 
-    /** Indicates that a network request within a SFSafariViewController or UIWebview failed.
+    /** Indicates that a network request within a SFSafariViewController or WKWebView failed.
      */
     FIRAuthErrorCodeWebNetworkRequestFailed = 17061,
 
-    /** Indicates that an internal error occurred within a SFSafariViewController or UIWebview.
+    /** Indicates that an internal error occurred within a SFSafariViewController or WKWebView.
      */
     FIRAuthErrorCodeWebInternalError = 17062,
 
-    /** Indicates that the local player was not authenticated prior to attempting Game Center signin.
+    /** Indicates a general failure during a web sign-in flow.
+     */
+    FIRAuthErrorCodeWebSignInUserInteractionFailure = 17063,
+
+    /** Indicates that the local player was not authenticated prior to attempting Game Center
+        signin.
      */
     FIRAuthErrorCodeLocalPlayerNotAuthenticated = 17066,
 
@@ -308,14 +321,35 @@ typedef NS_ENUM(NSInteger, FIRAuthErrorCode) {
      */
     FIRAuthErrorCodeNullUser = 17067,
 
-    /** Indicates that the Firebase Dynamic Link domain used is either not configured or is unauthorized
-        for the current project.
+    /** Indicates that a Firebase Dynamic Link is not activated.
+     */
+    FIRAuthErrorCodeDynamicLinkNotActivated = 17068,
+
+    /**
+     * Represents the error code for when the given provider id for a web operation is invalid.
+     */
+    FIRAuthErrorCodeInvalidProviderID = 17071,
+
+    /** Indicates that the Firebase Dynamic Link domain used is either not configured or is
+        unauthorized for the current project.
      */
     FIRAuthErrorCodeInvalidDynamicLinkDomain = 17074,
+
+    /** Indicates that the credential is rejected because it's misformed or mismatching.
+     */
+    FIRAuthErrorCodeRejectedCredential = 17075,
 
     /** Indicates that the GameKit framework is not linked prior to attempting Game Center signin.
      */
     FIRAuthErrorCodeGameKitNotLinked = 17076,
+
+    /** Indicates that the nonce is missing or invalid.
+     */
+    FIRAuthErrorCodeMissingOrInvalidNonce = 17094,
+
+    /** Indicates an error for when the client identifier is missing.
+     */
+    FIRAuthErrorCodeMissingClientIdentifier = 17993,
 
     /** Indicates an error occurred while attempting to access the keychain.
      */
@@ -332,3 +366,5 @@ typedef NS_ENUM(NSInteger, FIRAuthErrorCode) {
 } NS_SWIFT_NAME(AuthErrorCode);
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -63,7 +63,7 @@ public class FirebaseListenerUtil {
             killUserAccountListener()
         }
         
-        var docRef = DataManager.sharedManager.getUserRefFromUserID(id: User.get(.id) as! String)
+        //var docRef = DataManager.sharedManager.getUserRefFromUserID(id: User.get(.id) as! String)
         
         /*SnapshotInterface si = new SnapshotInterface() {
             @Override
