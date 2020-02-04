@@ -13,6 +13,7 @@
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="kNo-zV-ZBT"/>
                 <outlet property="colorBanner" destination="Z4b-tF-fZ9" id="y44-s6-joE"/>
                 <outlet property="houseEmblem" destination="cDB-Of-F4H" id="duj-gN-saT"/>
+                <outlet property="rankHeaderLabel" destination="RNE-y9-W9O" id="hdi-bO-Xxj"/>
                 <outlet property="rankNumberLabel" destination="P6c-mF-sol" id="Lhz-h6-462"/>
                 <outlet property="totalPointsLabel" destination="Fdf-wP-pFp" id="7y8-58-xav"/>
                 <outlet property="viewPointsButton" destination="jt1-LE-iWS" id="JfF-sl-gOo"/>
@@ -104,7 +105,7 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="145.59999999999999" y="-469.1154422788606"/>
+            <point key="canvasLocation" x="288" y="-469"/>
         </view>
     </objects>
     <resources>
