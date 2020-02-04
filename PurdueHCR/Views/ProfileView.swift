@@ -21,6 +21,7 @@ class ProfileView: UIView {
     @IBOutlet var totalPointsLabel: UILabel!
 	@IBOutlet weak var viewPointsButton: UIButton!
     @IBOutlet weak var rankNumberLabel: UILabel!
+    @IBOutlet weak var rankHeaderLabel: UILabel!
     @IBOutlet weak var houseEmblem: UIButton!
     
     //@IBOutlet var achievementLabel: UILabel!
@@ -88,12 +89,20 @@ class ProfileView: UIView {
         colorBanner.layer.cornerRadius = DefinedValues.radius
         colorBanner.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
-        DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
-            self.rankNumberLabel.text = "#" + houseRank.description
+        self.reloadData();
+        
+        if (User.get(.permissionLevel)
+           as! Int == 1){
+         self.rankHeaderLabel.text = "";
+         self.rankNumberLabel.text = "";
+         
         }
-        
-        self.reloadData()
-        
+        else{
+            DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
+                 self.rankNumberLabel.text = "#" + houseRank.description
+             
+            }
+        }
     }
     
     func reloadData() {
