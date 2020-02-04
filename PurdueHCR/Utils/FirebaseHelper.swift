@@ -914,6 +914,34 @@ class FirebaseHelper {
         }
     }
     
+    func getHouseRank(residentID: String, house: String, onDone:@escaping (Int)->Void){
+        let collectionRef = db.collection(self.USERS)
+        collectionRef.whereField("House", isEqualTo: house).getDocuments { (querySnapshot, error) in
+            if error != nil {
+                print("Error getting documents For House: \(String(describing: error))")
+                return
+            }
+            var users = [UserModel]()
+            var rank = 0
+            for document in querySnapshot!.documents{
+                let resID = document.documentID as! String
+                let points = document.data()["TotalPoints"] as! Int
+                let model = UserModel(name: resID, points: points)
+                users.append(model)
+            }
+            users.sort(by: { (um, um2) -> Bool in
+                return um.totalPoints > um2.totalPoints
+            })
+            for (i, user) in users.enumerated() {
+                if (user.userName == residentID) {
+                    rank = i + 1
+                    break
+                }
+            }
+            onDone(rank)
+        }
+    }
+    
     func deleteReward(reward:Reward, onDone:@escaping (_ err:Error?) -> Void){
         var ref: DocumentReference? = nil
         ref = self.db.collection("Rewards").document(reward.rewardName)
@@ -971,7 +999,8 @@ class FirebaseHelper {
 				let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
 				let houseEnabledMessage = document.data()!["houseEnabledMessage"] as! String
 				let iosVersion = document.data()!["iOS_Version"] as! String
-				let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, iosVersion: iosVersion)
+                let suggestedPointIDs = document.data()!["suggestedPointIDs"] as! String
+				let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs)
 				onDone(systemPreferences)
 			} else {
 				print("Error: Unabled to retrieve SystemPreferences information")

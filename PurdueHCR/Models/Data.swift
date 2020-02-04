@@ -463,18 +463,21 @@ class SystemPreferences {
 	var isHouseEnabled : Bool
 	var houseEnabledMessage : String
 	var iosVersion : String
+    var suggestedPointIDs : String
 	
-	init(isHouseEnabled: Bool, houseEnabledMessage: String, iosVersion: String) {
+    init(isHouseEnabled: Bool, houseEnabledMessage: String, iosVersion: String, suggestedPointIDs: String) {
 		self.isHouseEnabled = isHouseEnabled
 		self.houseEnabledMessage = houseEnabledMessage
 		self.iosVersion = iosVersion
+        self.suggestedPointIDs = suggestedPointIDs
 	}
 	
 	func convertToDictionary() -> [String:Any] {
 		let dict : [String:Any] = [
 			"isHouseEnabled":isHouseEnabled,
 			"houseEnabledMessage":houseEnabledMessage,
-			"iOS_Version":iosVersion
+            "iOS_Version":iosVersion,
+            "suggestedPointIDs":suggestedPointIDs
 		]
 		return dict
 	}

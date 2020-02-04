@@ -44,7 +44,7 @@ class HousePointsView: UIView {
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        backgroundView.layer.cornerRadius = 10
+        backgroundView.layer.cornerRadius = DefinedValues.radius
         
         rewardImageView = createImageView()
         pointsRemainingLabel.accessibilityIdentifier = "TotalHousePoints"
@@ -89,8 +89,7 @@ class HousePointsView: UIView {
     
     func createImageView() -> UIImageView {
         if (rewardImageView == nil) {
-			// TODO: Fix this mess please :)
-            return UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+            return UIImageView()
         } else {
             return rewardImageView!
         }

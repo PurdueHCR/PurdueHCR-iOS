@@ -16,12 +16,15 @@ class ProfileView: UIView {
 
 	weak var delegate: CustomViewDelegate?
 	
+    @IBOutlet weak var colorBanner: UIButton!
     @IBOutlet var backgroundView: UIView!
-    @IBOutlet var houseLogoImageView: UIImageView!
-    @IBOutlet var nameLabel: UILabel!
     @IBOutlet var totalPointsLabel: UILabel!
 	@IBOutlet weak var viewPointsButton: UIButton!
-	//@IBOutlet var achievementLabel: UILabel!
+    @IBOutlet weak var rankNumberLabel: UILabel!
+    @IBOutlet weak var rankHeaderLabel: UILabel!
+    @IBOutlet weak var houseEmblem: UIButton!
+    
+    //@IBOutlet var achievementLabel: UILabel!
 //    @IBOutlet var pointsButton: UILabel! // change back to button for the Medals update
 	
     var transitionFunc: () ->() = {print("NO IMPLEMENTATION")}
@@ -37,55 +40,75 @@ class ProfileView: UIView {
     }
     
     private func commonInit(){
+        
+        
         Bundle.main.loadNibNamed("ProfileView", owner: self, options: nil)
         addSubview(backgroundView)
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-		viewPointsButton.layer.cornerRadius = viewPointsButton.layer.frame.height / 2
-		viewPointsButton.imageEdgeInsets = UIEdgeInsets.init(top: 15, left: 15, bottom: 15, right: 15)
-//        pointsButton.text = "Stay tuned for:\n The Medals Update!"
-//        pointsButton.layer.borderWidth = 2.0
-//        pointsButton.layer.borderColor = UIColor.black.cgColor
-//        totalPointsLabel.layer.borderWidth = 0
-//        totalPointsLabel.layer.borderColor = UIColor.black.cgColor
-//		houseLogoImageView.frame(forAlignmentRect: CGRect.init(x: -100, y: 0, width: 25, height: 25))
-		let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
+		
+        viewPointsButton.layer.cornerRadius = viewPointsButton.layer.frame.height / 2
+		
+        let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
 		if (permissionLevel == PointType.PermissionLevel.fhp) {
 			viewPointsButton.isEnabled = false
 			viewPointsButton.isHidden = true
 			totalPointsLabel.text = ""
 		}
-        reloadData()
+        houseEmblem.backgroundColor = UIColor.white
+        houseEmblem.layer.cornerRadius = houseEmblem.frame.height / 2
+        var houseImage: UIImage!
+        let houseName = User.get(.house) as! String
+       
+        if(houseName == "Platinum"){
+            houseImage = UIImage.init(imageLiteralResourceName: "Platinum").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+        }
+        else if(houseName == "Copper"){
+            houseImage = UIImage.init(imageLiteralResourceName: "Copper").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+        }
+        else if(houseName == "Palladium"){
+            houseImage = UIImage.init(imageLiteralResourceName: "Palladium").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+        }
+        else if(houseName == "Silver"){
+            houseImage = UIImage.init(imageLiteralResourceName: "Silver").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+        }
+        else if(houseName == "Titanium"){
+            houseImage = UIImage.init(imageLiteralResourceName: "Titanium").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+        }
+        houseEmblem.setImage(houseImage, for: .normal)
+        houseEmblem.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        houseEmblem.isEnabled = true;
+        houseEmblem.imageView?.alpha = 1.0;
+    
+        var houses = DataManager.sharedManager.getHouses()!
+        let house = houses.remove(at: houses.firstIndex(of: House(id: houseName, points: 0, hexColor:""))!)
+        colorBanner.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor)
+        
+        houseEmblem.layer.borderColor = colorBanner.backgroundColor?.cgColor
+        houseEmblem.layer.borderWidth = 4
+        colorBanner.layer.cornerRadius = DefinedValues.radius
+        colorBanner.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        self.reloadData();
+        
+        if (User.get(.permissionLevel)
+           as! Int == 1){
+         self.rankHeaderLabel.text = "";
+         self.rankNumberLabel.text = "";
+         
+        }
+        else{
+            DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
+                 self.rankNumberLabel.text = "#" + houseRank.description
+             
+            }
+        }
     }
     
     func reloadData() {
-        let houseName = User.get(.house) as! String
-        if(houseName == "Platinum"){
-            houseLogoImageView.image = #imageLiteral(resourceName: "Platinum")
-        }
-        else if(houseName == "Copper"){
-            houseLogoImageView.image = #imageLiteral(resourceName: "Copper")
-        }
-        else if(houseName == "Palladium"){
-            houseLogoImageView.image = #imageLiteral(resourceName: "Palladium")
-        }
-        else if(houseName == "Silver"){
-            houseLogoImageView.image = #imageLiteral(resourceName: "Silver")
-        }
-        else if(houseName == "Titanium"){
-            houseLogoImageView.image = #imageLiteral(resourceName: "Titanium")
-        }
-		let firstName = User.get(.firstName) as! String
-		let lastName = User.get(.lastName) as! String
-        nameLabel.text = firstName + " " + lastName
-		
-		let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
-		if (permissionLevel == PointType.PermissionLevel.fhp) {
-			totalPointsLabel.text = ""
-		} else {
-			totalPointsLabel.adjustsFontSizeToFitWidth = true
-        	totalPointsLabel.text = (User.get(.points) as! Int).description + " points"
-		}
+        
+        totalPointsLabel.adjustsFontSizeToFitWidth = true
+        totalPointsLabel.text = (User.get(.points) as! Int).description
 		
         totalPointsLabel.accessibilityIdentifier = "Resident Points"
         
