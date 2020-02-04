@@ -29,7 +29,7 @@ class LinkCodeViewController: UIViewController {
         if(link!.enabled){
             activateSwitch.setOn(true, animated: false)
         }
-        linkDescriptionLabel.text = DataManager.sharedManager.getPointType(value: link!.pointTypeID).pointDescription
+        linkDescriptionLabel.text = DataManager.sharedManager.getPointType(value: link!.pointTypeID).pointName
         qrCodeDescriptionTextView.text = link!.description
         qrCodeDescriptionTextView.isEditable = false
         qrCodeDescriptionTextView.layer.borderWidth = 1
