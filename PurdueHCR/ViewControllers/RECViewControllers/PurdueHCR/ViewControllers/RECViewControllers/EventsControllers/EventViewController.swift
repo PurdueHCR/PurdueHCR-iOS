@@ -38,7 +38,6 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         eventTableView.rowHeight = 133
         eventTableView.sectionHeaderHeight = 2000
         eventTableView.estimatedSectionHeaderHeight = 2000
-
         
         events = Event.sortEvents(events: events)
         
