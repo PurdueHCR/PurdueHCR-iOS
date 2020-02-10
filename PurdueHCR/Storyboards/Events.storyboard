@@ -50,15 +50,15 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e1A-gb-fh3">
-                                <rect key="frame" x="0.0" y="199" width="414" height="663"/>
+                                <rect key="frame" x="10" y="199" width="394" height="663"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventTableViewCell" rowHeight="133" id="8nr-6U-5nW" customClass="EventTableViewCell" customModule="PurdueHCR" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="133"/>
+                                        <rect key="frame" x="0.0" y="28" width="394" height="133"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8nr-6U-5nW" id="jd7-r1-1JD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="133"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394" height="133"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdM-yW-H3q">
@@ -68,7 +68,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXL-za-BNg">
-                                                    <rect key="frame" x="350" y="15" width="54" height="29"/>
+                                                    <rect key="frame" x="329.5" y="15" width="54.5" height="29"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -80,12 +80,12 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dqp-dz-Syu">
-                                                    <rect key="frame" x="348" y="52" width="56" height="24"/>
+                                                    <rect key="frame" x="328" y="52" width="56" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description... does it go to a second line when i type enough" textAlignment="natural" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRX-KW-rVF">
-                                                    <rect key="frame" x="10" y="84" width="394" height="41"/>
+                                                    <rect key="frame" x="10" y="84" width="374" height="41"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="41" id="aYQ-kv-kPT"/>
                                                     </constraints>
@@ -119,10 +119,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="OAr-s6-hbh">
-                                        <rect key="frame" x="0.0" y="161" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="161" width="394" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OAr-s6-hbh" id="rmx-s3-Ste">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -136,8 +136,8 @@
                             <constraint firstItem="pKb-Fm-9XS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aan-M5-gxs"/>
                             <constraint firstItem="e1A-gb-fh3" firstAttribute="centerX" secondItem="pKb-Fm-9XS" secondAttribute="centerX" id="fXJ-Am-AoW"/>
                             <constraint firstItem="e1A-gb-fh3" firstAttribute="top" secondItem="pKb-Fm-9XS" secondAttribute="bottom" constant="1" id="jVU-rV-eBg"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e1A-gb-fh3" secondAttribute="trailing" id="jk2-JA-gKD"/>
-                            <constraint firstItem="e1A-gb-fh3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="t9M-34-qOp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e1A-gb-fh3" secondAttribute="trailing" constant="10" id="jk2-JA-gKD"/>
+                            <constraint firstItem="e1A-gb-fh3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="t9M-34-qOp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
