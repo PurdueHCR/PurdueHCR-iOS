@@ -11,10 +11,10 @@
 		AA19658323DA7F3A008B6B1E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA19658223DA7F3A008B6B1E /* GoogleService-Info.plist */; };
 		AA27A11B23DAA297007017F1 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA27A11A23DAA297007017F1 /* Events.storyboard */; };
 		AA27A11F23DAA497007017F1 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A11E23DAA497007017F1 /* EventViewController.swift */; };
-		AA27A12123DAA4A3007017F1 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12023DAA4A3007017F1 /* CreateEventViewController.swift */; };
 		AA27A12323DAA4A5007017F1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12223DAA4A5007017F1 /* Event.swift */; };
 		AA27A12523DAA4A7007017F1 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */; };
 		AA27A12723DAA4A9007017F1 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */; };
+		AA40DCFC23F2114A00FB6A73 /* CreateEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA40DCFB23F2114A00FB6A73 /* CreateEventTableViewController.swift */; };
 		AAA6D5AD23DFD35D005ADCF7 /* AddEventBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA6D5AC23DFD35D005ADCF7 /* AddEventBarButton.swift */; };
 		AFFF5C517BE37CA63E769D79 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
@@ -114,10 +114,10 @@
 		AA19658223DA7F3A008B6B1E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AA27A11A23DAA297007017F1 /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		AA27A11E23DAA497007017F1 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
-		AA27A12023DAA4A3007017F1 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		AA27A12223DAA4A5007017F1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
+		AA40DCFB23F2114A00FB6A73 /* CreateEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventTableViewController.swift; sourceTree = "<group>"; };
 		AAA6D5AC23DFD35D005ADCF7 /* AddEventBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventBarButton.swift; sourceTree = "<group>"; };
 		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -250,7 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				AA27A11E23DAA497007017F1 /* EventViewController.swift */,
-				AA27A12023DAA4A3007017F1 /* CreateEventViewController.swift */,
+				AA40DCFB23F2114A00FB6A73 /* CreateEventTableViewController.swift */,
 				AA27A12223DAA4A5007017F1 /* Event.swift */,
 				AA27A12423DAA4A6007017F1 /* EventTableViewCell.swift */,
 				AA27A12623DAA4A8007017F1 /* VerifyViewController.swift */,
@@ -852,6 +852,7 @@
 				D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */,
 				D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
+				AA40DCFC23F2114A00FB6A73 /* CreateEventTableViewController.swift in Sources */,
 				D3912A74219CE7960002E7C7 /* RECPointOptionTableViewController.swift in Sources */,
 				B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */,
 				AA27A12523DAA4A7007017F1 /* EventTableViewCell.swift in Sources */,
@@ -862,7 +863,6 @@
 				B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */,
 				AA27A12723DAA4A9007017F1 /* VerifyViewController.swift in Sources */,
 				D3D062BD20E816AB00E8B3A3 /* User.swift in Sources */,
-				AA27A12123DAA4A3007017F1 /* CreateEventViewController.swift in Sources */,
 				D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */,
 				D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */,
 				B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */,

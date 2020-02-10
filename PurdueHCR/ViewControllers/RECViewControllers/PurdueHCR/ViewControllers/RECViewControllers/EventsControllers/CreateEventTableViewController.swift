@@ -1,29 +1,51 @@
 //
-//  CreateEventViewController.swift
-//  HCR_Calendar
+//  CreateEventTableViewController.swift
+//  PurdueHCR
 //
-//  Created by Brennan Doyle on 9/14/19.
-//  Copyright © 2019 Brennan Doyle. All rights reserved.
+//  Created by Brennan Doyle on 2/10/20.
+//  Copyright © 2020 DecodeProgramming. All rights reserved.
 //
 
 import UIKit
 
-class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-
+class CreateEventTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+     
     @IBOutlet weak var newEventName: UITextField!
     @IBOutlet weak var newEventDate: UIDatePicker!
     @IBOutlet weak var newEventLocation: UITextField!
     @IBOutlet weak var newEventPoints: UISegmentedControl!
     @IBOutlet weak var newEventDescription: UITextField!
-    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var housePickerView: UIPickerView!
     @IBOutlet weak var createEventButton: UIButton!
     
     let houses = ["All Houses", "Silver", "Palladium", "Platinum", "Titanium", "Copper"]
     var houseI = 1
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        housePickerView.delegate = self
+        housePickerView.dataSource = self
+        
+        createEventButton.layer.cornerRadius = 4
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 7
+    }
+    
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return houses[row]
@@ -42,15 +64,6 @@ class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPic
         else if (house == "Platinum") { houseI = 4 }
         else if (house == "Titanium") { houseI = 5 }
         else if (house == "Copper") { houseI = 6 }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        
-        createEventButton.layer.cornerRadius = 4
     }
     
     @IBAction func createNewEvent(_ sender: Any) {
@@ -105,6 +118,56 @@ class CreateEventViewController: UIViewController, UIPickerViewDataSource, UIPic
         }
     }
     
+    
+    
+    
+    
+
+    /*
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+
+        // Configure the cell...
+
+        return cell
+    }
+    */
+
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    */
+
+    /*
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
+    }
+    */
+
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+
+    }
+    */
+
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
+
     /*
     // MARK: - Navigation
 
