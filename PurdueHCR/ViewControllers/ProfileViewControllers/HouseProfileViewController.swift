@@ -32,6 +32,9 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     var houseView: HousePointsView?
     var topScorersView: TopScorersView?
    
+    var messageLogs = [PointLog]()
+
+    // TODO: Move this to bottom and clean it up
     /// WARNING: Change these constants according to your project's design
     private struct Const {
         /// Image height/width for Large NavBar state
@@ -155,6 +158,8 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 				else {
 					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
 				}
+                self.messageLogs = pointLogs
+                self.messageLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
 			})
         }
         tableView.reloadData()
@@ -384,6 +389,8 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "show_notifications") {
             self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+            let nextVC = segue.destination as! NotificationsTableViewController
+            nextVC.displayedLogs = messageLogs
         }
     }
     

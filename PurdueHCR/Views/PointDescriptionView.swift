@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class PointDescriptionView: UIView {
     @IBOutlet var residentLabel: UILabel!
@@ -41,13 +42,14 @@ class PointDescriptionView: UIView {
 		grayView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
-    func setLog(pointLog:PointLog) {
+    func setLog(pointLog: PointLog) {
         residentLabel.text = pointLog.firstName + " " + pointLog.lastName
         pointTypeDescriptionLabel.text = pointLog.type.pointName
         descriptionLabel.text = pointLog.pointDescription
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "MMM dd, yyyy"
-		dateLabel.text = dateFormatter.string(for: pointLog.dateOccurred?.dateValue())
+        let date = pointLog.dateSubmitted!.dateValue()
+        dateLabel.text = dateFormatter.string(from: date)
     }
     
 

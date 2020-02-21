@@ -17,7 +17,6 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
     var refresher: UIRefreshControl?
 	
 	override func viewDidLoad() {
-		self.activityIndicator.startAnimating()
 		super.viewDidLoad()
     
 		activityIndicator.center = self.view.center
@@ -34,10 +33,10 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 		//searchController.searchBar.placeholder = "Search Points"
 		//navigationItem.searchController = searchController
 		definesPresentationContext = true
-        resfreshData()
 	}
 	
 	@objc func resfreshData(){
+        self.activityIndicator.startAnimating()
 		DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs
 			self.displayedLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})

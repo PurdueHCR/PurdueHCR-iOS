@@ -37,6 +37,8 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     var point3: PointType?
     var point4: PointType?
     
+    var tappedPoint: PointType?
+    
     var refresher: UIRefreshControl?
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -126,7 +128,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             point3 = DataManager.sharedManager.getPointType(value: id2!)
             if (point3?.pointID != -1) {
                 suggested3.setTitle(point3?.pointName, for: .normal)
-                suggested3.titleLabel?.sizeToFit()
+                //suggested3.titleLabel?.sizeToFit()
                 suggestedValue3.text = String((point3?.pointValue)!)
             } else {
                 suggested3.isHidden = true
@@ -256,25 +258,30 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         if (sender.tag == 1) {
             if (point1?.pointID == -1) {
                 return
+            } else {
+                tappedPoint = point1
             }
-        } else if (point2?.pointID == -1) {
-            if (point2 == nil) {
+        } else if (sender.tag == 2) {
+            if (point2?.pointID == -1) {
                 return
+            } else {
+                tappedPoint = point2
             }
-        } else if (point3?.pointID == -1) {
-            if (point3 == nil) {
+        } else if (sender.tag == 3) {
+            if (point3?.pointID == -1) {
                 return
+            } else {
+                tappedPoint = point3
             }
-        } else {
+        } else if (sender.tag == 4) {
             if (point4?.pointID == -1) {
                 return
+            } else {
+                tappedPoint = point4
             }
         }
-//        tableView.cellForRow(at: index)?.selectionStyle = .none
-//        self.tableView.selectRow(at: index, animated: true, scrollPosition: UITableView.ScrollPosition.none)
         
         self.performSegue(withIdentifier: "cell_push", sender: self)
-//        tableView.cellForRow(at: index)?.selectionStyle = .default
     }
     
     // This function is called before the segue from selected ROW
@@ -293,7 +300,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
                 nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
             }
         } else {
-            nextViewController.type = point1
+            nextViewController.type = tappedPoint
         }
     }
     

@@ -146,7 +146,7 @@ class PointLog {
     /// - Parameters:
     ///   - id: FirebaseId of the log
     ///   - document: Dictionary that was returned from the database
-    init(id:String,document:[String:Any]){
+    init(id:String, document:[String:Any]){
         
         self.logID = id
         

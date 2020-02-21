@@ -770,6 +770,7 @@ class FirebaseHelper {
 							var firstName = document.data()["ResidentFirstName"] as! String
 							let lastName = document.data()["ResidentLastName"] as! String
                             let dateSubmitted = document.data()["DateSubmitted"] as! Timestamp
+                            let dateOccurred = document.data()["DateOccurred"] as! Timestamp
 							if(floorID == "Shreve"){
 								firstName = "(Shreve) " + firstName
 							}
@@ -777,6 +778,7 @@ class FirebaseHelper {
 							let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
 							let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
                             pointLog.dateSubmitted = dateSubmitted
+                            pointLog.dateOccurred = dateOccurred
 							pointLog.logID = id
 							if (idType >= 0) {
 								pointLog.wasHandled = true
@@ -794,45 +796,30 @@ class FirebaseHelper {
 		
 		let house = User.get(.house) as! String
 		
-		let residentId = User.get(.id) as! String
-		let path = db.collection(self.HOUSE).document(house).collection(self.POINTS)
-		path.getDocuments { (querySnapshot, err) in
-			if (err != nil) {
-				print("Error getting documents: \(String(describing: err))")
-				return
-			}
-			var pointLogs = [PointLog]()
-			for document in querySnapshot!.documents {
-				var getData = false
-				if (permissionLevel == .resident) {
-					if (document.data()["ResidentId"] as! String == residentId) {
-						if (document.data()["ResidentNotifications"] as! Int != 0) {
-							getData = true
-						}
-					}
-				}
-				else if (permissionLevel == .rhp) {
-					if (document.data()["RHPNotifications"] as! Int != 0) {
-						getData = true
-					}
-				}
-				if (getData) {
-                    //let idType = document.data()["PointTypeID"] as! Int
+        let resID = User.get(.id) as! String
+        var path: Query?
+        if (permissionLevel == .resident) {
+            path = db.collection(self.HOUSE).document(house).collection(self.POINTS).whereField("ResidentId", isEqualTo: resID).whereField("ResidentNotifications", isGreaterThan: 0)
+        }
+        else if (permissionLevel == .rhp) {
+            path = db.collection(self.HOUSE).document(house).collection(self.POINTS).whereField("RHPNotifications", isGreaterThan: 0)
+        }
+        if (path != nil) {
+            path!.getDocuments { (querySnapshot, err) in
+                if (err != nil) {
+                    print("Error getting documents: \(String(describing: err))")
+                    return
+                }
+                var pointLogs = [PointLog]()
+                for document in querySnapshot!.documents {
                     let pointLog = PointLog.init(id: document.documentID, document: document.data())
-                    /*let description = document.data()["Description"] as! String
-					let firstName = document.data()["ResidentFirstName"] as! String
-					let lastName = document.data()["ResidentLastName"] as! String
-					
-					let pointType = DataManager.sharedManager.getPointType(value: abs(idType))
-					let floorID = document.data()["FloorID"] as! String
-					let residentId = document.data()["ResidentId"] as! String
-					let pointLog = PointLog(pointDescription: description, firstName: firstName, lastName: lastName, type: pointType, floorID: floorID, residentId: residentId)
-					pointLog.logID = document.documentID*/
-					pointLogs.append(pointLog)
-				}
-			}
-			onDone(pointLogs)
-		}
+                    pointLogs.append(pointLog)
+                }
+                onDone(pointLogs)
+            }
+        }
+        // This should never be reached
+        onDone([])
 		
 	}
 

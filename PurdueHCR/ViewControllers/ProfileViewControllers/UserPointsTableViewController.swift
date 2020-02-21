@@ -219,7 +219,7 @@ class UserPointsTableViewController: UITableViewController {
 			/*if(isFiltering()) {
 				nextViewController.pointLog = self.filteredPoints[(indexPath?.row)!]
 			} else {*/
-				nextViewController.pointLog = self.notificationLogs[(indexPath?.row)!]
+				nextViewController.pointLog = self.notificationLogs[indexPath!.row]
 			//}
 			nextViewController.indexPath = indexPath
 			nextViewController.preViewContr = self

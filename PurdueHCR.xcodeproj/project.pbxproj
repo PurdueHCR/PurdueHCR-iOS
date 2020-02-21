@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C35594723E911030090FC89 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C35594623E911030090FC89 /* GoogleService-Info.plist */; };
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
 		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
+		B51FC15123F242D9003E1868 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B51FC15023F242D9003E1868 /* GoogleService-Info.plist */; };
 		B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */; };
 		B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */; };
 		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
@@ -19,7 +19,6 @@
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
 		B57D553B23E2322400495F19 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */; };
-		B57D788023E9FDE500D08A25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B57D787F23E9FDE500D08A25 /* GoogleService-Info.plist */; };
 		B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B57FC19123E3924700DC22B2 /* TopScorersView.xib */; };
 		B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599D98122F62F030033173C /* NotificationsViewController.swift */; };
 		B5AE2D4723DCA07100B2323C /* FirebaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4623DCA07100B2323C /* FirebaseListener.swift */; };
@@ -28,7 +27,6 @@
 		B5AE2D4D23DCA68C00B2323C /* FirebaseListenerUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4C23DCA68C00B2323C /* FirebaseListenerUtil.swift */; };
 		B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */; };
 		B5BD40B723C6847200E8D48F /* RECPointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */; };
-		B5D88D5523C395DC007A19D0 /* TopScorersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D88D5423C395DC007A19D0 /* TopScorersView.xib */; };
 		B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D88D5623C39688007A19D0 /* TopScorersView.swift */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
@@ -94,7 +92,6 @@
 		D3D062C720E82A6500E8B3A3 /* TypeSubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */; };
 		D749F37623399F0600410434 /* SuggestedPointsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D749F37523399F0600410434 /* SuggestedPointsView.xib */; };
 		D749F3782339A24B00410434 /* SuggestedPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D749F3772339A24B00410434 /* SuggestedPointsView.swift */; };
-		DB9E6BE623E90D3B008C660C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB9E6BE523E90D3B008C660C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +105,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0C35594623E911030090FC89 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.release.xcconfig"; sourceTree = "<group>"; };
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -116,6 +112,7 @@
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		B50E6C9122F1202A00505AA3 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		B51FC15023F242D9003E1868 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRECSystemPreferences.swift; sourceTree = "<group>"; };
 		B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointsTableViewController.swift; sourceTree = "<group>"; };
 		B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseCodeViewController.swift; sourceTree = "<group>"; };
@@ -123,7 +120,6 @@
 		B55399FE23E22CB100D62965 /* PurdueHCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCR.entitlements; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
 		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
-		B57D787F23E9FDE500D08A25 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B57FC19123E3924700DC22B2 /* TopScorersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopScorersView.xib; sourceTree = "<group>"; };
 		B599D98122F62F030033173C /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		B5AE2D4623DCA07100B2323C /* FirebaseListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseListener.swift; sourceTree = "<group>"; };
@@ -132,7 +128,6 @@
 		B5AE2D4C23DCA68C00B2323C /* FirebaseListenerUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseListenerUtil.swift; sourceTree = "<group>"; };
 		B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HousePointsHistoryViewController.swift; path = PurdueHCR/ViewControllers/ProfileViewControllers/HousePointsHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RECPointDescriptionView.xib; sourceTree = "<group>"; };
-		B5D88D5423C395DC007A19D0 /* TopScorersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopScorersView.xib; sourceTree = "<group>"; };
 		B5D88D5623C39688007A19D0 /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -202,7 +197,6 @@
 		D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSubmitViewController.swift; sourceTree = "<group>"; };
 		D749F37523399F0600410434 /* SuggestedPointsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestedPointsView.xib; sourceTree = "<group>"; };
 		D749F3772339A24B00410434 /* SuggestedPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedPointsView.swift; sourceTree = "<group>"; };
-		DB9E6BE523E90D3B008C660C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2069A978FC04FB762BECDEB /* Pods-PurdueHCR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -330,7 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				B55399FE23E22CB100D62965 /* PurdueHCR.entitlements */,
-				B57D787F23E9FDE500D08A25 /* GoogleService-Info.plist */,
+				B51FC15023F242D9003E1868 /* GoogleService-Info.plist */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
 				D3355C90214A25BF0037556C /* ViewXIB */,
@@ -662,7 +656,7 @@
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
-				B57D788023E9FDE500D08A25 /* GoogleService-Info.plist in Resources */,
+				B51FC15123F242D9003E1868 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
