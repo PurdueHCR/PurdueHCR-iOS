@@ -40,7 +40,7 @@
                                     <constraint firstAttribute="height" constant="40" id="oXP-o7-IHL"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="leftSpacer">
                                         <real key="value" value="10"/>
