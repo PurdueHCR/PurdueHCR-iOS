@@ -20,7 +20,7 @@ class UserPointsTableViewController: UITableViewController {
         
 		self.activityIndicator.startAnimating()
 		super.viewDidLoad()
-        
+                
 		activityIndicator.center = self.view.center
 		activityIndicator.style = .gray
 		activityIndicator.hidesWhenStopped = true
@@ -83,7 +83,11 @@ class UserPointsTableViewController: UITableViewController {
 				return 1
 			}
 			else {
-				emptyMessage(message: "No submitted points")
+                if (activityIndicator.isAnimating) {
+                    emptyMessage(message: "Loading...")
+                } else {
+                    emptyMessage(message: "No submitted points")
+                }
 				//navigationItem.searchController = nil
 				return 0
 			}
