@@ -23,6 +23,7 @@ class ProfileView: UIView {
     @IBOutlet weak var rankNumberLabel: UILabel!
     @IBOutlet weak var rankHeaderLabel: UILabel!
     @IBOutlet weak var houseEmblem: UIButton!
+    @IBOutlet weak var houseNameLabel: UILabel!
     
     //@IBOutlet var achievementLabel: UILabel!
 //    @IBOutlet var pointsButton: UILabel! // change back to button for the Medals update
@@ -79,7 +80,7 @@ class ProfileView: UIView {
         houseEmblem.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         houseEmblem.isEnabled = true;
         houseEmblem.imageView?.alpha = 1.0;
-    
+        
         var houses = DataManager.sharedManager.getHouses()!
         let house = houses.remove(at: houses.firstIndex(of: House(id: houseName, points: 0, hexColor:""))!)
         colorBanner.backgroundColor = AppUtils.hexStringToUIColor(hex: house.hexColor)
@@ -89,19 +90,11 @@ class ProfileView: UIView {
         colorBanner.layer.cornerRadius = DefinedValues.radius
         colorBanner.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
+        houseNameLabel.text = User.get(.house) as! String + " – " + (User.get(.floorID) as! String)
         self.reloadData();
         
-        if (User.get(.permissionLevel)
-           as! Int == 1){
-         self.rankHeaderLabel.text = "";
-         self.rankNumberLabel.text = "";
-         
-        }
-        else{
-            DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
-                 self.rankNumberLabel.text = "#" + houseRank.description
-             
-            }
+        DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
+             self.rankNumberLabel.text = "#" + houseRank.description
         }
     }
     

@@ -13,6 +13,7 @@
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="kNo-zV-ZBT"/>
                 <outlet property="colorBanner" destination="Z4b-tF-fZ9" id="y44-s6-joE"/>
                 <outlet property="houseEmblem" destination="cDB-Of-F4H" id="duj-gN-saT"/>
+                <outlet property="houseNameLabel" destination="eJw-an-wzQ" id="JLH-bb-RCS"/>
                 <outlet property="rankHeaderLabel" destination="RNE-y9-W9O" id="hdi-bO-Xxj"/>
                 <outlet property="rankNumberLabel" destination="P6c-mF-sol" id="Lhz-h6-462"/>
                 <outlet property="totalPointsLabel" destination="Fdf-wP-pFp" id="7y8-58-xav"/>
@@ -31,32 +32,32 @@
                     </constraints>
                 </button>
                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDB-Of-F4H">
-                    <rect key="frame" x="235" y="20.5" width="130" height="130"/>
+                    <rect key="frame" x="242.5" y="28" width="115" height="115"/>
                     <constraints>
-                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="130" id="P59-XZ-ZuZ"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="115" id="P59-XZ-ZuZ"/>
                         <constraint firstAttribute="width" secondItem="cDB-Of-F4H" secondAttribute="height" multiplier="1:1" id="hGb-L6-Xbv"/>
                     </constraints>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="Total Points Label" text="Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fdf-wP-pFp">
-                    <rect key="frame" x="5" y="100.5" width="225" height="26.5"/>
+                    <rect key="frame" x="5" y="100.5" width="232.5" height="26.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POINTS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deV-62-o9R">
-                    <rect key="frame" x="5" y="75.5" width="225" height="20"/>
+                    <rect key="frame" x="5" y="75.5" width="232.5" height="20"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOUSE RANK" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNE-y9-W9O">
-                    <rect key="frame" x="370" y="75.5" width="225" height="20.5"/>
+                    <rect key="frame" x="362.5" y="75.5" width="232.5" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6c-mF-sol">
-                    <rect key="frame" x="370" y="101" width="225" height="0.0"/>
+                    <rect key="frame" x="362.5" y="101" width="232.5" height="0.0"/>
                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -76,6 +77,12 @@
                         <action selector="viewUserPoints:" destination="-1" eventType="touchUpInside" id="9UJ-G4-6O7"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJw-an-wzQ">
+                    <rect key="frame" x="300" y="169" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
                 <constraint firstItem="P6c-mF-sol" firstAttribute="trailing" secondItem="RNE-y9-W9O" secondAttribute="trailing" id="1JX-s7-VzV"/>
@@ -87,10 +94,12 @@
                 <constraint firstItem="deV-62-o9R" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="HwK-Tp-CG2"/>
                 <constraint firstItem="P6c-mF-sol" firstAttribute="leading" secondItem="RNE-y9-W9O" secondAttribute="leading" id="IES-Sv-hMS"/>
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="trailing" secondItem="deV-62-o9R" secondAttribute="trailing" id="Iv2-78-u3o"/>
+                <constraint firstItem="eJw-an-wzQ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="O3m-lF-Xhl"/>
                 <constraint firstItem="cDB-Of-F4H" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="SqJ-uK-Ha3"/>
                 <constraint firstItem="RNE-y9-W9O" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="THv-ls-HMT"/>
                 <constraint firstItem="RNE-y9-W9O" firstAttribute="leading" secondItem="cDB-Of-F4H" secondAttribute="trailing" constant="5" id="VGZ-vy-t1u"/>
                 <constraint firstItem="jt1-LE-iWS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7.5" id="XrI-me-00m"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="eJw-an-wzQ" secondAttribute="bottom" constant="2" id="b1w-WJ-XSX"/>
                 <constraint firstItem="Z4b-tF-fZ9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fxv-c8-zM7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cDB-Of-F4H" secondAttribute="trailing" constant="50" id="iHu-8I-ZLZ"/>
                 <constraint firstItem="deV-62-o9R" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="iZH-cE-Dyq"/>
