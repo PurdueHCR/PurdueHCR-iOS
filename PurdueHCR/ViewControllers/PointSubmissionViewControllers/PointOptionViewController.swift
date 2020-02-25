@@ -70,6 +70,11 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             suggested3.layer.cornerRadius = radius
             suggested4.layer.cornerRadius = radius
             
+            suggested1.titleLabel?.numberOfLines = 2
+            suggested2.titleLabel?.numberOfLines = 2
+            suggested3.titleLabel?.numberOfLines = 2
+            suggested4.titleLabel?.numberOfLines = 2
+            
             suggestedValue1.layer.cornerRadius = pointRadius
             suggestedValue2.layer.cornerRadius = pointRadius
             suggestedValue3.layer.cornerRadius = pointRadius
@@ -128,7 +133,6 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             point3 = DataManager.sharedManager.getPointType(value: id2!)
             if (point3?.pointID != -1) {
                 suggested3.setTitle(point3?.pointName, for: .normal)
-                //suggested3.titleLabel?.sizeToFit()
                 suggestedValue3.text = String((point3?.pointValue)!)
             } else {
                 suggested3.isHidden = true
