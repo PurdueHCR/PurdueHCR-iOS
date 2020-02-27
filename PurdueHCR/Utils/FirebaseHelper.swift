@@ -295,7 +295,7 @@ class FirebaseHelper {
         let docRef = db.collection(self.HOUSE).document(house).collection(self.POINTS)
         let userFloorID = User.get(.floorID) as! String
         
-        docRef.whereField("PointTypeID", isLessThan: 0).getDocuments() { (querySnapshot, error) in
+        docRef.whereField("PointTypeID", isLessThan: 0).whereField("FloorID", isEqualTo: userFloorID).getDocuments() { (querySnapshot, error) in
                 if error != nil {
                     print("Error getting documents: \(String(describing: error))")
                     return
