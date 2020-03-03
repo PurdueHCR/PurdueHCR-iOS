@@ -145,8 +145,10 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
                 }
             }
 		} else {
-            if let rhpApprovalViewContr = (preViewContr as! RHPApprovalTableViewController?){
-                rhpApprovalViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: false, indexPath: indexPath!)
+            if (preViewContr is RHPApprovalTableViewController) {
+                if let rhpApprovalViewContr = (preViewContr as! RHPApprovalTableViewController?){
+                    rhpApprovalViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: false, indexPath: indexPath!)
+                }
             }
 		}
         self.navigationController?.popViewController(animated: true)

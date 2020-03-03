@@ -87,7 +87,8 @@ class BasePage{
 			app.tabBars.buttons["Houses"].tap()
 			app.navigationBars["House Overview"].buttons["Item"].tap()
 		}
-		app.buttons["Logout"].tap()
+		app.buttons["Sign Out"].tap()
+        app.buttons["Logout"].tap()
 		app.alerts["Log out?"].buttons["Yes"].tap()
         return SignInPage(app: app, test: test)
     }
