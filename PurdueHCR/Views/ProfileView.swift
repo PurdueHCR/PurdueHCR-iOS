@@ -29,6 +29,7 @@ class ProfileView: UIView {
 //    @IBOutlet var pointsButton: UILabel! // change back to button for the Medals update
 	
     var transitionFunc: () ->() = {print("NO IMPLEMENTATION")}
+    var isCompetitionVisible: Bool = true
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -45,6 +46,7 @@ class ProfileView: UIView {
         
         Bundle.main.loadNibNamed("ProfileView", owner: self, options: nil)
         addSubview(backgroundView)
+        
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 		
@@ -93,8 +95,13 @@ class ProfileView: UIView {
         houseNameLabel.text = User.get(.house) as! String + " – " + (User.get(.floorID) as! String)
         self.reloadData();
         
-        DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
-             self.rankNumberLabel.text = "#" + houseRank.description
+        isCompetitionVisible = DataManager.sharedManager.systemPreferences!.isCompetitionVisible
+        if (isCompetitionVisible) {
+            DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
+                 self.rankNumberLabel.text = "#" + houseRank.description
+            }
+        } else {
+            self.rankNumberLabel.text = "🙈"
         }
     }
     
