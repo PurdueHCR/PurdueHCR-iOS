@@ -158,6 +158,7 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - Alamofire (5.1.0)
   - AZDropdownMenu (1.1.3)
   - BoringSSL-GRPC (0.0.3):
     - BoringSSL-GRPC/Implementation (= 0.0.3)
@@ -301,6 +302,7 @@ PODS:
   - ValueStepper (1.6)
 
 DEPENDENCIES:
+  - Alamofire
   - AZDropdownMenu
   - Cely
   - Charts
@@ -317,6 +319,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - Alamofire
     - AZDropdownMenu
     - BoringSSL-GRPC
     - Cely
@@ -351,6 +354,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
+  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   AZDropdownMenu: 5aa9d598d0c8aa36ca51a7302e79b98d544d5554
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   Cely: a74f1439f96d1e7f2c30b3b8ef6c520c7fbb2346
@@ -383,6 +387,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   ValueStepper: 8b120c72c8d1391cd874a427485e2e57fda1a0b9
 
-PODFILE CHECKSUM: f4784c0accf42491896f6889a588e17dc5652493
+PODFILE CHECKSUM: cb3a176e058c732a88a4f950b681a44b59cad74e
 
 COCOAPODS: 1.8.4

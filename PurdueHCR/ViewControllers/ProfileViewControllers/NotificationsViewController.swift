@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class NotificationsTableViewController: UITableViewController, UISearchResultsUpdating {
 
@@ -18,7 +19,8 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-    
+        
+        
 		activityIndicator.center = self.view.center
 		activityIndicator.style = .gray
 		activityIndicator.hidesWhenStopped = true

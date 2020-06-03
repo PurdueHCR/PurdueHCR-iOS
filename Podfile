@@ -14,6 +14,7 @@ target 'PurdueHCR' do
   pod 'AZDropdownMenu'
   pod 'PopupKit'
   pod 'SnapKit'
+  pod 'Alamofire'
 end
 
 target 'PurdueHCRUITests' do
@@ -30,5 +31,5 @@ target 'PurdueHCRUITests' do
     pod 'NotificationBannerSwift'
     pod 'AZDropdownMenu'
     pod 'PopupKit'
-
+    pod 'Alamofire'
 end

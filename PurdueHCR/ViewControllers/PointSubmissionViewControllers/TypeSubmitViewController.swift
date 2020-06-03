@@ -120,30 +120,33 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         let floor = User.get(.floorID) as! String
 		let residentId = User.get(.id) as! String
 		
-		let dateOccurred = Timestamp.init(date: datePicker.date)
+        let dateOccurred = Timestamp.init(date: datePicker.date)
         let pointLog = PointLog(pointDescription: logDescription, firstName: firstName, lastName: lastName, type: pointType, floorID: floor, residentId: residentId, dateOccurred: dateOccurred)
 		DataManager.sharedManager.writePoints(log: pointLog, preApproved: preApproved) { (err:Error?) in
             if (err != nil) {
-                if(err!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
-                    self.notify(title: "Failed to submit", subtitle: "Point Type is no longer enabled.", style: .danger)
-                }
-                else{
-                    self.notify(title: "Failed to submit", subtitle: "Database Error.", style: .danger)
-                    print("Error in posting: ",err!.localizedDescription)
-                }
-                
-                self.submitButton.isEnabled = true;
+//                if(err!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+//                    self.notify(title: "Failed to submit", subtitle: "Point Type is no longer enabled.", style: .danger)
+//                }
+//                else{
+//                    self.notify(title: "Failed to submit", subtitle: "Database Error.", style: .danger)
+//                    print("Error in posting: ",err!.localizedDescription)
+//                }
+//
+//                self.submitButton.isEnabled = true;
+                self.submitButton.isEnabled = true
                 return
+            } else {
+                self.navigationController?.popViewController(animated: true)
+//                if(preApproved){
+//                    self.notify(title: "Way to Go RHP", subtitle: "Congrats, \(pointLog.type.pointValue) points submitted.", style: .success)
+//                }
+//                else{
+//                    self.notify(title: "Submitted for approval!", subtitle: pointLog.pointDescription, style: .success)
+//                }
             }
-			
+            
         }
-		self.navigationController?.popViewController(animated: true)
-		if(preApproved){
-			self.notify(title: "Way to Go RHP", subtitle: "Congrats, \(pointLog.type.pointValue) points submitted.", style: .success)
-		}
-		else{
-			self.notify(title: "Submitted for approval!", subtitle: pointLog.pointDescription, style: .success)
-		}
+        
     }
 
 	func textViewDidChangeSelection(_ textView: UITextView) {

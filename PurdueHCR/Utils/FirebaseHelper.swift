@@ -8,6 +8,8 @@
 
 import Foundation
 import Firebase
+import Alamofire
+import NotificationBannerSwift
 
 
 class FirebaseHelper {
@@ -117,11 +119,11 @@ class FirebaseHelper {
     ///   - house: If the house is different than the saved house for the user (Used for REC Awarding points)
     ///   - isRECGrantingAward: Boolean to denote that this point is being added by the RHP
     ///   - onDone: Closure function the be called once the code hits an error or finishs. err is nil if no errors are found.
-    func addPointLog(log:PointLog, documentID:String = "", preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+    func addPointLog(log:PointLog, documentID:String = "", preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, success: @escaping (_ response: AnyObject?) -> Void, failure: @escaping (_ error: Error?) -> Void){
         var ref: DocumentReference? = nil
         //If point type is disabled and it is not an REC granting an award, warn that it is disabled
         if(!log.type.isEnabled && !isRECGrantingAward){
-            onDone(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
+            failure(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
             return
         }
         //If the log is preapproved, update the approval status
@@ -131,25 +133,88 @@ class FirebaseHelper {
         
         if(documentID == "")
         {
-            // write the document to the HOUSE table and save the reference
-			let data = log.convertToDict()
-			var ref: DocumentReference? = nil
-			ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: data, completion: { err in
-                if ( err == nil){
-					if (preApproved) {
-						//OnDone will be called in updateHouseAndUserPoints
-						self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
-                        //Add message to pointLog does not require us to wait
-						self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref!.documentID)
-					}
-                    else{
-                        onDone(nil)
+//            // write the document to the HOUSE table and save the reference
+//			let data = log.convertToDict()
+//			var ref: DocumentReference? = nil
+//			ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: data, completion: { err in
+//                if ( err == nil){
+//					if (preApproved) {
+//						//OnDone will be called in updateHouseAndUserPoints
+//						self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+//                        //Add message to pointLog does not require us to wait
+//						self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref!.documentID)
+//					}
+//                    else{
+//                        onDone(nil)
+//                    }
+//				} else{
+//                    onDone(err)
+//                }
+//			})
+            
+            DataManager.sharedManager.getAuthorizationToken { (token, err) in
+                if let err = err {
+                    // HANDLE ERROR failure(err)
+                } else {
+                    let headerVal = "Bearer " + (token!)
+                    let header = HTTPHeader(name: "Authorization", value: headerVal)
+                    let headers = HTTPHeaders(arrayLiteral: header)
+                    let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint")!
+                    // May need to convert to string?
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
+                    let parameters = ["point_type_id":log.type.pointID, "description":log.description, "date_occurred":date] as [String : Any]
+                    
+                    print(date)
+                    print(log.dateOccurred?.dateValue())
+                    let request = AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                        
+                        switch response.result {
+                        case .success:
+                            if let result = response.value as? [String : Any] {
+                                print(result)
+                                if (preApproved) {
+                                    //OnDone will be called in updateHouseAndUserPoints
+                                    self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward: isRECGrantingAward, updatePointValue: false, onDone: { (err) in
+                                        // HANDLE ERROR failure(err)
+                                    })
+                                    //Add message to pointLog does not require us to wait
+                                    let ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(documentID)
+                                    self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref.documentID)
+                                }
+                            }
+                            if (preApproved) {
+                                let banner = NotificationBanner(title: "Way to Go RHP", subtitle: "Congrats, \(log.type.pointValue) points submitted.", style: .success)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                            else {
+                                let banner = NotificationBanner(title: "Submitted for approval!", subtitle: log.pointDescription, style: .success)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                            success(response.value as AnyObject?)
+                        case .failure(let error):
+                            if (error.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+                                DispatchQueue.main.async {
+                                    let banner = NotificationBanner(title: "Could not submit.", subtitle: "This type of point is disabled for now.", style: .danger)
+                                    banner.duration = 2
+                                    banner.show()
+                                }
+                            }
+                            else{
+                                DispatchQueue.main.async {
+                                    let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                                    banner.duration = 2
+                                    banner.show()
+                                }
+                            }
+                            failure(error)
+                        }
                     }
-				} else{
-                    onDone(err)
                 }
-			})
-			
+            }
         }
         else
         {
@@ -157,25 +222,31 @@ class FirebaseHelper {
             ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(documentID)//log.residentRef.documentID+documentID)
             ref!.getDocument { (document, error) in
                 if let document = document, document.exists {
-                    onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
+                    // failure(NSError(domain: "Document Exists", code: 1, userInfo: nil)) HANDLE ERROR
                 } else {
-                    ref!.setData(log.convertToDict()){ err in
+                    ref!.setData(log.convertToDict()) { err in
                         if ( err == nil){
 							if(preApproved)
 							{
-								self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+                                self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: { (err) in
+                                    // HANDLE ERROR
+                                })
 							}
-							else{
-								onDone(err)
+							else {
+								// HANDLE ERROR
 							}
                         }
                         else{
-                            onDone(err)
+                            // HANDLE ERROR
                         }
                     }
                 }
             }
         }
+    }
+    
+    func sendSubmitPointRequest(log:PointLog, documentID:String = "", preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, token:String, success: (_ response: AnyObject?) -> Void, failure: (_ error: Error?) -> Void) {
+        //
     }
     
     /// update the status of the point log if it has been approved, rejected, or updated
@@ -901,31 +972,25 @@ class FirebaseHelper {
         }
     }
     
-    func getHouseRank(residentID: String, house: String, onDone:@escaping (Int)->Void){
-        let collectionRef = db.collection(self.USERS)
-        collectionRef.whereField("House", isEqualTo: house).getDocuments { (querySnapshot, error) in
-            if error != nil {
-                print("Error getting documents For House: \(String(describing: error))")
-                return
+    enum RetrievalError: Error {
+        case unableToParseResponse
+    }
+    
+    func getHouseRank(residentID: String, house: String, onDone:@escaping (Int?, Int?, Error?)->Void){
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(nil, nil, err)
             }
-            var users = [UserModel]()
-            var rank = 0
-            for document in querySnapshot!.documents{
-                let resID = document.documentID
-                let points = document.data()["TotalPoints"] as! Int
-                let model = UserModel(name: resID, points: points)
-                users.append(model)
-            }
-            users.sort(by: { (um, um2) -> Bool in
-                return um.totalPoints > um2.totalPoints
-            })
-            for (i, user) in users.enumerated() {
-                if (user.userName == residentID) {
-                    rank = i + 1
-                    break
+            let headerVal = "Bearer " + (token ?? "")
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
+            let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank")!
+            AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Int] {
+                    onDone(result["houseRank"], result["semesterRank"], nil)
                 }
             }
-            onDone(rank)
+            onDone(nil, nil, RetrievalError.unableToParseResponse)
         }
     }
     
@@ -1008,6 +1073,10 @@ class FirebaseHelper {
 			onDone(err)
 		}
 	}
+    
+    func getAuthorizationToken(onDone: @escaping(_ token:String?, _ err:Error?)->Void) {
+        Auth.auth().currentUser!.getIDTokenForcingRefresh(true, completion: onDone)
+    }
 
 }
 

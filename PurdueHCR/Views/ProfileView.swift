@@ -97,9 +97,14 @@ class ProfileView: UIView {
         
         isCompetitionVisible = DataManager.sharedManager.systemPreferences!.isCompetitionVisible
         if (isCompetitionVisible) {
-            DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
-                 self.rankNumberLabel.text = "#" + houseRank.description
+            DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank, semesterRank, err) in
+                if let err = err {
+                    print(err.localizedDescription)
+                } else {
+                    self.rankNumberLabel.text = "#" + houseRank!.description
+                }
             }
+            
         } else {
             self.rankNumberLabel.text = "🙈"
         }
