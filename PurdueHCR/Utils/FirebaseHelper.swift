@@ -119,11 +119,11 @@ class FirebaseHelper {
     ///   - house: If the house is different than the saved house for the user (Used for REC Awarding points)
     ///   - isRECGrantingAward: Boolean to denote that this point is being added by the RHP
     ///   - onDone: Closure function the be called once the code hits an error or finishs. err is nil if no errors are found.
-    func addPointLog(log:PointLog, documentID:String = "", preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, success: @escaping (_ response: AnyObject?) -> Void, failure: @escaping (_ error: Error?) -> Void){
+    func addPointLog(log:PointLog, documentID:String = "", preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, onDone: @escaping (_ err:Error?)->Void){
         var ref: DocumentReference? = nil
         //If point type is disabled and it is not an REC granting an award, warn that it is disabled
         if(!log.type.isEnabled && !isRECGrantingAward){
-            failure(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
+            onDone(NSError(domain: "Could not submit points because point type is disabled.", code: 1, userInfo: nil))
             return
         }
         //If the log is preapproved, update the approval status
@@ -154,7 +154,7 @@ class FirebaseHelper {
             
             DataManager.sharedManager.getAuthorizationToken { (token, err) in
                 if let err = err {
-                    // HANDLE ERROR failure(err)
+                    onDone(err)
                 } else {
                     let headerVal = "Bearer " + (token!)
                     let header = HTTPHeader(name: "Authorization", value: headerVal)
@@ -168,17 +168,14 @@ class FirebaseHelper {
                     
                     print(date)
                     print(log.dateOccurred?.dateValue())
-                    let request = AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-                        
+                    AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                         switch response.result {
                         case .success:
                             if let result = response.value as? [String : Any] {
                                 print(result)
                                 if (preApproved) {
                                     //OnDone will be called in updateHouseAndUserPoints
-                                    self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward: isRECGrantingAward, updatePointValue: false, onDone: { (err) in
-                                        // HANDLE ERROR failure(err)
-                                    })
+                                    self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward: isRECGrantingAward, updatePointValue: false, onDone: onDone)
                                     //Add message to pointLog does not require us to wait
                                     let ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(documentID)
                                     self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref.documentID)
@@ -194,7 +191,7 @@ class FirebaseHelper {
                                 banner.duration = 2
                                 banner.show()
                             }
-                            success(response.value as AnyObject?)
+                            onDone(nil)
                         case .failure(let error):
                             if (error.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
                                 DispatchQueue.main.async {
@@ -202,15 +199,21 @@ class FirebaseHelper {
                                     banner.duration = 2
                                     banner.show()
                                 }
+                            } else if (error.localizedDescription == "The operation couldn’t be completed. (Document Exists error 1.)"){
+                                DispatchQueue.main.async {
+                                    let banner = NotificationBanner(title: "Could not submit.", subtitle: "You have already scanned this code.", style: .danger)
+                                    banner.duration = 2
+                                    banner.show()
+                                }
                             }
-                            else{
+                            else {
                                 DispatchQueue.main.async {
                                     let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
                                     banner.duration = 2
                                     banner.show()
                                 }
                             }
-                            failure(error)
+                            onDone(error)
                         }
                     }
                 }
@@ -228,16 +231,14 @@ class FirebaseHelper {
                         if ( err == nil){
 							if(preApproved)
 							{
-                                self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: { (err) in
-                                    // HANDLE ERROR
-                                })
+                                self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
 							}
 							else {
-								// HANDLE ERROR
+								onDone(err)
 							}
                         }
                         else{
-                            // HANDLE ERROR
+                            onDone(error)
                         }
                     }
                 }
