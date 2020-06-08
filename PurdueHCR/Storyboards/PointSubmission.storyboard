@@ -266,7 +266,7 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEb-3G-mB8">
                                                         <rect key="frame" x="305" y="20" width="50" height="50"/>
-                                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="UMx-bv-Vs2"/>
                                                             <constraint firstAttribute="width" secondItem="PEb-3G-mB8" secondAttribute="height" multiplier="1:1" id="kdx-O4-HYr"/>
@@ -280,11 +280,19 @@
                                                             <action selector="submit:" destination="oFJ-nJ-PE0" eventType="touchUpInside" id="EY6-L2-jhK"/>
                                                         </connections>
                                                     </button>
+                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Hdq-Af-WHd">
+                                                        <rect key="frame" x="310" y="25" width="40" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="8xL-2W-PKc"/>
+                                                            <constraint firstAttribute="width" constant="40" id="b5t-E1-KBc"/>
+                                                        </constraints>
+                                                    </activityIndicatorView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="N1k-ec-IwP" firstAttribute="top" secondItem="zbW-t0-8sl" secondAttribute="bottom" constant="5" id="5nq-uY-poc"/>
                                                     <constraint firstAttribute="trailing" secondItem="zbW-t0-8sl" secondAttribute="trailing" constant="15" id="6eC-wF-20c"/>
+                                                    <constraint firstItem="Hdq-Af-WHd" firstAttribute="centerY" secondItem="PEb-3G-mB8" secondAttribute="centerY" id="6q5-vX-8o0"/>
                                                     <constraint firstItem="nlS-gv-ON8" firstAttribute="top" secondItem="t0X-Nm-FtR" secondAttribute="top" id="9Ug-Wg-BCH"/>
                                                     <constraint firstAttribute="bottom" secondItem="N1k-ec-IwP" secondAttribute="bottom" constant="10" id="Ayw-Pr-q1i"/>
                                                     <constraint firstItem="nlS-gv-ON8" firstAttribute="leading" secondItem="t0X-Nm-FtR" secondAttribute="trailing" constant="10" id="CCe-IB-ZWP"/>
@@ -295,6 +303,7 @@
                                                     <constraint firstItem="t0X-Nm-FtR" firstAttribute="leading" secondItem="p5A-ge-pS3" secondAttribute="leading" constant="20" symbolic="YES" id="WSP-OJ-pug"/>
                                                     <constraint firstItem="nlS-gv-ON8" firstAttribute="bottom" secondItem="t0X-Nm-FtR" secondAttribute="bottom" id="iAq-Ur-iLc"/>
                                                     <constraint firstItem="t0X-Nm-FtR" firstAttribute="top" secondItem="p5A-ge-pS3" secondAttribute="top" constant="20" symbolic="YES" id="jIt-Ef-uN7"/>
+                                                    <constraint firstItem="Hdq-Af-WHd" firstAttribute="centerX" secondItem="PEb-3G-mB8" secondAttribute="centerX" id="nU9-E1-bcv"/>
                                                     <constraint firstItem="PEb-3G-mB8" firstAttribute="centerY" secondItem="nlS-gv-ON8" secondAttribute="centerY" id="odG-Br-LVN"/>
                                                     <constraint firstItem="zbW-t0-8sl" firstAttribute="leading" secondItem="p5A-ge-pS3" secondAttribute="leading" constant="15" id="tRL-BX-M4V"/>
                                                     <constraint firstItem="N1k-ec-IwP" firstAttribute="trailing" secondItem="zbW-t0-8sl" secondAttribute="trailing" id="yxN-NZ-d41"/>
@@ -365,6 +374,7 @@
                     <navigationItem key="navigationItem" title="Create Submission" id="ZAH-QY-1Uc"/>
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="Hdq-Af-WHd" id="nyI-8L-swE"/>
                         <outlet property="datePicker" destination="HvT-ph-Y7E" id="rJU-Uk-8yC"/>
                         <outlet property="descriptionField" destination="fGY-ye-561" id="tUc-bx-ntF"/>
                         <outlet property="descriptionLabel" destination="N1k-ec-IwP" id="1tT-NQ-n7F"/>

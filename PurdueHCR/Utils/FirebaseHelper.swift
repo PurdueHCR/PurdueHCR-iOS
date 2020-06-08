@@ -162,25 +162,13 @@ class FirebaseHelper {
                     let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint")!
                     // May need to convert to string?
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
-                    let parameters = ["point_type_id":log.type.pointID, "description":log.description, "date_occurred":date] as [String : Any]
+                    let parameters = ["point_type_id":log.type.pointID, "description":log.description, "date_occurred":date, "is_guaranteed_approval":preApproved.description] as [String : Any]
                     
-                    print(date)
-                    print(log.dateOccurred?.dateValue())
                     AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                         switch response.result {
                         case .success:
-                            if let result = response.value as? [String : Any] {
-                                print(result)
-                                if (preApproved) {
-                                    //OnDone will be called in updateHouseAndUserPoints
-                                    self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward: isRECGrantingAward, updatePointValue: false, onDone: onDone)
-                                    //Add message to pointLog does not require us to wait
-                                    let ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(documentID)
-                                    self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref.documentID)
-                                }
-                            }
                             if (preApproved) {
                                 let banner = NotificationBanner(title: "Way to Go RHP", subtitle: "Congrats, \(log.type.pointValue) points submitted.", style: .success)
                                 banner.duration = 2

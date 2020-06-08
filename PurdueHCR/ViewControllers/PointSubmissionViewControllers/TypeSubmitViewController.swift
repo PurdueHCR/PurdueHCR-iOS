@@ -21,6 +21,7 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 	@IBOutlet weak var datePicker: UIDatePicker!
 	@IBOutlet weak var topView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
 	
     var type:PointType?
@@ -46,7 +47,7 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         descriptionField.layer.borderWidth = 1
 		//descriptionField.becomeFirstResponder()
         submitButton.layer.cornerRadius = submitButton.frame.height / 2
-		
+        
         fortyPercent = self.view.frame.size.height * 0.45
         
 		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
@@ -85,20 +86,28 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
     }
     
 	@IBAction func submit(_ sender: Any) {
-        submitButton.isEnabled = false;
+        submitButton.isEnabled = false
+        submitButton.backgroundColor = UIColor.gray
+        activityIndicator.isHidden = false
         guard let description = descriptionField.text, !description.isEmpty, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else{
             notify(title: "Failure", subtitle: "Please enter a description", style: .danger)
-            submitButton.isEnabled = true;
+            submitButton.isEnabled = true
+            submitButton.backgroundColor = self.view.tintColor
+            activityIndicator.isHidden = true
             return
         }
         guard let pointType = type else{
             notify(title: "Failure", subtitle: "Please reselect your point type", style: .danger)
-            submitButton.isEnabled = true;
+            submitButton.isEnabled = true
+            submitButton.backgroundColor = self.view.tintColor
+            activityIndicator.isHidden = true
             return
         }
         if(description == placeholder){
             notify(title: "Failure", subtitle: "Please tell us more about what you did!", style: .danger)
-            submitButton.isEnabled = true;
+            submitButton.isEnabled = true
+            submitButton.backgroundColor = self.view.tintColor
+            activityIndicator.isHidden = true
             return
         }
         submitPointLog(pointType: pointType, logDescription: description)
@@ -125,6 +134,8 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		DataManager.sharedManager.writePoints(log: pointLog, preApproved: preApproved) { (err:Error?) in
             if (err != nil) {
                 self.submitButton.isEnabled = true
+                self.submitButton.backgroundColor = self.view.tintColor
+                self.activityIndicator.isHidden = true
             } else {
                 self.navigationController?.popViewController(animated: true)
             }
@@ -180,8 +191,8 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
     }
     
     func moveTextView(textView:UITextView, up:Bool){
-        if(up && textView.frame.minY > self.fortyPercent){
-            let movement = self.fortyPercent - textView.frame.minY
+        if(up && textView.frame.maxY > self.fortyPercent){
+            let movement = self.fortyPercent - textView.frame.maxY
             self.lastChange = Double(movement)
             UIView.beginAnimations("TextFieldMove", context: nil)
             UIView.setAnimationBeginsFromCurrentState(true)

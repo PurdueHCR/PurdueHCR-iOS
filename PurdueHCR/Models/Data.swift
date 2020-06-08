@@ -155,8 +155,8 @@ class PointLog {
 		self.firstName = document["ResidentFirstName"] as! String
 		self.lastName = document["ResidentLastName"] as! String
 		self.residentId = document["ResidentId"] as! String
-        self.approvedBy = ""//document["ApprovedBy"] as! String?
-        self.approvedOn = Timestamp()//document["ApprovedOn"] as! Timestamp?
+        self.approvedBy = document["ApprovedBy"] as! String?
+        self.approvedOn = document["ApprovedOn"] as! Timestamp?
         self.dateOccurred = document["DateOccurred"] as! Timestamp?
 		self.dateSubmitted = document["DateSubmitted"] as! Timestamp?
 		self.rhpNotifications = document["RHPNotifications"] as! Int
