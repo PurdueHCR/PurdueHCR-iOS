@@ -164,7 +164,7 @@ class FirebaseHelper {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
-                    let parameters = ["point_type_id":log.type.pointID, "description":log.description, "date_occurred":date, "is_guaranteed_approval":preApproved.description] as [String : Any]
+                    let parameters = ["point_type_id":log.type.pointID, "description":log.pointDescription, "date_occurred":date, "is_guaranteed_approval":preApproved.description] as [String : Any]
                     
                     AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                         switch response.result {
