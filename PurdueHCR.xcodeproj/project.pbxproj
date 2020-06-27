@@ -28,6 +28,14 @@
 		B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */; };
 		B5BD40B723C6847200E8D48F /* RECPointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */; };
 		B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D88D5623C39688007A19D0 /* TopScorersView.swift */; };
+		B5ED710A24A7D71E00080A52 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5ED710924A7D71E00080A52 /* Events.storyboard */; };
+		B5ED711224A7D7C400080A52 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710C24A7D7C400080A52 /* Event.swift */; };
+		B5ED711324A7D7C400080A52 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710D24A7D7C400080A52 /* EventViewController.swift */; };
+		B5ED711424A7D7C400080A52 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710E24A7D7C400080A52 /* EventTableViewCell.swift */; };
+		B5ED711524A7D7C400080A52 /* CreateEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710F24A7D7C400080A52 /* CreateEventTableViewController.swift */; };
+		B5ED711624A7D7C400080A52 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711024A7D7C400080A52 /* VerifyViewController.swift */; };
+		B5ED711724A7D7C400080A52 /* AddEventBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */; };
+		B5ED711924A7E73200080A52 /* ViewEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -129,6 +137,15 @@
 		B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HousePointsHistoryViewController.swift; path = PurdueHCR/ViewControllers/ProfileViewControllers/HousePointsHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RECPointDescriptionView.xib; sourceTree = "<group>"; };
 		B5D88D5623C39688007A19D0 /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
+		B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5ED710924A7D71E00080A52 /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
+		B5ED710C24A7D7C400080A52 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B5ED710D24A7D7C400080A52 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		B5ED710E24A7D7C400080A52 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		B5ED710F24A7D7C400080A52 /* CreateEventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventTableViewController.swift; sourceTree = "<group>"; };
+		B5ED711024A7D7C400080A52 /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
+		B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventBarButton.swift; sourceTree = "<group>"; };
+		B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEventTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -231,6 +248,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AA19657F23DA7E22008B6B1E /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		AB577E93D3B4B5BCEA137EE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,9 +265,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B5ED710B24A7D7C400080A52 /* EventsControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B5ED710C24A7D7C400080A52 /* Event.swift */,
+				B5ED710D24A7D7C400080A52 /* EventViewController.swift */,
+				B5ED710E24A7D7C400080A52 /* EventTableViewCell.swift */,
+				B5ED710F24A7D7C400080A52 /* CreateEventTableViewController.swift */,
+				B5ED711024A7D7C400080A52 /* VerifyViewController.swift */,
+				B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */,
+				B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */,
+			);
+			path = EventsControllers;
+			sourceTree = "<group>";
+		};
 		D30FBEE020FC0403000DD221 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				B5ED710B24A7D7C400080A52 /* EventsControllers */,
 				D3912A63219CE75D0002E7C7 /* RECViewControllers */,
 				D39D442F210E73FB0030F424 /* FlowControllers */,
 				D39D4430210E74090030F424 /* UserCreation */,
@@ -289,6 +329,7 @@
 		D30FBEE520FC046F000DD221 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				B5ED710924A7D71E00080A52 /* Events.storyboard */,
 				D30FC90720DF35D800201E74 /* Main.storyboard */,
 				D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */,
 				D33F43AC2108362D00D3982D /* LaunchScreen.storyboard */,
@@ -308,6 +349,7 @@
 				D30FC8FF20DF35D800201E74 /* Products */,
 				54A6A3EE8AE04E29868B02EB /* Pods */,
 				AB577E93D3B4B5BCEA137EE1 /* Frameworks */,
+				AA19657F23DA7E22008B6B1E /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -651,6 +693,7 @@
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
+				B5ED710A24A7D71E00080A52 /* Events.storyboard in Resources */,
 				B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */,
 				D749F37623399F0600410434 /* SuggestedPointsView.xib in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
@@ -756,6 +799,7 @@
 				B5AE2D4923DCA34F00B2323C /* FirebaseCollectionListener.swift in Sources */,
 				D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */,
 				D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */,
+				B5ED711324A7D7C400080A52 /* EventViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
 				D3912A74219CE7960002E7C7 /* RECPointOptionTableViewController.swift in Sources */,
 				B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */,
@@ -765,13 +809,18 @@
 				D3912A73219CE7960002E7C7 /* RECPointCreationTableViewController.swift in Sources */,
 				B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */,
 				B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */,
+				B5ED711924A7E73200080A52 /* ViewEventTableViewController.swift in Sources */,
 				D3D062BD20E816AB00E8B3A3 /* User.swift in Sources */,
+				B5ED711424A7D7C400080A52 /* EventTableViewCell.swift in Sources */,
+				B5ED711224A7D7C400080A52 /* Event.swift in Sources */,
 				D39D442B210E52690030F424 /* QRCodeGeneratorViewController.swift in Sources */,
 				D3D062B720E7F73C00E8B3A3 /* DataManager.swift in Sources */,
 				B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */,
 				D3912A7B219CE7A90002E7C7 /* RECRewardsTableViewController.swift in Sources */,
 				D749F3782339A24B00410434 /* SuggestedPointsView.swift in Sources */,
+				B5ED711624A7D7C400080A52 /* VerifyViewController.swift in Sources */,
 				D39D4435210E748A0030F424 /* LinkCodesTableViewController.swift in Sources */,
+				B5ED711524A7D7C400080A52 /* CreateEventTableViewController.swift in Sources */,
 				D3CC77CE21052CEF00B88F03 /* AppUtils.swift in Sources */,
 				D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */,
 				D3912A6C219CE77B0002E7C7 /* GrantAwardTableViewController.swift in Sources */,
@@ -790,6 +839,7 @@
 				D33F43B1210AA00700D3982D /* PointDescriptionView.swift in Sources */,
 				B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */,
 				B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */,
+				B5ED711724A7D7C400080A52 /* AddEventBarButton.swift in Sources */,
 				D30FC90420DF35D800201E74 /* PointOptionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
