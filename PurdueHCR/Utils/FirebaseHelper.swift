@@ -160,7 +160,6 @@ class FirebaseHelper {
                     let header = HTTPHeader(name: "Authorization", value: headerVal)
                     let headers = HTTPHeaders(arrayLiteral: header)
                     let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint")!
-                    // May need to convert to string?
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
@@ -245,9 +244,32 @@ class FirebaseHelper {
     ///   - approved: BOOL: Approved (true) rejected(false)
     ///   - updating: Bool: If the log has already been approved or rejected, and you are changing that status, set updating to true
     ///   - onDone: Closure to handle when the function is finished or if there is an error
-    func updatePointLogStatus(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+    func updatePointLogStatus(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void) {
+        
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(err)
+            } else {
+                let headerVal = "Bearer " + (token!)
+                let header = HTTPHeader(name: "Authorization", value: headerVal)
+                let headers = HTTPHeaders(arrayLiteral: header)
+                let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle")!
+                let parameters = ["approve":approved.description, "approver_id":User.get(.id)! as! String, "point_log_id":log.logID!] as [String : Any]
+                print("User ID IS: ", User.get(.id)! as! String)
+                
+                AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        onDone(nil)
+                    case .failure(let error):
+                        onDone(error)
+                    }
+                }
+            }
+        }
+        
         //TODO While User.get(house) will work for now, look at doing this a better way
-        let house = User.get(.house) as! String
+        /*let house = User.get(.house) as! String
         var housePointRef: DocumentReference?
         var houseRef:DocumentReference?
 		let residentID = log.residentId
@@ -304,7 +326,7 @@ class FirebaseHelper {
             } else {
                 onDone(NSError(domain: "Document does not exist", code: 2, userInfo: nil))
             }
-        }
+        }*/
         
         
     }
