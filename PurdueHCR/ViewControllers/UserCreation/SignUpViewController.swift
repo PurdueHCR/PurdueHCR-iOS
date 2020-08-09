@@ -18,11 +18,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var verifyPasswordField: UITextField!
     @IBOutlet var signUpButton: UIButton!
 	@IBOutlet weak var imageView: UIImageView!
-	
+    @IBOutlet weak var backButton: UIButton!
+    
     
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
     var houses:[House]?
+    
+    // For use when creating account from link
+    static var houseCode:String?
     
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -140,6 +144,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func back(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // Only to be used when signing up with code
+    @objc func goToLogin() {
+        self.performSegue(withIdentifier: "seg_back", sender: self)
     }
     
     override func didReceiveMemoryWarning() {

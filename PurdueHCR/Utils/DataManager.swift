@@ -178,10 +178,10 @@ class DataManager {
                     }
                 })
             }
-            
+
         })
     }
-    
+
     func getRewards() -> [Reward]?{
         return self._rewards
     }
@@ -354,7 +354,7 @@ class DataManager {
                 var documentID = ""
                 //If the QR code is single use, set the id of the point log to residentID+LinkID. This prevents the same user from submitting it twice
                 //If the QR Code is multiple use, do not set a documentID. Firestore will auto generate a random one.
-                if(link.singleUse){
+                if (link.singleUse) {
                     documentID = residentId + id
                 }
     

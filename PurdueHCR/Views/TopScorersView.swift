@@ -49,16 +49,20 @@ class TopScorersView: UIView {
         colorView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         DataManager.sharedManager.getHouseScorers {
             let house = self.getHouseWithName(name: User.get(.house) as! String)
-            self.first.text = house?.topScoreUsers?[0].userName
-            self.firstScore.text = house?.topScoreUsers?[0].totalPoints.description
-            self.second.text = house?.topScoreUsers?[1].userName
-            self.secondScore.text = house?.topScoreUsers?[1].totalPoints.description
-            self.third.text = house?.topScoreUsers?[2].userName
-            self.thirdScore.text = house?.topScoreUsers?[2].totalPoints.description
-            self.fourth.text = house?.topScoreUsers?[3].userName
-            self.fourthScore.text = house?.topScoreUsers?[3].totalPoints.description
-            self.fifth.text = house?.topScoreUsers?[4].userName
-            self.fifthScore.text = house?.topScoreUsers?[4].totalPoints.description
+            if (house!.topScoreUsers!.count < 5) {
+                self.first.text = "Not enough users"
+            } else {
+                self.first.text = house?.topScoreUsers?[0].userName
+                self.firstScore.text = house?.topScoreUsers?[0].totalPoints.description
+                self.second.text = house?.topScoreUsers?[1].userName
+                self.secondScore.text = house?.topScoreUsers?[1].totalPoints.description
+                self.third.text = house?.topScoreUsers?[2].userName
+                self.thirdScore.text = house?.topScoreUsers?[2].totalPoints.description
+                self.fourth.text = house?.topScoreUsers?[3].userName
+                self.fourthScore.text = house?.topScoreUsers?[3].totalPoints.description
+                self.fifth.text = house?.topScoreUsers?[4].userName
+                self.fifthScore.text = house?.topScoreUsers?[4].totalPoints.description
+            }
        }
         
         topScorersView.sizeToFit()

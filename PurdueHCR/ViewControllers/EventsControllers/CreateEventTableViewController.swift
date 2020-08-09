@@ -19,7 +19,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     @IBOutlet weak var createEventButton: UIButton!
     
     let houses = ["All Houses", "Silver", "Palladium", "Platinum", "Titanium", "Copper"]
-    var houseI = 1
+    var houseI = "All Houses"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +56,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let house = houses[row]
-        
-        if (house == "All Houses") { houseI = 1 }
-        else if (house == "Silver") { houseI = 2 }
-        else if (house == "Palladium") { houseI = 3 }
-        else if (house == "Platinum") { houseI = 4 }
-        else if (house == "Titanium") { houseI = 5 }
-        else if (house == "Copper") { houseI = 6 }
+        houseI = houses[row]
     }
     
     @IBAction func createNewEvent(_ sender: Any) {
@@ -98,13 +91,13 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             points = 10
         }
         
-        let description = newEventDescription.text!
+        let details = newEventDescription.text!
         
         // This is something to be implemented once we connect the database!
         let ownerID = "0987654321"
         
 
-        events.append(Event(name: name, location: location, points: points, house: houseI, description: description, fullDate: fullDate, time: time, ownerID: ownerID))
+        events.append(Event(name: name, location: location, points: points, house: houseI, details: details, fullDate: fullDate, time: time, ownerID: ownerID))
         
         print(events.count)
         performSegueToReturnBack()

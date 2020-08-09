@@ -32,8 +32,9 @@ class PointType {
 		case resident = 0
 		case rhp = 1
 		case rec = 2
-		case fhp = 3
+		case faculty = 3
         case priv = 4
+        case ea = 5
 	}
 	
     var pointValue:Int
@@ -460,16 +461,18 @@ class UserModel {
 }
 
 class SystemPreferences {
-	var isHouseEnabled : Bool
-	var houseEnabledMessage : String
+    var isHouseEnabled : Bool
+    var houseEnabledMessage : String
+    var showRewards: Bool
 	var iosVersion : String
     var suggestedPointIDs : String
     var competitionHiddenMessage : String
     var isCompetitionVisible : Bool
 	
-    init(isHouseEnabled: Bool, houseEnabledMessage: String, iosVersion: String, suggestedPointIDs: String, isCompetitionVisible: Bool, competitionHiddenMessage: String) {
+    init(isHouseEnabled: Bool, houseEnabledMessage: String, showRewards: Bool, iosVersion: String, suggestedPointIDs: String, isCompetitionVisible: Bool, competitionHiddenMessage: String) {
 		self.isHouseEnabled = isHouseEnabled
 		self.houseEnabledMessage = houseEnabledMessage
+        self.showRewards = showRewards
 		self.iosVersion = iosVersion
         self.suggestedPointIDs = suggestedPointIDs
         self.competitionHiddenMessage = competitionHiddenMessage
@@ -480,6 +483,7 @@ class SystemPreferences {
 		let dict : [String:Any] = [
 			"isHouseEnabled":isHouseEnabled,
 			"houseEnabledMessage":houseEnabledMessage,
+            "showRewards":showRewards,
             "iOS_Version":iosVersion,
             "suggestedPointIDs":suggestedPointIDs,
             "competitionHiddenMessage":competitionHiddenMessage,

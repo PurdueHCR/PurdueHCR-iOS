@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="16W-bW-AKg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="16W-bW-AKg">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -150,7 +150,7 @@
         <!--Sign Up View Controller-->
         <scene sceneID="gjK-U9-t3k">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="ilj-Rk-Dkf" customClass="SignUpViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpViewController" modalPresentationStyle="fullScreen" id="ilj-Rk-Dkf" customClass="SignUpViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ghq-pF-zWT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -253,6 +253,7 @@
                         <viewLayoutGuide key="safeArea" id="j9d-5n-MOa"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="y7Q-C6-YT2" id="rIn-jK-WjW"/>
                         <outlet property="emailField" destination="pvN-Ew-6q3" id="foU-af-XF1"/>
                         <outlet property="imageView" destination="h3W-NU-nmS" id="Qmh-Y3-eKK"/>
                         <outlet property="passwordField" destination="QyA-iQ-m68" id="jQG-46-KFu"/>
@@ -440,11 +441,11 @@
             <point key="canvasLocation" x="-1571" y="828"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="yTX-dg-aIZ"/>
+        <segue reference="7Rm-Z3-CLZ"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="emblem" width="1000" height="1000"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="yTX-dg-aIZ"/>
-        <segue reference="VrF-dY-ied"/>
-    </inferredMetricsTieBreakers>
 </document>

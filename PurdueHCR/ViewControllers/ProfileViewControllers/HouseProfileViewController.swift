@@ -26,6 +26,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     let padding : CGFloat = 12
     var permission: PointType.PermissionLevel?
     var houseImageView: UIImageView!
+    var showRewards = true
     
     var profileView: ProfileView?
     var compareView: HousePointsCompareView?
@@ -47,7 +48,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         tableView.refreshControl = refresher
         
         permission = PointType.PermissionLevel.init(rawValue: User.get(.permissionLevel) as! Int)!
-        if (permission == PointType.PermissionLevel.fhp) {
+        if (permission == PointType.PermissionLevel.faculty) {
             let navigationBar = navigationController!.navigationBar
 			self.navigationItem.rightBarButtonItems = nil
             let houseName = User.get(.house) as! String
@@ -110,6 +111,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 				self.present(alertController, animated: true, completion: .none)
 			}
 		}
+        showRewards = DataManager.sharedManager.systemPreferences!.showRewards
 		
         
         refreshData()
@@ -200,7 +202,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         }
         
         let row = indexPath.row
-        let isFHP = (permission == PointType.PermissionLevel.fhp)
+        let isFHP = (permission == PointType.PermissionLevel.faculty)
         
         if (row == 0 && !isFHP) {
             if (profileView == nil) {
@@ -249,7 +251,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: compareView, attribute: .height, multiplier: 1, constant: padding)
             NSLayoutConstraint.activate([cellHeight])
         }
-        else if ((!isFHP && row == 2) || (isFHP && row == 1)) {
+        else if (((!isFHP && row == 2) || (isFHP && row == 1)) && showRewards) {
             if (houseView == nil) {
                 houseView = HousePointsView.init()
                 houseView?.layer.shadowColor = UIColor.darkGray.cgColor
@@ -272,7 +274,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: houseView, attribute: .height, multiplier: 1, constant: padding)
             NSLayoutConstraint.activate([cellHeight])
         }
-        else if (isFHP && row == 2) {
+        else if (isFHP && row == 2 || (isFHP && row == 1 && !showRewards)) {
             if (topScorersView == nil) {
                 topScorersView = TopScorersView.init()
                 topScorersView?.layer.shadowColor = UIColor.darkGray.cgColor
@@ -302,7 +304,11 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if (showRewards) {
+            return 3
+        } else {
+            return 2
+        }
     }
     
     // Support conditional editing of the table view.
@@ -381,7 +387,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (permission == PointType.PermissionLevel.fhp) {
+        if (permission == PointType.PermissionLevel.faculty) {
             guard let height = navigationController?.navigationBar.frame.height else { return }
             moveAndResizeImage(for: height)
         }

@@ -10,6 +10,7 @@ import UIKit
 import Cely
 import Firebase
 import NotificationBannerSwift
+import FirebaseDynamicLinks
 
 @UIApplicationMain
  class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +22,7 @@ import NotificationBannerSwift
         
         //set up the project to connect with firebase and fetch the information on the houses so the login page has the information availible.
         FirebaseApp.configure()
+        DynamicLinks.performDiagnostics(completion: nil)
         DataManager.sharedManager.refreshHouses(onDone: {(house:[House]) in return})
         
         //Handle the user being logged in or not.
@@ -48,31 +50,92 @@ import NotificationBannerSwift
         return true
     }
     
-    // This method will handle the case where a URI is sent to the app from a link or a QR code
-    // the format is hcrpoint://addpoints/<linkId>
-    // Returns true if this app can handle this link
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        
-        guard let urlPath = url.path as String? , let urlHost  = url.host as String? else {
-            // Displays message when there is an issue with the uri link
-            let banner = NotificationBanner(title: "Failure", subtitle: "Link is not formatted correctly.", style: .danger)
+    func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) {
+        // Flutter adds /# in URL. This needs to be removed.
+        let modifiedURL = URL(string: (dynamicLink.url?.absoluteString.replacingOccurrences(of: "/#", with: ""))!)
+        guard let url = modifiedURL else {
+            print("Dynamic link object has no url.")
+            return
+        }
+        print("Your modified incoming link parameter is \(url.absoluteString)")
+
+        print("path", url.path)
+        print("path extension", url.pathExtension)
+        let components = url.pathComponents
+        if (components.count == 3) {
+            if (components[1] == "addpoints") {
+                DataManager.sharedManager.handlePointLink(id: components[2])
+            }
+            else if (components[1] == "createaccount") {
+                // Check that user is not already logged in
+                if (Cely.currentLoginStatus() == CelyStatus.loggedIn) {
+                    let banner = NotificationBanner(title: "Failure", subtitle: "Another user is already logged in.", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                    return
+                }
+                // Get usertype from code
+                guard let houseCodes = DataManager.sharedManager.getHouseCodes() else {
+                    let banner = NotificationBanner(title: "Failure", subtitle: "Unabled to confirm valid house code.", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                    return
+                }
+                for code in houseCodes {
+                    if (components[2] == code.code) {
+                        // Check that permission level is able to be created in app
+                        if (code.permissionLevel == PointType.PermissionLevel.rec.rawValue) {
+                            let banner = NotificationBanner(title: "Failure", subtitle: "REC account creation is not available in the app at this time.", style: .danger)
+                            banner.duration = 2
+                            banner.show()
+                        }
+                        else if (code.permissionLevel == PointType.PermissionLevel.faculty.rawValue) {
+                            let banner = NotificationBanner(title: "Failure", subtitle: "Faculty account creation is not available in the app at this time.", style: .danger)
+                            banner.duration = 2
+                            banner.show()
+                        }
+                        else if (code.permissionLevel == PointType.PermissionLevel.ea.rawValue) {
+                            let banner = NotificationBanner(title: "Failure", subtitle: "External Advisor account creation is not available in the app at this time.", style: .danger)
+                            banner.duration = 2
+                            banner.show()
+                        } else {
+                            let signUpStoryboard:UIStoryboard = UIStoryboard(name: "LoginStoryboard", bundle: nil)
+                            let signUpPage = signUpStoryboard.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+                            self.window?.setCurrentViewController(to: signUpPage)
+                            signUpPage.backButton.addTarget(signUpPage, action: #selector(signUpPage.goToLogin), for: .touchUpInside)
+                            SignUpViewController.houseCode = code.code
+                        }
+                    }
+                }
+                // Check that usertype can be created
+                // Take to page to create account with that code
+            }
+        } else {
+            let banner = NotificationBanner(title: "Failure", subtitle: "Illegal Link.", style: .danger)
             banner.duration = 2
             banner.show()
-            return false
         }
-        
-        // handles the link
-        if(urlHost == "addpoints"){
-            //this makes sure it has the format /<linkId>
-            let pathParts = urlPath.split(separator: "/")
-            if(pathParts.count == 1){
-                let linkID = pathParts[0].description.replacingOccurrences(of: "/", with: "")
-                DataManager.sharedManager.handlePointLink(id: linkID)
-                return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if let incomingURL = userActivity.referrerURL {
+            print("Incoming URL is \(incomingURL)")
+            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { (dynamicLink, err) in
+                guard err == nil else {
+                    print("Found an error! \(err!.localizedDescription)")
+                    return
+                }
+            
+                if let dynamicLink = dynamicLink {
+                    self.handleIncomingDynamicLink(dynamicLink)
+                }
             }
-            else{
-                // Issue with the link, so cause error
-                let banner = NotificationBanner(title: "Failure", subtitle: "Illegal Link.", style: .danger)
+            if (linkHandled) {
+                return true
+            } else {
+                // Displays message when there is an issue with the uri link
+                let banner = NotificationBanner(title: "Failure", subtitle: "Link is not formatted correctly.", style: .danger)
                 banner.duration = 2
                 banner.show()
                 return false
@@ -80,6 +143,58 @@ import NotificationBannerSwift
         }
         return false
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+      return application(app, open: url,
+                         sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+                         annotation: "")
+    }
+
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+      if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
+        // Handle the deep link. For example, show the deep-linked content or
+        // apply a promotional offer to the user's account.
+        // ...
+        print("In the source application open url function")
+        handleIncomingDynamicLink(dynamicLink)
+        return true
+      }
+      return false
+    }
+    
+    
+    // This method will handle the case where a URI is sent to the app from a link or a QR code
+    // the format is hcrpoint://addpoints/<linkId>
+    // Returns true if this app can handle this link
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+//
+//        guard let urlPath = url.path as String? , let urlHost  = url.host as String? else {
+//            // Displays message when there is an issue with the uri link
+//            let banner = NotificationBanner(title: "Failure", subtitle: "Link is not formatted correctly.", style: .danger)
+//            banner.duration = 2
+//            banner.show()
+//            return false
+//        }
+//
+//        // handles the link
+//        if(urlHost == "addpoints"){
+//            //this makes sure it has the format /<linkId>
+//            let pathParts = urlPath.split(separator: "/")
+//            if(pathParts.count == 1){
+//                let linkID = pathParts[0].description.replacingOccurrences(of: "/", with: "")
+//                DataManager.sharedManager.handlePointLink(id: linkID)
+//                return true
+//            }
+//            else{
+//                // Issue with the link, so cause error
+//                let banner = NotificationBanner(title: "Failure", subtitle: "Illegal Link.", style: .danger)
+//                banner.duration = 2
+//                banner.show()
+//                return false
+//            }
+//        }
+//        return false
+//    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

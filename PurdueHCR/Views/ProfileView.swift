@@ -53,7 +53,7 @@ class ProfileView: UIView {
         viewPointsButton.layer.cornerRadius = viewPointsButton.layer.frame.height / 2
 		
         let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
-		if (permissionLevel == PointType.PermissionLevel.fhp) {
+		if (permissionLevel == PointType.PermissionLevel.faculty) {
 			viewPointsButton.isEnabled = false
 			viewPointsButton.isHidden = true
 			totalPointsLabel.text = ""

@@ -163,7 +163,7 @@ class FirebaseHelper {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
-                    let parameters = ["point_type_id":log.type.pointID, "description":log.pointDescription, "date_occurred":date, "is_guaranteed_approval":preApproved.description] as [String : Any]
+                    let parameters = ["point_type_id":log.type.pointID, "description":log.pointDescription, "date_occurred":date] as [String : Any]
                     
                     AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                         switch response.result {
@@ -254,8 +254,7 @@ class FirebaseHelper {
                 let header = HTTPHeader(name: "Authorization", value: headerVal)
                 let headers = HTTPHeaders(arrayLiteral: header)
                 let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle")!
-                let parameters = ["approve":approved.description, "approver_id":User.get(.id)! as! String, "point_log_id":log.logID!] as [String : Any]
-                print("User ID IS: ", User.get(.id)! as! String)
+                let parameters = ["approve":approved.description, "point_log_id":log.logID!] as [String : Any]
                 
                 AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                     switch response.result {
@@ -1059,13 +1058,14 @@ class FirebaseHelper {
 		let ref: DocumentReference? = self.db.collection("SystemPreferences").document("Preferences")
 		ref?.getDocument { (document, error) in
 			if let document = document, document.exists {
-				let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
-				let houseEnabledMessage = document.data()!["houseEnabledMessage"] as! String
+                let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
+                let houseEnabledMessage = document.data()!["houseEnabledMessage"] as! String
+                let showRewards = document.data()!["ShowRewards"] as! Bool
 				let iosVersion = document.data()!["iOS_Version"] as! String
                 let suggestedPointIDs = document.data()!["suggestedPointIDs"] as! String
                 let competitionHiddenMessage = document.data()!["competitionHiddenMessage"] as! String
                 let isCompetitionVisible = document.data()!["isCompetitionVisible"] as! Bool
-                let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs, isCompetitionVisible: isCompetitionVisible, competitionHiddenMessage: competitionHiddenMessage)
+                let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, showRewards: showRewards, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs, isCompetitionVisible: isCompetitionVisible, competitionHiddenMessage: competitionHiddenMessage)
 				onDone(systemPreferences)
 			} else {
 				print("Error: Unabled to retrieve SystemPreferences information")

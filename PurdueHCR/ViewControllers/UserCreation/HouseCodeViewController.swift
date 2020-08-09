@@ -54,6 +54,11 @@ class HouseCodeViewController: UIViewController, UITextFieldDelegate {
 		self.view.addSubview(activityIndicator)
 		
 		self.hideKeyboardWhenTappedAround()
+        
+        // For when user has been created using link
+        if (SignUpViewController.houseCode != nil) {
+            codeField.text = SignUpViewController.houseCode
+        }
 		
 	}
     

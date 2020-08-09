@@ -32,6 +32,8 @@ class ViewEventTableViewController: UITableViewController {
         self.hostLabel.text = event?.house
         self.detailsLabel.text = event?.details
         
+        self.detailsLabel.text = "This is a really long description to test the ability of the row height to just keep expanding and expanding until it is large enough to handle a description that is as crazy long as this description is. "
+        
         if (going) {
             if #available(iOS 13.0, *) {
                 goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)

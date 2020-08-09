@@ -11,7 +11,7 @@
 
 import UIKit
 
-var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", points: 1, house: 1, description: "Eat snacks and chat with students and faculty", fullDate: "Sun, Sep 15 2019", time: "5:00 PM", ownerID: "1234567890")]
+var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", points: 1, house: "All Houses", details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", fullDate: "Sun, Sep 15 2019", time: "5:00 PM", ownerID: "1234567890")]
 
 var makeSection: Bool = true
 
@@ -130,7 +130,7 @@ class EventViewController: UITableViewController {
         cell.layer.cornerRadius = radius
         cell.layer.masksToBounds = true
         
-        //Creates vertical space between same-day events (no date in between them)
+        // Creates vertical space between same-day events (no date in between them)
         cell.layer.borderWidth = 4
         cell.layer.borderColor = UIColor.white.cgColor
                 
@@ -148,28 +148,28 @@ class EventViewController: UITableViewController {
             cell.eventPoints.text = "\(events[sectionIndex + indexPath.row].points) Points"
         }
         
-        //Setting background color based on who the event is for (by house)
+        // Setting background color based on who the event is for (by house)
         let color = events[sectionIndex + indexPath.row].house
-        if color == 1 { //All houses
-            cell.backgroundColor = UIColor(red: 233/255, green: 188/255, blue: 74/255, alpha: 1.0)
-        }
-        else if color == 2 { //Silver, Update Floor
-            cell.backgroundColor = UIColor(red: 88/255, green: 196/255, blue: 0/255, alpha: 1.0)
+        if color == "Silver" { //Silver, Update Floor
+            cell.houseColorView.backgroundColor = UIColor(red: 88/255, green: 196/255, blue: 0/255, alpha: 1.0)
 
         }
-        else if color == 3 { //Palladium, 3rd Floor
-            cell.backgroundColor = UIColor.lightGray
+        else if color == "Palladium" { //Palladium, 3rd Floor
+            cell.houseColorView.backgroundColor = UIColor.lightGray
         }
-        else if color == 4 { //Platinum, 4th Floor
-            cell.backgroundColor = UIColor(red: 0/255, green: 218/255, blue: 229/255, alpha: 1.0)
+        else if color == "Platinum" { //Platinum, 4th Floor
+            cell.houseColorView.backgroundColor = UIColor(red: 0/255, green: 218/255, blue: 229/255, alpha: 1.0)
         }
-        else if color == 5 { //Titanium, Update Floor
-            cell.backgroundColor = UIColor(red: 141/255, green: 113/255, blue: 226/255, alpha: 1.0)
+        else if color == "Titanium" { //Titanium, Update Floor
+            cell.houseColorView.backgroundColor = UIColor(red: 141/255, green: 113/255, blue: 226/255, alpha: 1.0)
 
         }
-        else if color == 6 { //Copper, Update Floor
-            cell.backgroundColor = UIColor(red: 247/255, green: 148/255, blue: 0/255, alpha: 1.0)
+        else if color == "Copper" { //Copper, Update Floor
+            cell.houseColorView.backgroundColor = UIColor(red: 247/255, green: 148/255, blue: 0/255, alpha: 1.0)
+        } else { // All Housesq
+            cell.houseColorView.backgroundColor = UIColor(red: 233/255, green: 188/255, blue: 74/255, alpha: 1.0)
         }
+        cell.houseColorView.layer.cornerRadius = cell.houseColorView.frame.width / 2
         cell.eventDescription.text = events[sectionIndex + indexPath.row].details
         return cell
     }

@@ -132,14 +132,16 @@ class RECRewardsTableViewController: UITableViewController {
     }
     
     @objc func refreshData(){
-        DataManager.sharedManager.refreshRewards { (rewards) in
-            self.rewards = rewards
-            DispatchQueue.main.async { [weak self] in
-                if(self != nil){
-                    self?.tableView.reloadData()
+        if (DataManager.sharedManager.systemPreferences!.showRewards) {
+            DataManager.sharedManager.refreshRewards { (rewards) in
+                self.rewards = rewards
+                DispatchQueue.main.async { [weak self] in
+                    if(self != nil){
+                        self?.tableView.reloadData()
+                    }
                 }
+                self.tableView.refreshControl?.endRefreshing()
             }
-            self.tableView.refreshControl?.endRefreshing()
         }
     }
     

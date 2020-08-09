@@ -125,7 +125,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     }
     // Check permission Level when USER is not REA/REC
     private func checkPermission(typePermission:Int, userPermission:PointType.PermissionLevel) ->Bool {
-        return ((userPermission == PointType.PermissionLevel.rhp && typePermission != 1) || (userPermission == PointType.PermissionLevel.fhp && typePermission == 3))
+        return ((userPermission == PointType.PermissionLevel.rhp && typePermission != 1) || (userPermission == PointType.PermissionLevel.faculty && typePermission == 3))
     }
 
     @IBAction func switchChanged(_ sender: UISwitch) {

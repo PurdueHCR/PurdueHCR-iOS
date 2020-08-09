@@ -172,6 +172,8 @@ PODS:
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
+  - Firebase/Analytics (6.16.0):
+    - Firebase/Core
   - Firebase/Auth (6.16.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.4.3)
@@ -180,6 +182,9 @@ PODS:
     - FirebaseAnalytics (= 6.2.2)
   - Firebase/CoreOnly (6.16.0):
     - FirebaseCore (= 6.6.1)
+  - Firebase/DynamicLinks (6.16.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 4.0.6)
   - Firebase/Firestore (6.16.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 1.10.0)
@@ -195,6 +200,7 @@ PODS:
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (= 0.3.9011)
+  - FirebaseAnalyticsInterop (1.5.0)
   - FirebaseAuth (6.4.3):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.6)
@@ -214,6 +220,9 @@ PODS:
     - GoogleUtilities/Logger (~> 6.5)
     - nanopb (~> 0.3.901)
   - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseDynamicLinks (4.0.8):
+    - FirebaseAnalyticsInterop (~> 1.3)
+    - FirebaseCore (~> 6.2)
   - FirebaseFirestore (1.10.0):
     - abseil/algorithm (= 0.20190808)
     - abseil/base (= 0.20190808)
@@ -306,8 +315,10 @@ DEPENDENCIES:
   - AZDropdownMenu
   - Cely
   - Charts
+  - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/DynamicLinks
   - Firebase/Firestore
   - Firebase/Storage
   - KDCircularProgress
@@ -326,11 +337,13 @@ SPEC REPOS:
     - Charts
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAnalyticsInterop
     - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreDiagnosticsInterop
+    - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseInstallations
     - FirebaseInstanceID
@@ -361,11 +374,13 @@ SPEC CHECKSUMS:
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   Firebase: 497158b816d0a86fc31babbd05546fcd7e6083ff
   FirebaseAnalytics: cf95d3aab897612783020fbd98401d5366f135ee
+  FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
   FirebaseAuth: 5ce2b03a3d7fe56b7a6e4c5ec7ff1522890b1d6f
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
   FirebaseCore: 85064903ed6c28e47fec9c7bd149d94ba1b6b6e7
   FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseDynamicLinks: 417dc6dbb6013233c77558290d73296f429656a6
   FirebaseFirestore: cee8f861d68dadce998876b78a4b75701bc94302
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
@@ -387,6 +402,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   ValueStepper: 8b120c72c8d1391cd874a427485e2e57fda1a0b9
 
-PODFILE CHECKSUM: cb3a176e058c732a88a4f950b681a44b59cad74e
+PODFILE CHECKSUM: 8b87e8116dd116c3018981df26c98543d32318cc
 
 COCOAPODS: 1.8.4
