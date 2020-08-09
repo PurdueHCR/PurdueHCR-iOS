@@ -19,11 +19,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var signUpButton: UIButton!
 	@IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var termsButton: UIButton!
+    @IBOutlet weak var privacyButton: UIButton!
     
     
     var fortyPercent = CGFloat(0.0)
     var lastChange = 0.0
     var houses:[House]?
+    
+    var uncheckedImage: UIImage?
+    var checkedImage: UIImage?
     
     // For use when creating account from link
     static var houseCode:String?
@@ -75,6 +80,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         //signUpButton.layer.borderWidth = 1
         //signUpButton.layer.borderColor = UIColor.black.cgColor
         
+        uncheckedImage = UIImage(named: "SF_circle_righthalf_fill")!.withRenderingMode(.alwaysTemplate)
+        checkedImage = UIImage(named: "SF_checkmark")!.withRenderingMode(.alwaysTemplate)
+        termsButton.setImage(uncheckedImage, for: .normal)
+        termsButton.tintColor = DefinedValues.systemBlue
+        privacyButton.setImage(uncheckedImage, for: .normal)
+        privacyButton.tintColor = DefinedValues.systemBlue
+        
         
     }
     
@@ -103,6 +115,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         else if ( !isValidEmail(testStr: email!)){
             self.notify(title: "Failed to Sign Up", subtitle: "Please enter a valid Purdue email address.", style: .danger)
+            self.signUpButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
+        }
+        else if (termsButton.currentImage == uncheckedImage) {
+            termsButton.tintColor = DefinedValues.systemRed
+            self.signUpButton.isEnabled = true
+            self.activityIndicator.stopAnimating()
+        }
+        else if (privacyButton.currentImage == uncheckedImage) {
+            privacyButton.tintColor = DefinedValues.systemRed
             self.signUpButton.isEnabled = true
             self.activityIndicator.stopAnimating()
         }
@@ -188,6 +210,36 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+    
+    @IBAction func selectTerms(_ sender: Any) {
+        if (termsButton.currentImage == uncheckedImage) {
+            termsButton.tintColor = DefinedValues.systemBlue
+            termsButton.setImage(checkedImage, for: .normal)
+        } else {
+            termsButton.setImage(uncheckedImage, for: .normal)
+        }
+    }
+    
+    @IBAction func selectPrivacyPolicy(_ sender: Any) {
+        if (privacyButton.currentImage == uncheckedImage) {
+            privacyButton.tintColor = DefinedValues.systemBlue
+            privacyButton.setImage(checkedImage, for: .normal)
+        } else {
+            privacyButton.setImage(uncheckedImage, for: .normal)
+        }
+    }
+    
+    @IBAction func openTerms(_ sender: Any) {
+        if let url = URL(string: "https://purduehcr.web.app/terms-and-conditions") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @IBAction func openPrivacyPolicy(_ sender: Any) {
+        if let url = URL(string: "https://purduehcr.web.app/privacy") {
+            UIApplication.shared.open(url)
+        }
     }
     
     /*

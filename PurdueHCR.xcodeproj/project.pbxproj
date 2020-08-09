@@ -241,6 +241,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40AA8A3C917F219109220032 /* HappyCodingSupport */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HappyCodingSupport;
+			sourceTree = "<group>";
+		};
 		54A6A3EE8AE04E29868B02EB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,6 +390,7 @@
 				D30FBEE220FC0433000DD221 /* Utils */,
 				D30FBEE020FC0403000DD221 /* ViewControllers */,
 				D3CC77CC210522CC00B88F03 /* Views */,
+				40AA8A3C917F219109220032 /* HappyCodingSupport */,
 			);
 			path = PurdueHCR;
 			sourceTree = "<group>";
@@ -729,9 +737,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -746,9 +758,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
