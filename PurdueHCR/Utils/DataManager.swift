@@ -295,8 +295,8 @@ class DataManager {
         return fbh.getDocumentReferenceFromID(id: id)
     }
     
-    func createQRCode(link:Link, onDone:@escaping(_ id:String?)->Void){
-        fbh.createQRCode(link: link, onDone: onDone)
+    func createQRCode(singleUse: Bool, pointID: Int, description: String, isEnabled:Bool, onDone:@escaping(_ code:[String:Any]?, _ err:Error?)->Void) {
+        fbh.createQRCode(singleUse: singleUse, pointID: pointID, description: description, isEnabled: isEnabled, onDone: onDone)
     }
     
     func handlePointLink(id:String) {

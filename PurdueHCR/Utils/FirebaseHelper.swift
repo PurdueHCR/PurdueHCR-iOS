@@ -29,14 +29,17 @@ class FirebaseHelper {
 	let MESSAGES = "Messages"
     
     // TEST URLS
+//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
 //    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
 //    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
 //    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
     
     // PRODUCTION URLS
+    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
     let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
     let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
     let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+
     
     init(){
         db = Firestore.firestore()
@@ -588,12 +591,19 @@ class FirebaseHelper {
         let linkRef = db.collection("Links").document(id)
         linkRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                let descr = document.data()!["Description"] as! String
-                let single = document.data()!["SingleUse"] as! Bool
-                let pointID = document.data()!["PointID"] as! Int
-                let enabled = document.data()!["Enabled"] as! Bool
+                let id = document.documentID
                 let archived = document.data()!["Archived"] as! Bool
-                let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID,enabled:enabled,archived:archived)
+                let claimedCount = document.data()!["ClaimedCount"] as! Int
+                let creatorID = document.data()!["CreatorID"] as! String
+                let descr = document.data()!["Description"] as! String
+                let dyLink = document.data()!["DynamicLink"] as! String
+                let enabled = document.data()!["Enabled"] as! Bool
+                let pointID = document.data()!["PointID"] as! Int
+                let pointDesc = document.data()!["PointTypeDescription"] as! String
+                let pointName = document.data()!["PointTypeName"] as! String
+                let pointVal = document.data()!["PointTypeValue"] as! Int
+                let single = document.data()!["SingleUse"] as! Bool
+                let link = Link(id: id, dynamicLink: dyLink, description: descr, singleUse: single, pointTypeID: pointID, pointTypeName: pointName, pointTypeDescription: pointDesc, pointTypeValue:pointVal, creatorID: creatorID, enabled:enabled, archived:archived, claimedCount: claimedCount)
                 onDone(link)
             } else {
                 print("Document does not exist")
@@ -753,22 +763,24 @@ class FirebaseHelper {
         })
     }
     
-    func createQRCode(link:Link,onDone:@escaping ( _ id:String?) -> Void){
-        let ref = db.collection("Links")
-        var linkID:DocumentReference?
-        linkID = ref.addDocument(data: [
-            "Description":link.description,
-            "PointID":link.pointTypeID,
-            "SingleUse":link.singleUse,
-            "CreatorID":User.get(.id) as! String,
-            "Enabled":link.enabled,
-            "Archived":link.archived])
-        {err in
-            if(err == nil){
-                onDone(linkID?.documentID)
-            }
-            else{
-                onDone(nil)
+    func createQRCode(singleUse:Bool, pointID:Int, description:String, isEnabled:Bool, onDone:@escaping ( _ code:[String : Any]?, _ err:Error?) -> Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(nil, err)
+                let banner = NotificationBanner(title: "Failure", subtitle: "Could not create QR code.", style: .danger)
+                banner.duration = 2
+                banner.show()
+            } else {
+                let headerVal = "Bearer " + (token ?? "")
+                let header = HTTPHeader(name: "Authorization", value: headerVal)
+                let headers = HTTPHeaders(arrayLiteral: header)
+                let url = URL(string: self.CREATE_QR_LINK)!
+                let params = ["single_use":singleUse.description, "point_id":pointID, "description":description, "is_enabled":isEnabled.description] as [String : Any]
+                AF.request(url, method: .post, parameters: params, headers: headers).validate().responseJSON { response in
+                    if let result = response.value as? [String : Any] {
+                        onDone(result, nil)
+                    }
+                }
             }
         }
     }
@@ -783,12 +795,18 @@ class FirebaseHelper {
                 var links = [Link]()
                 for document in querySnapshot!.documents {
                     let id = document.documentID
-                    let descr = document.data()["Description"] as! String
-                    let single = document.data()["SingleUse"] as! Bool
-                    let pointID = document.data()["PointID"] as! Int
-                    let enabled = document.data()["Enabled"] as! Bool
                     let archived = document.data()["Archived"] as! Bool
-                    let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID, enabled:enabled, archived:archived)
+                    let claimedCount = document.data()["ClaimedCount"] as! Int
+                    let creatorID = document.data()["CreatorID"] as! String
+                    let descr = document.data()["Description"] as! String
+                    let dyLink = document.data()["DynamicLink"] as! String
+                    let enabled = document.data()["Enabled"] as! Bool
+                    let pointID = document.data()["PointID"] as! Int
+                    let pointDesc = document.data()["PointTypeDescription"] as! String
+                    let pointName = document.data()["PointTypeName"] as! String
+                    let pointVal = document.data()["PointTypeValue"] as! Int
+                    let single = document.data()["SingleUse"] as! Bool
+                    let link = Link(id: id, dynamicLink: dyLink, description: descr, singleUse: single, pointTypeID: pointID, pointTypeName: pointName, pointTypeDescription: pointDesc, pointTypeValue:pointVal, creatorID: creatorID, enabled:enabled, archived:archived, claimedCount: claimedCount)
                     links.append(link)
                 }
                 onDone(links)

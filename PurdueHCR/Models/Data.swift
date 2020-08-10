@@ -391,35 +391,65 @@ class Link {
     var description:String
     var singleUse:Bool
     var pointTypeID:Int
+    var pointTypeDescription:String
+    var pointTypeName:String
+    var pointTypeValue:Int
     var enabled:Bool
     var archived:Bool
-    //Constructor for code from Database
-    init(id:String, description:String, singleUse:Bool, pointTypeID:Int, enabled:Bool, archived:Bool){
+    var creatorID:String
+    var dynamicLink:String
+    var claimedCount:Int
+    
+    // Constructor for code from Database
+    init(id:String, dynamicLink:String, description:String, singleUse:Bool, pointTypeID:Int, pointTypeName:String, pointTypeDescription:String, pointTypeValue:Int, creatorID:String, enabled:Bool, archived:Bool, claimedCount:Int) {
         self.id = id
         self.description = description
         self.singleUse = singleUse
         self.pointTypeID = pointTypeID
+        self.pointTypeDescription = pointTypeDescription
+        self.pointTypeName = pointTypeName
+        self.pointTypeValue = pointTypeValue
+        self.creatorID = creatorID
+        self.dynamicLink = dynamicLink
         self.enabled = enabled
         self.archived = archived
+        self.claimedCount = claimedCount
     }
-    //Constructor for when the qr code is created
-    init(description:String, singleUse:Bool, pointTypeID:Int){
+    
+    // Constructor for when the qr code is created
+    init(description:String, singleUse:Bool, pointTypeID:Int, pointTypeName:String, pointTypeDescription: String, pointTypeValue: Int) {
         self.id = ""
         self.description = description
         self.singleUse = singleUse
         self.pointTypeID = pointTypeID
+        self.pointTypeDescription = pointTypeDescription
+        self.pointTypeName = pointTypeName
+        self.pointTypeValue = pointTypeValue
+        self.creatorID = User.get(.id) as! String
+        self.dynamicLink = ""
         self.enabled = false
         self.archived = false
+        self.claimedCount = 0
     }
     
-    func getIOSDeepLink() -> String {
-        return "hcrpoint://addpoints/"+id
-        
+    // Constructor for code from API response
+    init(data:[String:Any]) {
+        print("data is", data)
+        self.id = data["id"] as! String
+        self.archived = data["archived"] as! Bool
+        self.creatorID = data["creatorId"] as! String
+        self.description = data["description"] as! String
+        self.enabled = true
+        self.pointTypeID = data["enabled"] as! Int
+        //self.pointTypeID = data["pointId"] as! Int
+        self.pointTypeName = data["pointTypeName"] as! String
+        self.pointTypeDescription = data["pointTypeDescription"] as! String
+        self.pointTypeValue = data["pointTypeValue"] as! Int
+        self.singleUse = data["singleUse"] as! Bool
+        self.dynamicLink = data["dynamicLink"] as! String
+        self.claimedCount = data["claimedCount"] as! Int
     }
-    
-    func getAndroidDeepLink() -> String {
-        return "intent://addpoints/"+id+"#Intent;scheme=hcrpoint;package=com.hcrpurdue.jason.hcrhousepoints;end"
-    }
+
 }
 
 class LinkList {
