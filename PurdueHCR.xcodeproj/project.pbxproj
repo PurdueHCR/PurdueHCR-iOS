@@ -10,9 +10,8 @@
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
 		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
-		B52A53F524DF5B32007F6886 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B52A53F424DF5B32007F6886 /* GoogleService-Info.plist */; };
+		B51BDD7724E0C222003EA6AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B51BDD7624E0C222003EA6AE /* GoogleService-Info.plist */; };
 		B52A53F824DF72F5007F6886 /* PurdueHCR.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B55399FE23E22CB100D62965 /* PurdueHCR.entitlements */; };
-		B52A53F924DF7349007F6886 /* PurdueHCRRelease.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B52A53F124DF441A007F6886 /* PurdueHCRRelease.entitlements */; };
 		B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */; };
 		B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */; };
 		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
@@ -123,8 +122,7 @@
 		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		B50E6C9122F1202A00505AA3 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCRDebug.entitlements; sourceTree = "<group>"; };
-		B52A53F124DF441A007F6886 /* PurdueHCRRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCRRelease.entitlements; sourceTree = "<group>"; };
-		B52A53F424DF5B32007F6886 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B51BDD7624E0C222003EA6AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestRECSystemPreferences.swift; sourceTree = "<group>"; };
 		B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointsTableViewController.swift; sourceTree = "<group>"; };
 		B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseCodeViewController.swift; sourceTree = "<group>"; };
@@ -376,9 +374,8 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
+				B51BDD7624E0C222003EA6AE /* GoogleService-Info.plist */,
 				B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */,
-				B52A53F124DF441A007F6886 /* PurdueHCRRelease.entitlements */,
-				B52A53F424DF5B32007F6886 /* GoogleService-Info.plist */,
 				B55399FE23E22CB100D62965 /* PurdueHCR.entitlements */,
 				D30FC90120DF35D800201E74 /* AppDelegate.swift */,
 				D30FC90F20DF35D900201E74 /* Info.plist */,
@@ -692,7 +689,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B52A53F924DF7349007F6886 /* PurdueHCRRelease.entitlements in Resources */,
 				B52A53F824DF72F5007F6886 /* PurdueHCR.entitlements in Resources */,
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
 				D3355C8F214A25B10037556C /* Profile.storyboard in Resources */,
@@ -712,8 +708,8 @@
 				B5ED710A24A7D71E00080A52 /* Events.storyboard in Resources */,
 				B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */,
 				D749F37623399F0600410434 /* SuggestedPointsView.xib in Resources */,
+				B51BDD7724E0C222003EA6AE /* GoogleService-Info.plist in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
-				B52A53F524DF5B32007F6886 /* GoogleService-Info.plist in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
 			);

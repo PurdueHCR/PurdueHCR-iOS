@@ -211,7 +211,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emblem" translatesAutoresizingMaskIntoConstraints="NO" id="h3W-NU-nmS">
                                 <rect key="frame" x="119.66666666666669" y="94" width="175" height="175"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="175" id="U7e-uP-ZPe"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="175" id="979-ty-vpe"/>
+                                    <constraint firstAttribute="height" priority="250" constant="175" id="U7e-uP-ZPe"/>
                                     <constraint firstAttribute="width" secondItem="h3W-NU-nmS" secondAttribute="height" multiplier="1:1" id="xFw-nn-Zk9"/>
                                 </constraints>
                             </imageView>
@@ -250,14 +251,14 @@
                                     <action selector="selectPrivacyPolicy:" destination="ilj-Rk-Dkf" eventType="touchUpInside" id="R2o-A6-JwE"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I have read and accept the" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KzN-Dx-jfn">
-                                <rect key="frame" x="47" y="484" width="128" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="I have read and accept the" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KzN-Dx-jfn">
+                                <rect key="frame" x="47" y="679" width="128" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I have read and accept the" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knj-Cb-0RT">
-                                <rect key="frame" x="47" y="510.66666666666674" width="128" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="I have read and accept the" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knj-Cb-0RT">
+                                <rect key="frame" x="47" y="710" width="128" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -288,6 +289,7 @@
                             <constraint firstItem="mCh-EH-SkA" firstAttribute="centerX" secondItem="ghq-pF-zWT" secondAttribute="centerX" id="7gL-Ih-xbl"/>
                             <constraint firstItem="pvN-Ew-6q3" firstAttribute="leading" secondItem="j9d-5n-MOa" secondAttribute="leading" constant="20" id="Fct-l2-naG"/>
                             <constraint firstItem="QyA-iQ-m68" firstAttribute="top" secondItem="pvN-Ew-6q3" secondAttribute="bottom" constant="10" id="GZA-x2-dw3"/>
+                            <constraint firstItem="knj-Cb-0RT" firstAttribute="top" secondItem="KzN-Dx-jfn" secondAttribute="bottom" constant="10" id="JOx-uL-A9b"/>
                             <constraint firstItem="KzN-Dx-jfn" firstAttribute="centerY" secondItem="MsZ-qn-cb6" secondAttribute="centerY" id="Kkc-FO-whI"/>
                             <constraint firstItem="knj-Cb-0RT" firstAttribute="centerY" secondItem="8DF-RJ-UuN" secondAttribute="centerY" id="OEV-lM-6OU"/>
                             <constraint firstItem="y7Q-C6-YT2" firstAttribute="top" secondItem="mCh-EH-SkA" secondAttribute="bottom" id="RRY-vP-tNl"/>
@@ -311,6 +313,7 @@
                             <constraint firstItem="j9d-5n-MOa" firstAttribute="bottom" secondItem="y7Q-C6-YT2" secondAttribute="bottom" constant="20" id="vjI-Te-onk"/>
                             <constraint firstItem="MsZ-qn-cb6" firstAttribute="top" secondItem="haG-W2-VO7" secondAttribute="bottom" constant="10" id="wXd-FO-SNQ"/>
                             <constraint firstItem="j9d-5n-MOa" firstAttribute="trailing" secondItem="pvN-Ew-6q3" secondAttribute="trailing" constant="20" id="wYp-JU-7ue"/>
+                            <constraint firstItem="mCh-EH-SkA" firstAttribute="top" relation="greaterThanOrEqual" secondItem="knj-Cb-0RT" secondAttribute="bottom" constant="20" id="wa7-9c-xiy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="j9d-5n-MOa"/>
                     </view>

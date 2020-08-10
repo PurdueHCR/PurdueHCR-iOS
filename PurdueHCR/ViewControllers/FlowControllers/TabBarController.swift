@@ -28,7 +28,7 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
             
-            viewControllers.append(linkEventViewController())
+            //viewControllers.append(linkEventViewController())
         }
         else if (p == 1){
             // RHP Controllers

@@ -28,6 +28,16 @@ class FirebaseHelper {
 	let USER_ID = "UserID"
 	let MESSAGES = "Messages"
     
+    // TEST URLS
+//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
+//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+    
+    // PRODUCTION URLS
+    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+    
     init(){
         db = Firestore.firestore()
         storage = Storage.storage()
@@ -159,7 +169,7 @@ class FirebaseHelper {
                     let headerVal = "Bearer " + (token!)
                     let header = HTTPHeader(name: "Authorization", value: headerVal)
                     let headers = HTTPHeaders(arrayLiteral: header)
-                    let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint")!
+                    let url = URL(string: self.SUBMIT_URL)!
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
@@ -253,7 +263,7 @@ class FirebaseHelper {
                 let headerVal = "Bearer " + (token!)
                 let header = HTTPHeader(name: "Authorization", value: headerVal)
                 let headers = HTTPHeaders(arrayLiteral: header)
-                let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle")!
+                let url = URL(string: self.HANDLE_URL)!
                 let parameters = ["approve":approved.description, "point_log_id":log.logID!] as [String : Any]
                 
                 AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -994,7 +1004,7 @@ class FirebaseHelper {
             let headerVal = "Bearer " + (token ?? "")
             let header = HTTPHeader(name: "Authorization", value: headerVal)
             let headers = HTTPHeaders(arrayLiteral: header)
-            let url = URL(string: "http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank")!
+            let url = URL(string: self.RANK_URL)!
             AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
                 if let result = response.value as? [String : Int] {
                     onDone(result["houseRank"], result["semesterRank"], nil)
