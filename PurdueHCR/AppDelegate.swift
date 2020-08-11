@@ -51,8 +51,12 @@ import FirebaseDynamicLinks
     }
     
     func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) {
+        guard let testExist = dynamicLink.url else {
+            print("Dynamic link object has no url.")
+            return
+        }
         // Flutter adds /# in URL. This needs to be removed.
-        let modifiedURL = URL(string: (dynamicLink.url?.absoluteString.replacingOccurrences(of: "/#", with: ""))!)
+        let modifiedURL = URL(string: (dynamicLink.url!.absoluteString.replacingOccurrences(of: "/#", with: "")))
         guard let url = modifiedURL else {
             print("Dynamic link object has no url.")
             return

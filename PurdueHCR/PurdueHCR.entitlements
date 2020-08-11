@@ -5,8 +5,6 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:purdue-hcr-test.web.app</string>
-		<string>applinks:DecodeProgramming.HCRPoint.app.goo.gl</string>
-		<string>applinks:hcrpoint.page.link</string>
 	</array>
 </dict>
 </plist>
