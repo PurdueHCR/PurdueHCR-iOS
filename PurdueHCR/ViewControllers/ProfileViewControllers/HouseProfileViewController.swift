@@ -26,6 +26,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     let padding : CGFloat = 12
     var permission: PointType.PermissionLevel?
     var houseImageView: UIImageView!
+    var showRewards = true
     
     var profileView: ProfileView?
     var compareView: HousePointsCompareView?
@@ -33,25 +34,6 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     var topScorersView: TopScorersView?
    
     var messageLogs = [PointLog]()
-
-    // TODO: Move this to bottom and clean it up
-    /// WARNING: Change these constants according to your project's design
-    private struct Const {
-        /// Image height/width for Large NavBar state
-        static let ImageSizeForLargeState: CGFloat = 40
-        /// Margin from right anchor of safe area to right anchor of Image
-        static let ImageRightMargin: CGFloat = 16
-        /// Margin from bottom anchor of NavBar to bottom anchor of Image for Large NavBar state
-        static let ImageBottomMarginForLargeState: CGFloat = 12
-        /// Margin from bottom anchor of NavBar to bottom anchor of Image for Small NavBar state
-        static let ImageBottomMarginForSmallState: CGFloat = 6
-        /// Image height/width for Small NavBar state
-        static let ImageSizeForSmallState: CGFloat = 32
-        /// Height of NavBar for Small state. Usually it's just 44
-        static let NavBarHeightSmallState: CGFloat = 44
-        /// Height of NavBar for Large state. Usually it's just 96.5 but if you have a custom font for the title, please make sure to edit this value since it changes the height for Large state of NavBar
-        static let NavBarHeightLargeState: CGFloat = 96.5
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +48,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         tableView.refreshControl = refresher
         
         permission = PointType.PermissionLevel.init(rawValue: User.get(.permissionLevel) as! Int)!
-        if (permission == PointType.PermissionLevel.fhp) {
+        if (permission == PointType.PermissionLevel.faculty) {
             let navigationBar = navigationController!.navigationBar
 			self.navigationItem.rightBarButtonItems = nil
             let houseName = User.get(.house) as! String
@@ -129,6 +111,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 				self.present(alertController, animated: true, completion: .none)
 			}
 		}
+        showRewards = DataManager.sharedManager.systemPreferences!.showRewards
 		
         
         refreshData()
@@ -219,7 +202,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         }
         
         let row = indexPath.row
-        let isFHP = (permission == PointType.PermissionLevel.fhp)
+        let isFHP = (permission == PointType.PermissionLevel.faculty)
         
         if (row == 0 && !isFHP) {
             if (profileView == nil) {
@@ -268,7 +251,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: compareView, attribute: .height, multiplier: 1, constant: padding)
             NSLayoutConstraint.activate([cellHeight])
         }
-        else if ((!isFHP && row == 2) || (isFHP && row == 1)) {
+        else if (((!isFHP && row == 2) || (isFHP && row == 1)) && showRewards) {
             if (houseView == nil) {
                 houseView = HousePointsView.init()
                 houseView?.layer.shadowColor = UIColor.darkGray.cgColor
@@ -291,7 +274,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: houseView, attribute: .height, multiplier: 1, constant: padding)
             NSLayoutConstraint.activate([cellHeight])
         }
-        else if (isFHP && row == 2) {
+        else if (isFHP && row == 2 || (isFHP && row == 1 && !showRewards)) {
             if (topScorersView == nil) {
                 topScorersView = TopScorersView.init()
                 topScorersView?.layer.shadowColor = UIColor.darkGray.cgColor
@@ -321,7 +304,11 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if (showRewards) {
+            return 3
+        } else {
+            return 2
+        }
     }
     
     // Support conditional editing of the table view.
@@ -400,7 +387,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (permission == PointType.PermissionLevel.fhp) {
+        if (permission == PointType.PermissionLevel.faculty) {
             guard let height = navigationController?.navigationBar.frame.height else { return }
             moveAndResizeImage(for: height)
         }
@@ -433,6 +420,24 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         houseImageView.transform = CGAffineTransform.identity
             .scaledBy(x: scale, y: scale)
             .translatedBy(x: xTranslation, y: yTranslation)
+    }
+    
+    /// WARNING: Change these constants according to your project's design
+    private struct Const {
+        /// Image height/width for Large NavBar state
+        static let ImageSizeForLargeState: CGFloat = 40
+        /// Margin from right anchor of safe area to right anchor of Image
+        static let ImageRightMargin: CGFloat = 16
+        /// Margin from bottom anchor of NavBar to bottom anchor of Image for Large NavBar state
+        static let ImageBottomMarginForLargeState: CGFloat = 12
+        /// Margin from bottom anchor of NavBar to bottom anchor of Image for Small NavBar state
+        static let ImageBottomMarginForSmallState: CGFloat = 6
+        /// Image height/width for Small NavBar state
+        static let ImageSizeForSmallState: CGFloat = 32
+        /// Height of NavBar for Small state. Usually it's just 44
+        static let NavBarHeightSmallState: CGFloat = 44
+        /// Height of NavBar for Large state. Usually it's just 96.5 but if you have a custom font for the title, please make sure to edit this value since it changes the height for Large state of NavBar
+        static let NavBarHeightLargeState: CGFloat = 96.5
     }
     
     @objc func reportBug(sender: UIButton!) {

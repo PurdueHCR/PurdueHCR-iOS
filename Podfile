@@ -8,12 +8,15 @@ target 'PurdueHCR' do
   pod 'Firebase/Storage'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'Firebase/DynamicLinks'
+  pod 'Firebase/Analytics'
   pod 'KDCircularProgress'
   pod 'Charts'
   pod 'NotificationBannerSwift'
   pod 'AZDropdownMenu'
   pod 'PopupKit'
   pod 'SnapKit'
+  pod 'Alamofire'
 end
 
 target 'PurdueHCRUITests' do
@@ -25,10 +28,12 @@ target 'PurdueHCRUITests' do
     pod 'Firebase/Storage'
     pod 'Firebase/Firestore'
     pod 'Firebase/Auth'
+    pod 'Firebase/DynamicLinks'
+    pod 'Firebase/Analytics'
     pod 'KDCircularProgress'
     pod 'Charts'
     pod 'NotificationBannerSwift'
     pod 'AZDropdownMenu'
     pod 'PopupKit'
-
+    pod 'Alamofire'
 end

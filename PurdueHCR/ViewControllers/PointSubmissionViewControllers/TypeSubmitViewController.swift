@@ -21,6 +21,7 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 	@IBOutlet weak var datePicker: UIDatePicker!
 	@IBOutlet weak var topView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
 	
     var type:PointType?
@@ -45,8 +46,8 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         descriptionField.layer.borderColor = UIColor.lightGray.cgColor
         descriptionField.layer.borderWidth = 1
 		//descriptionField.becomeFirstResponder()
-		submitButton.layer.cornerRadius = 10
-		
+        submitButton.layer.cornerRadius = submitButton.frame.height / 2
+        
         fortyPercent = self.view.frame.size.height * 0.45
         
 		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
@@ -85,20 +86,28 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
     }
     
 	@IBAction func submit(_ sender: Any) {
-        submitButton.isEnabled = false;
+        submitButton.isEnabled = false
+        submitButton.backgroundColor = UIColor.gray
+        activityIndicator.isHidden = false
         guard let description = descriptionField.text, !description.isEmpty, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else{
             notify(title: "Failure", subtitle: "Please enter a description", style: .danger)
-            submitButton.isEnabled = true;
+            submitButton.isEnabled = true
+            submitButton.backgroundColor = self.view.tintColor
+            activityIndicator.isHidden = true
             return
         }
         guard let pointType = type else{
             notify(title: "Failure", subtitle: "Please reselect your point type", style: .danger)
-            submitButton.isEnabled = true;
+            submitButton.isEnabled = true
+            submitButton.backgroundColor = self.view.tintColor
+            activityIndicator.isHidden = true
             return
         }
         if(description == placeholder){
             notify(title: "Failure", subtitle: "Please tell us more about what you did!", style: .danger)
-            submitButton.isEnabled = true;
+            submitButton.isEnabled = true
+            submitButton.backgroundColor = self.view.tintColor
+            activityIndicator.isHidden = true
             return
         }
         submitPointLog(pointType: pointType, logDescription: description)
@@ -120,30 +129,19 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         let floor = User.get(.floorID) as! String
 		let residentId = User.get(.id) as! String
 		
-		let dateOccurred = Timestamp.init(date: datePicker.date)
+        let dateOccurred = Timestamp.init(date: datePicker.date)
         let pointLog = PointLog(pointDescription: logDescription, firstName: firstName, lastName: lastName, type: pointType, floorID: floor, residentId: residentId, dateOccurred: dateOccurred)
 		DataManager.sharedManager.writePoints(log: pointLog, preApproved: preApproved) { (err:Error?) in
             if (err != nil) {
-                if(err!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
-                    self.notify(title: "Failed to submit", subtitle: "Point Type is no longer enabled.", style: .danger)
-                }
-                else{
-                    self.notify(title: "Failed to submit", subtitle: "Database Error.", style: .danger)
-                    print("Error in posting: ",err!.localizedDescription)
-                }
-                
-                self.submitButton.isEnabled = true;
-                return
+                self.submitButton.isEnabled = true
+                self.submitButton.backgroundColor = self.view.tintColor
+                self.activityIndicator.isHidden = true
+            } else {
+                self.navigationController?.popViewController(animated: true)
             }
-			
+            
         }
-		self.navigationController?.popViewController(animated: true)
-		if(preApproved){
-			self.notify(title: "Way to Go RHP", subtitle: "Congrats, \(pointLog.type.pointValue) points submitted.", style: .success)
-		}
-		else{
-			self.notify(title: "Submitted for approval!", subtitle: pointLog.pointDescription, style: .success)
-		}
+        
     }
 
 	func textViewDidChangeSelection(_ textView: UITextView) {
@@ -193,8 +191,8 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
     }
     
     func moveTextView(textView:UITextView, up:Bool){
-        if(up && textView.frame.minY > self.fortyPercent){
-            let movement = self.fortyPercent - textView.frame.minY
+        if(up && textView.frame.maxY > self.fortyPercent){
+            let movement = self.fortyPercent - textView.frame.maxY
             self.lastChange = Double(movement)
             UIView.beginAnimations("TextFieldMove", context: nil)
             UIView.setAnimationBeginsFromCurrentState(true)

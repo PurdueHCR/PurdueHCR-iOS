@@ -138,7 +138,7 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
 			setPermissionLevel(value: .rec)
 		}
         else if(self.permissionSlider.value > 2.5){
-            setPermissionLevel(value: .fhp)
+            setPermissionLevel(value: .faculty)
         }
 
     }
@@ -170,7 +170,7 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
         else if(value == PointType.PermissionLevel.rhp){
             permissionLabel.attributedText = rhpString
         }
-        else if(value == PointType.PermissionLevel.fhp){
+        else if(value == PointType.PermissionLevel.faculty){
             permissionLabel.attributedText = facultyString
         }
         else{

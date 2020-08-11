@@ -83,23 +83,24 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
 	
     @IBAction func generateQRCodes(_ sender: Any) {
         self.generateButton.isEnabled = false;
-        if(descriptionTextView.text == "" || descriptionTextView.text == "Enter point description here."){
+        if (descriptionTextView.text == "" || descriptionTextView.text == "Enter point description here.") {
             notify(title: "Failed to create QR Code", subtitle: "Please enter a description of your event.", style: .danger)
             self.generateButton.isEnabled = true;
-        }
-        else {
-            let link = Link(description: descriptionTextView.text, singleUse: !(multiUseSwitch.isOn), pointTypeID: selectedPoint!.pointID)
-            DataManager.sharedManager.createQRCode(link: link, onDone: {(id:String?) in
-                guard let linkID = id else{
-                    self.notify(title: "Failure", subtitle: "Could not create QR Code", style: .danger)
+        } else {
+            DataManager.sharedManager.createQRCode(singleUse: !(multiUseSwitch.isOn), pointID: selectedPoint!.pointID, description: descriptionTextView.text, isEnabled: true) { (code, err) in
+                if (err != nil) {
+                    print("Error: Unabled to create QR code. \(err?.localizedDescription)")
+                    // TODO: Fix race condition will cause this to appear even when it goes on
                     self.generateButton.isEnabled = true;
                     return
+                } else {
+                    // set link and do this method....
+                    self.link = Link(data: code!)
+                    self.appendMethod!(self.link!)
+                    self.performSegue(withIdentifier: "QR_Generate", sender: self)
                 }
-                link.id = linkID
-                self.link = link
-                self.appendMethod!(link)
-                self.performSegue(withIdentifier: "QR_Generate", sender: self)
-            })
+                
+            }
         }
     }
     
@@ -125,7 +126,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     }
     // Check permission Level when USER is not REA/REC
     private func checkPermission(typePermission:Int, userPermission:PointType.PermissionLevel) ->Bool {
-        return ((userPermission == PointType.PermissionLevel.rhp && typePermission != 1) || (userPermission == PointType.PermissionLevel.fhp && typePermission == 3))
+        return ((userPermission == PointType.PermissionLevel.rhp && typePermission != 1) || (userPermission == PointType.PermissionLevel.faculty && typePermission == 3))
     }
 
     @IBAction func switchChanged(_ sender: UISwitch) {

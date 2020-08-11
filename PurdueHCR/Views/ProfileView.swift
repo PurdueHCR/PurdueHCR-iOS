@@ -53,7 +53,7 @@ class ProfileView: UIView {
         viewPointsButton.layer.cornerRadius = viewPointsButton.layer.frame.height / 2
 		
         let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
-		if (permissionLevel == PointType.PermissionLevel.fhp) {
+		if (permissionLevel == PointType.PermissionLevel.faculty) {
 			viewPointsButton.isEnabled = false
 			viewPointsButton.isHidden = true
 			totalPointsLabel.text = ""
@@ -97,9 +97,14 @@ class ProfileView: UIView {
         
         isCompetitionVisible = DataManager.sharedManager.systemPreferences!.isCompetitionVisible
         if (isCompetitionVisible) {
-            DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank) in
-                 self.rankNumberLabel.text = "#" + houseRank.description
+            DataManager.sharedManager.getHouseRank(residentID: User.get(.id) as! String, house: User.get(.house) as! String) { (houseRank, semesterRank, err) in
+                if let err = err {
+                    print(err.localizedDescription)
+                } else {
+                    self.rankNumberLabel.text = "#" + houseRank!.description
+                }
             }
+            
         } else {
             self.rankNumberLabel.text = "🙈"
         }

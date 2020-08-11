@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAC-u5-ZHN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAC-u5-ZHN">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -305,6 +305,12 @@
                                             <action selector="saveToCameraRoll:" destination="oaG-gE-l7h" eventType="touchUpInside" id="5td-6C-n1S"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Times Used:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2B-Ag-b1q">
+                                        <rect key="frame" x="8" y="610" width="95.666666666666671" height="20.333333333333371"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="SGc-Wc-EST" firstAttribute="trailing" secondItem="icz-Ou-EmI" secondAttribute="trailingMargin" id="13F-Dl-fpr"/>
@@ -314,10 +320,10 @@
                                     <constraint firstItem="snk-oM-mKz" firstAttribute="top" secondItem="icz-Ou-EmI" secondAttribute="topMargin" id="3fu-5C-VWy"/>
                                     <constraint firstItem="ucx-QO-Zpz" firstAttribute="centerY" secondItem="6XC-f3-CXh" secondAttribute="centerY" id="5lA-VM-DBp"/>
                                     <constraint firstItem="ucx-QO-Zpz" firstAttribute="top" secondItem="98z-fR-2Y7" secondAttribute="bottom" constant="8" symbolic="YES" id="6Ca-Tz-uO8"/>
+                                    <constraint firstAttribute="bottom" secondItem="M2B-Ag-b1q" secondAttribute="bottom" constant="70" id="A1X-rT-JGA"/>
                                     <constraint firstItem="6XC-f3-CXh" firstAttribute="top" secondItem="98z-fR-2Y7" secondAttribute="bottom" constant="16" id="H6Z-ck-8U6"/>
                                     <constraint firstItem="rXG-5E-Gc2" firstAttribute="top" secondItem="snk-oM-mKz" secondAttribute="bottom" constant="23" id="Pyg-pp-qGv"/>
                                     <constraint firstItem="snk-oM-mKz" firstAttribute="centerX" secondItem="icz-Ou-EmI" secondAttribute="centerX" id="Rcw-M3-zRh"/>
-                                    <constraint firstAttribute="bottom" secondItem="3U2-1o-BnY" secondAttribute="bottom" constant="70" id="U9Q-py-ELK"/>
                                     <constraint firstItem="SGc-Wc-EST" firstAttribute="trailing" secondItem="Ev4-ze-7Yc" secondAttribute="trailing" id="VYD-xE-GnN"/>
                                     <constraint firstItem="ucx-QO-Zpz" firstAttribute="leading" secondItem="3U2-1o-BnY" secondAttribute="leading" id="Xz2-bs-z9O"/>
                                     <constraint firstItem="98z-fR-2Y7" firstAttribute="trailing" secondItem="6XC-f3-CXh" secondAttribute="trailing" id="Y44-R0-n56"/>
@@ -328,8 +334,10 @@
                                     <constraint firstItem="SGc-Wc-EST" firstAttribute="top" secondItem="rXG-5E-Gc2" secondAttribute="bottom" constant="29" id="ij3-0w-vvt"/>
                                     <constraint firstItem="9RX-fk-BN8" firstAttribute="leading" secondItem="3U2-1o-BnY" secondAttribute="trailing" constant="17" id="kl2-gX-TLh"/>
                                     <constraint firstItem="Ev4-ze-7Yc" firstAttribute="leading" secondItem="98z-fR-2Y7" secondAttribute="leading" id="lRN-yr-1gM"/>
+                                    <constraint firstItem="M2B-Ag-b1q" firstAttribute="leading" secondItem="ucx-QO-Zpz" secondAttribute="leading" id="mVz-UB-ynm"/>
                                     <constraint firstItem="rXG-5E-Gc2" firstAttribute="centerX" secondItem="SGc-Wc-EST" secondAttribute="centerX" id="mfc-Cw-Vha"/>
                                     <constraint firstItem="3U2-1o-BnY" firstAttribute="centerY" secondItem="9RX-fk-BN8" secondAttribute="centerY" id="n2d-RQ-PVW"/>
+                                    <constraint firstItem="M2B-Ag-b1q" firstAttribute="top" secondItem="3U2-1o-BnY" secondAttribute="bottom" constant="8" symbolic="YES" id="oUk-la-BIT"/>
                                     <constraint firstItem="98z-fR-2Y7" firstAttribute="top" secondItem="Ev4-ze-7Yc" secondAttribute="bottom" constant="15" id="qpQ-6f-rZv"/>
                                     <constraint firstItem="Ev4-ze-7Yc" firstAttribute="top" secondItem="SGc-Wc-EST" secondAttribute="bottom" constant="13" id="qtx-IQ-560"/>
                                     <constraint firstItem="SGc-Wc-EST" firstAttribute="leading" secondItem="Ev4-ze-7Yc" secondAttribute="leading" id="rAD-t6-mR3"/>
@@ -356,6 +364,7 @@
                         <outlet property="qrCodeDescriptionTextView" destination="SGc-Wc-EST" id="jx2-Qq-ZAy"/>
                         <outlet property="qrImageView" destination="rXG-5E-Gc2" id="E7y-1D-XdX"/>
                         <outlet property="saveToPhotosButton" destination="98z-fR-2Y7" id="MOW-tN-8Ki"/>
+                        <outlet property="timesUsedLabel" destination="M2B-Ag-b1q" id="adI-Ar-GVR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="spd-mx-as0" userLabel="First Responder" sceneMemberID="firstResponder"/>

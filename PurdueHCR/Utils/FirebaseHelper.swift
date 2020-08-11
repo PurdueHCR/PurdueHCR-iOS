@@ -8,6 +8,8 @@
 
 import Foundation
 import Firebase
+import Alamofire
+import NotificationBannerSwift
 
 
 class FirebaseHelper {
@@ -25,6 +27,19 @@ class FirebaseHelper {
     let FLOOR_ID = "FloorID"
 	let USER_ID = "UserID"
 	let MESSAGES = "Messages"
+    
+    // TEST URLS
+//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
+//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+    
+    // PRODUCTION URLS
+    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
+    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+
     
     init(){
         db = Firestore.firestore()
@@ -117,7 +132,7 @@ class FirebaseHelper {
     ///   - house: If the house is different than the saved house for the user (Used for REC Awarding points)
     ///   - isRECGrantingAward: Boolean to denote that this point is being added by the RHP
     ///   - onDone: Closure function the be called once the code hits an error or finishs. err is nil if no errors are found.
-    func addPointLog(log:PointLog, documentID:String = "", preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+    func addPointLog(log:PointLog, documentID:String = "", preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, onDone: @escaping (_ err:Error?)->Void){
         var ref: DocumentReference? = nil
         //If point type is disabled and it is not an REC granting an award, warn that it is disabled
         if(!log.type.isEnabled && !isRECGrantingAward){
@@ -131,25 +146,78 @@ class FirebaseHelper {
         
         if(documentID == "")
         {
-            // write the document to the HOUSE table and save the reference
-			let data = log.convertToDict()
-			var ref: DocumentReference? = nil
-			ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: data, completion: { err in
-                if ( err == nil){
-					if (preApproved) {
-						//OnDone will be called in updateHouseAndUserPoints
-						self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
-                        //Add message to pointLog does not require us to wait
-						self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref!.documentID)
-					}
-                    else{
-                        onDone(nil)
-                    }
-				} else{
+//            // write the document to the HOUSE table and save the reference
+//			let data = log.convertToDict()
+//			var ref: DocumentReference? = nil
+//			ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).addDocument(data: data, completion: { err in
+//                if ( err == nil){
+//					if (preApproved) {
+//						//OnDone will be called in updateHouseAndUserPoints
+//						self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+//                        //Add message to pointLog does not require us to wait
+//						self.addMessageToPontLog(message: "Pre-approved by PurdueHCR", messageType: .approve, pointID: ref!.documentID)
+//					}
+//                    else{
+//                        onDone(nil)
+//                    }
+//				} else{
+//                    onDone(err)
+//                }
+//			})
+            
+            DataManager.sharedManager.getAuthorizationToken { (token, err) in
+                if let err = err {
                     onDone(err)
+                } else {
+                    let headerVal = "Bearer " + (token!)
+                    let header = HTTPHeader(name: "Authorization", value: headerVal)
+                    let headers = HTTPHeaders(arrayLiteral: header)
+                    let url = URL(string: self.SUBMIT_URL)!
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                    let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
+                    let parameters = ["point_type_id":log.type.pointID, "description":log.pointDescription, "date_occurred":date] as [String : Any]
+                    
+                    AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                        switch response.result {
+                        case .success:
+                            if (preApproved) {
+                                let banner = NotificationBanner(title: "Way to Go RHP", subtitle: "Congrats, \(log.type.pointValue) points submitted.", style: .success)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                            else {
+                                let banner = NotificationBanner(title: "Submitted for approval!", subtitle: log.pointDescription, style: .success)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                            onDone(nil)
+                        case .failure(let error):
+                            if (error.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+                                DispatchQueue.main.async {
+                                    let banner = NotificationBanner(title: "Could not submit.", subtitle: "This type of point is disabled for now.", style: .danger)
+                                    banner.duration = 2
+                                    banner.show()
+                                }
+                            } else if (error.localizedDescription == "The operation couldn’t be completed. (Document Exists error 1.)"){
+                                DispatchQueue.main.async {
+                                    let banner = NotificationBanner(title: "Could not submit.", subtitle: "You have already scanned this code.", style: .danger)
+                                    banner.duration = 2
+                                    banner.show()
+                                }
+                            }
+                            else {
+                                DispatchQueue.main.async {
+                                    let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                                    banner.duration = 2
+                                    banner.show()
+                                }
+                            }
+                            onDone(error)
+                        }
+                    }
                 }
-			})
-			
+            }
         }
         else
         {
@@ -157,25 +225,29 @@ class FirebaseHelper {
             ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(documentID)//log.residentRef.documentID+documentID)
             ref!.getDocument { (document, error) in
                 if let document = document, document.exists {
-                    onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
+                    // failure(NSError(domain: "Document Exists", code: 1, userInfo: nil)) HANDLE ERROR
                 } else {
-                    ref!.setData(log.convertToDict()){ err in
+                    ref!.setData(log.convertToDict()) { err in
                         if ( err == nil){
 							if(preApproved)
 							{
-								self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+                                self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
 							}
-							else{
+							else {
 								onDone(err)
 							}
                         }
                         else{
-                            onDone(err)
+                            onDone(error)
                         }
                     }
                 }
             }
         }
+    }
+    
+    func sendSubmitPointRequest(log:PointLog, documentID:String = "", preApproved:Bool = false, house:String = (User.get(.house) as! String), isRECGrantingAward:Bool = false, token:String, success: (_ response: AnyObject?) -> Void, failure: (_ error: Error?) -> Void) {
+        //
     }
     
     /// update the status of the point log if it has been approved, rejected, or updated
@@ -185,9 +257,31 @@ class FirebaseHelper {
     ///   - approved: BOOL: Approved (true) rejected(false)
     ///   - updating: Bool: If the log has already been approved or rejected, and you are changing that status, set updating to true
     ///   - onDone: Closure to handle when the function is finished or if there is an error
-    func updatePointLogStatus(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
+    func updatePointLogStatus(log:PointLog, approved:Bool, updating:Bool = false, onDone:@escaping (_ err:Error?)->Void) {
+        
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(err)
+            } else {
+                let headerVal = "Bearer " + (token!)
+                let header = HTTPHeader(name: "Authorization", value: headerVal)
+                let headers = HTTPHeaders(arrayLiteral: header)
+                let url = URL(string: self.HANDLE_URL)!
+                let parameters = ["approve":approved.description, "point_log_id":log.logID!] as [String : Any]
+                
+                AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        onDone(nil)
+                    case .failure(let error):
+                        onDone(error)
+                    }
+                }
+            }
+        }
+        
         //TODO While User.get(house) will work for now, look at doing this a better way
-        let house = User.get(.house) as! String
+        /*let house = User.get(.house) as! String
         var housePointRef: DocumentReference?
         var houseRef:DocumentReference?
 		let residentID = log.residentId
@@ -244,7 +338,7 @@ class FirebaseHelper {
             } else {
                 onDone(NSError(domain: "Document does not exist", code: 2, userInfo: nil))
             }
-        }
+        }*/
         
         
     }
@@ -497,12 +591,19 @@ class FirebaseHelper {
         let linkRef = db.collection("Links").document(id)
         linkRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                let descr = document.data()!["Description"] as! String
-                let single = document.data()!["SingleUse"] as! Bool
-                let pointID = document.data()!["PointID"] as! Int
-                let enabled = document.data()!["Enabled"] as! Bool
+                let id = document.documentID
                 let archived = document.data()!["Archived"] as! Bool
-                let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID,enabled:enabled,archived:archived)
+                let claimedCount = document.data()!["ClaimedCount"] as! Int
+                let creatorID = document.data()!["CreatorID"] as! String
+                let descr = document.data()!["Description"] as! String
+                let dyLink = document.data()!["DynamicLink"] as! String
+                let enabled = document.data()!["Enabled"] as! Bool
+                let pointID = document.data()!["PointID"] as! Int
+                let pointDesc = document.data()!["PointTypeDescription"] as! String
+                let pointName = document.data()!["PointTypeName"] as! String
+                let pointVal = document.data()!["PointTypeValue"] as! Int
+                let single = document.data()!["SingleUse"] as! Bool
+                let link = Link(id: id, dynamicLink: dyLink, description: descr, singleUse: single, pointTypeID: pointID, pointTypeName: pointName, pointTypeDescription: pointDesc, pointTypeValue:pointVal, creatorID: creatorID, enabled:enabled, archived:archived, claimedCount: claimedCount)
                 onDone(link)
             } else {
                 print("Document does not exist")
@@ -662,22 +763,24 @@ class FirebaseHelper {
         })
     }
     
-    func createQRCode(link:Link,onDone:@escaping ( _ id:String?) -> Void){
-        let ref = db.collection("Links")
-        var linkID:DocumentReference?
-        linkID = ref.addDocument(data: [
-            "Description":link.description,
-            "PointID":link.pointTypeID,
-            "SingleUse":link.singleUse,
-            "CreatorID":User.get(.id) as! String,
-            "Enabled":link.enabled,
-            "Archived":link.archived])
-        {err in
-            if(err == nil){
-                onDone(linkID?.documentID)
-            }
-            else{
-                onDone(nil)
+    func createQRCode(singleUse:Bool, pointID:Int, description:String, isEnabled:Bool, onDone:@escaping ( _ code:[String : Any]?, _ err:Error?) -> Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(nil, err)
+                let banner = NotificationBanner(title: "Failure", subtitle: "Could not create QR code.", style: .danger)
+                banner.duration = 2
+                banner.show()
+            } else {
+                let headerVal = "Bearer " + (token ?? "")
+                let header = HTTPHeader(name: "Authorization", value: headerVal)
+                let headers = HTTPHeaders(arrayLiteral: header)
+                let url = URL(string: self.CREATE_QR_LINK)!
+                let params = ["single_use":singleUse.description, "point_id":pointID, "description":description, "is_enabled":isEnabled.description] as [String : Any]
+                AF.request(url, method: .post, parameters: params, headers: headers).validate().responseJSON { response in
+                    if let result = response.value as? [String : Any] {
+                        onDone(result, nil)
+                    }
+                }
             }
         }
     }
@@ -692,12 +795,18 @@ class FirebaseHelper {
                 var links = [Link]()
                 for document in querySnapshot!.documents {
                     let id = document.documentID
-                    let descr = document.data()["Description"] as! String
-                    let single = document.data()["SingleUse"] as! Bool
-                    let pointID = document.data()["PointID"] as! Int
-                    let enabled = document.data()["Enabled"] as! Bool
                     let archived = document.data()["Archived"] as! Bool
-                    let link = Link(id: id, description: descr, singleUse: single, pointTypeID: pointID, enabled:enabled, archived:archived)
+                    let claimedCount = document.data()["ClaimedCount"] as! Int
+                    let creatorID = document.data()["CreatorID"] as! String
+                    let descr = document.data()["Description"] as! String
+                    let dyLink = document.data()["DynamicLink"] as! String
+                    let enabled = document.data()["Enabled"] as! Bool
+                    let pointID = document.data()["PointID"] as! Int
+                    let pointDesc = document.data()["PointTypeDescription"] as! String
+                    let pointName = document.data()["PointTypeName"] as! String
+                    let pointVal = document.data()["PointTypeValue"] as! Int
+                    let single = document.data()["SingleUse"] as! Bool
+                    let link = Link(id: id, dynamicLink: dyLink, description: descr, singleUse: single, pointTypeID: pointID, pointTypeName: pointName, pointTypeDescription: pointDesc, pointTypeValue:pointVal, creatorID: creatorID, enabled:enabled, archived:archived, claimedCount: claimedCount)
                     links.append(link)
                 }
                 onDone(links)
@@ -901,31 +1010,25 @@ class FirebaseHelper {
         }
     }
     
-    func getHouseRank(residentID: String, house: String, onDone:@escaping (Int)->Void){
-        let collectionRef = db.collection(self.USERS)
-        collectionRef.whereField("House", isEqualTo: house).getDocuments { (querySnapshot, error) in
-            if error != nil {
-                print("Error getting documents For House: \(String(describing: error))")
-                return
+    enum RetrievalError: Error {
+        case unableToParseResponse
+    }
+    
+    func getHouseRank(residentID: String, house: String, onDone:@escaping (Int?, Int?, Error?)->Void){
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(nil, nil, err)
             }
-            var users = [UserModel]()
-            var rank = 0
-            for document in querySnapshot!.documents{
-                let resID = document.documentID
-                let points = document.data()["TotalPoints"] as! Int
-                let model = UserModel(name: resID, points: points)
-                users.append(model)
-            }
-            users.sort(by: { (um, um2) -> Bool in
-                return um.totalPoints > um2.totalPoints
-            })
-            for (i, user) in users.enumerated() {
-                if (user.userName == residentID) {
-                    rank = i + 1
-                    break
+            let headerVal = "Bearer " + (token ?? "")
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
+            let url = URL(string: self.RANK_URL)!
+            AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Int] {
+                    onDone(result["houseRank"], result["semesterRank"], nil)
                 }
             }
-            onDone(rank)
+            onDone(nil, nil, RetrievalError.unableToParseResponse)
         }
     }
     
@@ -983,13 +1086,14 @@ class FirebaseHelper {
 		let ref: DocumentReference? = self.db.collection("SystemPreferences").document("Preferences")
 		ref?.getDocument { (document, error) in
 			if let document = document, document.exists {
-				let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
-				let houseEnabledMessage = document.data()!["houseEnabledMessage"] as! String
+                let isHouseEnabled = document.data()!["isHouseEnabled"] as! Bool
+                let houseEnabledMessage = document.data()!["houseEnabledMessage"] as! String
+                let showRewards = document.data()!["ShowRewards"] as! Bool
 				let iosVersion = document.data()!["iOS_Version"] as! String
                 let suggestedPointIDs = document.data()!["suggestedPointIDs"] as! String
                 let competitionHiddenMessage = document.data()!["competitionHiddenMessage"] as! String
                 let isCompetitionVisible = document.data()!["isCompetitionVisible"] as! Bool
-                let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs, isCompetitionVisible: isCompetitionVisible, competitionHiddenMessage: competitionHiddenMessage)
+                let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, showRewards: showRewards, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs, isCompetitionVisible: isCompetitionVisible, competitionHiddenMessage: competitionHiddenMessage)
 				onDone(systemPreferences)
 			} else {
 				print("Error: Unabled to retrieve SystemPreferences information")
@@ -1008,6 +1112,10 @@ class FirebaseHelper {
 			onDone(err)
 		}
 	}
+    
+    func getAuthorizationToken(onDone: @escaping(_ token:String?, _ err:Error?)->Void) {
+        Auth.auth().currentUser!.getIDTokenForcingRefresh(true, completion: onDone)
+    }
 
 }
 

@@ -18,6 +18,7 @@ class LinkCodeViewController: UIViewController {
     @IBOutlet var archiveSwitch: UISwitch!
     @IBOutlet var saveToPhotosButton: UIButton!
     @IBOutlet var copyLinkButton: UIButton!
+    @IBOutlet weak var timesUsedLabel: UILabel!
     
     var p : PopupView?
     
@@ -31,6 +32,7 @@ class LinkCodeViewController: UIViewController {
         }
         linkDescriptionLabel.text = DataManager.sharedManager.getPointType(value: link!.pointTypeID).pointName
         qrCodeDescriptionTextView.text = link!.description
+        timesUsedLabel.text = "Times Used: " + String(link!.claimedCount)
         qrCodeDescriptionTextView.isEditable = false
         qrCodeDescriptionTextView.layer.borderWidth = 1
         qrCodeDescriptionTextView.layer.borderColor = UIColor.black.cgColor
@@ -41,7 +43,7 @@ class LinkCodeViewController: UIViewController {
     }
 
     func generateQRCode(){
-        let linkCode = "hcrpoint://addpoints/"+link!.id
+        let linkCode = link!.dynamicLink
         print(linkCode)
         let data = linkCode.data(using:String.Encoding.isoLatin1, allowLossyConversion: false)
         let filter = CIFilter(name: "CIQRCodeGenerator")
@@ -60,76 +62,9 @@ class LinkCodeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: START
     @IBAction func copyQRLink(_ sender: Any) {
-        
-        let color = UIColor.lightGray
-        
-        let width : Int = Int(self.view.frame.width - 20)
-        let height = 280
-        let distance = 20
-        let buttonWidth = width - (distance * 2)
-        let borderWidth : CGFloat = 2
-        let radius : CGFloat = 10
-        
-        let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
-        contentView.backgroundColor = UIColor.white
-        contentView.layer.cornerRadius = radius
-        
-        p = PopupView.init(contentView: contentView)
-        p?.maskType = .dimmed
-        p?.layer.cornerRadius = radius
-        
-        let copyIOSButton = UIButton.init(frame: CGRect.init(x: distance, y: 25, width: buttonWidth, height: 75))
-        copyIOSButton.layer.cornerRadius = radius
-        copyIOSButton.layer.borderWidth = borderWidth
-        copyIOSButton.layer.borderColor = color.cgColor
-        copyIOSButton.setTitleColor(UIColor.black, for: .normal)
-        copyIOSButton.setTitle("Copy iOS Link", for: .normal)
-        copyIOSButton.addTarget(self, action: #selector(copyIOSLink), for: .touchUpInside)
-        
-        let copyAndroidButton = UIButton.init(frame: CGRect.init(x: distance, y: 115, width: buttonWidth, height: 75))
-        copyAndroidButton.layer.cornerRadius = radius
-        copyAndroidButton.layer.borderWidth = borderWidth
-        copyAndroidButton.layer.borderColor = color.cgColor
-        copyAndroidButton.setTitleColor(UIColor.black, for: .normal)
-        copyAndroidButton.setTitle("Copy Android Link", for: .normal)
-        copyAndroidButton.addTarget(self, action: #selector(copyAndroidLink), for: .touchUpInside)
-        
-        let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 45, y: height - 75, width: 90, height: 50))
-        closeButton.layer.cornerRadius = 25
-        closeButton.setTitle("Cancel", for: .normal)
-        closeButton.backgroundColor = color
-        closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        
-        contentView.addSubview(copyIOSButton)
-        contentView.addSubview(copyAndroidButton)
-        contentView.addSubview(closeButton)
-        
-        let xPos = self.view.frame.width / 2
-        let yPos = self.view.frame.height - ((self.tabBarController?.view!.safeAreaInsets.bottom)!) - (CGFloat(height) / 2) - 10
-        let location = CGPoint.init(x: xPos, y: yPos)
-        p?.showType = .slideInFromBottom
-        p?.maskType = .dimmed
-        p?.dismissType = .slideOutToBottom
-        p?.show(at: location, in: (self.tabBarController?.view)!)
-    }
-    
-    @objc func buttonAction(sender: UIButton!) {
-        p?.dismissType = .slideOutToBottom
-        p?.dismiss(animated: true)
-    }
-    
-    @objc func copyIOSLink(sender: UIButton!) {
-        UIPasteboard.general.string = link!.getIOSDeepLink()
+        UIPasteboard.general.string = link!.dynamicLink
         notify(title: "iOS Link Copied!", subtitle: "", style: .success)
-        p?.dismissType = .slideOutToBottom
-        p?.dismiss(animated: true)
-    }
-    
-    @objc func copyAndroidLink(sender: UIButton!) {
-        UIPasteboard.general.string = link!.getAndroidDeepLink()
-        notify(title: "Android Link Copied!", subtitle: "", style: .success)
         p?.dismissType = .slideOutToBottom
         p?.dismiss(animated: true)
     }

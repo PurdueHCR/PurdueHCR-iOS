@@ -89,9 +89,7 @@ class DataManager {
     ///   - onDone: Closure function the be called once the code hits an error or finish. err is nil if no errors are found.
     func writePoints(log:PointLog, preApproved:Bool = false, onDone:@escaping (_ err:Error?)->Void) {
         // take in a point log, write it to house then write the ref to the user
-		fbh.addPointLog(log: log, preApproved: preApproved) { (err:Error?) in
-			onDone(err)
-		}
+        fbh.addPointLog(log: log, preApproved: preApproved, onDone: onDone)
     }
     
     /// Add Award from REA/REC
@@ -103,7 +101,6 @@ class DataManager {
     func awardPointsToHouseFromREC(log:PointLog, house:House, onDone:@escaping (_ err:Error?)->Void){
         // This is to seperate the awards from the real earnings from the individual floors in the house
         log.floorID = "Award"
-
         fbh.addPointLog(log: log, preApproved: true, house: house.houseID, isRECGrantingAward: true, onDone: onDone)
     }
 	
@@ -181,10 +178,10 @@ class DataManager {
                     }
                 })
             }
-            
+
         })
     }
-    
+
     func getRewards() -> [Reward]?{
         return self._rewards
     }
@@ -298,11 +295,11 @@ class DataManager {
         return fbh.getDocumentReferenceFromID(id: id)
     }
     
-    func createQRCode(link:Link, onDone:@escaping(_ id:String?)->Void){
-        fbh.createQRCode(link: link, onDone: onDone)
+    func createQRCode(singleUse: Bool, pointID: Int, description: String, isEnabled:Bool, onDone:@escaping(_ code:[String:Any]?, _ err:Error?)->Void) {
+        fbh.createQRCode(singleUse: singleUse, pointID: pointID, description: description, isEnabled: isEnabled, onDone: onDone)
     }
     
-    func handlePointLink(id:String){
+    func handlePointLink(id:String) {
         //Make sure that the user submitting a QR point is a Resident or an RHP
 		
 		let userLevel = User.get(.permissionLevel) as! Int
@@ -357,51 +354,20 @@ class DataManager {
                 var documentID = ""
                 //If the QR code is single use, set the id of the point log to residentID+LinkID. This prevents the same user from submitting it twice
                 //If the QR Code is multiple use, do not set a documentID. Firestore will auto generate a random one.
-                if(link.singleUse){
+                if (link.singleUse) {
                     documentID = residentId + id
                 }
-				
-                //NOTE: preApproved is now changed to SingleUseCodes || RHP
-                self.fbh.addPointLog(log: log, documentID: documentID, preApproved: (link.singleUse || (User.get(.permissionLevel) as! Int) == 1) , onDone: {(err:Error?) in
-                    if (err == nil){
-						DispatchQueue.main.async {
-                            let banner = NotificationBanner(title: "Success", subtitle: log.pointDescription, style: .success)
-                            banner.duration = 2
-                            print("Call this")
-                            banner.show()
-                        }
-                        
-                    }
-                    else{
-                        if(err!.localizedDescription == "The operation couldn’t be completed. (Document Exists error 1.)"){
-                            DispatchQueue.main.async {
-                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "You have already scanned this code.", style: .danger)
-                                banner.duration = 2
-                                banner.show()
-                            }
-                        }
-                        else if (err!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
-                            DispatchQueue.main.async {
-                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "This type of point is disabled for now.", style: .danger)
-                                banner.duration = 2
-                                banner.show()
-                            }
-                        }
-                        else{
-                            DispatchQueue.main.async {
-                                let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
-                                banner.duration = 2
-                                banner.show()
-                            }
-                        }
+    
+                
+                self.fbh.addPointLog(log: log, documentID: documentID, preApproved: (link.singleUse || (User.get(.permissionLevel) as! Int) == 1) , onDone: { (err) in
+                    if let err = err {
+                        print("\(err.localizedDescription)")
                     }
                 })
-                
             }
-            
         })
     }
-    
+
     func getQRCodeFor(ownerID:String, withRefresh refresh:Bool, withCompletion onDone:@escaping ( _ links:LinkList?)->Void){
         if(refresh || self._links == nil){
             fbh.getQRCodeFor(ownerID: ownerID, withCompletion: {(links:[Link]?) in
@@ -463,7 +429,7 @@ class DataManager {
         }
     }
     
-    func getHouseRank(residentID: String, house: String, onDone:@escaping (Int)->Void) {
+    func getHouseRank(residentID: String, house: String, onDone:@escaping (Int?, Int?, Error?)->Void) {
         fbh.getHouseRank(residentID: residentID, house: house, onDone: onDone)
     }
     
@@ -521,6 +487,10 @@ class DataManager {
 	func updateSystemPreferences(withCompletion onDone:@escaping ( _ err:Error?) ->Void){
 		fbh.updateSystemPreferences(systemPreferences: systemPreferences!, withCompletion: onDone)
 	}
+    
+    func getAuthorizationToken(onDone: @escaping(_ token:String?, _ err:Error?)->Void) {
+        fbh.getAuthorizationToken(onDone: onDone)
+    }
 	
 }
 

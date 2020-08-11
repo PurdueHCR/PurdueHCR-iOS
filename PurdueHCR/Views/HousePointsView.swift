@@ -77,7 +77,7 @@ class HousePointsView: UIView {
             pointsRemainingLabel.text? = "Victory"
         }
         self.addSubview(rewardImageView!)
-        
+
         self.rewardImageView?.translatesAutoresizingMaskIntoConstraints = false
         let xConstraint = NSLayoutConstraint.init(item: rewardImageView!, attribute: .centerX, relatedBy: .equal, toItem: self.circleProgress, attribute: .centerX, multiplier: 1, constant: 0)
         let yConstraint = NSLayoutConstraint.init(item: rewardImageView!, attribute: .centerY, relatedBy: .equal, toItem: self.circleProgress, attribute: .centerY, multiplier: 1, constant: 0)
@@ -106,8 +106,8 @@ class HousePointsView: UIView {
         }
         return nil
     }
-	
-    
+
+
     /// Sketchy return type atm, because we do not know if the ppr will be a double
     ///
     /// - Returns: <#return value description#>
