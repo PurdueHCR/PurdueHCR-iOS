@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,9 +11,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileView" customModule="PurdueHCR" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="kNo-zV-ZBT"/>
+                <outlet property="blackButton" destination="bgP-31-Sb2" id="PGs-s0-2pd"/>
                 <outlet property="colorBanner" destination="Z4b-tF-fZ9" id="y44-s6-joE"/>
                 <outlet property="houseEmblem" destination="cDB-Of-F4H" id="duj-gN-saT"/>
                 <outlet property="houseNameLabel" destination="eJw-an-wzQ" id="JLH-bb-RCS"/>
+                <outlet property="infoButton" destination="Frq-3U-lhf" id="NXv-Kp-UuS"/>
                 <outlet property="rankHeaderLabel" destination="RNE-y9-W9O" id="hdi-bO-Xxj"/>
                 <outlet property="rankNumberLabel" destination="P6c-mF-sol" id="Lhz-h6-462"/>
                 <outlet property="totalPointsLabel" destination="Fdf-wP-pFp" id="7y8-58-xav"/>
@@ -83,8 +85,27 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bgP-31-Sb2">
+                    <rect key="frame" x="9" y="9" width="32" height="32"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Frq-3U-lhf">
+                    <rect key="frame" x="7.5" y="7.5" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Frq-3U-lhf" secondAttribute="height" multiplier="1:1" id="N9a-Sr-kY6"/>
+                        <constraint firstAttribute="height" constant="35" id="fcz-TZ-pr0"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" backgroundImage="SF_info">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                    </state>
+                    <connections>
+                        <action selector="showHouseCodes:" destination="-1" eventType="touchUpInside" id="lv1-Y6-wT6"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstItem="bgP-31-Sb2" firstAttribute="centerX" secondItem="Frq-3U-lhf" secondAttribute="centerX" id="0tZ-Ic-Z0j"/>
                 <constraint firstItem="P6c-mF-sol" firstAttribute="trailing" secondItem="RNE-y9-W9O" secondAttribute="trailing" id="1JX-s7-VzV"/>
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="deV-62-o9R" secondAttribute="bottom" constant="5" id="4j0-Z8-Xj1"/>
                 <constraint firstItem="P6c-mF-sol" firstAttribute="top" secondItem="RNE-y9-W9O" secondAttribute="bottom" constant="5" id="59D-Yu-KrX"/>
@@ -95,11 +116,13 @@
                 <constraint firstItem="P6c-mF-sol" firstAttribute="leading" secondItem="RNE-y9-W9O" secondAttribute="leading" id="IES-Sv-hMS"/>
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="trailing" secondItem="deV-62-o9R" secondAttribute="trailing" id="Iv2-78-u3o"/>
                 <constraint firstItem="eJw-an-wzQ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="O3m-lF-Xhl"/>
+                <constraint firstItem="bgP-31-Sb2" firstAttribute="centerY" secondItem="Frq-3U-lhf" secondAttribute="centerY" id="SpJ-em-OPP"/>
                 <constraint firstItem="cDB-Of-F4H" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="SqJ-uK-Ha3"/>
                 <constraint firstItem="RNE-y9-W9O" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="THv-ls-HMT"/>
                 <constraint firstItem="RNE-y9-W9O" firstAttribute="leading" secondItem="cDB-Of-F4H" secondAttribute="trailing" constant="5" id="VGZ-vy-t1u"/>
                 <constraint firstItem="jt1-LE-iWS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7.5" id="XrI-me-00m"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="eJw-an-wzQ" secondAttribute="bottom" constant="2" id="b1w-WJ-XSX"/>
+                <constraint firstItem="Frq-3U-lhf" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="7.5" id="bl3-h2-Jko"/>
                 <constraint firstItem="Z4b-tF-fZ9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fxv-c8-zM7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cDB-Of-F4H" secondAttribute="trailing" constant="50" id="iHu-8I-ZLZ"/>
                 <constraint firstItem="deV-62-o9R" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="iZH-cE-Dyq"/>
@@ -107,17 +130,29 @@
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="trailing" secondItem="deV-62-o9R" secondAttribute="trailing" id="leX-0l-7EY"/>
                 <constraint firstItem="cDB-Of-F4H" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="lpf-xi-eEb"/>
                 <constraint firstItem="cDB-Of-F4H" firstAttribute="leading" secondItem="deV-62-o9R" secondAttribute="trailing" constant="5" id="mAg-AH-OGf"/>
+                <constraint firstItem="Frq-3U-lhf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="7.5" id="peq-Ol-iGc"/>
+                <constraint firstItem="bgP-31-Sb2" firstAttribute="width" secondItem="Frq-3U-lhf" secondAttribute="width" constant="-3" id="raM-cP-43S"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="RNE-y9-W9O" secondAttribute="trailing" constant="5" id="rpt-dC-hDv"/>
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="leading" secondItem="deV-62-o9R" secondAttribute="leading" id="u0e-1S-bxu"/>
+                <constraint firstItem="bgP-31-Sb2" firstAttribute="height" secondItem="Frq-3U-lhf" secondAttribute="height" constant="-3" id="ubR-BA-XsH"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="288" y="-469"/>
+            <point key="canvasLocation" x="288" y="-469.1154422788606"/>
         </view>
+        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tsd-Qj-izI">
+            <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+            <nil key="textColor"/>
+            <nil key="highlightedColor"/>
+            <point key="canvasLocation" x="-176" y="-614"/>
+        </label>
     </objects>
     <resources>
-        <image name="list.bullet" catalog="system" width="64" height="44"/>
+        <image name="SF_info" width="44" height="44"/>
+        <image name="list.bullet" catalog="system" width="128" height="88"/>
     </resources>
 </document>
