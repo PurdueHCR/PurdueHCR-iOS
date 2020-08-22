@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 	
@@ -15,7 +16,9 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	@IBOutlet weak var sendButton: UIButton!
 	@IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 	@IBOutlet weak var typeMessageField: UITextField!
-	var indexPath : IndexPath?
+    @IBOutlet weak var sendActivityIndicator: UIActivityIndicatorView!
+    
+    var indexPath : IndexPath?
 	var approveButton : UIButton?
 	var rejectButton : UIButton?
     var pointLog: PointLog?
@@ -27,6 +30,9 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.sendActivityIndicator.stopAnimating()
+        self.sendActivityIndicator.isHidden = true
         
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -168,13 +174,23 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 
 	@IBAction func sendMessage(_ sender: Any) {
 		let message = typeMessageField.text!
+        self.view.endEditing(true)
 			if (message != "") {
-			DataManager.sharedManager.addMessageToPointLog(message: message, messageType: .comment, pointID: pointLog!.logID!)
-			typeMessageField.text! = ""
+                self.sendButton.isEnabled = false
+                sendActivityIndicator.isHidden = false
+                sendActivityIndicator.startAnimating()
+                DataManager.sharedManager.addMessageToPointLog(message: message, pointID: pointLog!.logID!) { (err) in
+                    if (err == nil) {
+                        self.messageLogs.append(MessageLog(creationDate: Timestamp(), message: message, senderFirstName: User.get(.firstName) as! String, senderLastName: User.get(.lastName) as! String, senderPermissionLevel:  PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)!, messageType: .comment))
+                        self.tableView.reloadData()
+                        self.scrollToBottom()
+                        self.typeMessageField.text! = ""
+                    }
+                    self.sendButton.isEnabled = true
+                    self.sendActivityIndicator.stopAnimating()
+                    self.sendActivityIndicator.isHidden = true
+                }
 				
-			// TODO: Fix this so it actually runs after the textfield has added the new log
-			scrollToBottom()
-			resfreshData()
 		}
 	}
 	
@@ -291,12 +307,13 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	}
 	
 	
-	// TODO: This should probably be an extension to the textview
 	func scrollToBottom() {
-		if (self.tableView.visibleCells.count > 1) {
-			let bottomOffset = CGPoint(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.size.height)
-			self.tableView.setContentOffset(bottomOffset, animated: true)
-		}
+        let indexPath = IndexPath(row: self.messageLogs.count, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+//		if (self.tableView.visibleCells.count > 1) {
+//			let bottomOffset = CGPoint(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.size.height)
+//			self.tableView.setContentOffset(bottomOffset, animated: true)
+//		}
 	}
 	
 }

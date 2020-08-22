@@ -80,7 +80,7 @@ class HousePointsHistoryViewController: UITableViewController, UISearchResultsUp
                 return 1
             }
             else {
-                emptyMessage(message: "Loading History")
+                emptyMessage(message: "No Point History")
                 return 0
             }
         }

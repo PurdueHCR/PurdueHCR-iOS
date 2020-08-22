@@ -143,8 +143,8 @@ class DataManager {
 		})
 	}
 	
-	func addMessageToPointLog(message: String, messageType: MessageLog.MessageType, pointID: String) {
-		fbh.addMessageToPontLog(message: message, messageType: messageType, pointID: pointID)
+    func addMessageToPointLog(message: String, pointID: String, onDone: @escaping(_  err:Error?)->Void) {
+        fbh.addMessageToPontLog(message: message, pointID: pointID, onDone: onDone)
 	}
 	
     func refreshHouses(onDone:@escaping ( _ houses:[House]) ->Void){
