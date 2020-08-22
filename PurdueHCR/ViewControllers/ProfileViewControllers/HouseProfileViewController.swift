@@ -23,7 +23,8 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     var refreshCount = 0
 	var p : PopupView?
 	var house : House?
-    let padding : CGFloat = 12
+    let padding : CGFloat = 10
+    let shadowRadius : CGFloat = 7
     var permission: PointType.PermissionLevel?
     var houseImageView: UIImageView!
     var showRewards = true
@@ -112,7 +113,6 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 			}
 		}
         showRewards = DataManager.sharedManager.systemPreferences!.showRewards
-		
         
         refreshData()
     
@@ -196,6 +196,9 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         
         var cell : UITableViewCell!
         cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = UIColor.clear
+        cell.clipsToBounds = false
+        cell.layer.masksToBounds = false
         
         for view in cell.subviews {
             view.removeFromSuperview()
@@ -210,11 +213,15 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 profileView?.layer.shadowColor = UIColor.darkGray.cgColor
                 profileView?.layer.shadowOpacity = 0.5
                 profileView?.layer.shadowOffset = CGSize.zero
-                profileView?.layer.shadowRadius = 5
+                profileView?.layer.shadowRadius = shadowRadius
                 profileView?.layer.cornerRadius = DefinedValues.radius
                 profileView?.backgroundColor = UIColor.white
+                profileView?.clipsToBounds = false
+                profileView?.layer.masksToBounds = false
                 profileView?.delegate = self
             }
+            cell.contentView.clipsToBounds = false
+            cell.clipsToBounds = false
             cell.addSubview(profileView!)
             
             profileView?.translatesAutoresizingMaskIntoConstraints = false
@@ -234,10 +241,14 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 compareView?.layer.shadowColor = UIColor.darkGray.cgColor
                 compareView?.layer.shadowOpacity = 0.5
                 compareView?.layer.shadowOffset = CGSize.zero
-                compareView?.layer.shadowRadius = 5
+                compareView?.layer.shadowRadius = shadowRadius
                 compareView?.layer.cornerRadius = DefinedValues.radius
+                compareView?.clipsToBounds = false
+                compareView?.layer.masksToBounds = false
                 compareView?.backgroundColor = UIColor.white
             }
+            cell.contentView.clipsToBounds = false
+            cell.clipsToBounds = false
             cell.addSubview(compareView!)
             
             compareView?.translatesAutoresizingMaskIntoConstraints = false
@@ -257,7 +268,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 houseView?.layer.shadowColor = UIColor.darkGray.cgColor
                 houseView?.layer.shadowOpacity = 0.5
                 houseView?.layer.shadowOffset = CGSize.zero
-                houseView?.layer.shadowRadius = 5
+                houseView?.layer.shadowRadius = shadowRadius
                 houseView?.layer.cornerRadius = DefinedValues.radius
                 houseView?.backgroundColor = UIColor.white
             }
@@ -280,7 +291,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 topScorersView?.layer.shadowColor = UIColor.darkGray.cgColor
                 topScorersView?.layer.shadowOpacity = 0.5
                 topScorersView?.layer.shadowOffset = CGSize.zero
-                topScorersView?.layer.shadowRadius = 5
+                topScorersView?.layer.shadowRadius = shadowRadius
                 topScorersView?.layer.cornerRadius = DefinedValues.radius
                 topScorersView?.backgroundColor = UIColor.white
                 topScorersView?.autoresizingMask = [.flexibleHeight]

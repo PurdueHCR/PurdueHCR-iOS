@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ehx-jP-2Fn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ehx-jP-2Fn">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -58,10 +58,15 @@
                                     <action selector="sendMessage:" destination="v84-jY-ASU" eventType="touchUpInside" id="cHv-Od-hsD"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="WiP-8R-Fgm">
+                                <rect key="frame" x="335" y="542" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Guh-2G-5nC" firstAttribute="bottom" secondItem="nez-ld-HG3" secondAttribute="bottom" constant="-145" id="2aH-lo-koq"/>
+                            <constraint firstItem="WiP-8R-Fgm" firstAttribute="centerX" secondItem="YV1-Pd-R6G" secondAttribute="centerX" id="5QB-A0-Oqa"/>
+                            <constraint firstItem="WiP-8R-Fgm" firstAttribute="centerY" secondItem="YV1-Pd-R6G" secondAttribute="centerY" id="91I-Na-bOd"/>
                             <constraint firstItem="Guh-2G-5nC" firstAttribute="trailing" secondItem="nez-ld-HG3" secondAttribute="trailing" id="Bdm-aX-92D"/>
                             <constraint firstItem="jmt-qn-nZ3" firstAttribute="top" secondItem="Guh-2G-5nC" secondAttribute="bottom" constant="10" id="Mo4-fP-WnW"/>
                             <constraint firstItem="jmt-qn-nZ3" firstAttribute="leading" secondItem="nez-ld-HG3" secondAttribute="leading" constant="10" id="Qau-lo-WhZ"/>
@@ -76,6 +81,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="TDD-db-bPi" id="hr0-xD-5jg"/>
                         <outlet property="bottomConstraint" destination="2aH-lo-koq" id="ydy-Ym-Yap"/>
+                        <outlet property="sendActivityIndicator" destination="WiP-8R-Fgm" id="LBo-Gp-5GX"/>
                         <outlet property="sendButton" destination="YV1-Pd-R6G" id="T4Y-RC-JwH"/>
                         <outlet property="tableView" destination="Guh-2G-5nC" id="IR9-TJ-EUY"/>
                         <outlet property="typeMessageField" destination="jmt-qn-nZ3" id="lZw-tc-eY4"/>

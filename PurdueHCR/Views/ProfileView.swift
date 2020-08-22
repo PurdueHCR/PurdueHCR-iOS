@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PopupKit
 
 protocol CustomViewDelegate: class {
 	func goToNextScene()
@@ -24,6 +25,10 @@ class ProfileView: UIView {
     @IBOutlet weak var rankHeaderLabel: UILabel!
     @IBOutlet weak var houseEmblem: UIButton!
     @IBOutlet weak var houseNameLabel: UILabel!
+    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var blackButton: UIButton!
+    
+    var p : PopupView?
     
     //@IBOutlet var achievementLabel: UILabel!
 //    @IBOutlet var pointsButton: UILabel! // change back to button for the Medals update
@@ -52,12 +57,18 @@ class ProfileView: UIView {
 		
         viewPointsButton.layer.cornerRadius = viewPointsButton.layer.frame.height / 2
 		
+        infoButton.isHidden = true
+        blackButton.layer.cornerRadius = 25
+        
         let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
 		if (permissionLevel == PointType.PermissionLevel.faculty) {
 			viewPointsButton.isEnabled = false
 			viewPointsButton.isHidden = true
 			totalPointsLabel.text = ""
 		}
+        if (permissionLevel == PointType.PermissionLevel.rhp) {
+            infoButton.isHidden = false
+        }
         houseEmblem.backgroundColor = UIColor.white
         houseEmblem.layer.cornerRadius = houseEmblem.frame.height / 2
         var houseImage: UIImage!
@@ -119,7 +130,75 @@ class ProfileView: UIView {
         
         
     }
-	
+    
+    @IBAction func showHouseCodes(_ sender: Any) {
+        guard let del = self.delegate else { return }
+        let parent = del as! HouseProfileViewController
+        //let color = UIColor.lightGray
+        let width : Int = Int(parent.view.frame.width - 70)
+        let height = 185
+        //let distance = 20
+        //let buttonWidth = width - (distance * 2)
+        //let borderWidth : CGFloat = 2
+        
+        let contentView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        contentView.backgroundColor = UIColor.white
+        contentView.layer.cornerRadius = DefinedValues.radius
+        
+        p = PopupView.init(contentView: contentView)
+        p?.maskType = .dimmed
+        p?.layer.cornerRadius = DefinedValues.radius
+        
+        var lastPosition = 25
+        let codesTitle = UILabel(frame: CGRect(x: 0, y: lastPosition, width: width, height: 20))
+        codesTitle.text = "HOUSE CODES"
+        codesTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        codesTitle.textColor = UIColor.darkGray
+        codesTitle.textAlignment = .center
+        
+        lastPosition += 35
+        
+        let codes = DataManager.sharedManager.getHouseCodes()!
+        for code in codes {
+            if (code.house == User.get(.house) as! String) {
+                if (!code.codeName.contains("RHP")) {
+                    lastPosition += 5
+                    let codeName = UITextView(frame: CGRect(x: 20, y: lastPosition, width: width - 20, height: 30))
+                    codeName.isScrollEnabled = false
+                    codeName.isEditable = false
+                    codeName.text = code.codeName + ": " + code.code
+                    codeName.font = .systemFont(ofSize: 15, weight: .regular)
+                    lastPosition += 30
+                    contentView.addSubview(codeName)
+                }
+            }
+        }
+        
+        
+        let closeButton = UIButton(frame: CGRect(x: width - 35, y: 10, width: 25, height: 25))
+        let closeImage = #imageLiteral(resourceName: "SF_xmark").withRenderingMode(.alwaysTemplate)
+        closeButton.setBackgroundImage(closeImage, for: .normal)
+        closeButton.tintColor = UIColor.darkGray
+        closeButton.setTitle("", for: .normal)
+        closeButton.addTarget(self, action: #selector(dismissCodes), for: .touchUpInside)
+        
+        contentView.addSubview(codesTitle)
+        contentView.addSubview(closeButton)
+        
+        let xPos = parent.view.frame.width / 2
+        let yPos = parent.view.frame.height / 2 // - ((parent.tabBarController?.view!.safeAreaInsets.bottom)!) - (CGFloat(height) / 2) - 10
+        let location = CGPoint.init(x: xPos, y: yPos)
+        p?.showType = .slideInFromBottom
+        p?.maskType = .dimmed
+        p?.dismissType = .slideOutToBottom
+        p?.show(at: location, in: (parent.tabBarController?.view)!)
+    }
+    
+    @objc func dismissCodes(sender: UIButton!) {
+        p?.dismissType = .slideOutToBottom
+        p?.dismiss(animated: true)
+    }
+    
     @IBAction func transition(_ sender: Any) {
         transitionFunc()
     }

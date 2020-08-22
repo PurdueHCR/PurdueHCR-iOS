@@ -33,15 +33,17 @@ class FirebaseHelper {
 //    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
 //    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
 //    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
     
     // PRODUCTION URLS
     let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
     let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
     let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
     let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
 
     
-    init(){
+    init() {
         db = Firestore.firestore()
         storage = Storage.storage()
         let settings = db.settings
@@ -457,31 +459,63 @@ class FirebaseHelper {
 		}
 	}
 	
-	func addMessageToPontLog(message: String, messageType: MessageLog.MessageType, pointID: String) {
-		let house = User.get(.house) as! String
-		let firstName = User.get(.firstName) as! String
-		let lastName = User.get(.lastName) as! String
-		let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)!
-		let newMessage = MessageLog.init(creationDate: Timestamp.init(), message: message, senderFirstName: firstName, senderLastName: lastName, senderPermissionLevel: permissionLevel, messageType: messageType)
-		let data = newMessage.convertToDict()
-		let ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(pointID)
-		ref.collection(self.MESSAGES).addDocument(data: data)
-		var resNotif = 0
-		var rhpNotif = 0
-		ref.getDocument { (document, err) in
-			if (err != nil) {
-				print("Error getting document: \(String(describing: err))")
-				return
-			}
-			resNotif = document!.data()!["ResidentNotifications"] as! Int
-			rhpNotif = document!.data()!["RHPNotifications"] as! Int
-			if (permissionLevel == .resident) {
-				ref.setData(["RHPNotifications":(rhpNotif + 1)], merge: true)
-			}
-			else if (permissionLevel == .rhp && document?.data()!["ResidentId"] as! String != User.get(.id) as! String) {
-				ref.setData(["ResidentNotifications":(resNotif + 1)], merge: true)
-			}
-		}
+    func addMessageToPontLog(message: String, pointID: String, onDone: @escaping (_ err: Error?)->Void) {
+	
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                DispatchQueue.main.async {
+                    let banner = NotificationBanner(title: "Could not send message.", subtitle: "A server error occurred.", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                }
+                onDone(err)
+            } else {
+                let headerVal = "Bearer " + (token!)
+                let header = HTTPHeader(name: "Authorization", value: headerVal)
+                let headers = HTTPHeaders(arrayLiteral: header)
+                let url = URL(string: self.ADD_MESSAGE_URL)!
+                let parameters = ["log_id":pointID, "message":message] as [String : Any]
+                
+                AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        onDone(nil)
+                    case .failure(let error):
+                        DispatchQueue.main.async {
+                            let banner = NotificationBanner(title: "Could not send message.", subtitle: "A server error occurred.", style: .danger)
+                            banner.duration = 2
+                            banner.show()
+                        }
+                        onDone(error)
+                    }
+                }
+            }
+        }
+        
+//        let house = User.get(.house) as! String
+//		let firstName = User.get(.firstName) as! String
+//		let lastName = User.get(.lastName) as! String
+//		let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)!
+//		let newMessage = MessageLog.init(creationDate: Timestamp.init(), message: message, senderFirstName: firstName, senderLastName: lastName, senderPermissionLevel: permissionLevel, messageType: messageType)
+//		let data = newMessage.convertToDict()
+//		let ref = self.db.collection(self.HOUSE).document(house).collection(self.POINTS).document(pointID)
+//		ref.collection(self.MESSAGES).addDocument(data: data)
+//		var resNotif = 0
+//		var rhpNotif = 0
+//		ref.getDocument { (document, err) in
+//			if (err != nil) {
+//				print("Error getting document: \(String(describing: err))")
+//				return
+//			}
+//			resNotif = document!.data()!["ResidentNotifications"] as! Int
+//			rhpNotif = document!.data()!["RHPNotifications"] as! Int
+//			if (permissionLevel == .resident) {
+//				ref.setData(["RHPNotifications":(rhpNotif + 1)], merge: true)
+//			}
+//			else if (permissionLevel == .rhp && document?.data()!["ResidentId"] as! String != User.get(.id) as! String) {
+//				ref.setData(["ResidentNotifications":(resNotif + 1)], merge: true)
+//			}
+//		}
 		
 	}
     
@@ -534,13 +568,9 @@ class FirebaseHelper {
 					let permissionLevel = codeDoc.data()["PermissionLevel"] as! Int
 					let house = codeDoc.data()["House"]
 					let floorID = codeDoc.data()["FloorId"]
-					if (house == nil || floorID == nil) {
-						houseCodes.append(HouseCode.init(code: code, codeName: codeName, permissionLevel: permissionLevel, house: "", floorID: ""))
-					} else {
-						houseCodes.append(HouseCode.init(code: code, codeName: codeName, permissionLevel: permissionLevel, house: house as! String, floorID: floorID as! String))
-					}
+                    houseCodes.append(HouseCode.init(code: code, codeName: codeName, permissionLevel: permissionLevel, house: house as? String ?? "", floorID: floorID as? String ?? ""))
 					
-				}
+                }
 				onDone(houseArray, houseCodes)
 			}
 			
