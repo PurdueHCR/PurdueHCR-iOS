@@ -83,9 +83,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                             </textView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="613-9m-V54">
+                                <rect key="frame" x="197" y="493" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="613-9m-V54" firstAttribute="centerX" secondItem="Pqy-7r-qWZ" secondAttribute="centerX" id="8v6-8h-j5I"/>
                             <constraint firstItem="hiX-kw-LBb" firstAttribute="leading" secondItem="51m-7L-IVd" secondAttribute="leadingMargin" id="D1j-y7-Fh8"/>
                             <constraint firstItem="jzu-Uv-Eu4" firstAttribute="top" secondItem="qOZ-Db-HBF" secondAttribute="top" id="FTa-ON-WEh"/>
                             <constraint firstItem="qOZ-Db-HBF" firstAttribute="bottom" secondItem="Pqy-7r-qWZ" secondAttribute="bottom" constant="213" id="HNc-Ck-AWV"/>
@@ -100,6 +104,7 @@
                             <constraint firstItem="qOZ-Db-HBF" firstAttribute="trailing" secondItem="KDe-eT-Bkh" secondAttribute="trailing" constant="14" id="eP3-kr-dhv"/>
                             <constraint firstItem="jzu-Uv-Eu4" firstAttribute="leading" secondItem="51m-7L-IVd" secondAttribute="leading" id="mu1-fL-jOo"/>
                             <constraint firstItem="7zI-S4-lwL" firstAttribute="top" secondItem="KDe-eT-Bkh" secondAttribute="bottom" constant="8" symbolic="YES" id="oqW-jx-bUL"/>
+                            <constraint firstItem="613-9m-V54" firstAttribute="centerY" secondItem="Pqy-7r-qWZ" secondAttribute="centerY" id="te2-zw-KJ9"/>
                             <constraint firstItem="jzu-Uv-Eu4" firstAttribute="centerX" secondItem="7zI-S4-lwL" secondAttribute="centerX" id="w62-H2-cM4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qOZ-Db-HBF"/>
@@ -108,6 +113,7 @@
                     <connections>
                         <outlet property="descriptionTextView" destination="7zI-S4-lwL" id="qVx-ty-kJk"/>
                         <outlet property="generateButton" destination="Pqy-7r-qWZ" id="DL6-vB-VGP"/>
+                        <outlet property="loadingIcon" destination="613-9m-V54" id="03l-Wq-wWg"/>
                         <outlet property="multiUseSwitch" destination="KDe-eT-Bkh" id="aNr-6K-6hX"/>
                         <outlet property="pickerView" destination="jzu-Uv-Eu4" id="97v-ly-cHl"/>
                         <segue destination="oaG-gE-l7h" kind="show" identifier="QR_Generate" id="dzV-p3-AiX"/>

@@ -439,9 +439,8 @@ class Link {
         self.archived = data["archived"] as! Bool
         self.creatorID = data["creatorId"] as! String
         self.description = data["description"] as! String
-        self.enabled = true
-        self.pointTypeID = data["enabled"] as! Int
-        //self.pointTypeID = data["pointId"] as! Int
+        self.enabled = data["enabled"] as! Bool
+        self.pointTypeID = data["pointId"] as! Int
         self.pointTypeName = data["pointTypeName"] as! String
         self.pointTypeDescription = data["pointTypeDescription"] as! String
         self.pointTypeValue = data["pointTypeValue"] as! Int

@@ -141,7 +141,7 @@ class ProfileView: UIView {
         //let buttonWidth = width - (distance * 2)
         //let borderWidth : CGFloat = 2
         
-        let contentView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        let contentView = UIView()
         contentView.backgroundColor = UIColor.white
         contentView.layer.cornerRadius = DefinedValues.radius
         
@@ -174,6 +174,7 @@ class ProfileView: UIView {
             }
         }
         
+        contentView.frame = CGRect(x: 0, y: 0, width: width, height: lastPosition + 25)
         
         let closeButton = UIButton(frame: CGRect(x: width - 35, y: 10, width: 25, height: 25))
         let closeImage = #imageLiteral(resourceName: "SF_xmark").withRenderingMode(.alwaysTemplate)

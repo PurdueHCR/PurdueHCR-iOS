@@ -14,6 +14,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     @IBOutlet var multiUseSwitch: UISwitch!
     @IBOutlet var descriptionTextView: UITextView!
     @IBOutlet var generateButton: UIButton!
+    @IBOutlet weak var loadingIcon: UIActivityIndicatorView!
     
     var appendMethod:((_ link:Link)->Void)?
     var pointTypes = [PointType]()
@@ -35,7 +36,10 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.selectRow(0, inComponent: 0, animated: true)
-        // Do any additional setup after loading the view.
+
+        loadingIcon.isHidden = true
+        loadingIcon.stopAnimating()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,7 +86,9 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
     }
 	
     @IBAction func generateQRCodes(_ sender: Any) {
-        self.generateButton.isEnabled = false;
+        self.generateButton.isEnabled = false
+        self.loadingIcon.startAnimating()
+        self.loadingIcon.isHidden = false
         if (descriptionTextView.text == "" || descriptionTextView.text == "Enter point description here.") {
             notify(title: "Failed to create QR Code", subtitle: "Please enter a description of your event.", style: .danger)
             self.generateButton.isEnabled = true;
@@ -90,8 +96,9 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
             DataManager.sharedManager.createQRCode(singleUse: !(multiUseSwitch.isOn), pointID: selectedPoint!.pointID, description: descriptionTextView.text, isEnabled: true) { (code, err) in
                 if (err != nil) {
                     print("Error: Unabled to create QR code. \(err?.localizedDescription)")
-                    // TODO: Fix race condition will cause this to appear even when it goes on
-                    self.generateButton.isEnabled = true;
+                    self.generateButton.isEnabled = true
+                    self.loadingIcon.stopAnimating()
+                    self.loadingIcon.isHidden = true
                     return
                 } else {
                     // set link and do this method....

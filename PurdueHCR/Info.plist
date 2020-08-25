@@ -35,7 +35,7 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FirebaseDynamicLinksCustomDomains</key>
 	<array>
-		<string>https://purdue-hcr-test.web.app</string>
+		<string>https://purduehcr.web.app</string>
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
