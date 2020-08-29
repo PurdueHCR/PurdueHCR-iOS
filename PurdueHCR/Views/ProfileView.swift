@@ -179,7 +179,7 @@ class ProfileView: UIView {
         let closeButton = UIButton(frame: CGRect(x: width - 35, y: 10, width: 25, height: 25))
         let closeImage = #imageLiteral(resourceName: "SF_xmark").withRenderingMode(.alwaysTemplate)
         closeButton.setBackgroundImage(closeImage, for: .normal)
-        closeButton.tintColor = UIColor.darkGray
+        closeButton.tintColor = UIColor.lightGray
         closeButton.setTitle("", for: .normal)
         closeButton.addTarget(self, action: #selector(dismissCodes), for: .touchUpInside)
         

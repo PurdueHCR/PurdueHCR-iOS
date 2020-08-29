@@ -18,6 +18,7 @@ class DefinedValues {
 	static let systemYellow = UIColor.init(red: 1.00, green: 204.0/255.0, blue: 0.0, alpha: 1.0)
 	static let systemRed = UIColor.init(red: 1.00, green: 59.0/255.0, blue: 48.0/255.0, alpha: 1.0)
 	static let systemGreen = UIColor.init(red: 52.0/255.0, green: 199.0/255.0, blue: 89.0/255.0, alpha: 1.0)
+    static let systemGray4 = UIColor.init(red: 209/255.0, green: 209/255.0, blue: 214/255.0, alpha: 1.0)
 	static let systemGray5 = UIColor.init(red: 229.0/255.0, green: 229.0/255.0, blue: 234.0/255.0, alpha: 1.0)
 	
 	// Raw Values

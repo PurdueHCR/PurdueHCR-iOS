@@ -164,24 +164,6 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         self.performSegue(withIdentifier: "My_Points", sender: self)
     }
 	
-	
-	
-	@objc func logout(sender: UIButton!) {
-		let alert = UIAlertController.init(title: "Log out?", message: "Are you sure you want to log out?", preferredStyle: .alert)
-		
-		let noAction = UIAlertAction.init(title: "No", style: .default) { (action) in
-		}
-		let yesAction = UIAlertAction.init(title: "Yes", style: .default) { (action) in
-			try? Auth.auth().signOut()
-			Cely.logout()
-		}
-		
-		alert.addAction(noAction)
-		alert.addAction(yesAction)
-		
-		self.present(alert, animated: true)
-	}
-	
 	func goToNextScene() {
 		let storyboard = UIStoryboard(name: "Profile", bundle: nil)
 		let vc = storyboard.instantiateViewController(withIdentifier: "UserPointsController")
@@ -334,49 +316,19 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
     @IBAction func showSettings(_ sender: Any) {
         
-        let color = UIColor.lightGray
         let width : Int = Int(self.view.frame.width - 20)
-        let height = 280
-        let distance = 20
-        let buttonWidth = width - (distance * 2)
-        let borderWidth : CGFloat = 2
+        let height = 540
         
-        let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
-        contentView.backgroundColor = UIColor.white
-        contentView.layer.cornerRadius = DefinedValues.radius
+        let contentView = LogoutView(frame: CGRect(x: 0, y:0, width: width, height: height))
+        contentView.delegate = self
         
         p = PopupView.init(contentView: contentView)
         p?.maskType = .dimmed
         p?.layer.cornerRadius = DefinedValues.radius
-        
-        let reportButton = UIButton.init(frame: CGRect.init(x: distance, y: 115, width: buttonWidth, height: 75))
-        reportButton.layer.cornerRadius = DefinedValues.radius
-        reportButton.layer.borderWidth = borderWidth
-        reportButton.layer.borderColor = color.cgColor
-        reportButton.setTitleColor(UIColor.black, for: .normal)
-        reportButton.setTitle("Report a bug", for: .normal)
-        reportButton.addTarget(self, action: #selector(reportBug), for: .touchUpInside)
-        
-        let logoutButton = UIButton.init(frame: CGRect.init(x: distance, y: 25, width: buttonWidth, height: 75))
-        logoutButton.layer.cornerRadius = DefinedValues.radius
-        logoutButton.layer.borderWidth = borderWidth
-        logoutButton.layer.borderColor = color.cgColor
-        logoutButton.setTitleColor(UIColor.black, for: .normal)
-        logoutButton.setTitle("Logout", for: .normal)
-        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        
-        let closeButton = UIButton.init(frame: CGRect.init(x: width/2 - 45, y: height - 75, width: 90, height: 50))
-        closeButton.layer.cornerRadius = 25
-        closeButton.setTitle("Cancel", for: .normal)
-        closeButton.backgroundColor = color
-        closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        
-        contentView.addSubview(reportButton)
-        contentView.addSubview(logoutButton)
-        contentView.addSubview(closeButton)
+
         
         let xPos = self.view.frame.width / 2
-        let yPos = self.view.frame.height - ((self.tabBarController?.view!.safeAreaInsets.bottom)!) - (CGFloat(height) / 2) - 10
+        let yPos = self.view.frame.height / 2
         let location = CGPoint.init(x: xPos, y: yPos)
         p?.showType = .slideInFromBottom
         p?.maskType = .dimmed
@@ -392,7 +344,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         }
     }
     
-    @objc func buttonAction(sender: UIButton!) {
+    func buttonAction() {
         p?.dismissType = .slideOutToBottom
         p?.dismiss(animated: true)
     }
@@ -449,10 +401,6 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         static let NavBarHeightSmallState: CGFloat = 44
         /// Height of NavBar for Large state. Usually it's just 96.5 but if you have a custom font for the title, please make sure to edit this value since it changes the height for Large state of NavBar
         static let NavBarHeightLargeState: CGFloat = 96.5
-    }
-    
-    @objc func reportBug(sender: UIButton!) {
-        UIApplication.shared.open(URL(string: "https://sites.google.com/view/hcr-points/home")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
     
     
