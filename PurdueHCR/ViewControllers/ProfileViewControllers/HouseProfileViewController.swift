@@ -85,7 +85,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         } else {
             backgroundTable.backgroundColor = DefinedValues.systemGray5
         }*/
-        backgroundTable.backgroundColor = UIColor.white
+        //backgroundTable.backgroundColor = UIColor.white
 		
 		// TODO: A separate method should probably be created for this so that it doesn't have to pass around as much data but instead just returns a boolean whether or not the user has a notification
 		
@@ -192,10 +192,10 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         if (row == 0 && !isFHP) {
             if (profileView == nil) {
                 profileView = ProfileView.init()
-                profileView?.layer.shadowColor = UIColor.darkGray.cgColor
-                profileView?.layer.shadowOpacity = 0.5
-                profileView?.layer.shadowOffset = CGSize.zero
-                profileView?.layer.shadowRadius = shadowRadius
+//                profileView?.layer.shadowColor = UIColor.darkGray.cgColor
+//                profileView?.layer.shadowOpacity = 0.5
+//                profileView?.layer.shadowOffset = CGSize.zero
+//                profileView?.layer.shadowRadius = shadowRadius
                 profileView?.layer.cornerRadius = DefinedValues.radius
                 profileView?.backgroundColor = UIColor.white
                 profileView?.clipsToBounds = false
@@ -220,10 +220,10 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         else if ((!isFHP && row == 1) || (isFHP && row == 0)) {
             if (compareView == nil) {
                 compareView = HousePointsCompareView.init()
-                compareView?.layer.shadowColor = UIColor.darkGray.cgColor
-                compareView?.layer.shadowOpacity = 0.5
-                compareView?.layer.shadowOffset = CGSize.zero
-                compareView?.layer.shadowRadius = shadowRadius
+//                compareView?.layer.shadowColor = UIColor.darkGray.cgColor
+//                compareView?.layer.shadowOpacity = 0.5
+//                compareView?.layer.shadowOffset = CGSize.zero
+//                compareView?.layer.shadowRadius = shadowRadius
                 compareView?.layer.cornerRadius = DefinedValues.radius
                 compareView?.clipsToBounds = false
                 compareView?.layer.masksToBounds = false
@@ -247,12 +247,12 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         else if (((!isFHP && row == 2) || (isFHP && row == 1)) && showRewards) {
             if (houseView == nil) {
                 houseView = HousePointsView.init()
-                houseView?.layer.shadowColor = UIColor.darkGray.cgColor
-                houseView?.layer.shadowOpacity = 0.5
-                houseView?.layer.shadowOffset = CGSize.zero
-                houseView?.layer.shadowRadius = shadowRadius
+//                houseView?.layer.shadowColor = UIColor.darkGray.cgColor
+//                houseView?.layer.shadowOpacity = 0.5
+//                houseView?.layer.shadowOffset = CGSize.zero
+//                houseView?.layer.shadowRadius = shadowRadius
                 houseView?.layer.cornerRadius = DefinedValues.radius
-                houseView?.backgroundColor = UIColor.white
+                //houseView?.backgroundColor = UIColor.white
             }
             cell.addSubview(houseView!)
             
@@ -270,12 +270,12 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         else if (isFHP && row == 2 || (isFHP && row == 1 && !showRewards)) {
             if (topScorersView == nil) {
                 topScorersView = TopScorersView.init()
-                topScorersView?.layer.shadowColor = UIColor.darkGray.cgColor
-                topScorersView?.layer.shadowOpacity = 0.5
-                topScorersView?.layer.shadowOffset = CGSize.zero
-                topScorersView?.layer.shadowRadius = shadowRadius
+//                topScorersView?.layer.shadowColor = UIColor.darkGray.cgColor
+//                topScorersView?.layer.shadowOpacity = 0.5
+//                topScorersView?.layer.shadowOffset = CGSize.zero
+//                topScorersView?.layer.shadowRadius = shadowRadius
                 topScorersView?.layer.cornerRadius = DefinedValues.radius
-                topScorersView?.backgroundColor = UIColor.white
+                //topScorersView?.backgroundColor = UIColor.white
                 topScorersView?.autoresizingMask = [.flexibleHeight]
                 topScorersView?.sizeToFit()
             }
@@ -291,7 +291,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: topScorersView, attribute: .height, multiplier: 1, constant: padding+5)
             NSLayoutConstraint.activate([cellHeight])
         }
-        cell.backgroundColor = UIColor.white//DefinedValues.systemGray5
+        //cell.backgroundColor = UIColor.white//DefinedValues.systemGray5
         
         return cell
     }
