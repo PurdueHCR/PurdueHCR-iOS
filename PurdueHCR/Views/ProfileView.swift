@@ -58,7 +58,8 @@ class ProfileView: UIView {
         viewPointsButton.layer.cornerRadius = viewPointsButton.layer.frame.height / 2
 		
         infoButton.isHidden = true
-        blackButton.layer.cornerRadius = 25
+        blackButton.isHidden = true
+        blackButton.layer.cornerRadius = infoButton.layer.frame.height / 2
         
         let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
 		if (permissionLevel == PointType.PermissionLevel.faculty) {
@@ -68,6 +69,7 @@ class ProfileView: UIView {
 		}
         if (permissionLevel == PointType.PermissionLevel.rhp) {
             infoButton.isHidden = false
+            blackButton.isHidden = false
         }
         houseEmblem.backgroundColor = UIColor.white
         houseEmblem.layer.cornerRadius = houseEmblem.frame.height / 2
