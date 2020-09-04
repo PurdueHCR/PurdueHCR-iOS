@@ -134,26 +134,36 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
             RHPApproveTableViewController, UserPointsTableViewController, or
             NotificationsTableViewController
          */
+        var message = ""
+        if (!approve) {
+            message = typeMessageField.text!
+            if (message == "") {
+                self.notify(title: "Error", subtitle: "You must type a message to reject a point log", style: .danger)
+                return
+            }
+            
+        }
+        
 		if (pointLog?.wasHandled == true) {
             if (preViewContr is HousePointsHistoryViewController) {
                 if let pointSubmittedViewContr = (preViewContr as! HousePointsHistoryViewController?) {
-                    pointSubmittedViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: true, indexPath: indexPath!)
+                    pointSubmittedViewContr.updatePointLogStatus(log: pointLog!, approve: approve, message: message, updating: true, indexPath: indexPath!)
                 }
             }
             else if (preViewContr is UserPointsTableViewController) {
                 if let userPointsViewContr = (preViewContr as! UserPointsTableViewController?){
-                    userPointsViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: true, indexPath: indexPath!)
+                    userPointsViewContr.updatePointLogStatus(log: pointLog!, approve: approve, message: message, updating: true, indexPath: indexPath!)
                 }
             }
             else if (preViewContr is NotificationsTableViewController) {
                 if let notificationsViewContr = (preViewContr as! NotificationsTableViewController?){
-                    notificationsViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: true, indexPath: indexPath!)
+                    notificationsViewContr.updatePointLogStatus(log: pointLog!, approve: approve, message: message, updating: true, indexPath: indexPath!)
                 }
             }
 		} else {
             if (preViewContr is RHPApprovalTableViewController) {
                 if let rhpApprovalViewContr = (preViewContr as! RHPApprovalTableViewController?){
-                    rhpApprovalViewContr.updatePointLogStatus(log: pointLog!, approve: approve, updating: false, indexPath: indexPath!)
+                    rhpApprovalViewContr.updatePointLogStatus(log: pointLog!, approve: approve, message: message, updating: false, indexPath: indexPath!)
                 }
             }
 		}
@@ -175,21 +185,21 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	@IBAction func sendMessage(_ sender: Any) {
 		let message = typeMessageField.text!
         self.view.endEditing(true)
-			if (message != "") {
-                self.sendButton.isEnabled = false
-                sendActivityIndicator.isHidden = false
-                sendActivityIndicator.startAnimating()
-                DataManager.sharedManager.addMessageToPointLog(message: message, pointID: pointLog!.logID!) { (err) in
-                    if (err == nil) {
-                        self.messageLogs.append(MessageLog(creationDate: Timestamp(), message: message, senderFirstName: User.get(.firstName) as! String, senderLastName: User.get(.lastName) as! String, senderPermissionLevel:  PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)!, messageType: .comment))
-                        self.tableView.reloadData()
-                        self.scrollToBottom()
-                        self.typeMessageField.text! = ""
-                    }
-                    self.sendButton.isEnabled = true
-                    self.sendActivityIndicator.stopAnimating()
-                    self.sendActivityIndicator.isHidden = true
+        if (message != "") {
+            self.sendButton.isEnabled = false
+            sendActivityIndicator.isHidden = false
+            sendActivityIndicator.startAnimating()
+            DataManager.sharedManager.addMessageToPointLog(message: message, pointID: pointLog!.logID!) { (err) in
+                if (err == nil) {
+                    self.messageLogs.append(MessageLog(creationDate: Timestamp(), message: message, senderFirstName: User.get(.firstName) as! String, senderLastName: User.get(.lastName) as! String, senderPermissionLevel:  PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)!, messageType: .comment))
+                    self.tableView.reloadData()
+                    self.scrollToBottom()
+                    self.typeMessageField.text! = ""
                 }
+                self.sendButton.isEnabled = true
+                self.sendActivityIndicator.stopAnimating()
+                self.sendActivityIndicator.isHidden = true
+            }
 				
 		}
 	}

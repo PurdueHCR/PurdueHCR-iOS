@@ -121,8 +121,8 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 		return cell
 	}
 	
-    func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = true, indexPath: IndexPath) {
-		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, updating: true, onDone: { (err: Error?) in
+    func updatePointLogStatus(log:PointLog, approve:Bool, message:String = "", updating:Bool = true, indexPath: IndexPath) {
+        DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, message: message, updating: true, onDone: { (err: Error?) in
 			if let error = err {
 				if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
 					self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
