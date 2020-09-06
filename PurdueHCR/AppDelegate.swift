@@ -50,12 +50,12 @@ import FirebaseDynamicLinks
     }
     
     func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) {
-        guard let testExist = dynamicLink.url else {
+        guard let verifiedURL = dynamicLink.url else {
             print("Dynamic link object has no url.")
             return
         }
         // Flutter adds /# in URL. This needs to be removed.
-        let modifiedURL = URL(string: (dynamicLink.url!.absoluteString.replacingOccurrences(of: "/#", with: "")))
+        let modifiedURL = URL(string: (verifiedURL.absoluteString.replacingOccurrences(of: "/#", with: "")))
         guard let url = modifiedURL else {
             print("Dynamic link object has no url.")
             return
@@ -67,7 +67,14 @@ import FirebaseDynamicLinks
         let components = url.pathComponents
         if (components.count == 3) {
             if (components[1] == "addpoints") {
-                DataManager.sharedManager.handlePointLink(id: components[2])
+                if (Cely.isLoggedIn()) {
+                    DataManager.sharedManager.handlePointLink(id: components[2])
+                } else {
+                   let banner = NotificationBanner(title: "Failure", subtitle: "You must log in to submit a point", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                    return
+                }
             }
             else if (components[1] == "createaccount") {
                 // Check that user is not already logged in
