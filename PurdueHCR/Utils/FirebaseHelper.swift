@@ -184,7 +184,11 @@ class FirebaseHelper {
                         switch response.result {
                         case .success:
                             if (preApproved) {
-                                let banner = NotificationBanner(title: "Way to Go RHP", subtitle: "Congrats, \(log.type.pointValue) points submitted.", style: .success)
+                                var endText = " points submitted."
+                                if (log.type.pointValue == 1) {
+                                    endText = " point submitted."
+                                }
+                                let banner = NotificationBanner(title: "Way to Go RHP", subtitle: "Congrats, \(log.type.pointValue)" + endText, style: .success)
                                 banner.duration = 2
                                 banner.show()
                             }
@@ -228,15 +232,35 @@ class FirebaseHelper {
             ref!.getDocument { (document, error) in
                 if let document = document, document.exists {
                     // failure(NSError(domain: "Document Exists", code: 1, userInfo: nil)) HANDLE ERROR
+                    let banner = NotificationBanner(title: "Failure", subtitle: "Point has already been submitted.", style: .danger)
+                    banner.duration = 2
+                    banner.show()
                 } else {
                     ref!.setData(log.convertToDict()) { err in
                         if ( err == nil){
 							if(preApproved)
 							{
-                                self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward:isRECGrantingAward, updatePointValue: false, onDone: onDone)
+                                self.updateHouseAndUserPoints(log: log, residentID: log.residentId, houseRef: self.db.collection(self.HOUSE).document(house), isRECGrantingAward: isRECGrantingAward, updatePointValue: false) { (error) in
+                                    if (error == nil) {
+                                        var endText = " points submitted."
+                                        if (log.type.pointValue == 1) {
+                                            endText = " point submitted."
+                                        }
+                                        let banner = NotificationBanner(title: "Way to Go", subtitle: "Congrats, \(log.type.pointValue)" + endText,  style: .success)
+                                        banner.duration = 2
+                                        banner.show()
+                                    } else {
+                                        let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                                        banner.duration = 2
+                                        banner.show()
+                                    }
+                                }
 							}
 							else {
-								onDone(err)
+                                let banner = NotificationBanner(title: "Way to Go", subtitle: "Congrats, \(log.type.pointValue) points submitted.", style: .success)
+                                banner.duration = 2
+                                banner.show()
+								onDone(nil)
 							}
                         }
                         else{

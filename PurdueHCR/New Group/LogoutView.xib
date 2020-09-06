@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fL-Ag-0Oa">
-                    <rect key="frame" x="87" y="447.5" width="225" height="55"/>
+                    <rect key="frame" x="87" y="428.5" width="225" height="55"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="GFO-eG-pK6"/>
@@ -50,7 +50,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ydb-Ch-rf6">
-                    <rect key="frame" x="15" y="407.5" width="90" height="25"/>
+                    <rect key="frame" x="15" y="388.5" width="90" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="90" id="OtX-Zv-FF2"/>
                         <constraint firstAttribute="height" constant="25" id="axt-NJ-4MZ"/>
@@ -62,7 +62,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="HVF-JZ-Bkf">
-                    <rect key="frame" x="120" y="407.5" width="179" height="25"/>
+                    <rect key="frame" x="120" y="388.5" width="179" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="X4U-i9-9vV"/>
                     </constraints>
@@ -73,17 +73,17 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="StH-Cz-1tm">
-                    <rect key="frame" x="30" y="46" width="344" height="95.5"/>
+                    <rect key="frame" x="30" y="46" width="344" height="76.5"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="5Za-IW-3qV"/>
                     </constraints>
-                    <string key="text">This app is maintained by PurdueHCR Development Committee. We are a group of students interested in application development and are open for anyone to join. Interested in joining? Check out our Slack channel!</string>
+                    <string key="text">This app is maintained by PurdueHCR Development Committee, a group of students passionate about app development. Interested in joining? Check out our Slack channel!</string>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y5u-yl-Urm">
-                    <rect key="frame" x="149.5" y="141.5" width="100" height="30"/>
+                    <rect key="frame" x="149.5" y="122.5" width="100" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="TcP-It-leW"/>
@@ -94,55 +94,55 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTACT INFORMATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBR-ki-Z5k">
-                    <rect key="frame" x="20" y="186.5" width="191" height="19.5"/>
+                    <rect key="frame" x="20" y="167.5" width="191" height="19.5"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PurdueHCR: purduehcr@gmail.com" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="lcs-uk-NR3">
-                    <rect key="frame" x="30" y="208" width="364" height="18"/>
+                    <rect key="frame" x="30" y="189" width="364" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.github.com/PurdueHCR" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ehM-6N-S9x">
-                    <rect key="frame" x="117" y="226" width="277" height="18"/>
+                    <rect key="frame" x="117" y="207" width="277" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ben Hardin: hardin30@purdue.edu" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="qwL-AV-dne">
-                    <rect key="frame" x="30" y="275.5" width="364" height="18"/>
+                    <rect key="frame" x="30" y="256.5" width="364" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asa Cutler: cutler4@purdue.edu" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="guj-1P-B26">
-                    <rect key="frame" x="30" y="325" width="364" height="18"/>
+                    <rect key="frame" x="30" y="306" width="364" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brian Johncox: brianjohncox232@gmail.com" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="bQj-Zx-GgF">
-                    <rect key="frame" x="30" y="374.5" width="364" height="18"/>
+                    <rect key="frame" x="30" y="355.5" width="364" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMMITTEE PRESIDENT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAs-h1-0hQ">
-                    <rect key="frame" x="20" y="254" width="187.5" height="19.5"/>
+                    <rect key="frame" x="20" y="235" width="187.5" height="19.5"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RESIDENTIAL LIFE ADVISOR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZx-p5-fcl">
-                    <rect key="frame" x="20" y="303.5" width="213" height="19.5"/>
+                    <rect key="frame" x="20" y="284.5" width="213" height="19.5"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FLUTTER DEVELOPER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldx-Gb-MZx">
-                    <rect key="frame" x="20" y="353" width="166.5" height="19.5"/>
+                    <rect key="frame" x="20" y="334" width="166.5" height="19.5"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -154,7 +154,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhR-Ao-Cc2">
-                    <rect key="frame" x="314" y="407.5" width="70" height="25"/>
+                    <rect key="frame" x="314" y="388.5" width="70" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="70" id="WDE-As-PSF"/>
                         <constraint firstAttribute="height" constant="25" id="dt2-xo-Im5"/>

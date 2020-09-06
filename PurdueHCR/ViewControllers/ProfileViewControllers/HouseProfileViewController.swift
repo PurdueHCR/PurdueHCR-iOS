@@ -209,7 +209,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             profileView?.translatesAutoresizingMaskIntoConstraints = false
             let horizontalConstraint = NSLayoutConstraint(item: profileView!, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
             let verticalConstraint = NSLayoutConstraint(item: profileView!, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 150)
-            let centeredVertically = NSLayoutConstraint(item: profileView!, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 5)
+            let centeredVertically = NSLayoutConstraint(item: profileView!, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 3)
             let widthConstraint = NSLayoutConstraint(item: profileView!, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
             
             NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, centeredVertically])
@@ -283,7 +283,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             
             topScorersView?.translatesAutoresizingMaskIntoConstraints = false
             let horizontalConstraint = NSLayoutConstraint(item: topScorersView!, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
-            let centeredVertically = NSLayoutConstraint(item: topScorersView!, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: -5)
+            let centeredVertically = NSLayoutConstraint(item: topScorersView!, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 0)
             let widthConstraint = NSLayoutConstraint(item: topScorersView!, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
                            
             NSLayoutConstraint.activate([horizontalConstraint, widthConstraint, centeredVertically])

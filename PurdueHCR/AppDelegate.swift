@@ -22,7 +22,6 @@ import FirebaseDynamicLinks
         
         //set up the project to connect with firebase and fetch the information on the houses so the login page has the information availible.
         FirebaseApp.configure()
-        DynamicLinks.performDiagnostics(completion: nil)
         DataManager.sharedManager.refreshHouses(onDone: {(house:[House]) in return})
         
         //Handle the user being logged in or not.
@@ -132,7 +131,9 @@ import FirebaseDynamicLinks
                 }
             
                 if let dynamicLink = dynamicLink {
-                    self.handleIncomingDynamicLink(dynamicLink)
+                    DataManager.sharedManager.refreshHouses { (houses) in
+                        self.handleIncomingDynamicLink(dynamicLink)
+                   }
                 }
             }
             if (linkHandled) {
@@ -148,23 +149,23 @@ import FirebaseDynamicLinks
         return false
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-      return application(app, open: url,
-                         sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-                         annotation: "")
-    }
-
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-      if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
-        // Handle the deep link. For example, show the deep-linked content or
-        // apply a promotional offer to the user's account.
-        // ...
-        print("In the source application open url function")
-        handleIncomingDynamicLink(dynamicLink)
-        return true
-      }
-      return false
-    }
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+//      return application(app, open: url,
+//                         sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+//                         annotation: "")
+//    }
+//
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//      if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
+//        // Handle the deep link. For example, show the deep-linked content or
+//        // apply a promotional offer to the user's account.
+//        // ...
+//        print("In the source application open url function")
+//        handleIncomingDynamicLink(dynamicLink)
+//        return true
+//      }
+//      return false
+//    }
     
     
     // This method will handle the case where a URI is sent to the app from a link or a QR code
