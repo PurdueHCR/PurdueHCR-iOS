@@ -146,8 +146,8 @@ class RHPApprovalTableViewController: UITableViewController {
     }*/
     
     
-	func updatePointLogStatus(log:PointLog, approve:Bool, updating:Bool = false, indexPath: IndexPath) {
-		DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, onDone: { (err: Error?) in
+    func updatePointLogStatus(log:PointLog, approve:Bool, message:String = "", updating:Bool = false, indexPath: IndexPath) {
+        DataManager.sharedManager.updatePointLogStatus(log: log, approved: approve, message: message, onDone: { (err: Error?) in
             if let error = err {
                 if(error.localizedDescription == "The operation couldn’t be completed. (Point request has already been handled error 1.)"){
                     self.notify(title: "WARNING: ALREADY HANDLED", subtitle: "Check with other RHPs before continuing", style: .warning)
@@ -157,7 +157,7 @@ class RHPApprovalTableViewController: UITableViewController {
                     self.notify(title: "Failure", subtitle: "Point request no longer exists.", style: .danger)
                     return
                 }
-                else{
+                else {
                     self.notify(title: "Failed", subtitle: "Failed to update point request.", style: .danger)
 //                    self.displayedLogs.append(log)
 //                    DispatchQueue.main.async { [unowned self] in

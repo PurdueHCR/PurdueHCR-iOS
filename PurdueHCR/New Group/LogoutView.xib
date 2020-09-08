@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LogoutView" customModule="PurdueHCR" customModuleProvider="target">
+            <connections>
+                <outlet property="closeButton" destination="gmX-ZW-siE" id="yVK-Ms-7cC"/>
+                <outlet property="conditionsButton" destination="HVF-JZ-Bkf" id="wGt-18-NDe"/>
+                <outlet property="joinButton" destination="Y5u-yl-Urm" id="DUm-I8-mjW"/>
+                <outlet property="logoutButton" destination="9fL-Ag-0Oa" id="JfW-dx-btC"/>
+                <outlet property="logoutView" destination="iN0-l3-epB" id="DGN-1K-140"/>
+                <outlet property="policyButton" destination="Ydb-Ch-rf6" id="OBk-tr-2PL"/>
+                <outlet property="reportButton" destination="hhR-Ao-Cc2" id="I0p-iR-Btd"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="399" height="546"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fL-Ag-0Oa">
+                    <rect key="frame" x="87" y="433.5" width="225" height="55"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="GFO-eG-pK6"/>
+                        <constraint firstAttribute="width" constant="225" id="P1b-DW-Zvf"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="Logout" image="SF_arrow_up_right_diamond_fill"/>
+                    <connections>
+                        <action selector="logout:" destination="-1" eventType="touchUpInside" id="BJc-nf-G2G"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmX-ZW-siE">
+                    <rect key="frame" x="364" y="10" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="1wf-tj-bYJ"/>
+                        <constraint firstAttribute="width" secondItem="gmX-ZW-siE" secondAttribute="height" multiplier="1:1" id="cNW-dG-Iv3"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="SF_xmark"/>
+                    <connections>
+                        <action selector="closeView:" destination="-1" eventType="touchUpInside" id="R9H-ou-6nO"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ydb-Ch-rf6">
+                    <rect key="frame" x="15" y="393.5" width="90" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="90" id="OtX-Zv-FF2"/>
+                        <constraint firstAttribute="height" constant="25" id="axt-NJ-4MZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="Privacy Policy"/>
+                    <connections>
+                        <action selector="openPolicy:" destination="-1" eventType="touchUpInside" id="LmY-Cg-i77"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="HVF-JZ-Bkf">
+                    <rect key="frame" x="120" y="393.5" width="179" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="X4U-i9-9vV"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="Terms and Conditions"/>
+                    <connections>
+                        <action selector="openConditions:" destination="-1" eventType="touchUpInside" id="77A-H7-BFF"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="StH-Cz-1tm">
+                    <rect key="frame" x="30" y="46" width="344" height="76.5"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="5Za-IW-3qV"/>
+                    </constraints>
+                    <string key="text">This app is maintained by PurdueHCR Development Committee, a group of students passionate about app development. Interested in joining? Check out our Slack channel!</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y5u-yl-Urm">
+                    <rect key="frame" x="149.5" y="132.5" width="100" height="30"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="TcP-It-leW"/>
+                    </constraints>
+                    <state key="normal" title="Join Slack"/>
+                    <connections>
+                        <action selector="join:" destination="-1" eventType="touchUpInside" id="MPv-XV-Nbc"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTACT INFORMATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBR-ki-Z5k">
+                    <rect key="frame" x="20" y="172.5" width="191" height="19.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PurdueHCR: purduehcr@gmail.com" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="lcs-uk-NR3">
+                    <rect key="frame" x="30" y="194" width="364" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.github.com/PurdueHCR" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ehM-6N-S9x">
+                    <rect key="frame" x="117" y="212" width="277" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ben Hardin: hardin30@purdue.edu" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="qwL-AV-dne">
+                    <rect key="frame" x="30" y="261.5" width="364" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asa Cutler: cutler4@purdue.edu" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="guj-1P-B26">
+                    <rect key="frame" x="30" y="311" width="364" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brian Johncox: brianjohncox232@gmail.com" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="bQj-Zx-GgF">
+                    <rect key="frame" x="30" y="360.5" width="364" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMMITTEE PRESIDENT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAs-h1-0hQ">
+                    <rect key="frame" x="20" y="240" width="187.5" height="19.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RESIDENTIAL LIFE ADVISOR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZx-p5-fcl">
+                    <rect key="frame" x="20" y="289.5" width="213" height="19.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FLUTTER DEVELOPER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldx-Gb-MZx">
+                    <rect key="frame" x="20" y="339" width="166.5" height="19.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ABOUT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yom-Ls-wOw">
+                    <rect key="frame" x="20" y="20" width="59" height="21"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhR-Ao-Cc2">
+                    <rect key="frame" x="314" y="393.5" width="70" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="WDE-As-PSF"/>
+                        <constraint firstAttribute="height" constant="25" id="dt2-xo-Im5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="Report Bug"/>
+                    <connections>
+                        <action selector="report:" destination="-1" eventType="touchUpInside" id="Ufi-cy-qV1"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="qwL-AV-dne" firstAttribute="leading" secondItem="lcs-uk-NR3" secondAttribute="leading" id="07V-MD-b9Y"/>
+                <constraint firstItem="wZx-p5-fcl" firstAttribute="top" secondItem="qwL-AV-dne" secondAttribute="bottom" constant="10" id="0xI-IL-pJ5"/>
+                <constraint firstItem="qwL-AV-dne" firstAttribute="top" secondItem="xAs-h1-0hQ" secondAttribute="bottom" constant="2" id="2FH-mv-HQj"/>
+                <constraint firstItem="Y5u-yl-Urm" firstAttribute="top" secondItem="StH-Cz-1tm" secondAttribute="bottom" constant="10" id="3DI-ZS-59T"/>
+                <constraint firstItem="lcs-uk-NR3" firstAttribute="leading" secondItem="iBR-ki-Z5k" secondAttribute="leading" constant="10" id="4TE-1A-sS6"/>
+                <constraint firstItem="StH-Cz-1tm" firstAttribute="leading" secondItem="lcs-uk-NR3" secondAttribute="leading" id="5w4-za-DvJ"/>
+                <constraint firstItem="Ydb-Ch-rf6" firstAttribute="top" secondItem="bQj-Zx-GgF" secondAttribute="bottom" constant="15" id="6JY-f6-ovT"/>
+                <constraint firstItem="bQj-Zx-GgF" firstAttribute="top" secondItem="ldx-Gb-MZx" secondAttribute="bottom" constant="2" id="6vc-kt-iN9"/>
+                <constraint firstItem="bQj-Zx-GgF" firstAttribute="trailing" secondItem="qwL-AV-dne" secondAttribute="trailing" id="9OX-zz-Wti"/>
+                <constraint firstItem="Ydb-Ch-rf6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="ATR-Pm-CS2"/>
+                <constraint firstItem="Ydb-Ch-rf6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="Bbw-yG-EDu"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hhR-Ao-Cc2" secondAttribute="trailing" constant="15" id="CCg-8F-asU"/>
+                <constraint firstItem="ldx-Gb-MZx" firstAttribute="leading" secondItem="iBR-ki-Z5k" secondAttribute="leading" id="CG2-sV-2lz"/>
+                <constraint firstItem="HVF-JZ-Bkf" firstAttribute="centerY" secondItem="Ydb-Ch-rf6" secondAttribute="centerY" id="EYc-zt-a50"/>
+                <constraint firstItem="ehM-6N-S9x" firstAttribute="top" secondItem="lcs-uk-NR3" secondAttribute="bottom" id="EcW-RP-DHi"/>
+                <constraint firstItem="hhR-Ao-Cc2" firstAttribute="centerY" secondItem="Ydb-Ch-rf6" secondAttribute="centerY" id="GMf-Sw-cha"/>
+                <constraint firstItem="xAs-h1-0hQ" firstAttribute="leading" secondItem="iBR-ki-Z5k" secondAttribute="leading" id="Gvd-JN-IRc"/>
+                <constraint firstItem="9fL-Ag-0Oa" firstAttribute="top" secondItem="Ydb-Ch-rf6" secondAttribute="bottom" constant="15" id="JF1-ah-rdj"/>
+                <constraint firstItem="Y5u-yl-Urm" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JJS-YQ-WLv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bQj-Zx-GgF" secondAttribute="trailing" constant="5" id="OKk-oX-5PO"/>
+                <constraint firstItem="ldx-Gb-MZx" firstAttribute="top" secondItem="guj-1P-B26" secondAttribute="bottom" constant="10" id="Owy-gO-US1"/>
+                <constraint firstItem="9fL-Ag-0Oa" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="SM1-6c-pgc"/>
+                <constraint firstItem="xAs-h1-0hQ" firstAttribute="top" secondItem="ehM-6N-S9x" secondAttribute="bottom" constant="10" id="Sya-wK-rFp"/>
+                <constraint firstItem="iBR-ki-Z5k" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="VOZ-45-pRh"/>
+                <constraint firstItem="ehM-6N-S9x" firstAttribute="leading" secondItem="lcs-uk-NR3" secondAttribute="leading" constant="87" id="Vf0-4O-FDX"/>
+                <constraint firstItem="guj-1P-B26" firstAttribute="leading" secondItem="lcs-uk-NR3" secondAttribute="leading" id="Wrd-Kn-Hwq"/>
+                <constraint firstItem="yom-Ls-wOw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="Wts-ax-hJz"/>
+                <constraint firstItem="HVF-JZ-Bkf" firstAttribute="leading" secondItem="Ydb-Ch-rf6" secondAttribute="trailing" constant="15" id="Wy1-gZ-aBD"/>
+                <constraint firstItem="wZx-p5-fcl" firstAttribute="leading" secondItem="iBR-ki-Z5k" secondAttribute="leading" id="XhA-af-E85"/>
+                <constraint firstItem="gmX-ZW-siE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="XuE-ET-V3O"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gmX-ZW-siE" secondAttribute="trailing" constant="10" id="Xxw-he-D5h"/>
+                <constraint firstItem="bQj-Zx-GgF" firstAttribute="leading" secondItem="lcs-uk-NR3" secondAttribute="leading" id="aMh-8J-hK4"/>
+                <constraint firstItem="iBR-ki-Z5k" firstAttribute="top" secondItem="Y5u-yl-Urm" secondAttribute="bottom" constant="10" id="dGy-3d-4R5"/>
+                <constraint firstItem="hhR-Ao-Cc2" firstAttribute="leading" secondItem="HVF-JZ-Bkf" secondAttribute="trailing" constant="15" id="dZH-XY-fIF"/>
+                <constraint firstItem="guj-1P-B26" firstAttribute="top" secondItem="wZx-p5-fcl" secondAttribute="bottom" constant="2" id="hhb-jG-RGB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="StH-Cz-1tm" secondAttribute="trailing" constant="25" id="jaQ-US-Pzb"/>
+                <constraint firstItem="bQj-Zx-GgF" firstAttribute="trailing" secondItem="guj-1P-B26" secondAttribute="trailing" id="kYh-Ta-bk9"/>
+                <constraint firstItem="iBR-ki-Z5k" firstAttribute="leading" secondItem="yom-Ls-wOw" secondAttribute="leading" id="oQM-9G-Wbx"/>
+                <constraint firstItem="StH-Cz-1tm" firstAttribute="top" secondItem="yom-Ls-wOw" secondAttribute="bottom" constant="5" id="rzY-EX-tT2"/>
+                <constraint firstItem="bQj-Zx-GgF" firstAttribute="trailing" secondItem="ehM-6N-S9x" secondAttribute="trailing" id="sGj-MF-yYJ"/>
+                <constraint firstItem="bQj-Zx-GgF" firstAttribute="trailing" secondItem="lcs-uk-NR3" secondAttribute="trailing" id="vA1-wE-gKr"/>
+                <constraint firstItem="lcs-uk-NR3" firstAttribute="top" secondItem="iBR-ki-Z5k" secondAttribute="bottom" constant="2" id="vdb-l1-9qs"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="107.97101449275362" y="108.48214285714285"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="SF_arrow_up_right_diamond_fill" width="16" height="16"/>
+        <image name="SF_xmark" width="44" height="44"/>
+    </resources>
+</document>

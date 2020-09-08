@@ -58,7 +58,8 @@ class ProfileView: UIView {
         viewPointsButton.layer.cornerRadius = viewPointsButton.layer.frame.height / 2
 		
         infoButton.isHidden = true
-        blackButton.layer.cornerRadius = 25
+        blackButton.isHidden = true
+        blackButton.layer.cornerRadius = infoButton.layer.frame.height / 2
         
         let permissionLevel = PointType.PermissionLevel(rawValue: User.get(.permissionLevel) as! Int)
 		if (permissionLevel == PointType.PermissionLevel.faculty) {
@@ -68,6 +69,7 @@ class ProfileView: UIView {
 		}
         if (permissionLevel == PointType.PermissionLevel.rhp) {
             infoButton.isHidden = false
+            blackButton.isHidden = false
         }
         houseEmblem.backgroundColor = UIColor.white
         houseEmblem.layer.cornerRadius = houseEmblem.frame.height / 2
@@ -141,7 +143,7 @@ class ProfileView: UIView {
         //let buttonWidth = width - (distance * 2)
         //let borderWidth : CGFloat = 2
         
-        let contentView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        let contentView = UIView()
         contentView.backgroundColor = UIColor.white
         contentView.layer.cornerRadius = DefinedValues.radius
         
@@ -174,11 +176,12 @@ class ProfileView: UIView {
             }
         }
         
+        contentView.frame = CGRect(x: 0, y: 0, width: width, height: lastPosition + 25)
         
         let closeButton = UIButton(frame: CGRect(x: width - 35, y: 10, width: 25, height: 25))
         let closeImage = #imageLiteral(resourceName: "SF_xmark").withRenderingMode(.alwaysTemplate)
         closeButton.setBackgroundImage(closeImage, for: .normal)
-        closeButton.tintColor = UIColor.darkGray
+        closeButton.tintColor = UIColor.lightGray
         closeButton.setTitle("", for: .normal)
         closeButton.addTarget(self, action: #selector(dismissCodes), for: .touchUpInside)
         

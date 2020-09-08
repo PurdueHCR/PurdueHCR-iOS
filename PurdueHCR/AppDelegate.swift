@@ -22,7 +22,6 @@ import FirebaseDynamicLinks
         
         //set up the project to connect with firebase and fetch the information on the houses so the login page has the information availible.
         FirebaseApp.configure()
-        DynamicLinks.performDiagnostics(completion: nil)
         DataManager.sharedManager.refreshHouses(onDone: {(house:[House]) in return})
         
         //Handle the user being logged in or not.
@@ -51,12 +50,12 @@ import FirebaseDynamicLinks
     }
     
     func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) {
-        guard let testExist = dynamicLink.url else {
+        guard let verifiedURL = dynamicLink.url else {
             print("Dynamic link object has no url.")
             return
         }
         // Flutter adds /# in URL. This needs to be removed.
-        let modifiedURL = URL(string: (dynamicLink.url!.absoluteString.replacingOccurrences(of: "/#", with: "")))
+        let modifiedURL = URL(string: (verifiedURL.absoluteString.replacingOccurrences(of: "/#", with: "")))
         guard let url = modifiedURL else {
             print("Dynamic link object has no url.")
             return
@@ -68,7 +67,14 @@ import FirebaseDynamicLinks
         let components = url.pathComponents
         if (components.count == 3) {
             if (components[1] == "addpoints") {
-                DataManager.sharedManager.handlePointLink(id: components[2])
+                if (Cely.isLoggedIn()) {
+                    DataManager.sharedManager.handlePointLink(id: components[2])
+                } else {
+                   let banner = NotificationBanner(title: "Failure", subtitle: "You must log in to submit a point", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                    return
+                }
             }
             else if (components[1] == "createaccount") {
                 // Check that user is not already logged in
@@ -132,7 +138,9 @@ import FirebaseDynamicLinks
                 }
             
                 if let dynamicLink = dynamicLink {
-                    self.handleIncomingDynamicLink(dynamicLink)
+                    DataManager.sharedManager.refreshHouses { (houses) in
+                        self.handleIncomingDynamicLink(dynamicLink)
+                   }
                 }
             }
             if (linkHandled) {
@@ -148,23 +156,23 @@ import FirebaseDynamicLinks
         return false
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-      return application(app, open: url,
-                         sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-                         annotation: "")
-    }
-
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-      if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
-        // Handle the deep link. For example, show the deep-linked content or
-        // apply a promotional offer to the user's account.
-        // ...
-        print("In the source application open url function")
-        handleIncomingDynamicLink(dynamicLink)
-        return true
-      }
-      return false
-    }
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+//      return application(app, open: url,
+//                         sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+//                         annotation: "")
+//    }
+//
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//      if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
+//        // Handle the deep link. For example, show the deep-linked content or
+//        // apply a promotional offer to the user's account.
+//        // ...
+//        print("In the source application open url function")
+//        handleIncomingDynamicLink(dynamicLink)
+//        return true
+//      }
+//      return false
+//    }
     
     
     // This method will handle the case where a URI is sent to the app from a link or a QR code
