@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
-		B508609E24F5F98500398E55 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B508609D24F5F98400398E55 /* GoogleService-Info.plist */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
 		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
 		B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */; };
 		B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */; };
 		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
+		B53716862506B1CE003E70B9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B53716852506B1CE003E70B9 /* GoogleService-Info.plist */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
@@ -118,7 +118,6 @@
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B508609D24F5F98400398E55 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		B50E6C9122F1202A00505AA3 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCRDebug.entitlements; sourceTree = "<group>"; };
@@ -127,6 +126,7 @@
 		B532665B24F454E1005ABEEC /* PurdueHCRRelease.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = PurdueHCRRelease.entitlements; sourceTree = "<group>"; };
 		B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCR.entitlements; sourceTree = "<group>"; };
 		B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseCodeViewController.swift; sourceTree = "<group>"; };
+		B53716852506B1CE003E70B9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
 		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
@@ -375,7 +375,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				B508609D24F5F98400398E55 /* GoogleService-Info.plist */,
+				B53716852506B1CE003E70B9 /* GoogleService-Info.plist */,
 				B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */,
 				B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */,
 				B532665B24F454E1005ABEEC /* PurdueHCRRelease.entitlements */,
@@ -711,7 +711,7 @@
 				B5ED710A24A7D71E00080A52 /* Events.storyboard in Resources */,
 				B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
-				B508609E24F5F98500398E55 /* GoogleService-Info.plist in Resources */,
+				B53716862506B1CE003E70B9 /* GoogleService-Info.plist in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
 			);
@@ -1034,7 +1034,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.2;
+				MARKETING_VERSION = 1.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1058,7 +1058,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.2;
+				MARKETING_VERSION = 1.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

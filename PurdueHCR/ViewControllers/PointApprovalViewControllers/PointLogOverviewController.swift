@@ -129,6 +129,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 	
     @objc func updatePointLog(approve: Bool) {
         rejectButton?.isEnabled = false
+        approveButton?.isEnabled = false
         /*
             Previous view controllers could be PointsSubmittedViewController,
             RHPApproveTableViewController, UserPointsTableViewController, or
@@ -139,6 +140,8 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
             message = typeMessageField.text!
             if (message == "") {
                 self.notify(title: "Error", subtitle: "You must type a message to reject a point log", style: .danger)
+                rejectButton?.isEnabled = true
+                approveButton?.isEnabled = true
                 return
             }
             
@@ -166,7 +169,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
                     rhpApprovalViewContr.updatePointLogStatus(log: pointLog!, approve: approve, message: message, updating: false, indexPath: indexPath!)
                 }
             }
-		}
+        }
         self.navigationController?.popViewController(animated: true)
     }
 	
