@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="16W-bW-AKg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="16W-bW-AKg">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -136,7 +136,7 @@
                     </view>
                     <connections>
                         <outlet property="forgotPasswordButton" destination="M3W-A2-Sop" id="VA8-7V-wHR"/>
-                        <outlet property="imageView" destination="27G-ic-2Pg" id="jAs-XE-UxJ"/>
+                        <outlet property="imageView" destination="27G-ic-2Pg" id="G1x-N2-GBJ"/>
                         <outlet property="logInButton" destination="rR0-AF-a2o" id="sLw-a2-fuA"/>
                         <outlet property="password" destination="vQo-Oe-EGD" id="9Mp-yp-9DV"/>
                         <outlet property="username" destination="W4d-ka-VCi" id="NLf-in-PKT"/>
@@ -509,7 +509,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yTX-dg-aIZ"/>
+        <segue reference="fz4-dE-SKe"/>
         <segue reference="VrF-dY-ied"/>
     </inferredMetricsTieBreakers>
     <resources>
