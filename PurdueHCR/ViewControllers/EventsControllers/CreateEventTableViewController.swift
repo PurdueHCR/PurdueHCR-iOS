@@ -96,10 +96,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         // This is something to be implemented once we connect the database!
         let ownerID = "0987654321"
         
-
         events.append(Event(name: name, location: location, points: points, house: houseI, details: details, fullDate: fullDate, time: time, ownerID: ownerID))
         
-        print(events.count)
         performSegueToReturnBack()
     }
     
@@ -110,8 +108,6 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-    
     
     
     

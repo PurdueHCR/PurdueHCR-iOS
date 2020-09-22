@@ -6,9 +6,6 @@
 //  Copyright © 2019 Brennan Doyle. All rights reserved.
 //
 
-
-
-
 import UIKit
 
 var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", points: 1, house: "All Houses", details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", fullDate: "Sun, Sep 15 2019", time: "5:00 PM", ownerID: "1234567890")]
@@ -24,8 +21,6 @@ class EventViewController: UITableViewController {
     
     let cellSpacing: CGFloat = 35
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -34,76 +29,61 @@ class EventViewController: UITableViewController {
    //     eventTableView.tableHeaderView!.frame = CGRectMake(0,0,200,300)
         //self.eventTableView.tableHeaderView = self.eventTableView.tableHeaderView
         
+        tableView.register(EventTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        
         self.tableView.rowHeight = 133
         self.tableView.sectionHeaderHeight = 2000
         self.tableView.estimatedSectionHeaderHeight = 2000
         
         events = Event.sortEvents(events: events)
-        
-    //Need to uncomment block for production. Disables add event view for resident users.
     
-//        guard let permission = User.get(.permissionLevel) else{
-//            return
-//        }
-//        let p = permission as! Int
-//
-//        if p == 0 {
-//            AddEventBarButton.isEnabled = false
-//            AddEventBarButton.tintColor = UIColor.clear
-//        }
-        
-        let navigationBar = navigationController!.navigationBar
-        self.navigationItem.rightBarButtonItems = nil
-        let houseName = User.get(.house) as! String
-        houseImageView = UIImageView()
-        if(houseName == "Platinum"){
-            houseImageView.image = #imageLiteral(resourceName: "Platinum")
+        guard let permission = User.get(.permissionLevel) else {
+            return
         }
-        else if(houseName == "Copper"){
-            houseImageView.image = #imageLiteral(resourceName: "Copper")
+        let p = permission as! Int
+
+        if p == 0 {
+            let navigationBar = navigationController!.navigationBar
+            self.navigationItem.rightBarButtonItems = nil
+            let houseName = User.get(.house) as! String
+            houseImageView = UIImageView()
+            
+            if (houseName == "Platinum"){
+                houseImageView.image = #imageLiteral(resourceName: "Platinum")
+            }
+            else if(houseName == "Copper"){
+                houseImageView.image = #imageLiteral(resourceName: "Copper")
+            }
+            else if(houseName == "Palladium"){
+                houseImageView.image = #imageLiteral(resourceName: "Palladium")
+            }
+            else if(houseName == "Silver"){
+                houseImageView.image = #imageLiteral(resourceName: "Silver")
+            }
+            else if(houseName == "Titanium"){
+                houseImageView.image = #imageLiteral(resourceName: "Titanium")
+            }
+            
+            navigationBar.addSubview(houseImageView)
+            houseImageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
+            houseImageView.clipsToBounds = true
+            houseImageView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                houseImageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
+                houseImageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
+                houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
+                houseImageView.widthAnchor.constraint(equalTo: houseImageView.heightAnchor)
+            ])
+        } else {
+            self.navigationItem.rightBarButtonItems = nil
+            self.navigationItem.rightBarButtonItem = AddEventBarButton
+            
         }
-        else if(houseName == "Palladium"){
-            houseImageView.image = #imageLiteral(resourceName: "Palladium")
-        }
-        else if(houseName == "Silver"){
-            houseImageView.image = #imageLiteral(resourceName: "Silver")
-        }
-        else if(houseName == "Titanium"){
-            houseImageView.image = #imageLiteral(resourceName: "Titanium")
-        }
-        navigationBar.addSubview(houseImageView)
-        houseImageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
-        houseImageView.clipsToBounds = true
-        houseImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            houseImageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
-            houseImageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
-            houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
-            houseImageView.widthAnchor.constraint(equalTo: houseImageView.heightAnchor)
-        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
         events = Event.sortEvents(events: events)
-    }
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        //makeSection = true
-        var header: String = ""
-        if section == 0 {
-            header = " \(events[section].fullDate)"
-        }
-        else {
-            if events[section].date == events[section - 1].date { //If same date as previous event, don't print date.
-                makeSection = false
-                return nil
-            }
-            else {
-                header = "  \(events[section].fullDate)"
-            }
-        }
-        return header 
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -136,20 +116,22 @@ class EventViewController: UITableViewController {
                 
         let sectionIndex = Event.startingIndexForSection(section: indexPath.section, events: events)
         
-        cell.eventName.text = events[sectionIndex + indexPath.row].name
+        let event = events[sectionIndex + indexPath.row]
+        
+        cell.eventName.text = event.name
                 
-        cell.eventDate.text = events[sectionIndex + indexPath.row].time
+        cell.eventDate.text = event.time
         
         
-        cell.eventLocation.text = events[sectionIndex + indexPath.row].location
-        if events[sectionIndex + indexPath.row].points == 1 {
+        cell.eventLocation.text = event.location
+        if event.points == 1 {
             cell.eventPoints.text = "1 Point"
         } else {
             cell.eventPoints.text = "\(events[sectionIndex + indexPath.row].points) Points"
         }
         
         // Setting background color based on who the event is for (by house)
-        let color = events[sectionIndex + indexPath.row].house
+        let color = event.house
         if color == "Silver" { //Silver, Update Floor
             cell.houseColorView.backgroundColor = UIColor(red: 88/255, green: 196/255, blue: 0/255, alpha: 1.0)
 
@@ -166,7 +148,7 @@ class EventViewController: UITableViewController {
         }
         else if color == "Copper" { //Copper, Update Floor
             cell.houseColorView.backgroundColor = UIColor(red: 247/255, green: 148/255, blue: 0/255, alpha: 1.0)
-        } else { // All Housesq
+        } else { // All Houses
             cell.houseColorView.backgroundColor = UIColor(red: 233/255, green: 188/255, blue: 74/255, alpha: 1.0)
         }
         cell.houseColorView.layer.cornerRadius = cell.houseColorView.frame.width / 2
@@ -179,17 +161,37 @@ class EventViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! EventTableViewHeaderFooterView
         
-//        let myLabel = UILabel()
-//        myLabel.frame = CGRect(x: 0, y: 0, width: 320, height: 300)
-//        myLabel.font = UIFont.boldSystemFont(ofSize: 26)
-//        myLabel.text = "Test text"
+        header.configureContents()
         
-        let headerView = UIView()
-        //headerView.addSubview(myLabel)
-        headerView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+        makeSection = true
+        var headerText: String = ""
+        if section == 0 {
+            headerText = " \(events[section].fullDate)"
+        }
+        else {
+            if events[section].date == events[section - 1].date { //If same date as previous event, don't print date.
+                makeSection = false
+                return nil
+            }
+            else {
+                headerText = "  \(events[section].fullDate)"
+            }
+        }
         
-        return headerView
+        header.title.text = headerText
+        
+        return header
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is ViewEventTableViewController {
+            let viewController = segue.destination as? ViewEventTableViewController
+            let eventSender = sender as? EventTableViewCell
+            viewController?.cellRow = self.tableView.indexPath(for: eventSender!)!.row
+            viewController?.cellSection = self.tableView.indexPath(for: eventSender!)!.section
+        }
     }
     
     /*
@@ -198,8 +200,16 @@ class EventViewController: UITableViewController {
      */
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let height = navigationController?.navigationBar.frame.height else { return }
-        moveAndResizeImage(for: height)
+        guard let permission = User.get(.permissionLevel) else{
+            return
+        }
+        let p = permission as! Int
+        if (p == 1) {
+            // Normal Resident - Has house logo instead of Add Event button in navigation bar.
+            guard let height = navigationController?.navigationBar.frame.height else { return }
+
+            moveAndResizeImage(for: height)
+        }
     }
     
     private func moveAndResizeImage(for height: CGFloat) {

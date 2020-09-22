@@ -14,25 +14,29 @@ class ViewEventTableViewController: UITableViewController {
     @IBOutlet weak var iCalExportButton: UIButton!
     @IBOutlet weak var gCalExportButton: UIButton!
     
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var hostLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
     
-    var going = true // To be set later when connected to database
-    var event: Event?
+    var going = false // To be set later when connected to database
+    var cellRow: Int = 0
+    var cellSection: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         iCalExportButton.layer.cornerRadius = DefinedValues.radius
         gCalExportButton.layer.cornerRadius = DefinedValues.radius
         
-        self.dateLabel.text = event?.fullDate
-        self.locationLabel.text = event?.location
-        self.hostLabel.text = event?.house
-        self.detailsLabel.text = event?.details
+        let event = events[cellSection + cellRow]
         
-        self.detailsLabel.text = "This is a really long description to test the ability of the row height to just keep expanding and expanding until it is large enough to handle a description that is as crazy long as this description is. "
+        self.nameLabel.text = event.name
+        self.dateLabel.text = event.fullDate
+        self.locationLabel.text = event.location
+        self.hostLabel.text = event.house
+        self.detailsLabel.text = event.details
         
         if (going) {
             if #available(iOS 13.0, *) {
