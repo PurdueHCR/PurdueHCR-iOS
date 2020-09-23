@@ -28,6 +28,7 @@
 		B5D6AF5524FAE20500CC5E86 /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D6AF5424FAE20500CC5E86 /* LogoutView.xib */; };
 		B5D6AF5724FAE89B00CC5E86 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D6AF5624FAE89B00CC5E86 /* LogoutView.swift */; };
 		B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D88D5623C39688007A19D0 /* TopScorersView.swift */; };
+		B5EC1D8D251BD72300988888 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5EC1D8C251BD72300988888 /* GoogleService-Info.plist */; };
 		B5ED710A24A7D71E00080A52 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5ED710924A7D71E00080A52 /* Events.storyboard */; };
 		B5ED711224A7D7C400080A52 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710C24A7D7C400080A52 /* Event.swift */; };
 		B5ED711324A7D7C400080A52 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710D24A7D7C400080A52 /* EventViewController.swift */; };
@@ -36,7 +37,6 @@
 		B5ED711624A7D7C400080A52 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711024A7D7C400080A52 /* VerifyViewController.swift */; };
 		B5ED711724A7D7C400080A52 /* AddEventBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */; };
 		B5ED711924A7E73200080A52 /* ViewEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */; };
-		B5FEA52B25117867001A487B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FEA52A25117866001A487B /* GoogleService-Info.plist */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -141,6 +141,7 @@
 		B5D6AF5624FAE89B00CC5E86 /* LogoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		B5D88D5623C39688007A19D0 /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
 		B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5EC1D8C251BD72300988888 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5ED710924A7D71E00080A52 /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		B5ED710C24A7D7C400080A52 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		B5ED710D24A7D7C400080A52 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -149,7 +150,6 @@
 		B5ED711024A7D7C400080A52 /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventBarButton.swift; sourceTree = "<group>"; };
 		B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEventTableViewController.swift; sourceTree = "<group>"; };
-		B5FEA52A25117866001A487B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -375,7 +375,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				B5FEA52A25117866001A487B /* GoogleService-Info.plist */,
+				B5EC1D8C251BD72300988888 /* GoogleService-Info.plist */,
 				B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */,
 				B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */,
 				B532665B24F454E1005ABEEC /* PurdueHCRRelease.entitlements */,
@@ -711,7 +711,7 @@
 				B5ED710A24A7D71E00080A52 /* Events.storyboard in Resources */,
 				B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
-				B5FEA52B25117867001A487B /* GoogleService-Info.plist in Resources */,
+				B5EC1D8D251BD72300988888 /* GoogleService-Info.plist in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
 			);
@@ -1034,7 +1034,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.3;
+				MARKETING_VERSION = 1.7.4;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1058,7 +1058,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.3;
+				MARKETING_VERSION = 1.7.4;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -48,7 +48,7 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		//descriptionField.becomeFirstResponder()
         submitButton.layer.cornerRadius = submitButton.frame.height / 2
         
-        fortyPercent = self.view.frame.size.height * 0.45
+        fortyPercent = self.view.frame.size.height * 0.55
         
 		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
 		self.topView.layer.shadowOpacity = 0.5
@@ -183,31 +183,45 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
-        moveTextView(textView: self.descriptionField, up: true)
+        //moveTextView(textView: self.descriptionField, up: true)
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            //bottomConstraint.constant = -1 * (keyboardSize.height - (self.tabBarController?.tabBar.frame.size.height)!)
+            // Add buffer so it goes up a little bit
+            // This doesn't work :)
+            let height = self.view.frame.height - keyboardSize.height - 10
+            if (self.descriptionField.frame.maxY > height) {
+                let diff = self.descriptionField.frame.maxY - height
+                self.view.frame.origin.y -= diff - 10
+                
+            
+                print("diff is " , self.view.frame.height)
+            }
+        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        moveTextView(textView: self.descriptionField, up: false)
+        self.view.frame.origin.y = 0
     }
     
     func moveTextView(textView:UITextView, up:Bool){
-        if(up && textView.frame.maxY > self.fortyPercent){
-            let movement = self.fortyPercent - textView.frame.maxY
-            self.lastChange = Double(movement)
-            UIView.beginAnimations("TextFieldMove", context: nil)
-            UIView.setAnimationBeginsFromCurrentState(true)
-            UIView.setAnimationDuration(0.3)
-            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-            UIView.commitAnimations()
-        }
-        else if(!up && self.lastChange != 0.0){
-            let movement = CGFloat(self.lastChange * -1.0)
-            self.lastChange = 0.0
-            UIView.beginAnimations("TextFieldMove", context: nil)
-            UIView.setAnimationBeginsFromCurrentState(true)
-            UIView.setAnimationDuration(0.3)
-            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-            UIView.commitAnimations()
-        }
+//        if(up && textView.frame.maxY > self.fortyPercent){
+//            let movement = self.fortyPercent - textView.frame.maxY
+//            self.lastChange = Double(movement)
+//            UIView.beginAnimations("TextFieldMove", context: nil)
+//            UIView.setAnimationBeginsFromCurrentState(true)
+//            UIView.setAnimationDuration(0.3)
+//            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+//            UIView.commitAnimations()
+//        }
+//        else if(!up && self.lastChange != 0.0){
+//            let movement = CGFloat(self.lastChange * -1.0)
+//            self.lastChange = 0.0
+//            UIView.beginAnimations("TextFieldMove", context: nil)
+//            UIView.setAnimationBeginsFromCurrentState(true)
+//            UIView.setAnimationDuration(0.3)
+//            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+//            UIView.commitAnimations()
+//        }
+    
     }
 }
