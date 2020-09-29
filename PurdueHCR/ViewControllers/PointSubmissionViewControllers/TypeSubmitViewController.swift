@@ -26,8 +26,6 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 	
     var type:PointType?
     var user:User?
-    var fortyPercent = CGFloat(0.0)
-    var lastChange = 0.0
 	let placeholder = "Tell us what you did!"
     
     override func viewDidLoad() {
@@ -47,8 +45,6 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         descriptionField.layer.borderWidth = 1
 		//descriptionField.becomeFirstResponder()
         submitButton.layer.cornerRadius = submitButton.frame.height / 2
-        
-        fortyPercent = self.view.frame.size.height * 0.55
         
 		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
 		self.topView.layer.shadowOpacity = 0.5
@@ -182,46 +178,27 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         self.descriptionField.resignFirstResponder()
     }
 
+    
+    /// Runs when the keyboard will appear on the screen
     @objc func keyboardWillShow(notification: NSNotification) {
-        //moveTextView(textView: self.descriptionField, up: true)
+        // Get the size of the current keyboard
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            //bottomConstraint.constant = -1 * (keyboardSize.height - (self.tabBarController?.tabBar.frame.size.height)!)
-            // Add buffer so it goes up a little bit
-            // This doesn't work :)
-            let height = self.view.frame.height - keyboardSize.height - 10
+            
+            // Location of the top of the keyboard on the screen
+            let height = self.view.frame.height - keyboardSize.height - tabBarController!.tabBar.frame.height
+            // Check if keyboard is above the bottom of the text field
             if (self.descriptionField.frame.maxY > height) {
                 let diff = self.descriptionField.frame.maxY - height
-                self.view.frame.origin.y -= diff - 10
-                
-            
-                print("diff is " , self.view.frame.height)
+                // Move the view up
+                self.view.frame.origin.y -= diff + 10
             }
         }
     }
     
+    /// Runs when the keyboard will disappear from the screen
     @objc func keyboardWillHide(notification: NSNotification) {
+        // Restore the view to it's normal location in case it has been
+        //  pushed up to accommodate the keyboard
         self.view.frame.origin.y = 0
-    }
-    
-    func moveTextView(textView:UITextView, up:Bool){
-//        if(up && textView.frame.maxY > self.fortyPercent){
-//            let movement = self.fortyPercent - textView.frame.maxY
-//            self.lastChange = Double(movement)
-//            UIView.beginAnimations("TextFieldMove", context: nil)
-//            UIView.setAnimationBeginsFromCurrentState(true)
-//            UIView.setAnimationDuration(0.3)
-//            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-//            UIView.commitAnimations()
-//        }
-//        else if(!up && self.lastChange != 0.0){
-//            let movement = CGFloat(self.lastChange * -1.0)
-//            self.lastChange = 0.0
-//            UIView.beginAnimations("TextFieldMove", context: nil)
-//            UIView.setAnimationBeginsFromCurrentState(true)
-//            UIView.setAnimationDuration(0.3)
-//            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-//            UIView.commitAnimations()
-//        }
-    
     }
 }
