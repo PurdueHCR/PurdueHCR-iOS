@@ -10,6 +10,7 @@
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
 		AA7A7F8925115CA5002BD54B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */; };
 		AA7A7F8B251182FA002BD54B /* EventTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */; };
+		AAAAC631251EDF0300C0E2C8 /* EventHostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAC630251EDF0300C0E2C8 /* EventHostTableViewController.swift */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
 		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
 		B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */; };
@@ -119,6 +120,7 @@
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		AAAAC630251EDF0300C0E2C8 /* EventHostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHostTableViewController.swift; sourceTree = "<group>"; };
 		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				B5ED710C24A7D7C400080A52 /* Event.swift */,
 				B5ED710D24A7D7C400080A52 /* EventViewController.swift */,
 				B5ED710E24A7D7C400080A52 /* EventTableViewCell.swift */,
+				AAAAC630251EDF0300C0E2C8 /* EventHostTableViewController.swift */,
 				AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */,
 				B5ED710F24A7D7C400080A52 /* CreateEventTableViewController.swift */,
 				B5ED711024A7D7C400080A52 /* VerifyViewController.swift */,
@@ -840,6 +843,7 @@
 				B5ED711524A7D7C400080A52 /* CreateEventTableViewController.swift in Sources */,
 				D3CC77CE21052CEF00B88F03 /* AppUtils.swift in Sources */,
 				D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */,
+				AAAAC631251EDF0300C0E2C8 /* EventHostTableViewController.swift in Sources */,
 				D3912A6C219CE77B0002E7C7 /* GrantAwardTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,
 				AA7A7F8B251182FA002BD54B /* EventTableViewHeaderFooterView.swift in Sources */,

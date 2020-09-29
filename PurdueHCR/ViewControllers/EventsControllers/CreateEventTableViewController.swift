@@ -17,6 +17,9 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     @IBOutlet weak var newEventDescription: UITextField!
     @IBOutlet weak var housePickerView: UIPickerView!
     @IBOutlet weak var createEventButton: UIButton!
+    @IBOutlet weak var hostEventSwitch: UISwitch!
+    @IBOutlet weak var chooseHostButton: UIButton!
+    
     
     let houses = ["All Houses", "Silver", "Palladium", "Platinum", "Titanium", "Copper"]
     var houseI = "All Houses"
@@ -28,6 +31,9 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         housePickerView.dataSource = self
         
         createEventButton.layer.cornerRadius = 4
+        
+        chooseHostButton.isHidden = true
+        chooseHostButton.isEnabled = false
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -43,9 +49,14 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 7
+        return 8
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell!.selectionStyle = .none
+        return nil
+    }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return houses[row]
@@ -57,6 +68,20 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         houseI = houses[row]
+    }
+    
+    @IBAction func hostEventSwitch(_ sender: UISwitch) {
+        if (sender.isOn) {
+            chooseHostButton.isHidden = true
+            chooseHostButton.isEnabled = false
+        } else {
+            chooseHostButton.isHidden = false
+            chooseHostButton.isEnabled = true
+        }
+    }
+    
+    @IBAction func chooseEventHost(_ sender: UIButton) {
+        sender.tintColor = UIColor.red
     }
     
     @IBAction func createNewEvent(_ sender: Any) {
@@ -74,6 +99,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         let date = newEventDate.date
         
         let location = newEventLocation.text!
+        
+        
         
         // Points may be something we want to change from this to a text input.
         let pointsI = newEventPoints.selectedSegmentIndex

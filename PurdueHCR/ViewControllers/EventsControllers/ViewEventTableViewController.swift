@@ -16,8 +16,10 @@ class ViewEventTableViewController: UITableViewController {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var hostLabel: UILabel!
+    @IBOutlet weak var attendeeLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
     
     var going = false // To be set later when connected to database
@@ -27,16 +29,46 @@ class ViewEventTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.allowsSelection = false
+        
         iCalExportButton.layer.cornerRadius = DefinedValues.radius
         gCalExportButton.layer.cornerRadius = DefinedValues.radius
         
         let event = events[cellSection + cellRow]
         
         self.nameLabel.text = event.name
+        self.nameLabel.numberOfLines = 1
+        self.nameLabel.sizeToFit()
+        
         self.dateLabel.text = event.fullDate
+        self.dateLabel.numberOfLines = 1
+        self.dateLabel.sizeToFit()
+        
+        self.timeLabel.text = event.time
+        self.timeLabel.numberOfLines = 1
+        self.timeLabel.sizeToFit()
+        
         self.locationLabel.text = event.location
-        self.hostLabel.text = event.house
+        self.locationLabel.numberOfLines = 1
+        self.locationLabel.sizeToFit()
+        
+        self.hostLabel.text = "To Fill In"
+        self.hostLabel.numberOfLines = 1
+        self.hostLabel.sizeToFit()
+        
+        self.attendeeLabel.text = event.house
+        self.attendeeLabel.numberOfLines = 1
+        self.attendeeLabel.sizeToFit()
+        
         self.detailsLabel.text = event.details
+        self.detailsLabel.numberOfLines = 0
+        self.detailsLabel.lineBreakMode = .byWordWrapping
+        self.detailsLabel.sizeToFit()
         
         if (going) {
             if #available(iOS 13.0, *) {
@@ -61,7 +93,11 @@ class ViewEventTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 6
+        return 7
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     /*
