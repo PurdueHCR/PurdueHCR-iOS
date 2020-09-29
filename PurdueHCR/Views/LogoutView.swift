@@ -20,7 +20,7 @@ class LogoutView: UIView {
     @IBOutlet weak var conditionsButton: UIButton!
     @IBOutlet weak var joinButton: UIButton!
     
-    var delegate: HouseProfileViewController?
+    var delegate: UIViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,7 +64,13 @@ class LogoutView: UIView {
     }
     
     @IBAction func closeView(_ sender: Any) {
-        delegate?.buttonAction()
+        if (delegate!.isKind(of: HouseProfileViewController.self)) {
+            let newDelegate = delegate as! HouseProfileViewController
+            newDelegate.buttonAction()
+        } else {
+            let newDelegate = delegate as! HouseCompetitionOverviewTableViewController
+            newDelegate.dismissRECLogout()
+        }
     }
     
     @IBAction func join(_ sender: Any) {
