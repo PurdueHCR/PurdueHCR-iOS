@@ -178,27 +178,34 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         self.descriptionField.resignFirstResponder()
     }
 
+    var hasMoved = false
     
     /// Runs when the keyboard will appear on the screen
     @objc func keyboardWillShow(notification: NSNotification) {
-        // Get the size of the current keyboard
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            
-            // Location of the top of the keyboard on the screen
-            let height = self.view.frame.height - keyboardSize.height - tabBarController!.tabBar.frame.height
-            // Check if keyboard is above the bottom of the text field
-            if (self.descriptionField.frame.maxY > height) {
-                let diff = self.descriptionField.frame.maxY - height
-                // Move the view up
-                self.view.frame.origin.y -= diff + 10
+        // Check if the screen has already been shifted up
+        if (!hasMoved) {
+            // Get the size of the current keyboard
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                
+                // Location of the top of the keyboard on the screen
+                let height = self.view.frame.height - keyboardSize.height - tabBarController!.tabBar.frame.height
+                // Check if keyboard is above the bottom of the text field
+                if (self.descriptionField.frame.maxY > height) {
+                    let diff = self.descriptionField.frame.maxY - height
+                    // Move the view up
+                    self.view.frame.origin.y -= diff + 10
+                    hasMoved = true
+                }
             }
         }
     }
+    
     
     /// Runs when the keyboard will disappear from the screen
     @objc func keyboardWillHide(notification: NSNotification) {
         // Restore the view to it's normal location in case it has been
         //  pushed up to accommodate the keyboard
         self.view.frame.origin.y = 0
+        hasMoved = false
     }
 }
