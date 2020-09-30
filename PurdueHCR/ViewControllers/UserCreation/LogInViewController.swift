@@ -129,7 +129,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 			//The DataManager will handle setting all the elements in User.properties
 			DataManager.sharedManager.getUserWhenLogginIn(id: usr.user.uid, onDone: { (success:Bool) in
 				if(success){
-					self.notify(title: "Success", subtitle: "Logging in", style: .success)
+					//self.notify(title: "Success", subtitle: "Logging in", style: .success)
 					User.save(Auth.auth().currentUser?.uid as Any, as: .id)
 					Cely.changeStatus(to: .loggedIn)
 					self.activityIndicator.stopAnimating()

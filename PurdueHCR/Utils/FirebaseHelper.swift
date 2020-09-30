@@ -29,18 +29,18 @@ class FirebaseHelper {
 	let MESSAGES = "Messages"
     
     // TEST URLS
-    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
-    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
-    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
+//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
     
     // PRODUCTION URLS
-//    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
-//    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
-//    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-//    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
-//    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
+    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
 
     
     init() {
@@ -982,27 +982,32 @@ class FirebaseHelper {
             }
             var users = [UserModel]()
             for document in querySnapshot!.documents{
-				let firstName = document.data()["FirstName"] as! String
-				let lastName = document.data()["LastName"] as! String
-                let name = firstName + " " + lastName
-                let points = document.data()["TotalPoints"] as! Int
-                let model = UserModel(name: name, points: points)
-                if(users.count < 5){
-                    users.append(model)
-                    users.sort(by: { (um, um2) -> Bool in
-                        return um.totalPoints > um2.totalPoints
-                    })
-                }
-                else{
-                    for i in 0..<5{
-                        if(users[i].totalPoints < model.totalPoints){
-                            users.insert(model, at: i)
-                            users.remove(at: 5)
-                            break;
+                let permissionLevel = document.data()["Permission Level"] as! Int
+                // Only consider residents, privileged residents, and rhps
+                if (permissionLevel == PointType.PermissionLevel.resident.rawValue
+                        || permissionLevel == PointType.PermissionLevel.priv.rawValue
+                        || permissionLevel == PointType.PermissionLevel.rhp.rawValue) {
+                    let firstName = document.data()["FirstName"] as! String
+                    let lastName = document.data()["LastName"] as! String
+                    let name = firstName + " " + lastName
+                    let points = document.data()["TotalPoints"] as! Int
+                    let model = UserModel(name: name, points: points)
+                    if(users.count < 5){
+                        users.append(model)
+                        users.sort(by: { (um, um2) -> Bool in
+                            return um.totalPoints > um2.totalPoints
+                        })
+                    }
+                    else{
+                        for i in 0..<5{
+                            if(users[i].totalPoints < model.totalPoints){
+                                users.insert(model, at: i)
+                                users.remove(at: 5)
+                                break;
+                            }
                         }
                     }
                 }
-                
                 
             }
             onDone(users)
