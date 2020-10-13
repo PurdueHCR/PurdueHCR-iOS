@@ -41,15 +41,22 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		descriptionField.text = placeholder
 		descriptionField.textColor = UIColor.lightGray
 		descriptionField.selectedTextRange = descriptionField.textRange(from: descriptionField.beginningOfDocument, to: descriptionField.beginningOfDocument)
-        descriptionField.layer.borderColor = UIColor.lightGray.cgColor
-        descriptionField.layer.borderWidth = 1
+        
+//        descriptionField.layer.borderColor = UIColor.lightGray.cgColor
+//        descriptionField.layer.borderWidth = 1
+
+        descriptionField.backgroundColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+        descriptionField.layer.cornerRadius = DefinedValues.radius
+        
 		//descriptionField.becomeFirstResponder()
         submitButton.layer.cornerRadius = submitButton.frame.height / 2
+    
         
-		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
-		self.topView.layer.shadowOpacity = 0.5
-		self.topView.layer.shadowOffset = .init(width: 0, height: 5)
-		self.topView.layer.shadowRadius = 3
+        // This top view was originally here so that we could have the shadow effect. Since this effect has been removed, the view should be removed
+//		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
+//		self.topView.layer.shadowOpacity = 0.5
+//		self.topView.layer.shadowOffset = .init(width: 0, height: 5)
+//		self.topView.layer.shadowRadius = 3
 		self.topView.sizeToFit()
 		
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -193,7 +200,7 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
                 if (self.descriptionField.frame.maxY > height) {
                     let diff = self.descriptionField.frame.maxY - height
                     // Move the view up
-                    self.view.frame.origin.y -= diff + 10
+                    self.view.frame.origin.y -= (diff + 20)
                     hasMoved = true
                 }
             }
