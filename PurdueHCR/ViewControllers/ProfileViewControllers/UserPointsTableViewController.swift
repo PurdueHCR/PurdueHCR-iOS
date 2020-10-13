@@ -45,9 +45,7 @@ class UserPointsTableViewController: UITableViewController {
 		DataManager.sharedManager.getAllPointLogsForUser(residentID: (User).get(.id) as! String, house: (User).get(.house) as! String, onDone: { (pointLogs:[PointLog]) in
 			self.notificationLogs = pointLogs
             self.notificationLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
-			DispatchQueue.main.async { [unowned self] in
-				self.tableView.reloadData()
-			}
+            self.tableView.reloadData()
 			self.tableView.refreshControl?.endRefreshing()
 			self.activityIndicator.stopAnimating()
 			self.navigationItem.hidesBackButton = false
