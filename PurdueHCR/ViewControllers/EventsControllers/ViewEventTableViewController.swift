@@ -45,11 +45,14 @@ class ViewEventTableViewController: UITableViewController {
         self.nameLabel.numberOfLines = 1
         self.nameLabel.sizeToFit()
         
-        self.dateLabel.text = event.fullDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Event.dateFormat
+        self.dateLabel.text = dateFormatter.string(from: event.startDate)
         self.dateLabel.numberOfLines = 1
         self.dateLabel.sizeToFit()
         
-        self.timeLabel.text = event.time
+        dateFormatter.dateFormat = Event.timeFormat
+        self.timeLabel.text = dateFormatter.string(from: event.startTime) + " - " + dateFormatter.string(from: event.endTime)
         self.timeLabel.numberOfLines = 1
         self.timeLabel.sizeToFit()
         
@@ -57,7 +60,7 @@ class ViewEventTableViewController: UITableViewController {
         self.locationLabel.numberOfLines = 1
         self.locationLabel.sizeToFit()
         
-        self.hostLabel.text = "To Fill In"
+        self.hostLabel.text = event.host
         self.hostLabel.numberOfLines = 1
         self.hostLabel.sizeToFit()
         

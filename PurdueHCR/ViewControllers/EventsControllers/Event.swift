@@ -11,33 +11,55 @@ import UIKit
 class Event {
     
     var name: String
-    var time: String
-    var fullDate: String
-    var date: Date
+    var startDate: Date
+    var startTime: Date
+    var endDate: Date
+    var endTime: Date
     var location: String
     var points: Int
     var house: String
     var details: String
-    var ownerId: String
+    var creatorID: String
+    var host: String
+    static let dateFormat = "E, MMM d yyyy"
+    static let timeFormat = "h:mm a"
         
-    init (name: String, location: String, points: Int, house: String, details: String, fullDate: String, time: String, ownerID: String) {
+    init (name: String, location: String, points: Int, house: String, details: String, startDateTime: String, endDateTime: String, creatorID: String, host: String) {
         self.name = name;
         self.location = location
         self.points = points
         self.house = house
         self.details = details
         
-        self.fullDate = fullDate
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E, MMM d yyyy"
-        self.date = dateFormatter.date(from: fullDate)!
-        self.time = time
+        dateFormatter.dateFormat = Event.dateFormat + " " + Event.timeFormat
+        print("Start Date Time: " + startDateTime)
+        let fullStartDateTime = dateFormatter.date(from: startDateTime)!
+        let fullEndDateTime = dateFormatter.date(from: endDateTime)!
         
-        self.ownerId = ownerID
+        dateFormatter.dateFormat = Event.dateFormat
+        let startDateString = dateFormatter.string(from: fullStartDateTime)
+        print(startDateString)
+        let endDateString = dateFormatter.string(from: fullEndDateTime)
+        print(startDateString)
+        self.startDate = dateFormatter.date(from: startDateString)!
+        self.endDate = dateFormatter.date(from: endDateString)!
+        
+        dateFormatter.dateFormat = Event.timeFormat
+        let startTimeString = dateFormatter.string(from: fullStartDateTime)
+        print(startTimeString)
+        let endTimeString = dateFormatter.string(from: fullEndDateTime)
+        print(endTimeString)
+        self.startTime = dateFormatter.date(from: startTimeString)!
+        self.endTime = dateFormatter.date(from: endTimeString)!
+        
+        
+        self.creatorID = creatorID
+        self.host = host
     }
     
     static func startingIndexForSection(section: Int, events: [Event]) -> Int {
-        var currentDate = events[0].date
+        var currentDate = events[0].startDate
         var ctr = 0
         var index = 0
         
@@ -46,11 +68,11 @@ class Event {
             if ctr == section {
                 break
             }
-            if (events[i].date == currentDate) {
+            if (events[i].startDate == currentDate) {
                 continue;
             } else {
                 ctr += 1
-                currentDate = events[i].date
+                currentDate = events[i].startDate
                 index = i
             }
         }
@@ -68,10 +90,10 @@ class Event {
         if (index + 1 == events.count) {
             return 1
         }
-        let currentDate = events[index].date
+        let currentDate = events[index].startDate
         
         while true {
-            if events[index + 1].date == currentDate { // Current date will still be correct for section from above loop
+            if events[index + 1].startDate == currentDate { // Current date will still be correct for section from above loop
                 ret += 1
                 index += 1
             } else {
@@ -85,14 +107,14 @@ class Event {
     
     static func getNumUniqueDates(events: [Event]) -> Int {
         var ret = 1
-        var currentDate = events[0].date
+        var currentDate = events[0].startDate
         
         for i in 0...events.count-1 {
-            if (events[i].date == currentDate) {
+            if (events[i].startDate == currentDate) {
                 continue;
             } else {
                 ret += 1
-                currentDate = events[i].date
+                currentDate = events[i].startDate
             }
             
         }
@@ -110,17 +132,15 @@ class Event {
             while (!done) {
                 change = false
                 for i in 0...ret.count-2 {
-                    if (ret[i].date > ret[i+1].date) {
+                    if (ret[i].startDate > ret[i+1].startDate) {
                         change = true
                         let temp: Event = ret[i]
                         ret[i] = ret[i+1]
                         ret[i+1] = temp
                     }
-                    if (ret[i].date == ret[i+1].date) {
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "h:mm a"
-                        let date0 = dateFormatter.date(from: ret[i].time)!
-                        let date1 = dateFormatter.date(from: ret[i+1].time)!
+                    if (ret[i].startDate == ret[i+1].startDate) {
+                        let date0 = ret[i].startTime
+                        let date1 = ret[i+1].startTime
                         if (date0 > date1) {
                             change = true
                             let temp: Event = ret[i]

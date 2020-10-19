@@ -8,7 +8,7 @@
 
 import UIKit
 
-var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", points: 1, house: "All Houses", details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", fullDate: "Sun, Sep 15 2019", time: "5:00 PM", ownerID: "1234567890")]
+var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", points: 1, house: "All Houses", details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", startDateTime: "Sun, Sep 15 2019 5:00 PM", endDateTime: "Sun, Sep 15 2019 6:00 PM", creatorID: "1234567890", host: "User1234")]
 
 var makeSection: Bool = true
 
@@ -120,7 +120,9 @@ class EventViewController: UITableViewController {
         
         cell.eventName.text = event.name
                 
-        cell.eventDate.text = event.time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Event.timeFormat
+        cell.eventTime.text = dateFormatter.string(from: event.startTime)
         
         
         cell.eventLocation.text = event.location
@@ -167,16 +169,18 @@ class EventViewController: UITableViewController {
         
         makeSection = true
         var headerText: String = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Event.dateFormat
         if section == 0 {
-            headerText = " \(events[section].fullDate)"
+            headerText = dateFormatter.string(from: events[section].startDate)
         }
         else {
-            if events[section].date == events[section - 1].date { //If same date as previous event, don't print date.
+            if events[section].startDate == events[section - 1].startDate { //If same date as previous event, don't print date.
                 makeSection = false
                 return nil
             }
             else {
-                headerText = "  \(events[section].fullDate)"
+                headerText = dateFormatter.string(from: events[section].startDate)
             }
         }
         

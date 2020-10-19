@@ -11,14 +11,15 @@ import UIKit
 class CreateEventTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
      
     @IBOutlet weak var newEventName: UITextField!
-    @IBOutlet weak var newEventDate: UIDatePicker!
+    @IBOutlet weak var newEventStartDate: UIDatePicker!
+    @IBOutlet weak var newEventEndDate: UIDatePicker!
     @IBOutlet weak var newEventLocation: UITextField!
     @IBOutlet weak var newEventPoints: UISegmentedControl!
     @IBOutlet weak var newEventDescription: UITextField!
     @IBOutlet weak var housePickerView: UIPickerView!
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var hostEventSwitch: UISwitch!
-    @IBOutlet weak var chooseHostButton: UIButton!
+    @IBOutlet weak var chooseHostField: UITextField!
     
     
     let houses = ["All Houses", "Silver", "Palladium", "Platinum", "Titanium", "Copper"]
@@ -32,8 +33,10 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         
         createEventButton.layer.cornerRadius = 4
         
-        chooseHostButton.isHidden = true
-        chooseHostButton.isEnabled = false
+        chooseHostField.isHidden = true
+        chooseHostField.isEnabled = false
+        chooseHostField.frame = CGRect(x: chooseHostField.frame.minX, y: chooseHostField.frame.minY, width: chooseHostField.frame.maxX, height: 0)
+        self.tableView.reloadData()
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -49,7 +52,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 8
+        return 9
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -72,35 +75,36 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     
     @IBAction func hostEventSwitch(_ sender: UISwitch) {
         if (sender.isOn) {
-            chooseHostButton.isHidden = true
-            chooseHostButton.isEnabled = false
+            chooseHostField.isHidden = true
+            chooseHostField.isEnabled = false
+            chooseHostField.frame = CGRect(x: chooseHostField.frame.minX, y: chooseHostField.frame.minY, width: chooseHostField.frame.maxX, height: 0)
+            self.tableView.reloadData()
         } else {
-            chooseHostButton.isHidden = false
-            chooseHostButton.isEnabled = true
+            chooseHostField.isHidden = false
+            chooseHostField.isEnabled = true
+            chooseHostField.frame = CGRect(x: chooseHostField.frame.minX, y: chooseHostField.frame.minY, width: chooseHostField.frame.maxX, height: 41)
+            self.tableView.reloadData()
         }
     }
-    
-    @IBAction func chooseEventHost(_ sender: UIButton) {
-        sender.tintColor = UIColor.red
-    }
+
     
     @IBAction func createNewEvent(_ sender: Any) {
 
         let name = newEventName.text!
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        let time = dateFormatter.string(from: newEventDate.date)
-        
-        dateFormatter.dateFormat = "E, MMM d yyyy"
-        let fullDate = dateFormatter.string(from: newEventDate.date)
-        
-        
-        let date = newEventDate.date
+        dateFormatter.dateFormat = Event.dateFormat + " " + Event.timeFormat
+        let startDateTime = dateFormatter.string(from: newEventStartDate.date)
+        let endDateTime = dateFormatter.string(from: newEventEndDate.date)
         
         let location = newEventLocation.text!
         
-        
+        let host: String
+        if hostEventSwitch.isOn {
+            host = "Creator"
+        } else {
+            host = chooseHostField.text!
+        }
         
         // Points may be something we want to change from this to a text input.
         let pointsI = newEventPoints.selectedSegmentIndex
@@ -121,9 +125,9 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         let details = newEventDescription.text!
         
         // This is something to be implemented once we connect the database!
-        let ownerID = "0987654321"
+        let creatorID = "0987654321"
         
-        events.append(Event(name: name, location: location, points: points, house: houseI, details: details, fullDate: fullDate, time: time, ownerID: ownerID))
+        events.append(Event(name: name, location: location, points: points, house: houseI, details: details, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host))
         
         performSegueToReturnBack()
     }
