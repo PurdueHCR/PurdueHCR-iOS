@@ -86,7 +86,6 @@ class ViewEventTableViewController: UITableViewController {
                 // Fallback on earlier versions
             }
         }
-        
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

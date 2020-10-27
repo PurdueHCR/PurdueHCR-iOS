@@ -97,6 +97,15 @@ class EventViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
         events = Event.sortEvents(events: events)
+        
+        guard let permission = User.get(.permissionLevel) else {
+            return
+        }
+        let p = permission as! Int
+        
+        if p == 0 {
+            houseImageView.isHidden = false
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -204,6 +213,7 @@ class EventViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is ViewEventTableViewController {
+            houseImageView.isHidden = true
             let viewController = segue.destination as? ViewEventTableViewController
             let eventSender = sender as? EventTableViewCell
             viewController?.cellRow = self.tableView.indexPath(for: eventSender!)!.row
