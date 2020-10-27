@@ -33,23 +33,18 @@ class Event {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Event.dateFormat + " " + Event.timeFormat
-        print("Start Date Time: " + startDateTime)
         let fullStartDateTime = dateFormatter.date(from: startDateTime)!
         let fullEndDateTime = dateFormatter.date(from: endDateTime)!
         
         dateFormatter.dateFormat = Event.dateFormat
         let startDateString = dateFormatter.string(from: fullStartDateTime)
-        print(startDateString)
         let endDateString = dateFormatter.string(from: fullEndDateTime)
-        print(startDateString)
         self.startDate = dateFormatter.date(from: startDateString)!
         self.endDate = dateFormatter.date(from: endDateString)!
         
         dateFormatter.dateFormat = Event.timeFormat
         let startTimeString = dateFormatter.string(from: fullStartDateTime)
-        print(startTimeString)
         let endTimeString = dateFormatter.string(from: fullEndDateTime)
-        print(endTimeString)
         self.startTime = dateFormatter.date(from: startTimeString)!
         self.endTime = dateFormatter.date(from: endTimeString)!
         

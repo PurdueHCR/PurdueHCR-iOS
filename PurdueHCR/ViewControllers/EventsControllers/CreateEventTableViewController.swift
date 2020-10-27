@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CreateEventTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
      
@@ -22,6 +23,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     @IBOutlet weak var chooseHostField: UITextField!
     
     
+    let fbh = FirebaseHelper()
     let houses = ["All Houses", "Silver", "Palladium", "Platinum", "Titanium", "Copper"]
     var houseI = "All Houses"
     
@@ -127,7 +129,19 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         // This is something to be implemented once we connect the database!
         let creatorID = "0987654321"
         
-        events.append(Event(name: name, location: location, points: points, house: houseI, details: details, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host))
+        let event = Event(name: name, location: location, points: points, house: houseI, details: details, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host)
+        events.append(event)
+        
+        print("Calling Add Event")
+        // FIRE BASE HELPER METHOD TO ADD EVENT
+        fbh.addEvent(event: event) { (err) in
+            if (err != nil) {
+                
+            } else {
+                print("No Error")
+            }
+        }
+        
         
         performSegueToReturnBack()
     }

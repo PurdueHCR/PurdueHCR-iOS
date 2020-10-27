@@ -34,6 +34,8 @@ class FirebaseHelper {
 //    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
 //    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
 //    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event"
+    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/add"
     
     // PRODUCTION URLS
     let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
@@ -41,7 +43,7 @@ class FirebaseHelper {
     let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
     let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
     let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-
+    //let EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event"
     
     init() {
         db = Firestore.firestore()
@@ -1137,6 +1139,107 @@ class FirebaseHelper {
             }
         }
     }
+    
+    // Event Functions
+    func addEvent(event: Event, onDone:@escaping (_ err:Error?)->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+         var events: [Event?]?
+         if let err = err {
+            print("Error in addEvent()")
+            events = nil
+            onDone(err)
+         }
+         let headerVal = "Bearer " + (token ?? "")
+         let header = HTTPHeader(name: "Authorization", value: headerVal)
+         let headers = HTTPHeaders(arrayLiteral: header)
+         let url = URL(string: self.ADD_EVENT_URL)!
+            
+         let dateFormatter = DateFormatter()
+         dateFormatter.dateFormat = Event.dateFormat
+         let startDateString = dateFormatter.string(from: event.startDate)
+         //let endDateString = dateFormatter.string(from: event.endDate)
+         dateFormatter.dateFormat = Event.timeFormat
+         let startTimeString = dateFormatter.string(from: event.startTime)
+         //let endTimeString = dateFormatter.string(from: event.endTime)
+         let startDateTimeString = startDateString + " " + startTimeString
+         //let endDateTimeString = endDateString + " " + endTimeString
+            
+         let parameters = ["name":event.name, "details":event.details, "date":startDateTimeString, "location":event.location, "points":event.points, "point_type_id":1, "house": event.house] as [String : Any]
+            
+            
+         AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+             if let result = response.value as? [String : Any] {
+                print("Add Event Result:")
+                print(result)
+                onDone(nil)
+             }
+         }
+         print("retrieval error part")
+         onDone(RetrievalError.unableToParseResponse)
+        }
+    }
+    
+    
+    func getEvents(onDone:@escaping ([Event?]?, Error?) ->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+         var events: [Event?]?
+         if let err = err {
+            print("Error in getEvents()")
+            events = nil
+            onDone(events, err)
+         }
+         let headerVal = "Bearer " + (token ?? "")
+         let header = HTTPHeader(name: "Authorization", value: headerVal)
+         let headers = HTTPHeaders(arrayLiteral: header)
+         let url = URL(string: self.GET_EVENT_URL)!
+         AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+             if let result = response.value as? [String : Any] {
+                print("Get Event Result:")
+                print(result)
+                // Parse Event Supplied
+                /* Prints this so far:
+                 ["events": <__NSArray0 0x7fff8002e300>(
+
+                 )
+                 ]
+                 */
+                events = nil
+                onDone(events, nil)
+             }
+         }
+         events = nil
+         onDone(events, RetrievalError.unableToParseResponse)
+        }
+    }
+    
+     
+    func getEventsCreated(onDone:@escaping ([Event?]?, Error?) ->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+         var events: [Event?]?
+         if let err = err {
+            print("Error in getEventsCreated()")
+            events = nil
+            onDone(events, err)
+         }
+         let headerVal = "Bearer " + (token ?? "")
+         let header = HTTPHeader(name: "Authorization", value: headerVal)
+         let headers = HTTPHeaders(arrayLiteral: header)
+         let url = URL(string: self.GET_EVENT_URL)!
+         AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+             if let result = response.value as? [String : Any] {
+                print("Get Event Created Results:")
+                print(result)
+                // Parse Event Supplied
+                
+                events = nil
+                onDone(events, nil)
+             }
+         }
+         events = nil
+         onDone(events, RetrievalError.unableToParseResponse)
+        }
+    }
+    
 	
 	/// Retrieves the system preferences for the app
 	///

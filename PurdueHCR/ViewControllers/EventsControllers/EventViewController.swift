@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", points: 1, house: "All Houses", details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", startDateTime: "Sun, Sep 15 2019 5:00 PM", endDateTime: "Sun, Sep 15 2019 6:00 PM", creatorID: "1234567890", host: "User1234")]
+
+let fbh = FirebaseHelper()
 
 var makeSection: Bool = true
 
@@ -28,6 +31,16 @@ class EventViewController: UITableViewController {
 
    //     eventTableView.tableHeaderView!.frame = CGRectMake(0,0,200,300)
         //self.eventTableView.tableHeaderView = self.eventTableView.tableHeaderView
+        
+        
+        fbh.getEvents() { (events, err) in
+            if (err != nil) {
+                //print("Error in getEvents()")
+            } else {
+                print("Not an error in getEvents()")
+            }
+        }
+        
         
         tableView.register(EventTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
