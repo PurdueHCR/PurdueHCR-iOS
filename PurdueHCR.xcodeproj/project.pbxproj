@@ -1034,8 +1034,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.5;
-				PRODUCT_BUNDLE_IDENTIFIER = harry.DecodeProgramming.HCRPoint;
+				MARKETING_VERSION = 1.7.6;
+				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1058,8 +1058,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.5;
-				PRODUCT_BUNDLE_IDENTIFIER = harry.DecodeProgramming.HCRPoint;
+				MARKETING_VERSION = 1.7.6;
+				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
