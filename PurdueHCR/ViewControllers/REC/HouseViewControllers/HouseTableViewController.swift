@@ -153,6 +153,7 @@ class HouseTableViewController: UITableViewController {
             }
             
             self.logCount = countOfLogs
+            self.logCount.sort { $0.count > $1.count }
             DispatchQueue.main.async { [weak self] in
                 if(self != nil){
                     self?.tableView.reloadData()
