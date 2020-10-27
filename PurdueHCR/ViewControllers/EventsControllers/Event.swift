@@ -118,35 +118,8 @@ class Event {
     }
     
     static func sortEvents(events: [Event]) -> [Event] {
-        var done: Bool = false
-        var change: Bool = false
-        
         var ret = events
-        
-        if (events.count > 1) {
-            while (!done) {
-                change = false
-                for i in 0...ret.count-2 {
-                    if (ret[i].startDate > ret[i+1].startDate) {
-                        change = true
-                        let temp: Event = ret[i]
-                        ret[i] = ret[i+1]
-                        ret[i+1] = temp
-                    }
-                    if (ret[i].startDate == ret[i+1].startDate) {
-                        let date0 = ret[i].startTime
-                        let date1 = ret[i+1].startTime
-                        if (date0 > date1) {
-                            change = true
-                            let temp: Event = ret[i]
-                            ret[i] = ret[i+1]
-                            ret[i+1] = temp
-                        }
-                    }
-                }
-                if change == false { done = true }
-            }
-        }
+        ret.sort(by: {$0.startDate > $1.startDate})
         return ret
     }
 }

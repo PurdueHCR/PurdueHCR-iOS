@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -705,7 +705,7 @@
                                                 <constraint firstItem="4ui-zE-Kul" firstAttribute="leading" secondItem="bYU-cW-PxT" secondAttribute="leadingMargin" id="Rzu-Qy-Mna"/>
                                                 <constraint firstAttribute="trailing" secondItem="oFT-bv-4TH" secondAttribute="trailing" constant="20" symbolic="YES" id="Y7E-DI-edd"/>
                                                 <constraint firstItem="oFT-bv-4TH" firstAttribute="leading" secondItem="bYU-cW-PxT" secondAttribute="leading" constant="20" symbolic="YES" id="dOO-Tz-OyY"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="4ui-zE-Kul" secondAttribute="trailing" constant="312" id="dhP-hN-Flu"/>
+                                                <constraint firstAttribute="right" relation="greaterThanOrEqual" secondItem="4ui-zE-Kul" secondAttribute="right" constant="50" id="dhP-hN-Flu"/>
                                                 <constraint firstItem="oFT-bv-4TH" firstAttribute="top" secondItem="4ui-zE-Kul" secondAttribute="bottom" constant="10" id="fSM-9K-6uF"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4ui-zE-Kul" secondAttribute="bottom" constant="30" id="r8p-5M-a9k"/>
                                                 <constraint firstItem="4ui-zE-Kul" firstAttribute="top" secondItem="bYU-cW-PxT" secondAttribute="topMargin" constant="5" id="rff-LK-ouK"/>
