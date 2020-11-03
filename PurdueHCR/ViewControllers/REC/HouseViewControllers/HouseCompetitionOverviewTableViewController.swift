@@ -52,6 +52,19 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        var sysPref : SystemPreferences?
+        DataManager.sharedManager.refreshSystemPreferences { (systemPreferences) in
+            sysPref = systemPreferences
+            // Error checking here
+            let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+            if (sysPref?.iosVersion != appVersion) {
+                let alertController = UIAlertController.init(title: "Update Available", message: "It looks like you do not have the newest version of PurdueHCR. Please update as soon as posible to ensure you get all the latest and greatest features!", preferredStyle: .alert)
+                let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: .none)
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: .none)
+            }
+        }
     }
 
     func setPlaceLabels(house:House){
