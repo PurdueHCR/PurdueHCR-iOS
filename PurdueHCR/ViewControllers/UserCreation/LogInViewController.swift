@@ -44,11 +44,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		self.imageView.layer.shadowOpacity = 100
 		self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
 		
-		activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = UIActivityIndicatorView.Style.gray
-        self.view.addSubview(activityIndicator)
-		
         self.username.delegate = self
         self.password.delegate = self
         fortyPercent = self.view.frame.size.height * CGFloat(0.4)
@@ -59,21 +54,20 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         username.layer.cornerRadius = 10
         username.layer.masksToBounds = true
 		username.backgroundColor = systemGray5
-        //username.layer.borderWidth = 1
-        //username.layer.borderColor = UIColor.lightGray.cgColor
 		username.tag = 0
         password.layer.cornerRadius = 10
         password.layer.masksToBounds = true
 		password.backgroundColor = systemGray5
-        //password.layer.borderWidth = 1
-        //password.layer.borderColor = UIColor.lightGray.cgColor
 		password.tag = 1
         logInButton.layer.cornerRadius = 10
         logInButton.layer.masksToBounds = true
-        //logInButton.layer.borderWidth = 1
-        //logInButton.layer.borderColor = UIColor.darkGray.cgColor
-		
-        // Do any additional setup after loading the view.
+        
+        // Constrain loading icon to middle of login button
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        activityIndicator.center = logInButton.center
+        self.view.addSubview(activityIndicator)
+        NSLayoutConstraint.activate([activityIndicator.centerYAnchor.constraint(equalTo: logInButton.centerYAnchor), activityIndicator.centerXAnchor.constraint(equalTo: logInButton.centerXAnchor)])
     }
 	
 	@IBAction func nextTextField(_ sender: Any) {
