@@ -15,7 +15,6 @@
 		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B5539818255B5CF5006FD21B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5539817255B5CF5006FD21B /* GoogleService-Info.plist */; };
-		B553981C255B6213006FD21B /* LaundryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B553981B255B6213006FD21B /* LaundryViewController.swift */; };
 		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B555F30B2552298B002D1151 /* LaundryMachine.xib in Resources */ = {isa = PBXBuildFile; fileRef = B555F30A2552298B002D1151 /* LaundryMachine.xib */; };
 		B555F30F255229F1002D1151 /* LaundryMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B555F30E255229F1002D1151 /* LaundryMachineView.swift */; };
@@ -27,6 +26,7 @@
 		B5AE2D4923DCA34F00B2323C /* FirebaseCollectionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4823DCA34F00B2323C /* FirebaseCollectionListener.swift */; };
 		B5AE2D4B23DCA35D00B2323C /* FirebaseDocumentListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4A23DCA35D00B2323C /* FirebaseDocumentListener.swift */; };
 		B5AE2D4D23DCA68C00B2323C /* FirebaseListenerUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4C23DCA68C00B2323C /* FirebaseListenerUtil.swift */; };
+		B5AF7C0825893C99004967E3 /* LaundryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B553981B255B6213006FD21B /* LaundryViewController.swift */; };
 		B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */; };
 		B5BD40B723C6847200E8D48F /* RECPointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */; };
 		B5D6AF5524FAE20500CC5E86 /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D6AF5424FAE20500CC5E86 /* LogoutView.xib */; };
@@ -818,7 +818,7 @@
 			files = (
 				D30FBEF3210380F3000DD221 /* PointLogOverviewController.swift in Sources */,
 				D3912A6D219CE77B0002E7C7 /* HouseCompetitionOverviewTableViewController.swift in Sources */,
-				B553981C255B6213006FD21B /* LaundryViewController.swift in Sources */,
+				B5AF7C0825893C99004967E3 /* LaundryViewController.swift in Sources */,
 				B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */,
 				D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */,
 				D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */,
