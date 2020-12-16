@@ -8,11 +8,12 @@
 
 import UIKit
 
-var filterNorth : Bool = true
+var filterNorth : Bool = false
 
 class LaundryViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet weak var filterButton: UIBarButtonItem!
+    @IBOutlet weak var machinesContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,13 +61,18 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
 }
 
 
+
+
 class LaundryCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let itemsPerRow : CGFloat = 8;
+    var itemsPerRow : CGFloat = 8;
     let sectionInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (!filterNorth) {
+            itemsPerRow = 6;
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -89,9 +95,9 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         
         machineView.translatesAutoresizingMaskIntoConstraints = false
         let horizontalConstraint = NSLayoutConstraint(item: machineView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
-        let verticalConstraint = NSLayoutConstraint(item: machineView, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 150)
+        let verticalConstraint = NSLayoutConstraint(item: machineView, attribute: .height, relatedBy: .equal, toItem: cell, attribute: .height, multiplier: 1, constant: 0)
         let centeredVertically = NSLayoutConstraint(item: machineView, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 3)
-        let widthConstraint = NSLayoutConstraint(item: machineView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
+        let widthConstraint = NSLayoutConstraint(item: machineView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: 0)
         
         NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, centeredVertically])
         
@@ -99,59 +105,88 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         let paddingSpace = sectionInsets.left * (itemsPerRow)
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
-        //let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: profileView, attribute: .height, multiplier: 1, constant: padding+5)
-        let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1.0, constant: widthPerItem + 100)
-        let cellWidth = NSLayoutConstraint(item: cell, attribute: .width, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1.0, constant: widthPerItem + 10)
+        let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1.0, constant: widthPerItem)
+        let cellWidth = NSLayoutConstraint(item: cell, attribute: .width, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1.0, constant: widthPerItem)
         NSLayoutConstraint.activate([cellHeight, cellWidth])
+        
+        cell.backgroundColor = UIColor.blue
         
         return cell
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 16
     }
+
     
     // MARK: - Collection View Flow Layout Delegate
     func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
         //2
-        let paddingSpace = sectionInsets.left * (itemsPerRow)
-        let availableWidth = view.frame.width - paddingSpace
+        //let paddingSpace = sectionInsets.left * (itemsPerRow)
+        let availableWidth = collectionView.bounds.width//view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
-        
+
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
 
-    //3
-    func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
+//    //3
+//    func collectionView(_ collectionView: UICollectionView,
+//                      layout collectionViewLayout: UICollectionViewLayout,
+//                      insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return sectionInsets
+//    }
+//
+//    // 4
+//    func collectionView(_ collectionView: UICollectionView,
+//                      layout collectionViewLayout: UICollectionViewLayout,
+//                      minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return sectionInsets.left
+//    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.zero
     }
 
-    // 4
-    func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
 }
 
 
-//class LaundryBuildingTableViewController: UITableViewController {
-//
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 2
-//    }
-//
-//}
+
+
+class LaundryBuildingTableViewController: UITableViewController {
+    
+    var machinesView : LaundryCollectionViewController?
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.row == 0) {
+            // Selected north
+            filterNorth = true
+        } else {
+            // Selected south
+            filterNorth = false
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+
+}
