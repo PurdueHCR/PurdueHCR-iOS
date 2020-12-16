@@ -26,7 +26,7 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         
         let menuViewController = storyboard?.instantiateViewController(withIdentifier: "filter_view")
             menuViewController?.modalPresentationStyle = .popover
-            menuViewController?.preferredContentSize = CGSize(width: 200, height: 75)
+            menuViewController?.preferredContentSize = CGSize(width: 200, height: 87)
         
         if let menuPresentationController = menuViewController?.popoverPresentationController{
             menuPresentationController.permittedArrowDirections = .up
@@ -182,16 +182,42 @@ class LaundryBuildingTableViewController: UITableViewController {
         return 2
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "north_south_cell", for: indexPath)
+        
+        if (filterNorth && indexPath.row == 0) {
+            cell.accessoryType = .checkmark
+        }
+        else if (!filterNorth && indexPath.row == 1) {
+            cell.accessoryType = .checkmark
+        }
+        
+        if (indexPath.row == 0) {
+            cell.textLabel?.text = "Honors North"
+        } else {
+            cell.textLabel?.text = "Honors South"
+        }
+        
+        return cell
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.row == 0) {
             // Selected north
             filterNorth = true
+            tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.accessoryType = .none
         } else {
             // Selected south
             filterNorth = false
+            tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.accessoryType = .none
         }
-        machinesView?.setNeedsDisplay()
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.accessoryType = .none
     }
 
 }
