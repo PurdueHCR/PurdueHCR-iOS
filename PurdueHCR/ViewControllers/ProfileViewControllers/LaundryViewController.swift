@@ -13,7 +13,7 @@ var filterNorth : Bool = true
 class LaundryViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet weak var filterButton: UIBarButtonItem!
-    @IBOutlet weak var machinesContainerView: UIView!
+    @IBOutlet weak var machinesContainerView: LaundryCollectionViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,14 +51,20 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     //UIPopoverPresentationControllerDelegate
-    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
-        machinesContainerView.setNeedsLayout()
-    }
-     
+//    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+//    }
+    
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         return true
     }
     
+    // Store the collection view once it has been added to the current view via a segue to the embedded view
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "show_collection") {
+            guard let destinationVC = segue.destination as? LaundryCollectionViewController else { return }
+            machinesContainerView = destinationVC
+        }
+    }
 
 }
 
@@ -76,6 +82,8 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
     
     let sectionInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     
+    var refresher: UIRefreshControl?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // More dryers per row than washers
@@ -86,13 +94,33 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
             itemsPerRow = southDryers
         }
         itemsPerRow /= 2
+        
+        refresher = UIRefreshControl()
+        refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher?.addTarget(self, action:  #selector(reloadData), for: .valueChanged)
+        self.collectionView.refreshControl = refresher
+    }
+
+    @objc func reloadData() {
+        if (filterNorth) {
+            itemsPerRow = northDryers
+        } else {
+            itemsPerRow = southDryers
+        }
+        itemsPerRow /= 2
+        print("items per row: ", itemsPerRow)
+        self.collectionView.reloadData()
+        self.collectionView.refreshControl?.endRefreshing()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : UICollectionViewCell
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-       
-        // Todo: Add refresher and make sure cells aren't recreated, only their data
+        
+        // Clear the old views from the reusable cell
+        for view in cell.subviews {
+            view.removeFromSuperview()
+        }
         
         let column = indexPath.row % Int(itemsPerRow)
         var addWasher = false
@@ -140,8 +168,6 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         }
     }
 
-    
-    // MARK: - Collection View Flow Layout Delegate
     func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -172,7 +198,7 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
 
 class LaundryBuildingTableViewController: UITableViewController {
     
-    var machinesView : UIView?
+    var machinesView : LaundryCollectionViewController?
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -212,6 +238,7 @@ class LaundryBuildingTableViewController: UITableViewController {
             filterNorth = false
             tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.accessoryType = .none
         }
+        machinesView?.reloadData()
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         self.dismiss(animated: true, completion: nil)
     }

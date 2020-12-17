@@ -70,7 +70,7 @@
                                     <constraint firstAttribute="width" constant="394" id="ono-Ef-LXR"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="4Yl-S9-X3a" kind="embed" id="o1g-p4-ooC"/>
+                                    <segue destination="4Yl-S9-X3a" kind="embed" identifier="show_collection" id="o1g-p4-ooC"/>
                                 </connections>
                             </containerView>
                         </subviews>
