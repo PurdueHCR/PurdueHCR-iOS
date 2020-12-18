@@ -66,9 +66,6 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b4w-Q6-TUp">
                                 <rect key="frame" x="10" y="140" width="394" height="732"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="394" id="ono-Ef-LXR"/>
-                                </constraints>
                                 <connections>
                                     <segue destination="4Yl-S9-X3a" kind="embed" identifier="show_collection" id="o1g-p4-ooC"/>
                                 </connections>

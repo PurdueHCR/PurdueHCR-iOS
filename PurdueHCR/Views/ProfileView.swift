@@ -93,8 +93,8 @@ class ProfileView: UIView {
         }
         houseEmblem.setImage(houseImage, for: .normal)
         houseEmblem.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        houseEmblem.isEnabled = true;
-        houseEmblem.imageView?.alpha = 1.0;
+        houseEmblem.isEnabled = true
+        houseEmblem.imageView?.alpha = 1.0
         
         var houses = DataManager.sharedManager.getHouses()!
         let house = houses.remove(at: houses.firstIndex(of: House(id: houseName, points: 0, hexColor:""))!)

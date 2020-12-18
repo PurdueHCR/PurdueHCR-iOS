@@ -100,7 +100,7 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         refresher?.addTarget(self, action:  #selector(reloadData), for: .valueChanged)
         self.collectionView.refreshControl = refresher
     }
-
+    
     @objc func reloadData() {
         if (filterNorth) {
             itemsPerRow = northDryers
@@ -132,25 +132,46 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         if (indexPath.section == 0 || addWasher) {
             let machineView = LaundryMachineView.init()
             machineView.layer.cornerRadius = DefinedValues.radius
-            machineView.backgroundColor = UIColor.white
+            machineView.backgroundView.backgroundColor = UIColor.green
             machineView.clipsToBounds = false
             machineView.layer.masksToBounds = false
             //machineView.delegate = self
+            
+            machineView.contentMode = .scaleAspectFit
+            if (indexPath.section == 0) {
+                var machineImage = UIImage.init(imageLiteralResourceName: "Dryer").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+                machineImage = self.resizedImage(image: machineImage, for: cell.bounds.size)!
+                print("machine image size ", machineImage.size)
+                machineView.backgroundImage.image = machineImage
+
+            } else {
+                var machineImage = UIImage.init(imageLiteralResourceName: "Washer").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+                machineImage = self.resizedImage(image: machineImage, for: cell.bounds.size)!
+                machineView.backgroundImage.image = machineImage
+            }
+            
+            machineView.machineNumberLabel.text = "1"
+            machineView.layer.borderWidth = 2.0
+            machineView.layer.borderColor = UIColor.orange.cgColor
+            
             cell.contentView.clipsToBounds = false
             cell.clipsToBounds = false
+            
             cell.addSubview(machineView)
-            
+                        
             machineView.translatesAutoresizingMaskIntoConstraints = false
-            let horizontalConstraint = NSLayoutConstraint(item: machineView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
-            let verticalConstraint = NSLayoutConstraint(item: machineView, attribute: .height, relatedBy: .equal, toItem: cell, attribute: .height, multiplier: 1, constant: 0)
-            let centeredVertically = NSLayoutConstraint(item: machineView, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 3)
-            let widthConstraint = NSLayoutConstraint(item: machineView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: 0)
+            let horizontalConstraint = NSLayoutConstraint(item: machineView, attribute: .left, relatedBy: .equal, toItem: cell, attribute: .left, multiplier: 1, constant: 0)
+            let heightConstraint = NSLayoutConstraint(item: machineView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 0)
+            let centeredVertically = NSLayoutConstraint(item: machineView, attribute: .right, relatedBy: .equal, toItem: cell, attribute: .right, multiplier: 1, constant: 0)
+            let widthConstraint = NSLayoutConstraint(item: machineView, attribute: .bottom, relatedBy: .equal, toItem: cell, attribute: .bottom, multiplier: 1, constant: 0)
             
-            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, centeredVertically])
+            NSLayoutConstraint.activate([horizontalConstraint, heightConstraint, widthConstraint, centeredVertically])
+            
+            
         }
         
+        cell.backgroundColor = UIColor.clear
         
-        cell.backgroundColor = UIColor.blue
         
         return cell
     }
@@ -189,6 +210,14 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func resizedImage(image: UIImage, for size: CGSize) -> UIImage? {
+        let smallerSize = CGSize(width: size.width - 10, height: size.height - 10)
+        let renderer = UIGraphicsImageRenderer(size: smallerSize)
+        return renderer.image { (context) in
+            image.draw(in: CGRect(origin: .zero, size: smallerSize))
+        }
     }
     
 }
