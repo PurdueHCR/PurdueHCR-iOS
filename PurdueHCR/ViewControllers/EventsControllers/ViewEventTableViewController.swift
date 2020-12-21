@@ -39,7 +39,12 @@ class ViewEventTableViewController: UITableViewController {
         iCalExportButton.layer.cornerRadius = DefinedValues.radius
         gCalExportButton.layer.cornerRadius = DefinedValues.radius
         
-        let event = events[cellSection + cellRow]
+        let event: Event
+        if (!filtered) {
+            event = events[cellSection + cellRow]
+        } else {
+            event = filteredEvents[cellSection + cellRow]
+        }
         
         self.nameLabel.text = event.name
         self.nameLabel.numberOfLines = 1
@@ -64,7 +69,17 @@ class ViewEventTableViewController: UITableViewController {
         self.hostLabel.numberOfLines = 1
         self.hostLabel.sizeToFit()
         
-        self.attendeeLabel.text = event.house
+        var floors: String = ""
+        var i: Int = 0
+        for floor in event.floors {
+            if (i == event.floors.count - 1) {
+                floors.append(floor)
+            } else {
+                floors.append(floor + ", ")
+            }
+            i += 1
+        }
+        self.attendeeLabel.text = floors
         self.attendeeLabel.numberOfLines = 1
         self.attendeeLabel.sizeToFit()
         

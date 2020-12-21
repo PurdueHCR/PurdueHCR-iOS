@@ -16,19 +16,19 @@ class Event {
     var endDate: Date
     var endTime: Date
     var location: String
-    var points: Int
-    var house: String
+    var pointType: PointType
+    var floors: [String]
     var details: String
     var creatorID: String
     var host: String
     static let dateFormat = "E, MMM d yyyy"
     static let timeFormat = "h:mm a"
         
-    init (name: String, location: String, points: Int, house: String, details: String, startDateTime: String, endDateTime: String, creatorID: String, host: String) {
+    init (name: String, location: String, pointType: PointType, floors: [String], details: String, startDateTime: String, endDateTime: String, creatorID: String, host: String) {
         self.name = name;
         self.location = location
-        self.points = points
-        self.house = house
+        self.pointType = pointType
+        self.floors = floors
         self.details = details
         
         let dateFormatter = DateFormatter()
@@ -119,7 +119,7 @@ class Event {
     
     static func sortEvents(events: [Event]) -> [Event] {
         var ret = events
-        ret.sort(by: {$0.startDate > $1.startDate})
+        ret.sort(by: {$0.startDate < $1.startDate})
         return ret
     }
 }

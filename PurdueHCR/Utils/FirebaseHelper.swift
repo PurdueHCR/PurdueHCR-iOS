@@ -1157,14 +1157,34 @@ class FirebaseHelper {
          let dateFormatter = DateFormatter()
          dateFormatter.dateFormat = Event.dateFormat
          let startDateString = dateFormatter.string(from: event.startDate)
-         //let endDateString = dateFormatter.string(from: event.endDate)
+         let endDateString = dateFormatter.string(from: event.endDate)
          dateFormatter.dateFormat = Event.timeFormat
          let startTimeString = dateFormatter.string(from: event.startTime)
-         //let endTimeString = dateFormatter.string(from: event.endTime)
+         let endTimeString = dateFormatter.string(from: event.endTime)
          let startDateTimeString = startDateString + " " + startTimeString
-         //let endDateTimeString = endDateString + " " + endTimeString
+         let endDateTimeString = endDateString + " " + endTimeString
+           
+//         Example of paramters we need to be sending.
+//         {
+//           "name": "A Very Fun Event",
+//           "details": "A very fun event by me!",
+//           "startDate": {
+//             "_seconds": 156463200,
+//             "_nanoseconds": 0
+//           },
+//           "endDate": {
+//             "_seconds": 156463200,
+//             "_nanoseconds": 0
+//           },
+//           "location": "HCRS 1066",
+//           "pointTypeId": 22,
+//           "floorIds": [
+//             "2N"
+//           ],
+//           "host": "The Society"
+//         }
             
-         let parameters = ["name":event.name, "details":event.details, "date":startDateTimeString, "location":event.location, "points":event.points, "point_type_id":1, "house": event.house] as [String : Any]
+         let parameters = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate": endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "host":event.host] as [String : Any]
             
             
          AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in

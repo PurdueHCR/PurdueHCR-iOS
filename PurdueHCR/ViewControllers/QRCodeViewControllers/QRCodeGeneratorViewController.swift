@@ -24,7 +24,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        pointTypes = filter(points: DataManager.sharedManager.getPoints()!)
+        pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
         pickerView.reloadAllComponents()
         selectedPoint = pointTypes[0]
         descriptionTextView.layer.borderColor = UIColor.black.cgColor
@@ -118,22 +118,6 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
             nextViewController.link = self.link
         }
         
-    }
-    
-    func filter(points:[PointType]) -> [PointType] {
-        var types = [PointType]()
-        let permissionLevel = PointType.PermissionLevel.init(rawValue: User.get(.permissionLevel) as! Int)!
-        for point in points {
-            // Permission Level 2 is REA/REC, then check if point is enabled, then check RHP/FHP permission
-            if (permissionLevel == PointType.PermissionLevel.rec || (point.isEnabled && checkPermission(typePermission: point.permissionLevel.rawValue, userPermission: permissionLevel))) {
-                types.append(point)
-            }
-        }
-        return types
-    }
-    // Check permission Level when USER is not REA/REC
-    private func checkPermission(typePermission:Int, userPermission:PointType.PermissionLevel) ->Bool {
-        return ((userPermission == PointType.PermissionLevel.rhp && typePermission != 1) || (userPermission == PointType.PermissionLevel.faculty && typePermission == 3))
     }
 
     @IBAction func switchChanged(_ sender: UISwitch) {

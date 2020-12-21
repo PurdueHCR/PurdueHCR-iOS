@@ -15,30 +15,66 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     @IBOutlet weak var newEventStartDate: UIDatePicker!
     @IBOutlet weak var newEventEndDate: UIDatePicker!
     @IBOutlet weak var newEventLocation: UITextField!
-    @IBOutlet weak var newEventPoints: UISegmentedControl!
+    @IBOutlet weak var newEventMyFloorSwitch: UISwitch!
+    @IBOutlet weak var newEventMyHouseSwitch: UISwitch!
+    @IBOutlet weak var newEventCustomFloorButton: UIButton!
     @IBOutlet weak var newEventDescription: UITextField!
-    @IBOutlet weak var housePickerView: UIPickerView!
-    @IBOutlet weak var createEventButton: UIButton!
+    @IBOutlet weak var newEventPointType: UIPickerView!
     @IBOutlet weak var hostEventSwitch: UISwitch!
     @IBOutlet weak var chooseHostField: UITextField!
+    @IBOutlet weak var createEventButton: UIButton!
     
     
     let fbh = FirebaseHelper()
-    let houses = ["All Houses", "Silver", "Palladium", "Platinum", "Titanium", "Copper"]
-    var houseI = "All Houses"
+    var floorsSelected: [String] = [String]()
+    var pointTypes: [PointType] = [PointType]()
+    var pointTypesIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        housePickerView.delegate = self
-        housePickerView.dataSource = self
+        newEventPointType.delegate = self
+        newEventPointType.dataSource = self
         
         createEventButton.layer.cornerRadius = 4
         
         chooseHostField.isHidden = true
         chooseHostField.isEnabled = false
         chooseHostField.frame = CGRect(x: chooseHostField.frame.minX, y: chooseHostField.frame.minY, width: chooseHostField.frame.maxX, height: 0)
+        
+        newEventMyHouseSwitch.isOn = false
+        newEventMyFloorSwitch.isOn = true
+        
+        pointTypes = DataManager.sharedManager.getPoints()!
+//        for type in pointTypes {
+//            print("Pre Point Type: " + type.pointName)
+//        }
+        pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
+//        for pointType in pointTypes {
+//            print("Post Point Type: " + pointType.pointName)
+//        }
+        
         self.tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if (floorsSelected.isEmpty) {
+            newEventCustomFloorButton.setTitle("Custom...", for: .normal)
+            if (!newEventMyHouseSwitch.isOn && !newEventMyFloorSwitch.isOn) {
+                newEventMyFloorSwitch.isOn = true
+            }
+        } else {
+            var floorString = ""
+            var i = 0
+            for floor in floorsSelected {
+                floorString.append(floor)
+                if (i != floorsSelected.count - 1) {
+                    floorString.append(", ")
+                }
+                i += 1
+            }
+            newEventCustomFloorButton.setTitle(floorString, for: .normal)
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -64,15 +100,15 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return houses[row]
+        return pointTypes[row].pointName
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return houses.count
+        return pointTypes.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        houseI = houses[row]
+        pointTypesIndex = row
     }
     
     @IBAction func hostEventSwitch(_ sender: UISwitch) {
@@ -89,9 +125,20 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         }
     }
 
+    @IBAction func floorInviteSwitch(_ sender: UIButton) {
+        if (sender == newEventMyFloorSwitch) {
+            if (newEventMyFloorSwitch.isOn) {
+                newEventMyHouseSwitch.isOn = false
+            }
+        } else if (sender == newEventMyHouseSwitch) {
+            if (newEventMyHouseSwitch.isOn) {
+                newEventMyFloorSwitch.isOn = false
+            }
+        }
+    }
+    
     
     @IBAction func createNewEvent(_ sender: Any) {
-
         let name = newEventName.text!
         
         let dateFormatter = DateFormatter()
@@ -101,6 +148,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         
         let location = newEventLocation.text!
         
+        let pointType = pointTypes[pointTypesIndex]
+        
         let host: String
         if hostEventSwitch.isOn {
             host = "Creator"
@@ -108,28 +157,39 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             host = chooseHostField.text!
         }
         
-        // Points may be something we want to change from this to a text input.
-        let pointsI = newEventPoints.selectedSegmentIndex
-        var points = 0
-        if pointsI == 0 {
-            points = 1
-        }
-        else if pointsI == 1 {
-            points = 3
-        }
-        else if pointsI == 2 {
-            points = 5
-        }
-        else if pointsI == 3 {
-            points = 10
+        var floors = [String]()
+        if (newEventMyFloorSwitch.isOn) {
+            let floorId = User.get(.floorID) as! String
+            print("FloorID: " + floorId)
+            floors.append(floorId)
+        } else if (newEventMyHouseSwitch.isOn) {
+            let floorId = User.get(.floorID) as! String
+            print("floorId" + floorId)
+            let startIndex = floorId.startIndex
+            let northSouthIndex = floorId.index(after: startIndex)
+            var floor2: String = ""
+            if (floorId[northSouthIndex] == "N") {
+                floor2 = "" + String(floorId.first!) + "S"
+            } else if (floorId[northSouthIndex] == "S") {
+                floor2 = "" + String(floorId.first!) + "N"
+            } else {
+                print("Error with second floor")
+            }
+            
+            floors.append(floorId)
+            floors.append(floor2)
+        } else {
+            floors = floorsSelected
         }
         
         let details = newEventDescription.text!
         
-        // This is something to be implemented once we connect the database!
-        let creatorID = "0987654321"
+        guard let id = User.get(.id) else {
+            return
+        }
+        let creatorID = id as! String
         
-        let event = Event(name: name, location: location, points: points, house: houseI, details: details, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host)
+        let event = Event(name: name, location: location, pointType: pointType, floors: floors, details: details, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host)
         events.append(event)
         
         print("Calling Add Event")
@@ -154,7 +214,14 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         }
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.newEventMyFloorSwitch.isOn = false
+        self.newEventMyHouseSwitch.isOn = false
+        if (segue.destination is SelectFloorsTableViewController) {
+            let dest = segue.destination as! SelectFloorsTableViewController
+            dest.delegate = self
+        }
+    }
     
 
     /*
@@ -212,4 +279,17 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     }
     */
 
+}
+
+extension CreateEventTableViewController: SelectFloorsDelegate {
+    func updateData(selected: [Bool], floors: [String]) {
+        var i = 0;
+        floorsSelected = [String]()
+        for floor in selected {
+            if (floor) {
+                floorsSelected.append(floors[i])
+            }
+            i += 1
+        }
+    }
 }

@@ -9,7 +9,9 @@
 import UIKit
 import Firebase
 
-var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", points: 1, house: "All Houses", details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", startDateTime: "Sun, Sep 15 2019 5:00 PM", endDateTime: "Sun, Sep 15 2019 6:00 PM", creatorID: "1234567890", host: "User1234")]
+var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", pointType: PointType(pv: 1, pn: "pn", pd: "pd", rcs: true, pid: 0, permissionLevel: PointType.PermissionLevel.resident, isEnabled: true), floors: ["3N", "4N"], details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", startDateTime: "Sun, Sep 15 2019 5:00 PM", endDateTime: "Sun, Sep 15 2019 6:00 PM", creatorID: "1234567890", host: "User1234")]
+var filteredEvents: [Event] = [Event]()
+var filtered = false
 
 let fbh = FirebaseHelper()
 
@@ -20,6 +22,8 @@ class EventViewController: UITableViewController {
     
     //@IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var AddEventBarButton: UIBarButtonItem!
+    @IBOutlet weak var FilterEventsBarButton: UIBarButtonItem!
+    
     var houseImageView: UIImageView!
     
     let cellSpacing: CGFloat = 35
@@ -87,10 +91,15 @@ class EventViewController: UITableViewController {
                 houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
                 houseImageView.widthAnchor.constraint(equalTo: houseImageView.heightAnchor)
             ])
+            FilterEventsBarButton.isEnabled = false
+            FilterEventsBarButton.title = ""
         } else {
             self.navigationItem.rightBarButtonItems = nil
             self.navigationItem.rightBarButtonItem = AddEventBarButton
-            
+            FilterEventsBarButton.title = "Filter"
+            self.navigationItem.leftBarButtonItems = nil
+            self.navigationItem.leftBarButtonItem = FilterEventsBarButton
+            self.title = "All Events"
         }
     }
     
@@ -108,12 +117,55 @@ class EventViewController: UITableViewController {
         }
     }
     
+    @IBAction func switchFilter(_ sender: UIBarButtonItem) {
+        if self.title == "All Events" {
+            // Filter to be only events that the user created
+            self.title = "My Events"
+            //filteredEvents = getFilteredEventsFromDatabase()
+// Next lines will be removed when connected to API
+            guard let userId = User.get(.id) else {
+                return
+            }
+            let id = userId as! String
+            for event in events {
+                if (event.creatorID == id) {
+                    filteredEvents.append(event)
+                }
+            }
+// Above lines will be removed when connected to API
+            filtered = true
+            self.tableView.reloadData()
+        } else {
+            // Unfilter to all events
+            self.title = "All Events"
+            filtered = false
+            self.tableView.reloadData()
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Event.numRowsInSection(section: section, events: events)
+        if (!filtered) {
+            return Event.numRowsInSection(section: section, events: events)
+        } else {
+            if (filteredEvents.count != 0) {
+                return Event.numRowsInSection(section: section, events: filteredEvents)
+            } else {
+                return 0
+            }
+        }
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return Event.getNumUniqueDates(events: events)
+        if (!filtered) {
+            return Event.getNumUniqueDates(events: events)
+        } else {
+            if (filteredEvents.count != 0) {
+                return Event.getNumUniqueDates(events: filteredEvents)
+            } else {
+                return 0
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -138,7 +190,12 @@ class EventViewController: UITableViewController {
                 
         let sectionIndex = Event.startingIndexForSection(section: indexPath.section, events: events)
         
-        let event = events[sectionIndex + indexPath.row]
+        let event: Event
+        if (!filtered) {
+            event = events[sectionIndex + indexPath.row]
+        } else {
+            event = filteredEvents[sectionIndex + indexPath.row]
+        }
         
         cell.eventName.text = event.name
                 
@@ -148,33 +205,36 @@ class EventViewController: UITableViewController {
         
         
         cell.eventLocation.text = event.location
-        if event.points == 1 {
+        if event.pointType.pointValue == 1 {
             cell.eventPoints.text = "1 Point"
         } else {
-            cell.eventPoints.text = "\(events[sectionIndex + indexPath.row].points) Points"
+            cell.eventPoints.text = "\(events[sectionIndex + indexPath.row].pointType.pointValue) Points"
         }
         
-        // Setting background color based on who the event is for (by house)
-        let color = event.house
-        if color == "Silver" { //Silver, Update Floor
-            cell.houseColorView.backgroundColor = UIColor(red: 88/255, green: 196/255, blue: 0/255, alpha: 1.0)
-
-        }
-        else if color == "Palladium" { //Palladium, 3rd Floor
-            cell.houseColorView.backgroundColor = UIColor.lightGray
-        }
-        else if color == "Platinum" { //Platinum, 4th Floor
-            cell.houseColorView.backgroundColor = UIColor(red: 0/255, green: 218/255, blue: 229/255, alpha: 1.0)
-        }
-        else if color == "Titanium" { //Titanium, Update Floor
-            cell.houseColorView.backgroundColor = UIColor(red: 141/255, green: 113/255, blue: 226/255, alpha: 1.0)
-
-        }
-        else if color == "Copper" { //Copper, Update Floor
-            cell.houseColorView.backgroundColor = UIColor(red: 247/255, green: 148/255, blue: 0/255, alpha: 1.0)
-        } else { // All Houses
-            cell.houseColorView.backgroundColor = UIColor(red: 233/255, green: 188/255, blue: 74/255, alpha: 1.0)
-        }
+        // **** Must update this when the colors array is implemented ****
+        // Setting background color based on who the event is for (by floors invited)
+//        let color = event.house
+//        if color == "Silver" { //Silver, Update Floor
+//            cell.houseColorView.backgroundColor = UIColor(red: 88/255, green: 196/255, blue: 0/255, alpha: 1.0)
+//
+//        }
+//        else if color == "Palladium" { //Palladium, 3rd Floor
+//            cell.houseColorView.backgroundColor = UIColor.lightGray
+//        }
+//        else if color == "Platinum" { //Platinum, 4th Floor
+//            cell.houseColorView.backgroundColor = UIColor(red: 0/255, green: 218/255, blue: 229/255, alpha: 1.0)
+//        }
+//        else if color == "Titanium" { //Titanium, Update Floor
+//            cell.houseColorView.backgroundColor = UIColor(red: 141/255, green: 113/255, blue: 226/255, alpha: 1.0)
+//
+//        }
+//        else if color == "Copper" { //Copper, Update Floor
+//            cell.houseColorView.backgroundColor = UIColor(red: 247/255, green: 148/255, blue: 0/255, alpha: 1.0)
+//        } else { // All Houses
+//            cell.houseColorView.backgroundColor = UIColor(red: 233/255, green: 188/255, blue: 74/255, alpha: 1.0)
+//        }
+        cell.houseColorView.backgroundColor = UIColor(red: 233/255, green: 188/255, blue: 74/255, alpha: 1.0)
+        
         cell.houseColorView.layer.cornerRadius = cell.houseColorView.frame.width / 2
         cell.eventDescription.text = events[sectionIndex + indexPath.row].details
         return cell
@@ -194,15 +254,27 @@ class EventViewController: UITableViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Event.dateFormat
         if section == 0 {
-            headerText = dateFormatter.string(from: events[section].startDate)
+            if (!filtered) {
+                headerText = dateFormatter.string(from: events[section].startDate)
+            } else {
+                headerText = dateFormatter.string(from: filteredEvents[section].startDate)
+            }
         }
         else {
-            if events[section].startDate == events[section - 1].startDate { //If same date as previous event, don't print date.
-                makeSection = false
-                return nil
-            }
-            else {
-                headerText = dateFormatter.string(from: events[section].startDate)
+            if (!filtered) {
+                if events[section].startDate == events[section - 1].startDate { //If same date as previous event, don't print date.
+                    makeSection = false
+                    return nil
+                } else {
+                    headerText = dateFormatter.string(from: events[section].startDate)
+                }
+            } else {
+                if filteredEvents[section].startDate == filteredEvents[section - 1].startDate { //If same date as previous event, don't print date.
+                    makeSection = false
+                    return nil
+                } else {
+                    headerText = dateFormatter.string(from: filteredEvents[section].startDate)
+                }
             }
         }
         
@@ -213,7 +285,13 @@ class EventViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is ViewEventTableViewController {
-            houseImageView.isHidden = true
+            guard let permission = User.get(.permissionLevel) else {
+                return
+            }
+            let p = permission as! Int
+            if p == 0 {
+                houseImageView.isHidden = true
+            }
             let viewController = segue.destination as? ViewEventTableViewController
             let eventSender = sender as? EventTableViewCell
             viewController?.cellRow = self.tableView.indexPath(for: eventSender!)!.row
@@ -231,7 +309,7 @@ class EventViewController: UITableViewController {
             return
         }
         let p = permission as! Int
-        if (p == 1) {
+        if (p == 0) {
             // Normal Resident - Has house logo instead of Add Event button in navigation bar.
             guard let height = navigationController?.navigationBar.frame.height else { return }
 
