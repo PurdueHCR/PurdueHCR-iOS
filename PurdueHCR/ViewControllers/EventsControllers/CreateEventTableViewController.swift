@@ -129,10 +129,12 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         if (sender == newEventMyFloorSwitch) {
             if (newEventMyFloorSwitch.isOn) {
                 newEventMyHouseSwitch.isOn = false
+                newEventCustomFloorButton.setTitle("Custom...", for: .normal)
             }
         } else if (sender == newEventMyHouseSwitch) {
             if (newEventMyHouseSwitch.isOn) {
                 newEventMyFloorSwitch.isOn = false
+                newEventCustomFloorButton.setTitle("Custom...", for: .normal)
             }
         }
     }
