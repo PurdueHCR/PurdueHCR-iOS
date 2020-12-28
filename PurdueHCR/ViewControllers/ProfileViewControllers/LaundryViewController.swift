@@ -10,6 +10,10 @@ import UIKit
 
 var filterNorth : Bool = true
 
+struct defaultsKeys {
+    static let filterBuilding = "filter_building"
+}
+
 class WasherStatus {
     
     static let Available = UIColor.green
@@ -50,6 +54,7 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         }
         
         self.view.backgroundColor = UIColor.groupTableViewBackground
+    
     }
     
     override func viewDidLayoutSubviews() {
@@ -240,6 +245,22 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Get user preference for building from the dictionary if it exists
+        let defaults = UserDefaults.standard
+        if let filterBuilding = defaults.string(forKey: defaultsKeys.filterBuilding) {
+            if (filterBuilding == "north") {
+                filterNorth = true
+            }
+            else {
+                filterNorth = false
+            }
+            
+        } else {
+            defaults.set("north", forKey: defaultsKeys.filterBuilding)
+            filterNorth = true
+        }
+        
         // More dryers per row than washers
         // Want icons same size so use this as the standard
         if (filterNorth) {
@@ -487,13 +508,16 @@ class LaundryBuildingTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let defaults = UserDefaults.standard
         if (indexPath.row == 0) {
             // Selected north
             filterNorth = true
+            defaults.set("north", forKey: defaultsKeys.filterBuilding)
             tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.accessoryType = .none
         } else {
             // Selected south
             filterNorth = false
+            defaults.set("south", forKey: defaultsKeys.filterBuilding)
             tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.accessoryType = .none
         }
         machinesView?.reloadData()
