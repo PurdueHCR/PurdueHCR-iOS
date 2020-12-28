@@ -10,6 +10,16 @@ import UIKit
 
 var filterNorth : Bool = true
 
+class WasherStatus {
+    
+    static let Available = UIColor.green
+    static let InUse = UIColor.red
+    static let Finishing = UIColor.orange
+    static let Finished = UIColor.blue
+    static let OutOfOrder = UIColor.darkGray
+    
+}
+
 class LaundryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var buildingLabel: UILabel!
@@ -24,6 +34,8 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
     var northWashers : [Int]?
     var southDryers : [Int]?
     var southWashers : [Int]?
+    
+    var pinnedMachines : [String] = ["Dryer 5"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,11 +113,18 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        if (pinnedMachines.count > 0) {
+            return 3
+        } else {
+            return 2
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == 0) {
+        if (section == 0 && pinnedMachines.count > 0) {
+            return "Pinned Machines"
+        }
+        else if (section == 1 && pinnedMachines.count > 0 || section == 0 && pinnedMachines.count == 0) {
             return "Dryers"
         } else {
             return "Washers"
@@ -113,7 +132,10 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0) {
+        if (section == 0 && pinnedMachines.count > 0) {
+            return pinnedMachines.count
+        }
+        else if (section == 1 && pinnedMachines.count > 0 || section == 0 && pinnedMachines.count == 0) {
             // Dryers
             if (filterNorth) {
                 return Int(machinesContainerView.numberOfNorthDryers)
@@ -131,28 +153,61 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : UITableViewCell
-        cell = tableView.dequeueReusableCell(withIdentifier: "table_cell", for: indexPath)
+        let cell : MachineTableCell
+        cell = tableView.dequeueReusableCell(withIdentifier: "table_cell", for: indexPath) as! MachineTableCell
         
-        if (indexPath.section == 0) {
+        if (indexPath.section == 0 && pinnedMachines.count > 0) {
+            // Pinned Machines
+            cell.nameLabel.text = pinnedMachines[indexPath.row]
+        }
+        else if (indexPath.section == 1 && pinnedMachines.count > 0 || indexPath.section == 0 && pinnedMachines.count == 0) {
             // Dryers
             if (filterNorth) {
-                cell.textLabel?.text = "Dryer " + String(northDryers![indexPath.row])
+                cell.nameLabel.text = "Dryer " + String(northDryers![indexPath.row])
             } else {
-                cell.textLabel?.text = "Dryer " + String(southDryers![indexPath.row])
+                cell.nameLabel.text = "Dryer " + String(southDryers![indexPath.row])
             }
         } else {
             // Washers
             if (filterNorth) {
-                cell.textLabel?.text = "Washer " + String(northWashers![indexPath.row])
+                cell.nameLabel.text = "Washer " + String(northWashers![indexPath.row])
             } else {
-                cell.textLabel?.text = "Washer " + String(southWashers![indexPath.row])
+                cell.nameLabel.text = "Washer " + String(southWashers![indexPath.row])
             }
         }
         
-        cell.detailTextLabel?.text = "5:34"
+        cell.timeRemainingLabel.text = "5:34"
+        cell.statusView.backgroundColor = WasherStatus.Available.withAlphaComponent(1.0)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        var actions : [UIContextualAction] = []
+        if (indexPath.section == 0 && pinnedMachines.count > 0) {
+            // Remove pin
+            let contextItem = UIContextualAction(style: .normal, title: "Remove Pin") { (action, view, boolValue) in
+                self.pinnedMachines.remove(at: indexPath.row)
+                self.tableView.reloadData()
+            }
+            contextItem.image = #imageLiteral(resourceName: "SF_pin_fill")
+            contextItem.backgroundColor = UIColor.systemBlue
+            actions.append(contextItem)
+        } else {
+            // Pin machine
+            let contextItem = UIContextualAction(style: .normal, title: "Pin") {  (contextualAction, view, boolValue) in
+                let cell = tableView.cellForRow(at: indexPath) as! MachineTableCell
+                self.pinnedMachines.append(cell.nameLabel.text!)
+                self.tableView.reloadData()
+            }
+            contextItem.backgroundColor = UIColor.systemBlue
+            contextItem.image = #imageLiteral(resourceName: "SF_pin")
+            actions.append(contextItem)
+        }
+        
+        let swipeActions = UISwipeActionsConfiguration(actions: actions)
+
+        return swipeActions
     }
     
 
@@ -450,4 +505,14 @@ class LaundryBuildingTableViewController: UITableViewController {
         tableView.cellForRow(at: indexPath)?.accessoryType = .none
     }
 
+}
+
+
+/// Washer/Dryer machine cell for table view
+class MachineTableCell: UITableViewCell {
+    
+    @IBOutlet weak var statusView: UIView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var timeRemainingLabel: UILabel!
+    
 }
