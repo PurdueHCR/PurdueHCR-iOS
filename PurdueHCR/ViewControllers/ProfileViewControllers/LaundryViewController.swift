@@ -16,8 +16,14 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBOutlet weak var filterButton: UIBarButtonItem!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var machinesContainerView: LaundryCollectionViewController!
+    @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    
+    var northDryers : [Int]?
+    var northWashers : [Int]?
+    var southDryers : [Int]?
+    var southWashers : [Int]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +36,21 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         } else {
             buildingLabel.text = "Honors South"
         }
+        
+        self.view.backgroundColor = UIColor.groupTableViewBackground
     }
     
     override func viewDidLayoutSubviews() {
         // Update the height constraint now that the view has loaded
         machinesContainerView.updateViewHeight()
+        northDryers = machinesContainerView.northDryers
+        northWashers = machinesContainerView.northWashers
+        southDryers = machinesContainerView.southDryers
+        southWashers  = machinesContainerView.southWashers
+        northDryers?.sort()
+        northWashers?.sort()
+        southDryers?.sort()
+        southWashers?.sort()
     }
     
     
@@ -100,16 +116,16 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         if (section == 0) {
             // Dryers
             if (filterNorth) {
-                return Int(machinesContainerView.northDryers)
+                return Int(machinesContainerView.numberOfNorthDryers)
             } else {
-                return Int(machinesContainerView.southDryers)
+                return Int(machinesContainerView.numberOfSouthDryers)
             }
         } else {
             // Washers
             if (filterNorth) {
-                return Int(machinesContainerView.northWashers)
+                return Int(machinesContainerView.numberOfNorthWashers)
             } else {
-                return Int(machinesContainerView.southWashers)
+                return Int(machinesContainerView.numberOfSouthWashers)
             }
         }
     }
@@ -117,6 +133,24 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : UITableViewCell
         cell = tableView.dequeueReusableCell(withIdentifier: "table_cell", for: indexPath)
+        
+        if (indexPath.section == 0) {
+            // Dryers
+            if (filterNorth) {
+                cell.textLabel?.text = "Dryer " + String(northDryers![indexPath.row])
+            } else {
+                cell.textLabel?.text = "Dryer " + String(southDryers![indexPath.row])
+            }
+        } else {
+            // Washers
+            if (filterNorth) {
+                cell.textLabel?.text = "Washer " + String(northWashers![indexPath.row])
+            } else {
+                cell.textLabel?.text = "Washer " + String(southWashers![indexPath.row])
+            }
+        }
+        
+        cell.detailTextLabel?.text = "5:34"
         
         return cell
     }
@@ -131,10 +165,15 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
     
     var itemsPerRow : CGFloat = 8;
     
-    let northWashers : CGFloat = 12
-    let northDryers : CGFloat = 16
-    let southWashers : CGFloat = 8
-    let southDryers : CGFloat = 12
+    let numberOfNorthWashers : CGFloat = 12
+    let numberOfNorthDryers : CGFloat = 16
+    let numberOfSouthWashers : CGFloat = 8
+    let numberOfSouthDryers : CGFloat = 12
+    
+    let northDryers = [15, 13, 11, 9, 7, 5, 3, 1, 16, 14, 12, 10, 8, 6, 4, 2]
+    let northWashers = [27, 28, 29, 30, 31, 32, 21, 22, 23, 24, 25, 26]
+    let southDryers = [9, 11, 13, 15, 17, 19, 10, 12, 14, 16, 18, 20]
+    let southWashers = [8, 7, 6, 5, 1, 2, 3, 4]
     
     let sectionInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     
@@ -149,9 +188,9 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         // More dryers per row than washers
         // Want icons same size so use this as the standard
         if (filterNorth) {
-            itemsPerRow = northDryers
+            itemsPerRow = numberOfNorthDryers
         } else {
-            itemsPerRow = southDryers
+            itemsPerRow = numberOfSouthDryers
         }
         itemsPerRow /= 2
         
@@ -164,10 +203,10 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
     
     @objc func reloadData() {
         if (filterNorth) {
-            itemsPerRow = northDryers
+            itemsPerRow = numberOfNorthDryers
             delegate?.buildingLabel.text = "Honors North"
         } else {
-            itemsPerRow = southDryers
+            itemsPerRow = numberOfSouthDryers
             delegate?.buildingLabel.text = "Honors South"
         }
         itemsPerRow /= 2
@@ -182,6 +221,8 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         self.collectionView.refreshControl?.endRefreshing()
         
         updateViewHeight()
+        
+        delegate?.tableView.reloadData()
     }
     
     
@@ -268,7 +309,29 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
             print(machineView.backgroundView.bounds.size)
             print(machineView.backgroundImage.bounds.size)
             
-            machineView.machineNumberLabel.text = "00"
+            // Add the machine number
+            if (indexPath.section == 0) {
+                // Dryers
+                if (filterNorth) {
+                    machineView.machineNumberLabel.text = String(northDryers[indexPath.row])
+                } else {
+                    machineView.machineNumberLabel.text = String(southDryers[indexPath.row])
+                }
+            } else {
+                // Washers
+                if (filterNorth) {
+                    machineView.machineNumberLabel.text = String(northWashers[indexPath.row])
+                } else {
+                    var subtractNum = 3
+                    if (indexPath.row > Int(itemsPerRow)) {
+                        subtractNum = 6
+                    }
+                    machineView.machineNumberLabel.text = String(southWashers[indexPath.row - subtractNum])
+                }
+                
+            }
+            
+            
             machineView.timeRemainingLabel.text = "5:34"
         }
         
@@ -286,9 +349,9 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         // More dryers than washers
         // For even icon sizes, use the same number of dryers per row for washers per row
         if (filterNorth) {
-            return Int(northDryers)
+            return Int(numberOfNorthDryers)
         } else {
-            return Int(southDryers)
+            return Int(numberOfSouthDryers)
         }
     }
 

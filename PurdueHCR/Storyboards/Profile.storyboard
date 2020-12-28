@@ -81,7 +81,6 @@
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="eBc-um-D3O">
                                 <rect key="frame" x="0.0" y="657" width="414" height="200"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="X8C-Dh-kOO"/>
                                 </constraints>
@@ -146,6 +145,7 @@
                         <outlet property="filterButton" destination="uLT-bI-AlK" id="mtj-4j-BHQ"/>
                         <outlet property="heightConstraint" destination="jdr-Tf-iSP" id="ReQ-x4-7De"/>
                         <outlet property="machinesContainerView" destination="b4w-Q6-TUp" id="KVa-st-BFT"/>
+                        <outlet property="tableView" destination="eBc-um-D3O" id="7OZ-EN-IRl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wsX-DV-e7t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
