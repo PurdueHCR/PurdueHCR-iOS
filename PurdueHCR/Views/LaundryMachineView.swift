@@ -29,14 +29,8 @@ class LaundryMachineView: UIView {
     func commonInit() {
         Bundle.main.loadNibNamed("LaundryMachine", owner: self, options: nil)
         addSubview(backgroundView)
-        backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-        backgroundImage.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-                     
-        timeRemainingLabel.text = "time"
-        machineNumberLabel.text = "no."
-        self.backgroundColor = UIColor.black
-        
+        //backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+                    
     }
     
 }

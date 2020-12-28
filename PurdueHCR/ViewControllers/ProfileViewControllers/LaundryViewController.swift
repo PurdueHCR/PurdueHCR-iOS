@@ -10,13 +10,31 @@ import UIKit
 
 var filterNorth : Bool = true
 
-class LaundryViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class LaundryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var buildingLabel: UILabel!
     @IBOutlet weak var filterButton: UIBarButtonItem!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var machinesContainerView: LaundryCollectionViewController!
+    
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        machinesContainerView.delegate = self
+        machinesContainerView.collectionView.layer.cornerRadius = DefinedValues.radius
+        
+        if (filterNorth) {
+            buildingLabel.text = "Honors North"
+        } else {
+            buildingLabel.text = "Honors South"
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // Update the height constraint now that the view has loaded
+        machinesContainerView.updateViewHeight()
     }
     
     
@@ -66,6 +84,44 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         }
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0) {
+            return "Dryers"
+        } else {
+            return "Washers"
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (section == 0) {
+            // Dryers
+            if (filterNorth) {
+                return Int(machinesContainerView.northDryers)
+            } else {
+                return Int(machinesContainerView.southDryers)
+            }
+        } else {
+            // Washers
+            if (filterNorth) {
+                return Int(machinesContainerView.northWashers)
+            } else {
+                return Int(machinesContainerView.southWashers)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell : UITableViewCell
+        cell = tableView.dequeueReusableCell(withIdentifier: "table_cell", for: indexPath)
+        
+        return cell
+    }
+    
+
 }
 
 
@@ -82,7 +138,11 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
     
     let sectionInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     
+    var resizedDryerImage : UIImage?
+    var resizedWasherImage : UIImage?
+    
     var refresher: UIRefreshControl?
+    var delegate: LaundryViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,23 +159,61 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action:  #selector(reloadData), for: .valueChanged)
         self.collectionView.refreshControl = refresher
+    
     }
     
     @objc func reloadData() {
         if (filterNorth) {
             itemsPerRow = northDryers
+            delegate?.buildingLabel.text = "Honors North"
         } else {
             itemsPerRow = southDryers
+            delegate?.buildingLabel.text = "Honors South"
         }
         itemsPerRow /= 2
-        print("items per row: ", itemsPerRow)
+        
+        // We do this calculation here before updating the cell images otherwise it would use the old cell size values
+        let paddingSpace = sectionInsets.left * (itemsPerRow)
+        let availableWidth = collectionView.bounds.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        
+        updateCellImages(cellWidth: widthPerItem)
         self.collectionView.reloadData()
         self.collectionView.refreshControl?.endRefreshing()
+        
+        updateViewHeight()
+    }
+    
+    
+    /// Create the resized version of images to fit in the cells
+    /// - Parameter cellWidth: width of the cell
+    func updateCellImages(cellWidth: CGFloat) {
+        let cellSize = CGSize(width: cellWidth, height: cellWidth)
+        resizedDryerImage = resizedImageAspect(image: #imageLiteral(resourceName: "Dryer"), for: cellSize)
+        resizedWasherImage = resizedImageAspect(image: #imageLiteral(resourceName: "Washer"), for: cellSize)
+    }
+    
+    /// Update the height constraint of the collection view
+    func updateViewHeight() {
+        let height = collectionView.collectionViewLayout.collectionViewContentSize.height
+        delegate?.heightConstraint.constant = height + 10
+        delegate?.view.setNeedsLayout()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : UICollectionViewCell
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        
+        if (resizedDryerImage == nil || resizedWasherImage == nil) {
+            // Call this only once since resizing images is computationally expensive
+            // This is also called by other functions when the view updates
+            
+            // We do this calculation here before updating the cell images otherwise it would use the old cell size values
+            let paddingSpace = sectionInsets.left * (itemsPerRow)
+            let availableWidth = collectionView.bounds.width - paddingSpace
+            let widthPerItem = availableWidth / itemsPerRow
+            updateCellImages(cellWidth: widthPerItem)
+        }
         
         // Clear the old views from the reusable cell
         for view in cell.subviews {
@@ -123,36 +221,18 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         }
         
         let column = indexPath.row % Int(itemsPerRow)
-        var addWasher = false
+        var addMachine = false
         if (filterNorth) {
-            addWasher = column < Int(itemsPerRow / 2)
+            addMachine = column < Int(itemsPerRow / 2)
         } else {
-            addWasher = column >= Int(itemsPerRow / 2)
+            addMachine = column >= Int(itemsPerRow / 2)
         }
-        if (indexPath.section == 0 || addWasher) {
-            let machineView = LaundryMachineView.init()
+        if (indexPath.section == 0 || addMachine) {
+            let machineView = LaundryMachineView()
             machineView.layer.cornerRadius = DefinedValues.radius
-            machineView.backgroundView.backgroundColor = UIColor.green
-            machineView.clipsToBounds = false
-            machineView.layer.masksToBounds = false
+            machineView.clipsToBounds = true
+            machineView.layer.masksToBounds = true
             //machineView.delegate = self
-            
-            machineView.contentMode = .scaleAspectFit
-            if (indexPath.section == 0) {
-                var machineImage = UIImage.init(imageLiteralResourceName: "Dryer").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
-                machineImage = self.resizedImage(image: machineImage, for: cell.bounds.size)!
-                print("machine image size ", machineImage.size)
-                machineView.backgroundImage.image = machineImage
-
-            } else {
-                var machineImage = UIImage.init(imageLiteralResourceName: "Washer").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
-                machineImage = self.resizedImage(image: machineImage, for: cell.bounds.size)!
-                machineView.backgroundImage.image = machineImage
-            }
-            
-            machineView.machineNumberLabel.text = "1"
-            machineView.layer.borderWidth = 2.0
-            machineView.layer.borderColor = UIColor.orange.cgColor
             
             cell.contentView.clipsToBounds = false
             cell.clipsToBounds = false
@@ -165,23 +245,46 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
             let centeredVertically = NSLayoutConstraint(item: machineView, attribute: .right, relatedBy: .equal, toItem: cell, attribute: .right, multiplier: 1, constant: 0)
             let widthConstraint = NSLayoutConstraint(item: machineView, attribute: .bottom, relatedBy: .equal, toItem: cell, attribute: .bottom, multiplier: 1, constant: 0)
             
+            let horizontalConstraint1 = NSLayoutConstraint(item: machineView.backgroundView!, attribute: .left, relatedBy: .equal, toItem: machineView, attribute: .left, multiplier: 1, constant: 0)
+            let heightConstraint1 = NSLayoutConstraint(item: machineView.backgroundView!, attribute: .top, relatedBy: .equal, toItem: machineView, attribute: .top, multiplier: 1, constant: 0)
+            let centeredVertically1 = NSLayoutConstraint(item: machineView.backgroundView!, attribute: .right, relatedBy: .equal, toItem: machineView, attribute: .right, multiplier: 1, constant: 0)
+            let widthConstraint1 = NSLayoutConstraint(item: machineView.backgroundView!, attribute: .bottom, relatedBy: .equal, toItem: machineView, attribute: .bottom, multiplier: 1, constant: 0)
+            
             NSLayoutConstraint.activate([horizontalConstraint, heightConstraint, widthConstraint, centeredVertically])
+            NSLayoutConstraint.activate([horizontalConstraint1, heightConstraint1, widthConstraint1, centeredVertically1])
             
+            print(cell.bounds.size)
+            print(machineView.backgroundView.bounds.size)
             
+            // Add images to the cells
+            if (indexPath.section == 0) {
+                // Dryer section
+                machineView.backgroundImage.image = resizedDryerImage
+            } else {
+                // Washer section
+                updateCellImages(cellWidth: cell.bounds.width)
+                machineView.backgroundImage.image = resizedWasherImage
+            }
+            print(machineView.backgroundView.bounds.size)
+            print(machineView.backgroundImage.bounds.size)
+            
+            machineView.machineNumberLabel.text = "00"
+            machineView.timeRemainingLabel.text = "5:34"
         }
         
-        cell.backgroundColor = UIColor.clear
-        
+        cell.backgroundColor = UIColor.blue
         
         return cell
     }
     
+    // Two sections: one for dryers and one for washers
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // Dryer section
+        // More dryers than washers
+        // For even icon sizes, use the same number of dryers per row for washers per row
         if (filterNorth) {
             return Int(northDryers)
         } else {
@@ -199,7 +302,7 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
 
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return sectionInsets
     }
@@ -209,17 +312,25 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 2
     }
     
-    func resizedImage(image: UIImage, for size: CGSize) -> UIImage? {
-        let smallerSize = CGSize(width: size.width - 10, height: size.height - 10)
+    /// Resize an image for the cell
+    /// Note: The value 21 reflects the constraints in LaundryMachine.xib. If these constraints change, this value must be updated
+    ///       I'm not entirely happy with this implementation but due to the complex nature of image resizing in Swift, this was
+    ///       the best way I could figure to do this
+    /// - Parameters:
+    ///   - image: image to resize
+    ///   - size: new size
+    /// - Returns: resized image
+    func resizedImageAspect(image: UIImage, for size: CGSize) -> UIImage? {
+        let length = size.width - 21
+        let smallerSize = CGSize(width: length, height: length)
         let renderer = UIGraphicsImageRenderer(size: smallerSize)
         return renderer.image { (context) in
             image.draw(in: CGRect(origin: .zero, size: smallerSize))
         }
     }
-    
 }
 
 
