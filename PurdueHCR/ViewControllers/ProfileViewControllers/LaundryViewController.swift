@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PopupKit
 
 var filterNorth : Bool = true
 
@@ -24,15 +25,43 @@ class WasherStatus {
     
 }
 
+enum MachineType {
+    case Washer
+    case Dryer
+}
+
+class Machine {
+    
+    var status : WasherStatus?
+    var number : Int?
+    var endTime : Date?
+    var machineType : MachineType?
+    
+    
+    init(machineType: MachineType, number: Int, status: WasherStatus, endTime: Date) {
+        self.machineType = machineType
+        self.number = number
+        self.status = status
+        self.endTime = endTime
+    }
+    
+    func getTimeRemaining() {
+        // I think the API should calculate the time the machine ends and then pass that to us and then we should display that to the user
+    }
+}
+
 class LaundryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var removeName: UIView!
     @IBOutlet weak var buildingLabel: UILabel!
     @IBOutlet weak var filterButton: UIBarButtonItem!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var machinesContainerView: LaundryCollectionViewController!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
     
     var northDryers : [Int]?
     var northWashers : [Int]?
@@ -54,12 +83,29 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         }
         
         self.view.backgroundColor = UIColor.groupTableViewBackground
-    
+        self.removeName.backgroundColor = UIColor.groupTableViewBackground
+        scrollView.backgroundColor = UIColor.groupTableViewBackground
+        
+        let width : Int = Int(self.view.frame.width - 20)
+        let height = 540
+        
+        let contentView = LogoutView(frame: CGRect(x: 0, y:0, width: width, height: height))
+        //contentView.delegate = self
+        let p = PopupView(contentView: contentView)
+        p.showType = .growIn
+        p.maskType = .dimmed
+        
+        let xPos = self.view.frame.width / 2
+        let yPos = self.view.frame.height / 2
+        let location = CGPoint(x: xPos, y: yPos)
+        //p.show(at: location, in: (self.tabBarController?.view)!)
     }
     
     override func viewDidLayoutSubviews() {
         // Update the height constraint now that the view has loaded
         machinesContainerView.updateViewHeight()
+        
+        // Set up list of machines for the table view
         northDryers = machinesContainerView.northDryers
         northWashers = machinesContainerView.northWashers
         southDryers = machinesContainerView.southDryers
@@ -68,6 +114,11 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         northWashers?.sort()
         southDryers?.sort()
         southWashers?.sort()
+        
+        // Update table view height
+        let tableHeight = tableView.contentSize.height
+        tableHeightConstraint.constant = tableHeight + 10
+        
     }
     
     
@@ -274,7 +325,7 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action:  #selector(reloadData), for: .valueChanged)
         self.collectionView.refreshControl = refresher
-    
+        
     }
     
     @objc func reloadData() {
@@ -312,8 +363,8 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
     
     /// Update the height constraint of the collection view
     func updateViewHeight() {
-        let height = collectionView.collectionViewLayout.collectionViewContentSize.height
-        delegate?.heightConstraint.constant = height + 10
+        let collectionHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
+        delegate?.collectionHeightConstraint.constant = collectionHeight + 10
         delegate?.view.setNeedsLayout()
     }
     
@@ -342,11 +393,11 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         if (filterNorth) {
             addMachine = column < Int(itemsPerRow / 2)
         } else {
-            addMachine = column >= Int(itemsPerRow / 2)
+            addMachine = column >= Int(itemsPerRow / 2) - 1
         }
         if (indexPath.section == 0 || addMachine) {
             let machineView = LaundryMachineView()
-            machineView.layer.cornerRadius = DefinedValues.radius
+            machineView.layer.cornerRadius = 5
             machineView.clipsToBounds = true
             machineView.layer.masksToBounds = true
             //machineView.delegate = self
@@ -398,9 +449,10 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
                 if (filterNorth) {
                     machineView.machineNumberLabel.text = String(northWashers[indexPath.row])
                 } else {
-                    var subtractNum = 3
+                    // Adjust for the number of empty blocks before the washers on the right
+                    var subtractNum = 2
                     if (indexPath.row > Int(itemsPerRow)) {
-                        subtractNum = 6
+                        subtractNum = 4
                     }
                     machineView.machineNumberLabel.text = String(southWashers[indexPath.row - subtractNum])
                 }
@@ -411,7 +463,7 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
             machineView.timeRemainingLabel.text = "5:34"
         }
         
-        cell.backgroundColor = UIColor.blue
+        //cell.backgroundColor = UIColor.blue
         
         return cell
     }
@@ -438,8 +490,9 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
         let paddingSpace = sectionInsets.left * (itemsPerRow)
         let availableWidth = collectionView.bounds.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
-
-        return CGSize(width: widthPerItem, height: widthPerItem)
+        let height = (16) * 2 + (widthPerItem - 4)
+        
+        return CGSize(width: widthPerItem, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -463,7 +516,7 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
     ///   - size: new size
     /// - Returns: resized image
     func resizedImageAspect(image: UIImage, for size: CGSize) -> UIImage? {
-        let length = size.width - 21
+        let length = size.width - 4
         let smallerSize = CGSize(width: length, height: length)
         let renderer = UIGraphicsImageRenderer(size: smallerSize)
         return renderer.image { (context) in
