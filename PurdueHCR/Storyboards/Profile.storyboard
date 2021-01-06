@@ -79,7 +79,7 @@
                                                     <segue destination="4Yl-S9-X3a" kind="embed" identifier="show_collection" id="o1g-p4-ooC"/>
                                                 </connections>
                                             </containerView>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="eBc-um-D3O">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="4" translatesAutoresizingMaskIntoConstraints="NO" id="eBc-um-D3O">
                                                 <rect key="frame" x="0.0" y="522" width="414" height="200"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="500" id="X8C-Dh-kOO"/>
@@ -142,12 +142,20 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXt-w1-pc0">
+                                                <rect key="frame" x="369.66666666666669" y="495" width="24.333333333333314" height="23.666666666666629"/>
+                                                <connections>
+                                                    <action selector="infoButtonAction:" destination="Cd7-AL-Pgh" eventType="touchUpInside" id="jsY-YG-Wfr"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="b4w-Q6-TUp" firstAttribute="leading" secondItem="cWS-PY-tuG" secondAttribute="leading" constant="10" id="F2C-co-HO4"/>
-                                            <constraint firstItem="RsW-ds-fnD" firstAttribute="top" secondItem="b4w-Q6-TUp" secondAttribute="bottom" constant="5" id="Fgc-Ax-AHJ"/>
+                                            <constraint firstItem="RsW-ds-fnD" firstAttribute="top" secondItem="b4w-Q6-TUp" secondAttribute="bottom" constant="10" id="Fgc-Ax-AHJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="RsW-ds-fnD" secondAttribute="trailing" constant="20" symbolic="YES" id="Jox-6O-TsU"/>
                                             <constraint firstItem="eBc-um-D3O" firstAttribute="top" secondItem="RsW-ds-fnD" secondAttribute="bottom" id="NEN-wF-HKE"/>
+                                            <constraint firstAttribute="trailing" secondItem="lXt-w1-pc0" secondAttribute="trailing" constant="20" symbolic="YES" id="OaI-qy-0Zv"/>
                                             <constraint firstItem="b4w-Q6-TUp" firstAttribute="top" secondItem="cWS-PY-tuG" secondAttribute="top" id="QC5-6L-LCP"/>
                                             <constraint firstItem="RsW-ds-fnD" firstAttribute="leading" secondItem="cWS-PY-tuG" secondAttribute="leading" constant="20" symbolic="YES" id="QNb-Of-4c6"/>
                                             <constraint firstAttribute="trailing" secondItem="b4w-Q6-TUp" secondAttribute="trailing" constant="10" id="VsZ-lj-Gql"/>
@@ -155,6 +163,7 @@
                                             <constraint firstAttribute="bottom" secondItem="eBc-um-D3O" secondAttribute="bottom" id="krJ-17-GAK"/>
                                             <constraint firstAttribute="trailing" secondItem="RsW-ds-fnD" secondAttribute="trailing" constant="20" symbolic="YES" id="p7e-KJ-ghl"/>
                                             <constraint firstItem="eBc-um-D3O" firstAttribute="leading" secondItem="cWS-PY-tuG" secondAttribute="leading" id="rDg-xB-k0P"/>
+                                            <constraint firstItem="lXt-w1-pc0" firstAttribute="centerY" secondItem="RsW-ds-fnD" secondAttribute="centerY" id="wam-oh-msn"/>
                                         </constraints>
                                     </view>
                                 </subviews>

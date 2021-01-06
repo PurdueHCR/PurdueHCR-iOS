@@ -15,38 +15,43 @@ struct defaultsKeys {
     static let filterBuilding = "filter_building"
 }
 
-class WasherStatus {
+class MachineStatus {
     
-    static let Available = UIColor.green
-    static let InUse = UIColor.red
-    static let Finishing = UIColor.orange
-    static let Finished = UIColor.blue
-    static let OutOfOrder = UIColor.darkGray
+    static let available = UIColor.green
+    static let inUse = UIColor.systemRed
+    static let finishing = UIColor.systemOrange
+    static let finished = UIColor.systemBlue.withAlphaComponent(0.75)
+    static let outOfOrder = UIColor.darkGray
     
 }
 
 enum MachineType {
-    case Washer
-    case Dryer
+    case washer
+    case dryer
 }
 
 class Machine {
     
-    var status : WasherStatus?
+    var status : UIColor?
     var number : Int?
     var endTime : Date?
     var machineType : MachineType?
     
     
-    init(machineType: MachineType, number: Int, status: WasherStatus, endTime: Date) {
+    init(machineType: MachineType, number: Int, status: UIColor, endTime: Date) {
         self.machineType = machineType
         self.number = number
         self.status = status
         self.endTime = endTime
     }
     
-    func getTimeRemaining() {
+    func getTimeRemainingString() -> String {
         // I think the API should calculate the time the machine ends and then pass that to us and then we should display that to the user
+        
+        if (status == MachineStatus.finished || status == MachineStatus.available || status == MachineStatus.outOfOrder) {
+            return "--:--"
+        }
+        return "5:34"
     }
 }
 
@@ -70,6 +75,8 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
     
     var pinnedMachines : [String] = ["Dryer 5"]
     
+    var p : PopupView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -86,22 +93,13 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         self.removeName.backgroundColor = UIColor.groupTableViewBackground
         scrollView.backgroundColor = UIColor.groupTableViewBackground
         
-        let width : Int = Int(self.view.frame.width - 20)
-        let height = 540
-        
-        let contentView = LogoutView(frame: CGRect(x: 0, y:0, width: width, height: height))
-        //contentView.delegate = self
-        let p = PopupView(contentView: contentView)
-        p.showType = .growIn
-        p.maskType = .dimmed
-        
-        let xPos = self.view.frame.width / 2
-        let yPos = self.view.frame.height / 2
-        let location = CGPoint(x: xPos, y: yPos)
-        //p.show(at: location, in: (self.tabBarController?.view)!)
     }
     
     override func viewDidLayoutSubviews() {
+        // Update table view height
+        let tableHeight = tableView.contentSize.height
+        tableHeightConstraint.constant = tableHeight + 10
+        
         // Update the height constraint now that the view has loaded
         machinesContainerView.updateViewHeight()
         
@@ -114,10 +112,6 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         northWashers?.sort()
         southDryers?.sort()
         southWashers?.sort()
-        
-        // Update table view height
-        let tableHeight = tableView.contentSize.height
-        tableHeightConstraint.constant = tableHeight + 10
         
     }
     
@@ -233,7 +227,7 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         }
         
         cell.timeRemainingLabel.text = "5:34"
-        cell.statusView.backgroundColor = WasherStatus.Available.withAlphaComponent(1.0)
+        cell.statusView.backgroundColor = MachineStatus.available.withAlphaComponent(1.0)
         
         return cell
     }
@@ -266,7 +260,29 @@ class LaundryViewController: UIViewController, UIPopoverPresentationControllerDe
         return swipeActions
     }
     
-
+    // Display color information
+    @IBAction func infoButtonAction(_ sender: Any) {
+       
+        let width : Int = Int(self.removeName.frame.width - 20)
+        let height = 205
+        
+        let contentView = MachineInfoView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        contentView.delegate = self
+        p = PopupView(contentView: contentView)
+        p?.showType = .slideInFromBottom
+        p?.maskType = .dimmed
+        p?.dismissType = .slideOutToBottom
+        
+        let xPos = self.view.frame.width / 2
+        let yPos = self.view.frame.height / 2
+        let location = CGPoint(x: xPos, y: yPos)
+        p?.show(at: location, in: (self.tabBarController?.view)!)
+    }
+    
+    func dismissMachineInfoPopup() {
+        p?.dismiss(animated: true)
+    }
+    
 }
 
 
@@ -421,8 +437,8 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
             NSLayoutConstraint.activate([horizontalConstraint, heightConstraint, widthConstraint, centeredVertically])
             NSLayoutConstraint.activate([horizontalConstraint1, heightConstraint1, widthConstraint1, centeredVertically1])
             
-            print(cell.bounds.size)
-            print(machineView.backgroundView.bounds.size)
+            //print(cell.bounds.size)
+            //print(machineView.backgroundView.bounds.size)
             
             // Add images to the cells
             if (indexPath.section == 0) {
@@ -433,8 +449,9 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
                 updateCellImages(cellWidth: cell.bounds.width)
                 machineView.backgroundImage.image = resizedWasherImage
             }
-            print(machineView.backgroundView.bounds.size)
-            print(machineView.backgroundImage.bounds.size)
+            
+            //print(machineView.backgroundView.bounds.size)
+            //print(machineView.backgroundImage.bounds.size)
             
             // Add the machine number
             if (indexPath.section == 0) {
@@ -459,8 +476,15 @@ class LaundryCollectionViewController: UICollectionViewController, UICollectionV
                 
             }
             
+            // Todo: Generate these machines after retrieval from API
+            let testMachine = Machine(machineType: .dryer, number: 15, status: MachineStatus.finished, endTime: Date())
             
-            machineView.timeRemainingLabel.text = "5:34"
+            if (testMachine.status == MachineStatus.outOfOrder) {
+                machineView.backgroundView.backgroundColor = UIColor.darkGray
+            }
+            
+            machineView.timeRemainingLabel.text = testMachine.getTimeRemainingString()
+            machineView.statusColorView.backgroundColor = testMachine.status
         }
         
         //cell.backgroundColor = UIColor.blue

@@ -138,7 +138,7 @@ class ProfileView: UIView {
         let parent = del as! HouseProfileViewController
         //let color = UIColor.lightGray
         let width : Int = Int(parent.view.frame.width - 70)
-        let height = 185
+        //let height = 185
         //let distance = 20
         //let buttonWidth = width - (distance * 2)
         //let borderWidth : CGFloat = 2

@@ -35,6 +35,7 @@ class LogoutView: UIView {
     
     func commonInit() {
         Bundle.main.loadNibNamed("LogoutView", owner: self, options: nil)
+        
         addSubview(logoutView)
         logoutView.frame = self.bounds
         logoutView.layer.cornerRadius = DefinedValues.radius

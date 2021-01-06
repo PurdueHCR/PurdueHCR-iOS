@@ -14,6 +14,7 @@ class LaundryMachineView: UIView {
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var machineNumberLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
+    @IBOutlet weak var statusColorView: UIView!
     
     
     override init(frame: CGRect) {
