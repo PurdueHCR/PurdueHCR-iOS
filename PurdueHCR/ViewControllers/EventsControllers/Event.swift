@@ -11,6 +11,7 @@ import UIKit
 class Event {
     
     var name: String
+    var details: String
     var startDate: Date
     var startTime: Date
     var endDate: Date
@@ -18,18 +19,24 @@ class Event {
     var location: String
     var pointType: PointType
     var floors: [String]
-    var details: String
-    var creatorID: String
+    var isPublicEvent: Bool
+    var isAllFloors: Bool
     var host: String
+    var creatorID: String
+    // var colors: [RGB-Color] (Not sure what typing I will use for this field
     static let dateFormat = "E, MMM d yyyy"
     static let timeFormat = "h:mm a"
         
-    init (name: String, location: String, pointType: PointType, floors: [String], details: String, startDateTime: String, endDateTime: String, creatorID: String, host: String) {
+    init (name: String, location: String, pointType: PointType, floors: [String], details: String, isPublicEvent: Bool, isAllFloors: Bool, startDateTime: String, endDateTime: String, creatorID: String, host: String) {
         self.name = name;
+        self.details = details
         self.location = location
         self.pointType = pointType
         self.floors = floors
-        self.details = details
+        self.isPublicEvent = isPublicEvent
+        self.isAllFloors = isAllFloors
+        self.creatorID = creatorID
+        self.host = host
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Event.dateFormat + " " + Event.timeFormat
@@ -47,10 +54,6 @@ class Event {
         let endTimeString = dateFormatter.string(from: fullEndDateTime)
         self.startTime = dateFormatter.date(from: startTimeString)!
         self.endTime = dateFormatter.date(from: endTimeString)!
-        
-        
-        self.creatorID = creatorID
-        self.host = host
     }
     
     static func startingIndexForSection(section: Int, events: [Event]) -> Int {

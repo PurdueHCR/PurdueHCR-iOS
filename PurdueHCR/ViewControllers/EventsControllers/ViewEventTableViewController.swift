@@ -70,15 +70,20 @@ class ViewEventTableViewController: UITableViewController {
         self.hostLabel.sizeToFit()
         
         var floors: String = ""
-        var i: Int = 0
-        for floor in event.floors {
-            if (i == event.floors.count - 1) {
-                floors.append(floor)
-            } else {
-                floors.append(floor + ", ")
+        if (event.isAllFloors) {
+            floors = "All Floors"
+        } else {
+            var i: Int = 0
+            for floor in event.floors {
+                if (i == event.floors.count - 1) {
+                    floors.append(floor)
+                } else {
+                    floors.append(floor + ", ")
+                }
+                i += 1
             }
-            i += 1
         }
+        
         self.attendeeLabel.text = floors
         self.attendeeLabel.numberOfLines = 1
         self.attendeeLabel.sizeToFit()

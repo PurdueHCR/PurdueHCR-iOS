@@ -1164,7 +1164,7 @@ class FirebaseHelper {
          let startDateTimeString = startDateString + " " + startTimeString
          let endDateTimeString = endDateString + " " + endTimeString
            
-//         Example of paramters we need to be sending.
+//         Example of parameters we need to be sending.
 //         {
 //           "name": "A Very Fun Event",
 //           "details": "A very fun event by me!",
@@ -1184,18 +1184,18 @@ class FirebaseHelper {
 //           "host": "The Society"
 //         }
             
-         let parameters = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate": endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "host":event.host] as [String : Any]
+            let parameters = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host] as [String : Any]
             
             
-         AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-             if let result = response.value as? [String : Any] {
+        AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            if let result = response.value as? [String : Any] {
                 print("Add Event Result:")
                 print(result)
                 onDone(nil)
-             }
-         }
-         print("retrieval error part")
-         onDone(RetrievalError.unableToParseResponse)
+            }
+        }
+        print("retrieval error part")
+        onDone(RetrievalError.unableToParseResponse)
         }
     }
     

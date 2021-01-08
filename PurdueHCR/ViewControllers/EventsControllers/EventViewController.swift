@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", pointType: PointType(pv: 1, pn: "pn", pd: "pd", rcs: true, pid: 0, permissionLevel: PointType.PermissionLevel.resident, isEnabled: true), floors: ["3N", "4N"], details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", startDateTime: "Sun, Sep 15 2019 5:00 PM", endDateTime: "Sun, Sep 15 2019 6:00 PM", creatorID: "1234567890", host: "User1234")]
+var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", pointType: PointType(pv: 1, pn: "pn", pd: "pd", rcs: true, pid: 0, permissionLevel: PointType.PermissionLevel.resident, isEnabled: true), floors: ["3N", "4N"], details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", isPublicEvent: false, isAllFloors: false, startDateTime: "Sun, Sep 15 2019 5:00 PM", endDateTime: "Sun, Sep 15 2019 6:00 PM", creatorID: "1234567890", host: "User1234")]
 var filteredEvents: [Event] = [Event]()
 var filtered = false
 
