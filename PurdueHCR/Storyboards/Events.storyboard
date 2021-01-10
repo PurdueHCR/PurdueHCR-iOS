@@ -543,7 +543,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="createNewEvent:" destination="IUJ-Jc-kjI" eventType="touchUpInside" id="ilP-SP-2gK"/>
+                                                        <action selector="createOrEditEvent:" destination="IUJ-Jc-kjI" eventType="touchUpInside" id="ezE-6t-Z6Y"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -557,6 +557,37 @@
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
                                         </accessibility>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="bjg-rL-rSL" userLabel="Delete Event Table View Cell">
+                                        <rect key="frame" x="0.0" y="1163" width="414" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bjg-rL-rSL" id="aYA-JO-GA5">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3W-yo-cPd" userLabel="Delete Event">
+                                                    <rect key="frame" x="25" y="10" width="364" height="30"/>
+                                                    <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="mnk-8k-dml"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                    <state key="normal" title="Delete Event">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="deleteEvent:" destination="IUJ-Jc-kjI" eventType="touchUpInside" id="0fs-fN-gna"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="g3W-yo-cPd" secondAttribute="trailing" constant="25" id="21a-4K-ikn"/>
+                                                <constraint firstItem="g3W-yo-cPd" firstAttribute="leading" secondItem="aYA-JO-GA5" secondAttribute="leading" constant="25" id="AzV-ww-UUI"/>
+                                                <constraint firstItem="g3W-yo-cPd" firstAttribute="top" secondItem="aYA-JO-GA5" secondAttribute="top" constant="10" id="omk-bP-ePu"/>
+                                                <constraint firstAttribute="bottom" secondItem="g3W-yo-cPd" secondAttribute="bottom" constant="10" id="zzW-Ne-g3s"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -931,18 +962,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="fOa-kQ-SEP">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="3rx-Nt-JWA">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZPk-bU-sgZ">
-                                <rect key="frame" x="375" y="11" width="19" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="square.and.arrow.up" catalog="system"/>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Gi4-gH-LRx">
+                            <connections>
+                                <segue destination="IUJ-Jc-kjI" kind="show" id="i9x-eG-wUT"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="attendeeLabel" destination="JM3-Xx-ZoR" id="ew5-nB-L37"/>
                         <outlet property="dateLabel" destination="dcW-XV-Qwx" id="ePp-LB-Muj"/>
                         <outlet property="detailsLabel" destination="oFT-bv-4TH" id="d5x-1g-V55"/>
+                        <outlet property="editEventButton" destination="Gi4-gH-LRx" id="Kc0-Il-h5Y"/>
                         <outlet property="gCalExportButton" destination="bbn-7v-dUo" id="SzC-W3-jI6"/>
                         <outlet property="goingButton" destination="KBc-4B-gpj" id="iVB-hv-vli"/>
                         <outlet property="hostLabel" destination="rHZ-rR-S5u" id="Rzg-e5-qGS"/>
@@ -975,14 +1005,19 @@
             <point key="canvasLocation" x="-48" y="117"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="i9x-eG-wUT"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="checkmark.circle" catalog="system" width="128" height="121"/>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

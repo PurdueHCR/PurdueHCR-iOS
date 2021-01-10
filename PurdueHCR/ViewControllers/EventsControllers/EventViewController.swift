@@ -296,6 +296,9 @@ class EventViewController: UITableViewController {
             let eventSender = sender as? EventTableViewCell
             viewController?.cellRow = self.tableView.indexPath(for: eventSender!)!.row
             viewController?.cellSection = self.tableView.indexPath(for: eventSender!)!.section
+        } else if segue.destination is CreateEventTableViewController {
+            let viewController = segue.destination as? CreateEventTableViewController
+            viewController?.creating = true
         }
     }
     

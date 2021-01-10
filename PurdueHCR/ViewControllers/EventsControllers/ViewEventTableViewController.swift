@@ -13,6 +13,7 @@ class ViewEventTableViewController: UITableViewController {
     @IBOutlet weak var goingButton: UIButton!
     @IBOutlet weak var iCalExportButton: UIButton!
     @IBOutlet weak var gCalExportButton: UIButton!
+    @IBOutlet weak var editEventButton: UIBarButtonItem!
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -107,6 +108,22 @@ class ViewEventTableViewController: UITableViewController {
             }
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let event: Event
+        if (!filtered) {
+            event = events[cellSection + cellRow]
+        } else {
+            event = filteredEvents[cellSection + cellRow]
+        }
+        
+        let userID = User.get(.id) as! String
+        
+        if (userID != event.creatorID) {
+            editEventButton.isEnabled = false
+            editEventButton.tintColor = UIColor.white
+        }
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -115,11 +132,19 @@ class ViewEventTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 7
+        return 8
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Preparing")
+        if segue.destination is CreateEventTableViewController {
+            let viewController = segue.destination as? CreateEventTableViewController
+            viewController?.creating = false
+        }
     }
 
     /*

@@ -34,6 +34,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     var pointTypes: [PointType] = [PointType]()
     var pointTypesIndex = 0
     
+    var creating: Bool = true // True if view is for creating and event. False if view is for editing/deleting an event.
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -66,40 +68,44 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if (floorsSelected.isEmpty) {
-            newEventCustomFloorButton.setTitle("Custom...", for: .normal)
-            if (!newEventMyHouseSwitch.isOn && !newEventMyFloorSwitch.isOn && !newEventAllHousesSwitch.isOn) {
-                newEventMyFloorSwitch.isOn = true
-            }
-        } else if (floorsSelected.count == 9) {
-            newEventAllHousesSwitch.isOn = true
-            newEventMyFloorSwitch.isOn = false
-            newEventMyHouseSwitch.isOn = false
-            newEventIsPublicSwitch.isOn = false
-            newEventIsPublicSwitch.isEnabled = true
-            newEventIsPublicLabel.textColor = UIColor.black
-            floorsSelected.removeAll()
-            newEventCustomFloorButton.setTitle("Custom...", for: .normal)
-        } else {
-            newEventMyFloorSwitch.isOn = false
-            newEventMyHouseSwitch.isOn = false
-            newEventAllHousesSwitch.isOn = false
-            
-            var floorString = ""
-            var i = 0
-            for floor in floorsSelected {
-                floorString.append(floor)
-                if (i != floorsSelected.count - 1) {
-                    floorString.append(", ")
+        if (creating) {
+            if (floorsSelected.isEmpty) {
+                newEventCustomFloorButton.setTitle("Custom...", for: .normal)
+                if (!newEventMyHouseSwitch.isOn && !newEventMyFloorSwitch.isOn && !newEventAllHousesSwitch.isOn) {
+                    newEventMyFloorSwitch.isOn = true
                 }
-                i += 1
+            } else if (floorsSelected.count == 9) {
+                newEventAllHousesSwitch.isOn = true
+                newEventMyFloorSwitch.isOn = false
+                newEventMyHouseSwitch.isOn = false
+                newEventIsPublicSwitch.isOn = false
+                newEventIsPublicSwitch.isEnabled = true
+                newEventIsPublicLabel.textColor = UIColor.black
+                floorsSelected.removeAll()
+                newEventCustomFloorButton.setTitle("Custom...", for: .normal)
+            } else {
+                newEventMyFloorSwitch.isOn = false
+                newEventMyHouseSwitch.isOn = false
+                newEventAllHousesSwitch.isOn = false
+                
+                var floorString = ""
+                var i = 0
+                for floor in floorsSelected {
+                    floorString.append(floor)
+                    if (i != floorsSelected.count - 1) {
+                        floorString.append(", ")
+                    }
+                    i += 1
+                }
+                newEventCustomFloorButton.setTitle(floorString, for: .normal)
             }
-            newEventCustomFloorButton.setTitle(floorString, for: .normal)
-        }
-        
-        let p = User.get(.permissionLevel) as! Int
-        if (p == 3) {
-            disableFhpFloorsInvited()
+            
+            let p = User.get(.permissionLevel) as! Int
+            if (p == 3) {
+                disableFhpFloorsInvited()
+            }
+        } else {
+            createEventButton.setTitle("Update Event", for: .normal)
         }
     }
     
@@ -116,7 +122,11 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 9
+        if (creating) {
+            return 9
+        } else {
+            return 10
+        }
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -217,8 +227,20 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         }
     }
     
+    @IBAction func createOrEditEvent(_ sender: UIButton) {
+        print("Create or edit")
+        if (creating) {
+            print("Creating")
+            createNewEvent()
+            print("Created, segueing")
+            performSegueToReturnBack()
+        } else {
+            editEvent()
+        }
+    }
     
-    @IBAction func createNewEvent(_ sender: Any) {
+    func createNewEvent() {
+        print("In create")
         let name = newEventName.text!
         
         let dateFormatter = DateFormatter()
@@ -294,8 +316,15 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             }
         }
         
-        
-        performSegueToReturnBack()
+        print("Done creating")
+    }
+    
+    func editEvent() {
+        print("Editing Event")
+    }
+    
+    @IBAction func deleteEvent(_ sender: UIButton) {
+    
     }
     
     func performSegueToReturnBack()  {
