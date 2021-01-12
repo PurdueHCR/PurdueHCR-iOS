@@ -79,31 +79,34 @@
                                                     <segue destination="4Yl-S9-X3a" kind="embed" identifier="show_collection" id="o1g-p4-ooC"/>
                                                 </connections>
                                             </containerView>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="4" translatesAutoresizingMaskIntoConstraints="NO" id="eBc-um-D3O">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="45" estimatedRowHeight="45" sectionHeaderHeight="10" sectionFooterHeight="4" translatesAutoresizingMaskIntoConstraints="NO" id="eBc-um-D3O">
                                                 <rect key="frame" x="0.0" y="522" width="414" height="200"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="500" id="X8C-Dh-kOO"/>
                                                 </constraints>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="table_cell" rowHeight="45" id="DYN-J4-QJ0" customClass="MachineTableCell" customModule="PurdueHCR" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="55.333332061767578" width="374" height="45"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="table_cell" rowHeight="45.333332061767578" id="DYN-J4-QJ0" customClass="MachineTableCell" customModule="PurdueHCR" customModuleProvider="target">
+                                                        <rect key="frame" x="20" y="55" width="374" height="46"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DYN-J4-QJ0" id="zJ9-xf-E5X">
-                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="45.333332061767578"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Hc-Wl-sd2">
-                                                                    <rect key="frame" x="296" y="0.0" width="78" height="45"/>
+                                                                    <rect key="frame" x="296" y="0.0" width="78" height="45.333333333333336"/>
                                                                     <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="45" id="Ojt-Pd-rtw"/>
+                                                                    </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdf-mH-HeF">
-                                                                    <rect key="frame" x="316" y="12" width="38" height="21"/>
+                                                                    <rect key="frame" x="316" y="12.333333333333336" width="38" height="21"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W3l-nL-837">
-                                                                    <rect key="frame" x="20" y="12" width="45" height="21"/>
+                                                                    <rect key="frame" x="20" y="12.333333333333336" width="45" height="21"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -209,7 +212,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wsX-DV-e7t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1482.608695652174" y="492.85714285714283"/>
+            <point key="canvasLocation" x="1484" y="694"/>
         </scene>
         <!--Laundry Collection View Controller-->
         <scene sceneID="qeS-Gm-0wB">
