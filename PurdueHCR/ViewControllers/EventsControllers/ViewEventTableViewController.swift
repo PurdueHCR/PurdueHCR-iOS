@@ -144,6 +144,8 @@ class ViewEventTableViewController: UITableViewController {
         if segue.destination is CreateEventTableViewController {
             let viewController = segue.destination as? CreateEventTableViewController
             viewController?.creating = false
+            viewController?.editCellRow = cellRow
+            viewController?.editCellSection = cellSection
         }
     }
 

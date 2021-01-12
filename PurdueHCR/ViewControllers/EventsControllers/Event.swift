@@ -24,8 +24,8 @@ class Event {
     var host: String
     var creatorID: String
     // var colors: [RGB-Color] (Not sure what typing I will use for this field
-    static let dateFormat = "E, MMM d yyyy"
-    static let timeFormat = "h:mm a"
+    static let dateFormat: String = "E, MMM d yyyy"
+    static let timeFormat: String = "h:mm a"
         
     init (name: String, location: String, pointType: PointType, floors: [String], details: String, isPublicEvent: Bool, isAllFloors: Bool, startDateTime: String, endDateTime: String, creatorID: String, host: String) {
         self.name = name;

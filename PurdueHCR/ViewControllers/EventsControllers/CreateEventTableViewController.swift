@@ -35,6 +35,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     var pointTypesIndex = 0
     
     var creating: Bool = true // True if view is for creating and event. False if view is for editing/deleting an event.
+    var editCellRow: Int = 0
+    var editCellSection: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,15 +56,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         newEventIsPublicSwitch.isEnabled = false
         newEventIsPublicLabel.textColor = UIColor.gray
         
-        
-        pointTypes = DataManager.sharedManager.getPoints()!
-//        for type in pointTypes {
-//            print("Pre Point Type: " + type.pointName)
-//        }
         pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
-//        for pointType in pointTypes {
-//            print("Post Point Type: " + pointType.pointName)
-//        }
         
         self.tableView.reloadData()
     }
@@ -105,6 +99,157 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                 disableFhpFloorsInvited()
             }
         } else {
+            let event: Event
+            if (!filtered) {
+                event = events[editCellSection + editCellRow]
+            } else {
+                event = filteredEvents[editCellSection + editCellRow]
+            }
+            
+            newEventName.text = event.name
+            newEventLocation.text = event.location
+            newEventDescription.text = event.details
+            
+            let firstName = User.get(.firstName) as! String
+            let lastName = User.get(.lastName) as! String
+            if (event.host != (firstName + " " + lastName)) {
+                hostEventSwitch.isOn = false
+                chooseHostField.text = event.host
+                chooseHostField.isEnabled = true
+                chooseHostField.textColor = UIColor.black
+            } else {
+                hostEventSwitch.isOn = true
+                chooseHostField.isEnabled = false
+                chooseHostField.textColor = UIColor.gray
+            }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = Event.dateFormat
+            let startDateString = dateFormatter.string(from: event.startDate)
+            let endDateString = dateFormatter.string(from: event.endDate)
+            dateFormatter.dateFormat = Event.timeFormat
+            let startTimeString = dateFormatter.string(from: event.startTime)
+            let endTimeString = dateFormatter.string(from: event.endTime)
+            dateFormatter.dateFormat = Event.dateFormat + " " + Event.timeFormat
+            let startDateTime = dateFormatter.date(from: startDateString + " " + startTimeString)
+            let endDateTime = dateFormatter.date(from: endDateString + " " + endTimeString)
+            newEventStartDate.date = startDateTime!
+            newEventEndDate.date = endDateTime!
+            
+            var pointTypeIndex = 0
+            for pointType in pointTypes {
+                if (pointType.pointID == event.pointType.pointID) {
+                    break
+                }
+                pointTypeIndex += 1
+            }
+            newEventPointType.selectRow(pointTypeIndex, inComponent: 0, animated: false)
+            
+            if (event.isAllFloors) {
+                newEventAllHousesSwitch.isOn = true
+                newEventMyFloorSwitch.isOn = false
+                newEventMyHouseSwitch.isOn = false
+                if (event.isPublicEvent) {
+                    newEventIsPublicSwitch.isOn = true
+                } else {
+                    newEventIsPublicSwitch.isOn = false
+                }
+                newEventIsPublicSwitch.isEnabled = true
+                newEventIsPublicLabel.textColor = UIColor.black
+                newEventCustomFloorButton.setTitle("Custom...", for: .normal)
+            } else {
+                // This currently does not check for FHP house situation.
+                floorsSelected = event.floors
+                let creatorFloor = getCreatorFloor()
+                if (floorsSelected.count == 1) {
+                    if (floorsSelected[0] == creatorFloor) {
+                        newEventMyFloorSwitch.isOn = true
+                    } else {
+                        newEventCustomFloorButton.setTitle(floorsSelected[0], for: .normal)
+                        newEventMyFloorSwitch.isOn = false
+                    }
+                    newEventMyHouseSwitch.isOn = false
+                    newEventAllHousesSwitch.isOn = false
+                    newEventIsPublicSwitch.isOn = false
+                    newEventIsPublicSwitch.isEnabled = false
+                    newEventIsPublicLabel.textColor = UIColor.gray
+                } else if (floorsSelected.count == 2) {
+                    // Check for MyHouse
+                    let startIndex = creatorFloor.startIndex
+                    let northSouthIndex = creatorFloor.index(after: startIndex)
+                    var floor2: String = ""
+                    if (creatorFloor[northSouthIndex] == "N") {
+                        floor2 = String(creatorFloor.first!) + "S"
+                    } else {
+                        floor2 = String(creatorFloor.first!) + "N"
+                    }
+                    
+                    if (creatorFloor == floorsSelected[0]) {
+                        if (floor2 == floorsSelected[1]) {
+                            newEventMyFloorSwitch.isOn = false
+                            newEventMyHouseSwitch.isOn = true
+                            newEventAllHousesSwitch.isOn = false
+                            newEventIsPublicSwitch.isOn = false
+                            newEventIsPublicSwitch.isEnabled = false
+                            newEventIsPublicLabel.textColor = UIColor.gray                        }
+                    } else if (floor2 == floorsSelected[0]) {
+                        if (creatorFloor == floorsSelected[1]) {
+                            newEventMyFloorSwitch.isOn = false
+                            newEventMyHouseSwitch.isOn = true
+                            newEventAllHousesSwitch.isOn = false
+                            newEventIsPublicSwitch.isOn = false
+                            newEventIsPublicSwitch.isEnabled = false
+                            newEventIsPublicLabel.textColor = UIColor.gray
+                        }
+                    } else {
+                        var floorString: String = ""
+                        var i = 0
+                        for floor in floorsSelected {
+                            floorString.append(floor)
+                            if (i != floorsSelected.count - 1) {
+                                floorString.append(", ")
+                            }
+                            i += 1
+                        }
+                        newEventCustomFloorButton.setTitle(floorString, for: .normal)
+                        newEventMyFloorSwitch.isOn = false
+                        newEventMyHouseSwitch.isOn = false
+                        newEventAllHousesSwitch.isOn = false
+                        newEventIsPublicSwitch.isOn = false
+                        newEventIsPublicSwitch.isEnabled = false
+                        newEventIsPublicLabel.textColor = UIColor.gray
+                    }
+                } else {
+                    var floorString: String = ""
+                    var i = 0
+                    for floor in floorsSelected {
+                        floorString.append(floor)
+                        if (i != floorsSelected.count - 1) {
+                            floorString.append(", ")
+                        }
+                        i += 1
+                    }
+                    newEventCustomFloorButton.setTitle(floorString, for: .normal)
+                    newEventMyFloorSwitch.isOn = false
+                    newEventMyHouseSwitch.isOn = false
+                    newEventAllHousesSwitch.isOn = false
+                    newEventIsPublicSwitch.isOn = false
+                    newEventIsPublicSwitch.isEnabled = false
+                    newEventIsPublicLabel.textColor = UIColor.gray
+                }
+            }
+            let p = User.get(.permissionLevel) as! Int
+            if (p == 3) {
+                if (newEventMyFloorSwitch.isOn) {
+                    newEventMyFloorSwitch.isOn = false
+                    newEventMyHouseSwitch.isOn = true
+                }
+                newEventMyFloorSwitch.isEnabled = false
+                newEventMyFloorLabel.textColor = UIColor.gray
+            }
+            
+            floorsSelected = event.floors
+            
             createEventButton.setTitle("Update Event", for: .normal)
         }
     }
@@ -158,6 +303,14 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         }
         newEventMyFloorSwitch.isEnabled = false
         newEventMyFloorLabel.textColor = UIColor.gray
+    }
+    
+    func getCreatorFloor() -> String {
+        let p = User.get(.permissionLevel) as! Int
+        if (p == 3) {
+            return convertHouseToFloors()[0]
+        }
+        return User.get(.floorID) as! String
     }
     
     func convertHouseToFloors() -> [String] {
@@ -254,7 +407,9 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         
         let host: String
         if hostEventSwitch.isOn {
-            host = "Creator"
+            let firstName = User.get(.firstName) as! String
+            let lastName = User.get(.lastName) as! String
+            host = firstName + " " + lastName
         } else {
             host = chooseHostField.text!
         }
@@ -276,16 +431,20 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                 let startIndex = floorId.startIndex
                 let northSouthIndex = floorId.index(after: startIndex)
                 var floor2: String = ""
-                if (floorId[northSouthIndex] == "N") {
+                if (floorId[startIndex] == "6") {
+                    // There is no 6th floor in the south building, so the house is only 6N
+                    floors.append(floorId)
+                } else if (floorId[northSouthIndex] == "N") {
                     floor2 = "" + String(floorId.first!) + "S"
+                    floors.append(floorId)
+                    floors.append(floor2)
                 } else if (floorId[northSouthIndex] == "S") {
                     floor2 = "" + String(floorId.first!) + "N"
+                    floors.append(floorId)
+                    floors.append(floor2)
                 } else {
                     print("Error with second floor")
                 }
-                
-                floors.append(floorId)
-                floors.append(floor2)
             }
         } else if (newEventAllHousesSwitch.isOn) {
             isAllFloors = true
