@@ -34,16 +34,18 @@ class FirebaseHelper {
 //    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
 //    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
 //    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
-    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event"
-    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/add"
+    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    //let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
     
     // PRODUCTION URLS
     let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
     let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
     let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+    // let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+    let SUBMIT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
     let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-    //let EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event"
+    //let EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
     
     init() {
         db = Firestore.firestore()
@@ -1143,59 +1145,66 @@ class FirebaseHelper {
     // Event Functions
     func addEvent(event: Event, onDone:@escaping (_ err:Error?)->Void) {
         DataManager.sharedManager.getAuthorizationToken { (token, err) in
-         var events: [Event?]?
-         if let err = err {
-            print("Error in addEvent()")
-            events = nil
-            onDone(err)
-         }
-         let headerVal = "Bearer " + (token ?? "")
-         let header = HTTPHeader(name: "Authorization", value: headerVal)
-         let headers = HTTPHeaders(arrayLiteral: header)
-         let url = URL(string: self.ADD_EVENT_URL)!
-            
-         let dateFormatter = DateFormatter()
-         dateFormatter.dateFormat = Event.dateFormat
-         let startDateString = dateFormatter.string(from: event.startDate)
-         let endDateString = dateFormatter.string(from: event.endDate)
-         dateFormatter.dateFormat = Event.timeFormat
-         let startTimeString = dateFormatter.string(from: event.startTime)
-         let endTimeString = dateFormatter.string(from: event.endTime)
-         let startDateTimeString = startDateString + " " + startTimeString
-         let endDateTimeString = endDateString + " " + endTimeString
+            var events: [Event?]?
+            if let err = err {
+                print("Error in addEvent()")
+                events = nil
+                onDone(err)
+            }
+            let headerVal = "Bearer " + (token ?? "")
+//            let header = HTTPHeader(name: "Authorization", value: headerVal)
+//            let header2 = HTTPHeader(name: "Content-Type", value: "application/json")
+            let headers: HTTPHeaders = [ .authorization(headerVal), .contentType("application/json"), .accept("*/*")]
+            let url = URL(string: self.ADD_EVENT_URL)!
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let startDateString = dateFormatter.string(from: event.startDate)
+            let endDateString = dateFormatter.string(from: event.endDate)
+            dateFormatter.dateFormat = "HH:mm:ss"
+            let startTimeString = dateFormatter.string(from: event.startTime)
+            let endTimeString = dateFormatter.string(from: event.endTime)
+            let startDateTimeString = startDateString + "T" + startTimeString + "+04:00"
+            let endDateTimeString = endDateString + "T" + endTimeString + "+04:00"
            
 //         Example of parameters we need to be sending.
 //         {
 //           "name": "A Very Fun Event",
 //           "details": "A very fun event by me!",
-//           "startDate": {
-//             "_seconds": 156463200,
-//             "_nanoseconds": 0
-//           },
-//           "endDate": {
-//             "_seconds": 156463200,
-//             "_nanoseconds": 0
-//           },
+//           "startDate": "2020-11-08T10:00:00+04:00",
+//           "endDate": "2020-11-08T10:00:00+04:00",
 //           "location": "HCRS 1066",
-//           "pointTypeId": 22,
+//           "pointTypeId": 1,
 //           "floorIds": [
 //             "2N"
 //           ],
+//           "isPublicEvent": false,
+//           "isAllFloors": false,
 //           "host": "The Society"
 //         }
+            print(startDateTimeString)
+            let body: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
             
-            let parameters = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host] as [String : Any]
+            print(JSONSerialization.isValidJSONObject(body))
+            print(body)
             
-            
-        AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-            if let result = response.value as? [String : Any] {
-                print("Add Event Result:")
-                print(result)
-                onDone(nil)
+            AF.request(url, method: .post, parameters: body, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Any] {
+                    print("Add Event Result:")
+                    print(result)
+                    onDone(nil)
+                } else {
+                    print(response.error!.errorDescription!)
+                    print(response.request?.httpBody)
+                    print(NSString(data: (response.request!.httpBody)!, encoding: String.Encoding.utf8.rawValue))
+                    print("Responses")
+                    print(response.request)  // original URL request
+                    print(response.response) // URL response
+                    print(response.data)     // server data
+                    print(response.result)   // result of response serialization
+                }
             }
-        }
-        print("retrieval error part")
-        onDone(RetrievalError.unableToParseResponse)
+            onDone(RetrievalError.unableToParseResponse)
         }
     }
     

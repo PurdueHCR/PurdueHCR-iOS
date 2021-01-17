@@ -158,7 +158,6 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                 newEventIsPublicLabel.textColor = UIColor.black
                 newEventCustomFloorButton.setTitle("Custom...", for: .normal)
             } else {
-                // This currently does not check for FHP house situation.
                 floorsSelected = event.floors
                 let creatorFloor = getCreatorFloor()
                 if (floorsSelected.count == 1) {
@@ -382,17 +381,37 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     
     @IBAction func createOrEditEvent(_ sender: UIButton) {
         print("Create or edit")
+        let event = createNewEvent()
         if (creating) {
-            print("Creating")
-            createNewEvent()
-            print("Created, segueing")
-            performSegueToReturnBack()
+            events.append(event)
+            
+            print("Calling Add Event")
+            // FIRE BASE HELPER METHOD TO ADD EVENT
+            fbh.addEvent(event: event) { (err) in
+                if (err != nil) {
+                    
+                } else {
+                    print("No Error")
+                }
+            }
+            
+            print("Done creating")
         } else {
-            editEvent()
+            // I don't think I need to do this. I probably just need to call the edit API and then call get API after.
+            let index: Int = editCellRow + editCellSection
+            if (!filtered) {
+                events.remove(at: index)
+                events.insert(event, at: index)
+            } else {
+                filteredEvents.remove(at: index)
+                filteredEvents.insert(event, at: index)
+            }
+            
         }
+        performSegueToReturnBack()
     }
     
-    func createNewEvent() {
+    func createNewEvent() -> Event {
         print("In create")
         let name = newEventName.text!
         
@@ -457,33 +476,14 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         
         let details = newEventDescription.text!
         
-        guard let id = User.get(.id) else {
-            return
-        }
-        let creatorID = id as! String
+        let creatorID = User.get(.id) as! String
         
-        let event = Event(name: name, location: location, pointType: pointType, floors: floors, details: details, isPublicEvent: isPublicEvent, isAllFloors: isAllFloors, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host)
-        events.append(event)
-        
-        print("Calling Add Event")
-        // FIRE BASE HELPER METHOD TO ADD EVENT
-        fbh.addEvent(event: event) { (err) in
-            if (err != nil) {
-                
-            } else {
-                print("No Error")
-            }
-        }
-        
-        print("Done creating")
-    }
-    
-    func editEvent() {
-        print("Editing Event")
+        return Event(name: name, location: location, pointType: pointType, floors: floors, details: details, isPublicEvent: isPublicEvent, isAllFloors: isAllFloors, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host)
     }
     
     @IBAction func deleteEvent(_ sender: UIButton) {
-    
+        // This option isn't in the API unless you call edit and pass a null event.
+        // If this is the case, call edit API and then call read API.
     }
     
     func performSegueToReturnBack()  {

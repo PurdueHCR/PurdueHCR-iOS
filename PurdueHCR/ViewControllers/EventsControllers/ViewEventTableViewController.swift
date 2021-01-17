@@ -39,12 +39,21 @@ class ViewEventTableViewController: UITableViewController {
         
         iCalExportButton.layer.cornerRadius = DefinedValues.radius
         gCalExportButton.layer.cornerRadius = DefinedValues.radius
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         let event: Event
         if (!filtered) {
             event = events[cellSection + cellRow]
         } else {
             event = filteredEvents[cellSection + cellRow]
+        }
+        
+        let userID = User.get(.id) as! String
+        
+        if (userID != event.creatorID) {
+            editEventButton.isEnabled = false
+            editEventButton.tintColor = UIColor.white
         }
         
         self.nameLabel.text = event.name
@@ -106,22 +115,6 @@ class ViewEventTableViewController: UITableViewController {
             } else {
                 // Fallback on earlier versions
             }
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        let event: Event
-        if (!filtered) {
-            event = events[cellSection + cellRow]
-        } else {
-            event = filteredEvents[cellSection + cellRow]
-        }
-        
-        let userID = User.get(.id) as! String
-        
-        if (userID != event.creatorID) {
-            editEventButton.isEnabled = false
-            editEventButton.tintColor = UIColor.white
         }
     }
 

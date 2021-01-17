@@ -37,7 +37,7 @@ class EventViewController: UITableViewController {
         //self.eventTableView.tableHeaderView = self.eventTableView.tableHeaderView
         
         
-        fbh.getEvents() { (events, err) in
+        fbh.getEvents() { (eventsAPI, err) in
             if (err != nil) {
                 //print("Error in getEvents()")
             } else {
@@ -52,6 +52,7 @@ class EventViewController: UITableViewController {
         self.tableView.sectionHeaderHeight = 2000
         self.tableView.estimatedSectionHeaderHeight = 2000
         
+        // Events from database will come sorted.
         events = Event.sortEvents(events: events)
     
         guard let permission = User.get(.permissionLevel) else {
@@ -105,6 +106,7 @@ class EventViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        // May not need this line, depends how we handle inserting event
         events = Event.sortEvents(events: events)
         
         guard let permission = User.get(.permissionLevel) else {
@@ -122,7 +124,7 @@ class EventViewController: UITableViewController {
             // Filter to be only events that the user created
             self.title = "My Events"
             //filteredEvents = getFilteredEventsFromDatabase()
-// Next lines will be removed when connected to API
+// Next lines will be removed when connected to API. But Maybe Not.
             guard let userId = User.get(.id) else {
                 return
             }
@@ -132,7 +134,7 @@ class EventViewController: UITableViewController {
                     filteredEvents.append(event)
                 }
             }
-// Above lines will be removed when connected to API
+// Above lines will be removed when connected to API. But Maybe Not.
             filtered = true
             self.tableView.reloadData()
         } else {
@@ -170,13 +172,6 @@ class EventViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as! EventTableViewCell
-
-        
-        // Currently, due to the borderWidth/Color, shadow does not show up.
-//        cell.layer.shadowColor = UIColor.lightGray.cgColor
-//        cell.layer.shadowOpacity = 0.5
-//        cell.layer.shadowOffset = CGSize.zero
-//        cell.layer.shadowRadius = 12
         
         
         let radius: CGFloat = cell.frame.height / 10
