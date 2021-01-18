@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-var events: [Event] = [Event(name: "Snack and Chat", location: "Innovation Forum", pointType: PointType(pv: 1, pn: "pn", pd: "pd", rcs: true, pid: 0, permissionLevel: PointType.PermissionLevel.resident, isEnabled: true), floors: ["3N", "4N"], details: "Eat snacks and chat with students and faculty and this is going to be a longer description now let's see how this behaves.", isPublicEvent: false, isAllFloors: false, startDateTime: "Sun, Sep 15 2019 5:00 PM", endDateTime: "Sun, Sep 15 2019 6:00 PM", creatorID: "1234567890", host: "User1234")]
+var events: [Event] = [Event]()
 var filteredEvents: [Event] = [Event]()
 var filtered = false
 
@@ -36,71 +36,74 @@ class EventViewController: UITableViewController {
    //     eventTableView.tableHeaderView!.frame = CGRectMake(0,0,200,300)
         //self.eventTableView.tableHeaderView = self.eventTableView.tableHeaderView
         
+        tableView.delegate = self
+        tableView.dataSource = self
         
         fbh.getEvents() { (eventsAPI, err) in
             if (err != nil) {
-                //print("Error in getEvents()")
+                print("Error in getEvents()")
             } else {
                 print("Not an error in getEvents()")
-            }
-        }
-        
-        
-        tableView.register(EventTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
-        
-        self.tableView.rowHeight = 133
-        self.tableView.sectionHeaderHeight = 2000
-        self.tableView.estimatedSectionHeaderHeight = 2000
-        
-        // Events from database will come sorted.
-        events = Event.sortEvents(events: events)
-    
-        guard let permission = User.get(.permissionLevel) else {
-            return
-        }
-        let p = permission as! Int
+                events = eventsAPI
+                
+                self.tableView.register(EventTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
+                
+                self.tableView.rowHeight = 133
+                self.tableView.sectionHeaderHeight = 2000
+                self.tableView.estimatedSectionHeaderHeight = 2000
+                
+                // Events from database will come sorted.
+                events = Event.sortEvents(events: events)
+            
+                guard let permission = User.get(.permissionLevel) else {
+                    return
+                }
+                let p = permission as! Int
 
-        if p == 0 {
-            let navigationBar = navigationController!.navigationBar
-            self.navigationItem.rightBarButtonItems = nil
-            let houseName = User.get(.house) as! String
-            houseImageView = UIImageView()
-            
-            if (houseName == "Platinum"){
-                houseImageView.image = #imageLiteral(resourceName: "Platinum")
+                if p == 0 {
+                    let navigationBar = self.navigationController!.navigationBar
+                    self.navigationItem.rightBarButtonItems = nil
+                    let houseName = User.get(.house) as! String
+                    self.houseImageView = UIImageView()
+                    
+                    if (houseName == "Platinum"){
+                        self.houseImageView.image = #imageLiteral(resourceName: "Platinum")
+                    }
+                    else if(houseName == "Copper"){
+                        self.houseImageView.image = #imageLiteral(resourceName: "Copper")
+                    }
+                    else if(houseName == "Palladium"){
+                        self.houseImageView.image = #imageLiteral(resourceName: "Palladium")
+                    }
+                    else if(houseName == "Silver"){
+                        self.houseImageView.image = #imageLiteral(resourceName: "Silver")
+                    }
+                    else if(houseName == "Titanium"){
+                        self.houseImageView.image = #imageLiteral(resourceName: "Titanium")
+                    }
+                    
+                    navigationBar.addSubview(self.houseImageView)
+                    self.houseImageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
+                    self.houseImageView.clipsToBounds = true
+                    self.houseImageView.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        self.houseImageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
+                        self.houseImageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
+                        self.houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
+                        self.houseImageView.widthAnchor.constraint(equalTo: self.houseImageView.heightAnchor)
+                    ])
+                    self.FilterEventsBarButton.isEnabled = false
+                    self.FilterEventsBarButton.title = ""
+                } else {
+                    self.navigationItem.rightBarButtonItems = nil
+                    self.navigationItem.rightBarButtonItem = self.AddEventBarButton
+                    self.FilterEventsBarButton.title = "Filter"
+                    self.navigationItem.leftBarButtonItems = nil
+                    self.navigationItem.leftBarButtonItem = self.FilterEventsBarButton
+                    self.title = "All Events"
+                }
+                self.tableView.reloadData()
             }
-            else if(houseName == "Copper"){
-                houseImageView.image = #imageLiteral(resourceName: "Copper")
-            }
-            else if(houseName == "Palladium"){
-                houseImageView.image = #imageLiteral(resourceName: "Palladium")
-            }
-            else if(houseName == "Silver"){
-                houseImageView.image = #imageLiteral(resourceName: "Silver")
-            }
-            else if(houseName == "Titanium"){
-                houseImageView.image = #imageLiteral(resourceName: "Titanium")
-            }
-            
-            navigationBar.addSubview(houseImageView)
-            houseImageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
-            houseImageView.clipsToBounds = true
-            houseImageView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                houseImageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
-                houseImageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
-                houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
-                houseImageView.widthAnchor.constraint(equalTo: houseImageView.heightAnchor)
-            ])
-            FilterEventsBarButton.isEnabled = false
-            FilterEventsBarButton.title = ""
-        } else {
-            self.navigationItem.rightBarButtonItems = nil
-            self.navigationItem.rightBarButtonItem = AddEventBarButton
-            FilterEventsBarButton.title = "Filter"
-            self.navigationItem.leftBarButtonItems = nil
-            self.navigationItem.leftBarButtonItem = FilterEventsBarButton
-            self.title = "All Events"
         }
     }
     
@@ -117,6 +120,7 @@ class EventViewController: UITableViewController {
         if p == 0 {
             houseImageView.isHidden = false
         }
+        self.tableView.reloadData()
     }
     
     @IBAction func switchFilter(_ sender: UIBarButtonItem) {
@@ -129,6 +133,7 @@ class EventViewController: UITableViewController {
                 return
             }
             let id = userId as! String
+            filteredEvents.removeAll()
             for event in events {
                 if (event.creatorID == id) {
                     filteredEvents.append(event)
@@ -163,6 +168,7 @@ class EventViewController: UITableViewController {
             return Event.getNumUniqueDates(events: events)
         } else {
             if (filteredEvents.count != 0) {
+                print("Sections" + String(Event.getNumUniqueDates(events: filteredEvents)))
                 return Event.getNumUniqueDates(events: filteredEvents)
             } else {
                 return 0
@@ -182,13 +188,21 @@ class EventViewController: UITableViewController {
         // Creates vertical space between same-day events (no date in between them)
         cell.layer.borderWidth = 4
         cell.layer.borderColor = UIColor.white.cgColor
-                
-        let sectionIndex = Event.startingIndexForSection(section: indexPath.section, events: events)
+         
+        let sectionIndex: Int
+        if (!filtered) {
+            sectionIndex = Event.startingIndexForSection(section: indexPath.section, events: events)
+        } else {
+            sectionIndex = Event.startingIndexForSection(section: indexPath.section, events: filteredEvents)
+        }
         
         let event: Event
         if (!filtered) {
             event = events[sectionIndex + indexPath.row]
         } else {
+            print("section" + String(sectionIndex))
+            print("row" + String(indexPath.row))
+            print("count" + String(filteredEvents.count))
             event = filteredEvents[sectionIndex + indexPath.row]
         }
         

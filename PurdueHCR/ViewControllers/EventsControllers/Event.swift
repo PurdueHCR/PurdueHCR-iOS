@@ -23,7 +23,9 @@ class Event {
     var isAllFloors: Bool
     var host: String
     var creatorID: String
-    // var colors: [RGB-Color] (Not sure what typing I will use for this field
+    var floorColors: [String]/*[RGB-Color] (Not sure what typing I will use for this field*/
+    var eventID: String
+    
     static let dateFormat: String = "E, MMM d yyyy"
     static let timeFormat: String = "h:mm a"
         
@@ -54,6 +56,55 @@ class Event {
         let endTimeString = dateFormatter.string(from: fullEndDateTime)
         self.startTime = dateFormatter.date(from: startTimeString)!
         self.endTime = dateFormatter.date(from: endTimeString)!
+        
+        self.floorColors = [""]
+        self.eventID = ""
+    }
+    
+    init (name: String, location: String, pointTypeId: String, floors: [String], details: String, isPublicEvent: Bool, startDateTime: String, endDateTime: String, creatorID: String, host: String, floorColors: [String], id: String) {
+        self.name = name
+        self.location = location
+        
+        self.pointType = DataManager.sharedManager.getPointType(value: Int(pointTypeId) ?? -1)
+        
+        self.floors = floors
+        self.details = details
+        self.isPublicEvent = isPublicEvent
+        if (floors.count == DataManager.sharedManager.getHouseCodes()?.count) {
+            self.isAllFloors = true
+        } else {
+            self.isAllFloors = false
+        }
+        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        let startDateString = dateFormatter.string(from: event.startDate)
+//        let endDateString = dateFormatter.string(from: event.endDate)
+//        dateFormatter.dateFormat = "HH:mm:ss"
+//        let startTimeString = dateFormatter.string(from: event.startTime)
+//        let endTimeString = dateFormatter.string(from: event.endTime)
+//        let startDateTimeString = startDateString + "T" + startTimeString + "+04:00"
+//        let endDateTimeString = endDateString + "T" + endTimeString + "+04:00"
+        
+        let startDateString = String(startDateTime.prefix(10))
+        let tempStartTimeString = String(startDateTime.suffix(13))
+        let startTimeString = String(tempStartTimeString.prefix(8))
+        let endDateString = String(endDateTime.prefix(10))
+        let tempEndTimeString = String(endDateTime.suffix(13))
+        let endTimeString = String(tempEndTimeString.prefix(8))
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        self.startDate = dateFormatter.date(from: startDateString)!
+        self.endDate = dateFormatter.date(from: endDateString)!
+        dateFormatter.dateFormat = "HH:mm:ss"
+        self.startTime = dateFormatter.date(from: startTimeString)!
+        self.endTime = dateFormatter.date(from: endTimeString)!
+            
+        self.creatorID = creatorID
+        self.host = host
+        self.floorColors = floorColors
+        self.eventID = id
     }
     
     static func startingIndexForSection(section: Int, events: [Event]) -> Int {
@@ -104,8 +155,14 @@ class Event {
     }
     
     static func getNumUniqueDates(events: [Event]) -> Int {
-        var ret = 1
-        var currentDate = events[0].startDate
+        if (events.count == 0) {
+            return 0
+        }
+        var ret = 0
+        var currentDate = Date()
+        print(currentDate)
+        currentDate = currentDate.addingTimeInterval(-86400)
+        print(currentDate)
         
         for i in 0...events.count-1 {
             if (events[i].startDate == currentDate) {
@@ -116,6 +173,8 @@ class Event {
             }
             
         }
+        
+        print(ret)
         
         return ret
     }

@@ -329,6 +329,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             floorsInvited.append("5S")
         } else if (house == "Titanium") {
             floorsInvited.append("6N")
+            floorsInvited.append("6S")
         }
         return floorsInvited
     }
@@ -450,10 +451,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                 let startIndex = floorId.startIndex
                 let northSouthIndex = floorId.index(after: startIndex)
                 var floor2: String = ""
-                if (floorId[startIndex] == "6") {
-                    // There is no 6th floor in the south building, so the house is only 6N
-                    floors.append(floorId)
-                } else if (floorId[northSouthIndex] == "N") {
+                if (floorId[northSouthIndex] == "N") {
                     floor2 = "" + String(floorId.first!) + "S"
                     floors.append(floorId)
                     floors.append(floor2)

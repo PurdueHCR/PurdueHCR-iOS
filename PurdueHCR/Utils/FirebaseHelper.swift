@@ -28,24 +28,32 @@ class FirebaseHelper {
 	let USER_ID = "UserID"
 	let MESSAGES = "Messages"
     
-    // TEST URLS
-//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
-//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
-//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
-//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
-    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
-    //let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    // LOCAL URLS
+    let CREATE_QR_LINK = "https://localhost:5001/purdue-hcr-test/us-central1/link/create"
+    let HANDLE_URL = "http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
+    let RANK_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
+    let SUBMIT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+    let ADD_MESSAGE_URL = "http://localhost:5001/purdue-hcr-test/uscentral1/point_log/messages"
+    let GET_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/feed"
     let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
     
+    // TEST URLS
+//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+//    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
+//    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    
     // PRODUCTION URLS
-    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
-    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-    // let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
-    let SUBMIT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
-    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-    //let EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
+//    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+//    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+//    let SUBMIT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+//    let EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
     
     init() {
         db = Firestore.firestore()
@@ -1145,16 +1153,15 @@ class FirebaseHelper {
     // Event Functions
     func addEvent(event: Event, onDone:@escaping (_ err:Error?)->Void) {
         DataManager.sharedManager.getAuthorizationToken { (token, err) in
-            var events: [Event?]?
+            //var events: [Event?]?
             if let err = err {
                 print("Error in addEvent()")
-                events = nil
+                //events = nil
                 onDone(err)
             }
             let headerVal = "Bearer " + (token ?? "")
-//            let header = HTTPHeader(name: "Authorization", value: headerVal)
-//            let header2 = HTTPHeader(name: "Content-Type", value: "application/json")
-            let headers: HTTPHeaders = [ .authorization(headerVal), .contentType("application/json"), .accept("*/*")]
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
             let url = URL(string: self.ADD_EVENT_URL)!
 
             let dateFormatter = DateFormatter()
@@ -1183,25 +1190,18 @@ class FirebaseHelper {
 //           "host": "The Society"
 //         }
             print(startDateTimeString)
-            let body: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
+            let parameters: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
             
-            print(JSONSerialization.isValidJSONObject(body))
-            print(body)
+            print(JSONSerialization.isValidJSONObject(parameters))
+            print(parameters)
             
-            AF.request(url, method: .post, parameters: body, headers: headers).validate().responseJSON { response in
+            AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                 if let result = response.value as? [String : Any] {
                     print("Add Event Result:")
                     print(result)
                     onDone(nil)
                 } else {
                     print(response.error!.errorDescription!)
-                    print(response.request?.httpBody)
-                    print(NSString(data: (response.request!.httpBody)!, encoding: String.Encoding.utf8.rawValue))
-                    print("Responses")
-                    print(response.request)  // original URL request
-                    print(response.response) // URL response
-                    print(response.data)     // server data
-                    print(response.result)   // result of response serialization
                 }
             }
             onDone(RetrievalError.unableToParseResponse)
@@ -1209,12 +1209,11 @@ class FirebaseHelper {
     }
     
     
-    func getEvents(onDone:@escaping ([Event?]?, Error?) ->Void) {
+    func getEvents(onDone:@escaping ([Event], Error?) ->Void) {
         DataManager.sharedManager.getAuthorizationToken { (token, err) in
-         var events: [Event?]?
+         var events: [Event] = [Event]()
          if let err = err {
-            print("Error in getEvents()")
-            events = nil
+            print("Error in retrieving auth token in getEvents()")
             onDone(events, err)
          }
          let headerVal = "Bearer " + (token ?? "")
@@ -1222,21 +1221,35 @@ class FirebaseHelper {
          let headers = HTTPHeaders(arrayLiteral: header)
          let url = URL(string: self.GET_EVENT_URL)!
          AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
-             if let result = response.value as? [String : Any] {
-                print("Get Event Result:")
-                print(result)
+             if let results = response.value as? [String : Any] {
                 // Parse Event Supplied
-                /* Prints this so far:
-                 ["events": <__NSArray0 0x7fff8002e300>(
-
-                 )
-                 ]
-                 */
-                events = nil
+                let eventsReturned = results["events"] as! [[String:Any]]
+                
+                for result in eventsReturned {
+                    let creatorId = result["creatorId"] as! String
+                    let details = result["details"] as! String
+                    let endDate = result["endDate"] as! String
+                    let floorColors = result["floorColors"] as! [String]
+                    let floorIds = result["floorIds"] as! [String]
+                    let host = result["host"] as! String
+                    let id = result["id"] as! String
+                    let isPublicEvent = result["isPublicEvent"] as! Bool
+                    let location = result["location"] as! String
+                    let name = result["name"] as! String
+                    let pointTypeId = result["pointTypeId"] as! String
+                    let startDate = result["startDate"] as! String
+                    
+                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                    
+                    events.append(event)
+                }
+                
                 onDone(events, nil)
+             } else {
+                print(response)
+                print("Failed Events Attempt")
              }
          }
-         events = nil
          onDone(events, RetrievalError.unableToParseResponse)
         }
     }
@@ -1284,7 +1297,8 @@ class FirebaseHelper {
                 let suggestedPointIDs = document.data()!["suggestedPointIDs"] as! String
                 let competitionHiddenMessage = document.data()!["competitionHiddenMessage"] as! String
                 let isCompetitionVisible = document.data()!["isCompetitionVisible"] as! Bool
-                let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, showRewards: showRewards, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs, isCompetitionVisible: isCompetitionVisible, competitionHiddenMessage: competitionHiddenMessage)
+                let floorIds = document.data()!["floorIds"] as! [String]
+                let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, showRewards: showRewards, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs, isCompetitionVisible: isCompetitionVisible, competitionHiddenMessage: competitionHiddenMessage, floorIds: floorIds)
 				onDone(systemPreferences)
 			} else {
 				print("Error: Unabled to retrieve SystemPreferences information")

@@ -16,8 +16,8 @@ class SelectFloorsTableViewController: UITableViewController {
     
     var delegate: SelectFloorsDelegate?
     
-    let floors = ["2N", "2S", "3N", "3S", "4N", "4S", "5N", "5S", "6N"]
-    var floorsSelected = [false, false, false, false, false, false, false, false, false]
+    let floors = ["2N", "2S", "3N", "3S", "4N", "4S", "5N", "5S", "6N", "6S"]
+    var floorsSelected = [false, false, false, false, false, false, false, false, false, false]
         
     override func viewDidLoad() {
         super.viewDidLoad()

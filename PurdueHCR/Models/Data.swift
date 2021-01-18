@@ -498,8 +498,9 @@ class SystemPreferences {
     var suggestedPointIDs : String
     var competitionHiddenMessage : String
     var isCompetitionVisible : Bool
+    var floorIds: [String]
 	
-    init(isHouseEnabled: Bool, houseEnabledMessage: String, showRewards: Bool, iosVersion: String, suggestedPointIDs: String, isCompetitionVisible: Bool, competitionHiddenMessage: String) {
+    init(isHouseEnabled: Bool, houseEnabledMessage: String, showRewards: Bool, iosVersion: String, suggestedPointIDs: String, isCompetitionVisible: Bool, competitionHiddenMessage: String, floorIds: [String]) {
 		self.isHouseEnabled = isHouseEnabled
 		self.houseEnabledMessage = houseEnabledMessage
         self.showRewards = showRewards
@@ -507,6 +508,7 @@ class SystemPreferences {
         self.suggestedPointIDs = suggestedPointIDs
         self.competitionHiddenMessage = competitionHiddenMessage
         self.isCompetitionVisible = isCompetitionVisible
+        self.floorIds = floorIds
 	}
 	
 	func convertToDictionary() -> [String:Any] {
@@ -517,7 +519,8 @@ class SystemPreferences {
             "iOS_Version":iosVersion,
             "suggestedPointIDs":suggestedPointIDs,
             "competitionHiddenMessage":competitionHiddenMessage,
-            "isCompetitionVisible":isCompetitionVisible
+            "isCompetitionVisible":isCompetitionVisible,
+            "floorIds":floorIds
 		]
 		return dict
 	}
