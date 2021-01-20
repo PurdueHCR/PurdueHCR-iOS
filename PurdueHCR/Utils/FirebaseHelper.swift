@@ -30,10 +30,11 @@ class FirebaseHelper {
     
     // TEST URLS
     let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
-    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
     let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
     
     // PRODUCTION URLS
 //    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
@@ -41,6 +42,7 @@ class FirebaseHelper {
 //    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
 //    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
 //    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+//    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
 
     
     init() {
@@ -609,6 +611,66 @@ class FirebaseHelper {
                 onDone(nil)
             }
         }
+    }
+    
+    func grantAward(house:House, ppr:Int, description:String, onDone: @escaping (_ err:Error?)->Void){
+        
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(err)
+            } else {
+                
+                let headers = self.generateHTTPHeader(token: token!)
+                let url = URL(string: self.SUBMIT_URL)!
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+//                let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
+                
+                let parameters = ["house":house.houseID, "ppr":ppr, "description":description] as [String : Any]
+                
+                AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        let banner = NotificationBanner(title: "Award Granted!", subtitle: log.pointDescription, style: .success)
+                        banner.duration = 2
+                        banner.show()
+                        onDone(nil)
+                    case .failure(let error):
+                        if (error.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "This type of point is disabled for now.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        } else if (error.localizedDescription == "The operation couldn’t be completed. (Document Exists error 1.)"){
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "You have already scanned this code.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        }
+                        onDone(error)
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Generate the headers for an AlamoFire HTTP request to the API
+    /// - Parameter token: string of the user's firebase authorization token
+    /// - Returns: HTTP headers
+    private func generateHTTPHeader(token:String) -> HTTPHeaders {
+        let headerVal = "Bearer " + (token)
+        let header = HTTPHeader(name: "Authorization", value: headerVal)
+        let headers = HTTPHeaders(arrayLiteral: header)
+        return headers
     }
     
     /// Helper function to updateUserPoints
