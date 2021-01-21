@@ -58,7 +58,6 @@
 		D37E1D9C20FAAD8E00C1B05E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */; };
 		D3912A6A219CE77B0002E7C7 /* HouseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */; };
 		D3912A6B219CE77B0002E7C7 /* SubmitGrantedAwardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A66219CE77A0002E7C7 /* SubmitGrantedAwardViewController.swift */; };
-		D3912A6C219CE77B0002E7C7 /* GrantAwardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A67219CE77A0002E7C7 /* GrantAwardTableViewController.swift */; };
 		D3912A6D219CE77B0002E7C7 /* HouseCompetitionOverviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A68219CE77A0002E7C7 /* HouseCompetitionOverviewTableViewController.swift */; };
 		D3912A6E219CE77B0002E7C7 /* RECHouse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3912A69219CE77A0002E7C7 /* RECHouse.storyboard */; };
 		D3912A73219CE7960002E7C7 /* RECPointCreationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3912A70219CE7960002E7C7 /* RECPointCreationTableViewController.swift */; };
@@ -176,7 +175,6 @@
 		D37E1D9B20FAAD8E00C1B05E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HouseTableViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/HouseTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		D3912A66219CE77A0002E7C7 /* SubmitGrantedAwardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitGrantedAwardViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/SubmitGrantedAwardViewController.swift; sourceTree = SOURCE_ROOT; };
-		D3912A67219CE77A0002E7C7 /* GrantAwardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GrantAwardTableViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/GrantAwardTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		D3912A68219CE77A0002E7C7 /* HouseCompetitionOverviewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HouseCompetitionOverviewTableViewController.swift; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/HouseCompetitionOverviewTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		D3912A69219CE77A0002E7C7 /* RECHouse.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = RECHouse.storyboard; path = PurdueHCR/ViewControllers/REC/HouseViewControllers/RECHouse.storyboard; sourceTree = SOURCE_ROOT; };
 		D3912A70219CE7960002E7C7 /* RECPointCreationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RECPointCreationTableViewController.swift; path = PurdueHCR/ViewControllers/REC/PointOptionsViewControllers/RECPointCreationTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -435,7 +433,6 @@
 		D3912A64219CE76A0002E7C7 /* HouseViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D3912A67219CE77A0002E7C7 /* GrantAwardTableViewController.swift */,
 				D3912A68219CE77A0002E7C7 /* HouseCompetitionOverviewTableViewController.swift */,
 				D3912A65219CE77A0002E7C7 /* HouseTableViewController.swift */,
 				D3912A69219CE77A0002E7C7 /* RECHouse.storyboard */,
@@ -839,7 +836,6 @@
 				B5ED711524A7D7C400080A52 /* CreateEventTableViewController.swift in Sources */,
 				D3CC77CE21052CEF00B88F03 /* AppUtils.swift in Sources */,
 				D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */,
-				D3912A6C219CE77B0002E7C7 /* GrantAwardTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,
 				D3912A6B219CE77B0002E7C7 /* SubmitGrantedAwardViewController.swift in Sources */,
 				B5AE2D4D23DCA68C00B2323C /* FirebaseListenerUtil.swift in Sources */,

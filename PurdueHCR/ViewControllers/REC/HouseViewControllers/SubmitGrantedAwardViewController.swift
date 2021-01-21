@@ -27,6 +27,8 @@ class SubmitGrantedAwardViewController: UIViewController, UITextViewDelegate {
         descriptionField.text = placeholder
         descriptionField.textColor = UIColor.lightGray
         descriptionField.selectedTextRange = descriptionField.textRange(from: descriptionField.beginningOfDocument, to: descriptionField.beginningOfDocument)
+        
+        self.navigationItem.title = ("Give Award to " + house!.houseID)
     }
     
     /// Submit Point Log as award
@@ -49,7 +51,7 @@ class SubmitGrantedAwardViewController: UIViewController, UITextViewDelegate {
             return
         }
         if (description == placeholder) {
-            notify(title: "Failure", subtitle: "Please tell us more about what you did!", style: .danger)
+            notify(title: "Failure", subtitle: "Please add an award description", style: .danger)
             return
         }
         self.submitButton.isEnabled = false

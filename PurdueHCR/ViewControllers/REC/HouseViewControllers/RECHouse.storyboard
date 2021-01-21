@@ -23,12 +23,12 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="247" id="X92-zc-Dsj">
                                         <rect key="frame" x="0.0" y="28" width="375" height="247"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X92-zc-Dsj" id="OKK-Wy-xV9">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X92-zc-Dsj" id="OKK-Wy-xV9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="247"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Vh-oL-JqO" customClass="HousePointsCompareView" customModule="PurdueHCR" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="11" width="343" height="225"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="225"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="225" id="IpR-hu-GdB"/>
@@ -36,9 +36,10 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="top" secondItem="OKK-Wy-xV9" secondAttribute="topMargin" id="5kC-Fd-UTV"/>
-                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="leading" secondItem="OKK-Wy-xV9" secondAttribute="leadingMargin" id="er0-H2-s73"/>
-                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="trailing" secondItem="OKK-Wy-xV9" secondAttribute="trailingMargin" id="mOj-ZB-Lvn"/>
+                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="top" secondItem="OKK-Wy-xV9" secondAttribute="top" id="5kC-Fd-UTV"/>
+                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="leading" secondItem="OKK-Wy-xV9" secondAttribute="leading" id="er0-H2-s73"/>
+                                                <constraint firstAttribute="bottom" secondItem="5Vh-oL-JqO" secondAttribute="bottom" id="lFw-Ui-hLb"/>
+                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="trailing" secondItem="OKK-Wy-xV9" secondAttribute="trailing" id="mOj-ZB-Lvn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -484,52 +485,6 @@
             </objects>
             <point key="canvasLocation" x="-892" y="-54"/>
         </scene>
-        <!--Submit Points-->
-        <scene sceneID="VCV-Z2-NIJ">
-            <objects>
-                <tableViewController id="zar-Wb-eli" customClass="GrantAwardTableViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Yze-E2-hVC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="3BE-Tx-ERv" customClass="PointTypeCell" customModule="PurdueHCR" customModuleProvider="target">
-                                <rect key="frame" x="16" y="55.5" width="343" height="43"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3BE-Tx-ERv" id="V8E-d8-dOz">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point Type" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uzn-JZ-3r5">
-                                            <rect key="frame" x="16" y="11" width="311" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Uzn-JZ-3r5" firstAttribute="leading" secondItem="V8E-d8-dOz" secondAttribute="leadingMargin" id="A4e-iV-cgZ"/>
-                                        <constraint firstItem="Uzn-JZ-3r5" firstAttribute="bottom" secondItem="V8E-d8-dOz" secondAttribute="bottomMargin" id="EwS-NT-ZDs"/>
-                                        <constraint firstItem="Uzn-JZ-3r5" firstAttribute="trailing" secondItem="V8E-d8-dOz" secondAttribute="trailingMargin" id="s4T-DD-q1z"/>
-                                        <constraint firstItem="Uzn-JZ-3r5" firstAttribute="top" secondItem="V8E-d8-dOz" secondAttribute="topMargin" id="yhd-8p-Kz3"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="typeLabel" destination="Uzn-JZ-3r5" id="VSj-uc-u4m"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="zar-Wb-eli" id="hNf-ZR-PGa"/>
-                            <outlet property="delegate" destination="zar-Wb-eli" id="069-io-4KJ"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Submit Points" id="gDQ-Vd-upc"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aGG-vq-rJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-129" y="716"/>
-        </scene>
         <!--Give Award-->
         <scene sceneID="9jm-ov-afG">
             <objects>
@@ -551,7 +506,7 @@
                                 </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points Per Resident" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQc-iF-7L6">
-                                <rect key="frame" x="70" y="60" width="290" height="22"/>
+                                <rect key="frame" x="60" y="60" width="300" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="OmZ-5C-kmm"/>
                                 </constraints>
@@ -559,13 +514,13 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tex-Z5-fq4">
-                                <rect key="frame" x="15" y="54" width="50" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tex-Z5-fq4">
+                                <rect key="frame" x="15" y="54" width="40" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="7lW-u9-rxC"/>
+                                    <constraint firstAttribute="width" constant="40" id="7lW-u9-rxC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7uE-5A-zPq"/>
@@ -596,14 +551,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXF-kv-K3q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="844" y="716.49175412293857"/>
+            <point key="canvasLocation" x="-26" y="656"/>
         </scene>
     </scenes>
     <resources>
         <image name="Settings" width="25" height="25"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
