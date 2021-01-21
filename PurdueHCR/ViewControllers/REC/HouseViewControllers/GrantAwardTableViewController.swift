@@ -19,20 +19,20 @@ class GrantAwardTableViewController: RECPointOptionTableViewController {
     }
     
     // This function is called before the segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "show_award_selected"){
-            // get a reference to the second view controller
-            let nextViewController = segue.destination as! SubmitGrantedAwardViewController
-            
-            let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
-            //        if(isFiltering()){
-            //            nextViewController.type = filteredPoints[(indexPath?.row)!]
-            //        }
-            //        else{
-            //            nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
-            //        }
-            nextViewController.type = pointSystem[indexPath!.section].points[indexPath!.row]
-            nextViewController.house = house
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if(segue.identifier == "show_award_selected"){
+//            // get a reference to the second view controller
+//            let nextViewController = segue.destination as! SubmitGrantedAwardViewController
+//            
+//            let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+//            //        if(isFiltering()){
+//            //            nextViewController.type = filteredPoints[(indexPath?.row)!]
+//            //        }
+//            //        else{
+//            //            nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
+//            //        }
+//            //nextViewController.type = pointSystem[indexPath!.section].points[indexPath!.row]
+//            //nextViewController.house = house
+//        }
+//    }
 }

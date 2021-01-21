@@ -613,7 +613,12 @@ class FirebaseHelper {
         }
     }
     
-    func grantAward(house:House, ppr:Int, description:String, onDone: @escaping (_ err:Error?)->Void){
+    /// Grant an award to ahouse
+    /// - Parameters:
+    ///   - house: house to give the points
+    ///   - ppr: the points per resident that the house should get
+    ///   - description: description of the award
+    func grantAward( ppr:Int, house:House, description:String, onDone: @escaping (_ err:Error?)->Void){
         
         DataManager.sharedManager.getAuthorizationToken { (token, err) in
             if let err = err {
@@ -621,7 +626,7 @@ class FirebaseHelper {
             } else {
                 
                 let headers = self.generateHTTPHeader(token: token!)
-                let url = URL(string: self.SUBMIT_URL)!
+                let url = URL(string: self.GRANT_AWARD_URL)!
 //                let dateFormatter = DateFormatter()
 //                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
 //                let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
@@ -631,9 +636,6 @@ class FirebaseHelper {
                 AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                     switch response.result {
                     case .success:
-                        let banner = NotificationBanner(title: "Award Granted!", subtitle: log.pointDescription, style: .success)
-                        banner.duration = 2
-                        banner.show()
                         onDone(nil)
                     case .failure(let error):
                         if (error.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){

@@ -363,7 +363,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="zar-Wb-eli" kind="show" identifier="show_give_award" id="FC9-Xt-ufH"/>
+                                            <segue destination="ykx-ft-nb4" kind="show" identifier="show_give_award" id="5rd-L3-NYo"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -525,15 +525,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Submit Points" id="gDQ-Vd-upc"/>
-                    <connections>
-                        <segue destination="ykx-ft-nb4" kind="show" identifier="show_award_selected" id="z5o-PH-ESe"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aGG-vq-rJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-26" y="716"/>
+            <point key="canvasLocation" x="-129" y="716"/>
         </scene>
-        <!--Grant Award-->
+        <!--Give Award-->
         <scene sceneID="9jm-ov-afG">
             <objects>
                 <viewController id="ykx-ft-nb4" customClass="SubmitGrantedAwardViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
@@ -541,17 +538,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUQ-Ec-i2Z">
-                                <rect key="frame" x="16" y="44" width="343" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="9jb-w9-tby"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Give a description for the award!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zes-64-fhc">
-                                <rect key="frame" x="16" y="88" width="343" height="190"/>
+                                <rect key="frame" x="15" y="98" width="345" height="190"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="190" id="trf-3c-NDc"/>
@@ -562,19 +550,38 @@
                                     <outlet property="delegate" destination="ykx-ft-nb4" id="98h-H1-Iq0"/>
                                 </connections>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points Per Resident" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQc-iF-7L6">
+                                <rect key="frame" x="70" y="60" width="290" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="OmZ-5C-kmm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tex-Z5-fq4">
+                                <rect key="frame" x="15" y="54" width="50" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="7lW-u9-rxC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7uE-5A-zPq"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="leading" secondItem="zes-64-fhc" secondAttribute="leading" id="4Se-CK-bnu"/>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="trailing" secondItem="350-HR-ZE0" secondAttribute="trailingMargin" id="CMw-6t-yii"/>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="top" secondItem="7uE-5A-zPq" secondAttribute="top" id="CUg-tR-TQm"/>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="trailing" secondItem="zes-64-fhc" secondAttribute="trailing" id="ENl-Fe-t67"/>
-                            <constraint firstItem="zes-64-fhc" firstAttribute="top" secondItem="XUQ-Ec-i2Z" secondAttribute="bottom" constant="8" symbolic="YES" id="fhG-IE-WbN"/>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="leading" secondItem="350-HR-ZE0" secondAttribute="leadingMargin" id="sJ4-c1-tPV"/>
+                            <constraint firstItem="zes-64-fhc" firstAttribute="trailing" secondItem="TQc-iF-7L6" secondAttribute="trailing" id="68N-ox-YVx"/>
+                            <constraint firstItem="Tex-Z5-fq4" firstAttribute="leading" secondItem="7uE-5A-zPq" secondAttribute="leading" constant="15" id="AX8-RH-zeJ"/>
+                            <constraint firstItem="zes-64-fhc" firstAttribute="leading" secondItem="Tex-Z5-fq4" secondAttribute="leading" id="Ndw-sj-Phu"/>
+                            <constraint firstItem="7uE-5A-zPq" firstAttribute="trailing" secondItem="TQc-iF-7L6" secondAttribute="trailing" constant="15" id="Ur5-D7-O96"/>
+                            <constraint firstItem="zes-64-fhc" firstAttribute="top" secondItem="Tex-Z5-fq4" secondAttribute="bottom" constant="10" id="V5L-Dd-hy2"/>
+                            <constraint firstItem="TQc-iF-7L6" firstAttribute="leading" secondItem="Tex-Z5-fq4" secondAttribute="trailing" constant="5" id="Y9l-Z6-a5P"/>
+                            <constraint firstItem="TQc-iF-7L6" firstAttribute="centerY" secondItem="Tex-Z5-fq4" secondAttribute="centerY" id="bor-J6-gnb"/>
+                            <constraint firstItem="Tex-Z5-fq4" firstAttribute="top" secondItem="7uE-5A-zPq" secondAttribute="top" constant="10" id="nEJ-Ag-VAQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Grant Award" id="vGp-na-2hD">
+                    <navigationItem key="navigationItem" title="Give Award" largeTitleDisplayMode="always" id="vGp-na-2hD">
                         <barButtonItem key="rightBarButtonItem" title="Submit" id="79Z-0B-3kF">
                             <connections>
                                 <action selector="submitAward:" destination="ykx-ft-nb4" id="emb-gx-3pl"/>
@@ -583,13 +590,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="descriptionField" destination="zes-64-fhc" id="aoJ-gu-kr8"/>
+                        <outlet property="pprField" destination="Tex-Z5-fq4" id="Haa-KS-3hG"/>
                         <outlet property="submitButton" destination="79Z-0B-3kF" id="DbE-dh-9QG"/>
-                        <outlet property="typeLabel" destination="XUQ-Ec-i2Z" id="AAh-L4-ARw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXF-kv-K3q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="844" y="717"/>
+            <point key="canvasLocation" x="844" y="716.49175412293857"/>
         </scene>
     </scenes>
     <resources>

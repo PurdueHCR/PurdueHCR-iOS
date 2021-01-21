@@ -13,16 +13,16 @@ class SubmitGrantedAwardViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var submitButton: UIBarButtonItem!
     @IBOutlet weak var descriptionField: UITextView!
-    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var pprField: UITextField!
     
+
     var house:House?
-    var type:PointType?
     
     let placeholder = "Give a description for the award!"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        typeLabel.text = type?.pointName
+
         descriptionField.layer.cornerRadius = DefinedValues.radius
         descriptionField.text = placeholder
         descriptionField.textColor = UIColor.lightGray
@@ -40,43 +40,34 @@ class SubmitGrantedAwardViewController: UIViewController, UITextViewDelegate {
             notify(title: "Failure", subtitle: "Please enter a description", style: .danger)
             return
         }
-        guard let pointType = type else {
-            notify(title: "Failure", subtitle: "Please reselect your point type", style: .danger)
-            submitButton.isEnabled = true
+        guard let ppr = Int(pprField.text ?? "") else {
+            notify(title: "Failure", subtitle: "Please provide a valid number for points per resident", style: .danger)
             return
         }
-        if (description == placeholder){
+        if (ppr <= 0) {
+            notify(title: "Failure", subtitle: "Please provide a valid number for points per resident", style: .danger)
+            return
+        }
+        if (description == placeholder) {
             notify(title: "Failure", subtitle: "Please tell us more about what you did!", style: .danger)
-            submitButton.isEnabled = true
             return
         }
         self.submitButton.isEnabled = false
-        submitPointLog(pointType: pointType, logDescription: description)
+        grantAward(ppr: ppr, logDescription: description)
     }
     
 
-    func submitPointLog(pointType: PointType, logDescription: String) {
-		let firstName = User.get(.firstName) as! String
-		let lastName = User.get(.lastName) as! String
-		let residentId = User.get(.id) as! String
+    func grantAward(ppr: Int, logDescription: String) {
 		
-		let log = PointLog(pointDescription: logDescription, firstName: firstName, lastName: lastName, type: pointType, floorID: "Award", residentId: residentId, dateOccurred: Timestamp.init())
-        DataManager.sharedManager.awardPointsToHouseFromREC(log: log, house: house!) { (error) in
-            if(error != nil){
-                if(error!.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
-                    self.notify(title: "Failed to submit", subtitle: "Point Type is no longer enabled.", style: .danger)
-                }
-                else{
-                    self.notify(title: "Failed to submit", subtitle: "Database Error.", style: .danger)
-                    print("Error in posting: ",error!.localizedDescription)
-                }
-                
-                self.submitButton.isEnabled = true;
+        DataManager.sharedManager.awardPointsToHouseFromREC(ppr: ppr, house: house!, description: logDescription) { (error) in
+            if(error != nil) {
+                print("Error in posting: ",error!.localizedDescription)
+                self.submitButton.isEnabled = true
                 return
             }
             else{
                 self.navigationController?.popViewController(animated: true)
-                self.notify(title: "Award Granted", subtitle: "\(log.type.pointValue) points given to \(self.house!.houseID) House.", style: .success)
+                self.notify(title: "Award Granted", subtitle: "\(self.pprField.text!) points given to \(self.house!.houseID) House.", style: .success)
             }
         }
     }

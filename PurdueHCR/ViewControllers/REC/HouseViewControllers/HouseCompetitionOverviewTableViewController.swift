@@ -303,7 +303,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
             nextViewController.houseName = self.houses[houseSelectionControl.selectedSegmentIndex]
         }
         else if( segue.identifier == "show_give_award"){
-            let nextViewController = segue.destination as! GrantAwardTableViewController
+            let nextViewController = segue.destination as! SubmitGrantedAwardViewController
             nextViewController.house = self.getHouseWithName(name: self.houses[houseSelectionControl.selectedSegmentIndex])
         }
         
