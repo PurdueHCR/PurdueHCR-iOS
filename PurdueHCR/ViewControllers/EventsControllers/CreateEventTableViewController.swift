@@ -35,8 +35,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     var pointTypesIndex = 0
     
     var creating: Bool = true // True if view is for creating and event. False if view is for editing/deleting an event.
-    var editCellRow: Int = 0
-    var editCellSection: Int = 0
+    var event = Event()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,13 +98,6 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                 disableFhpFloorsInvited()
             }
         } else {
-            let event: Event
-            if (!filtered) {
-                event = events[editCellSection + editCellRow]
-            } else {
-                event = filteredEvents[editCellSection + editCellRow]
-            }
-            
             newEventName.text = event.name
             newEventLocation.text = event.location
             newEventDescription.text = event.details
@@ -382,34 +374,46 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     
     @IBAction func createOrEditEvent(_ sender: UIButton) {
         print("Create or edit")
-        let event = createNewEvent()
+        let newEvent = createNewEvent()
         if (creating) {
-            events.append(event)
+            //events.append(newEvent)
             
-            print("Calling Add Event")
             // FIRE BASE HELPER METHOD TO ADD EVENT
-            fbh.addEvent(event: event) { (err) in
+            fbh.addEvent(event: newEvent) { (err) in
                 if (err != nil) {
                     
                 } else {
-                    print("No Error")
+                    
+                    self.fbh.getEvents() { (eventsAPI, err) in
+                        if (err != nil) {
+                            print("Error in getEvents()")
+                        } else {
+                            print("Not an error in getEvents()")
+                            events = eventsAPI
+                            self.performSegueToReturnBack(fromEdit: false, event: nil)
+                        }
+                    }
                 }
             }
-            
-            print("Done creating")
         } else {
-            // I don't think I need to do this. I probably just need to call the edit API and then call get API after.
-            let index: Int = editCellRow + editCellSection
-            if (!filtered) {
-                events.remove(at: index)
-                events.insert(event, at: index)
-            } else {
-                filteredEvents.remove(at: index)
-                filteredEvents.insert(event, at: index)
+            fbh.editEvent(event: newEvent, origID: event.eventID) { (err, event) in
+                if (err != nil) {
+                    
+                } else {
+                    print("No error in Edit")
+                    
+                    self.fbh.getEvents() { (eventsAPI, err) in
+                        if (err != nil) {
+                            print("Error in getEvents() inside editEvents()")
+                        } else {
+                            print("Not an error in getEvents() inside editEvents()")
+                            events = eventsAPI
+                            self.performSegueToReturnBack(fromEdit: true, event: event)
+                        }
+                    }
+                }
             }
-            
         }
-        performSegueToReturnBack()
     }
     
     func createNewEvent() -> Event {
@@ -420,6 +424,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         dateFormatter.dateFormat = Event.dateFormat + " " + Event.timeFormat
         let startDateTime = dateFormatter.string(from: newEventStartDate.date)
         let endDateTime = dateFormatter.string(from: newEventEndDate.date)
+        print("CreatedStartDateTime = " + startDateTime)
+        print("CreatedEndDateTime = " + endDateTime)
         
         let location = newEventLocation.text!
         
@@ -482,11 +488,38 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     @IBAction func deleteEvent(_ sender: UIButton) {
         // This option isn't in the API unless you call edit and pass a null event.
         // If this is the case, call edit API and then call read API.
+        print("Calling delete event")
+        
+
+        fbh.deleteEvent(origID: event.eventID) { (err) in
+            if (err != nil) {
+                
+            } else {
+                print("No eror")
+                
+                self.fbh.getEvents() { (eventsAPI, err) in
+                    if (err != nil) {
+                        print("Error in getEvents() inside editEvents()")
+                    } else {
+                        print("Not an error in getEvents() inside editEvents()")
+                        events = eventsAPI
+                        self.performSegueToReturnBack(fromEdit: false, event: nil)
+                        self.performSegueToReturnBack(fromEdit: false, event: nil)
+                    }
+                }
+            }
+        }
     }
     
-    func performSegueToReturnBack()  {
+    func performSegueToReturnBack(fromEdit: Bool, event: Event?)  {
         if let nav = self.navigationController {
-            nav.popViewController(animated: true)
+            if (fromEdit) {
+                nav.popViewController(animated: true)
+                let nextController = nav.topViewController as! ViewEventTableViewController
+                nextController.event = event!
+            } else {
+                nav.popViewController(animated: true)
+            }
         } else {
             self.dismiss(animated: true, completion: nil)
         }

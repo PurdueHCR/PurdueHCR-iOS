@@ -70,7 +70,7 @@ class Event {
         self.floors = floors
         self.details = details
         self.isPublicEvent = isPublicEvent
-        if (floors.count == DataManager.sharedManager.getHouseCodes()?.count) {
+        if (floors.count == DataManager.sharedManager.systemPreferences?.floorIds.count) {
             self.isAllFloors = true
         } else {
             self.isAllFloors = false
@@ -85,25 +85,49 @@ class Event {
 //        let endTimeString = dateFormatter.string(from: event.endTime)
 //        let startDateTimeString = startDateString + "T" + startTimeString + "+04:00"
 //        let endDateTimeString = endDateString + "T" + endTimeString + "+04:00"
-        
-        let startDateString = String(startDateTime.prefix(10))
-        let tempStartTimeString = String(startDateTime.suffix(13))
-        let startTimeString = String(tempStartTimeString.prefix(8))
-        let endDateString = String(endDateTime.prefix(10))
-        let tempEndTimeString = String(endDateTime.suffix(13))
-        let endTimeString = String(tempEndTimeString.prefix(8))
-        
+                
+        let isoDateFormatter = ISO8601DateFormatter() //2021-01-20T13:00:00.000Z
+        isoDateFormatter.formatOptions =  [.withInternetDateTime, .withFractionalSeconds]
+        let isoStartDateTime = isoDateFormatter.date(from: startDateTime)!
+        let isoEndDateTime = isoDateFormatter.date(from: endDateTime)!
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        self.startDate = dateFormatter.date(from: startDateString)!
-        self.endDate = dateFormatter.date(from: endDateString)!
+        let convertedStartDateString = dateFormatter.string(from: isoStartDateTime)
+        let convertedEndDateString = dateFormatter.string(from: isoEndDateTime)
+        self.startDate = dateFormatter.date(from: convertedStartDateString)!
+        self.endDate = dateFormatter.date(from: convertedEndDateString)!
         dateFormatter.dateFormat = "HH:mm:ss"
-        self.startTime = dateFormatter.date(from: startTimeString)!
-        self.endTime = dateFormatter.date(from: endTimeString)!
+        let convertedStartTimeString = dateFormatter.string(from: isoStartDateTime)
+        let convertedEndTimeString = dateFormatter.string(from: isoEndDateTime)
+        self.startTime = dateFormatter.date(from: convertedStartTimeString)!
+        self.endTime = dateFormatter.date(from: convertedEndTimeString)!
             
         self.creatorID = creatorID
         self.host = host
         self.floorColors = floorColors
+        self.eventID = id
+    }
+    
+    init () {
+        self.name = ""
+        self.details = ""
+        self.startDate = Date()
+        self.startTime = Date()
+        self.endDate = Date()
+        self.endTime = Date()
+        self.location = ""
+        self.pointType = PointType(pv: -1, pn: "", pd: "", rcs: false, pid: -1, permissionLevel: PointType.PermissionLevel.resident, isEnabled: false)
+        self.floors = [""]
+        self.isPublicEvent = false
+        self.isAllFloors = false
+        self.host = ""
+        self.creatorID = ""
+        self.floorColors = [""]/*[RGB-Color] (Not sure what typing I will use for this field*/
+        self.eventID = ""
+    }
+    
+    func setEventID(id: String) {
         self.eventID = id
     }
     
@@ -158,13 +182,10 @@ class Event {
         if (events.count == 0) {
             return 0
         }
-        var ret = 0
-        var currentDate = Date()
-        print(currentDate)
-        currentDate = currentDate.addingTimeInterval(-86400)
-        print(currentDate)
+        var ret = 1
+        var currentDate = events[0].startDate
         
-        for i in 0...events.count-1 {
+        for i in 1...events.count-1 {
             if (events[i].startDate == currentDate) {
                 continue;
             } else {
@@ -173,9 +194,7 @@ class Event {
             }
             
         }
-        
-        print(ret)
-        
+                
         return ret
     }
     

@@ -81,8 +81,10 @@
                                         <constraint firstAttribute="bottom" secondItem="URZ-Rr-4Bc" secondAttribute="bottom" constant="8" id="ZcY-OY-Ne2"/>
                                         <constraint firstItem="URZ-Rr-4Bc" firstAttribute="top" secondItem="rR3-Ey-3aX" secondAttribute="bottom" constant="8" id="aWW-ei-Zjd"/>
                                         <constraint firstItem="URZ-Rr-4Bc" firstAttribute="leading" secondItem="bTH-EY-K13" secondAttribute="leading" id="bHz-jP-ktF"/>
+                                        <constraint firstItem="7XL-76-KTk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bTH-EY-K13" secondAttribute="trailing" constant="10" id="bJE-GE-mqc"/>
                                         <constraint firstAttribute="bottom" secondItem="ezl-jZ-dvI" secondAttribute="bottom" constant="10" id="gJD-g8-Biz"/>
                                         <constraint firstAttribute="trailing" secondItem="Vmg-FO-qkB" secondAttribute="trailing" constant="10" id="hIJ-nf-JA0"/>
+                                        <constraint firstItem="Vmg-FO-qkB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rR3-Ey-3aX" secondAttribute="trailing" constant="10" id="i3i-GF-vcL"/>
                                         <constraint firstItem="bTH-EY-K13" firstAttribute="leading" secondItem="ezl-jZ-dvI" secondAttribute="trailing" constant="10" id="ig9-jI-Fe5"/>
                                         <constraint firstItem="ezl-jZ-dvI" firstAttribute="top" secondItem="irL-7m-jJk" secondAttribute="top" constant="10" id="kix-rT-clX"/>
                                         <constraint firstItem="rR3-Ey-3aX" firstAttribute="top" secondItem="bTH-EY-K13" secondAttribute="bottom" constant="8" id="n2f-XH-xhm"/>
@@ -684,38 +686,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GOING?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fU9-zi-O1v">
-                                                    <rect key="frame" x="342" y="5" width="64" height="20"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KBc-4B-gpj">
-                                                    <rect key="frame" x="354" y="25.5" width="40" height="39"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="KBc-4B-gpj" secondAttribute="height" multiplier="1:1" id="5jG-Ab-sXf"/>
-                                                        <constraint firstAttribute="height" constant="40" id="slu-eI-gzN"/>
-                                                    </constraints>
-                                                    <state key="normal" backgroundImage="checkmark.circle" catalog="system"/>
-                                                    <connections>
-                                                        <action selector="goingAction:" destination="rkV-g8-krZ" eventType="touchUpInside" id="s4R-iI-eYS"/>
-                                                    </connections>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THI-sw-EOc">
-                                                    <rect key="frame" x="20" y="15.5" width="179" height="39"/>
+                                                    <rect key="frame" x="20" y="10" width="384" height="50"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="fU9-zi-O1v" firstAttribute="top" secondItem="XlX-Oi-yHe" secondAttribute="top" constant="5" id="HGu-gl-jcM"/>
-                                                <constraint firstAttribute="trailing" secondItem="fU9-zi-O1v" secondAttribute="trailing" constant="8" id="ICY-R4-C26"/>
-                                                <constraint firstItem="KBc-4B-gpj" firstAttribute="top" secondItem="fU9-zi-O1v" secondAttribute="bottom" id="Nmz-Bc-GGH"/>
+                                                <constraint firstItem="THI-sw-EOc" firstAttribute="top" secondItem="XlX-Oi-yHe" secondAttribute="top" constant="10" id="41b-yX-BAZ"/>
                                                 <constraint firstItem="THI-sw-EOc" firstAttribute="leading" secondItem="XlX-Oi-yHe" secondAttribute="leadingMargin" id="RqX-Bs-Zq8"/>
-                                                <constraint firstAttribute="trailing" secondItem="KBc-4B-gpj" secondAttribute="trailing" constant="20" id="V6l-tx-aLl"/>
-                                                <constraint firstItem="KBc-4B-gpj" firstAttribute="centerX" secondItem="fU9-zi-O1v" secondAttribute="centerX" id="YJu-Mi-xKq"/>
-                                                <constraint firstAttribute="bottom" secondItem="KBc-4B-gpj" secondAttribute="bottom" constant="5" id="qwD-vf-JZY"/>
+                                                <constraint firstAttribute="bottom" secondItem="THI-sw-EOc" secondAttribute="bottom" constant="10" id="SuZ-SY-gek"/>
+                                                <constraint firstAttribute="right" secondItem="THI-sw-EOc" secondAttribute="right" constant="10" id="pz2-ej-jGl"/>
                                                 <constraint firstItem="THI-sw-EOc" firstAttribute="centerY" secondItem="XlX-Oi-yHe" secondAttribute="centerY" id="tck-oh-ocs"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -974,7 +956,6 @@
                         <outlet property="detailsLabel" destination="oFT-bv-4TH" id="d5x-1g-V55"/>
                         <outlet property="editEventButton" destination="Gi4-gH-LRx" id="Kc0-Il-h5Y"/>
                         <outlet property="gCalExportButton" destination="bbn-7v-dUo" id="SzC-W3-jI6"/>
-                        <outlet property="goingButton" destination="KBc-4B-gpj" id="iVB-hv-vli"/>
                         <outlet property="hostLabel" destination="rHZ-rR-S5u" id="Rzg-e5-qGS"/>
                         <outlet property="iCalExportButton" destination="pgF-9j-xpa" id="Hg6-dh-dUf"/>
                         <outlet property="locationLabel" destination="DL6-fd-1sR" id="DiX-D1-99A"/>
@@ -1009,7 +990,6 @@
         <segue reference="i9x-eG-wUT"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="checkmark.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

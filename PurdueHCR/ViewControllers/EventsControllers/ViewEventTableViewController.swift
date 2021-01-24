@@ -10,7 +10,7 @@ import UIKit
 
 class ViewEventTableViewController: UITableViewController {
 
-    @IBOutlet weak var goingButton: UIButton!
+//    @IBOutlet weak var goingButton: UIButton!
     @IBOutlet weak var iCalExportButton: UIButton!
     @IBOutlet weak var gCalExportButton: UIButton!
     @IBOutlet weak var editEventButton: UIBarButtonItem!
@@ -24,8 +24,7 @@ class ViewEventTableViewController: UITableViewController {
     @IBOutlet weak var detailsLabel: UILabel!
     
     var going = false // To be set later when connected to database
-    var cellRow: Int = 0
-    var cellSection: Int = 0
+    var event = Event()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,12 +41,12 @@ class ViewEventTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let event: Event
-        if (!filtered) {
-            event = events[cellSection + cellRow]
-        } else {
-            event = filteredEvents[cellSection + cellRow]
-        }
+//        let event: Event
+//        if (!filtered) {
+//            event = events[cellSection + cellRow]
+//        } else {
+//            event = filteredEvents[cellSection + cellRow]
+//        }
         
         let userID = User.get(.id) as! String
         
@@ -61,10 +60,19 @@ class ViewEventTableViewController: UITableViewController {
         self.nameLabel.sizeToFit()
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Event.dateFormat
-        self.dateLabel.text = dateFormatter.string(from: event.startDate)
-        self.dateLabel.numberOfLines = 1
-        self.dateLabel.sizeToFit()
+        if (event.startDate == event.endDate) {
+            dateFormatter.dateFormat = Event.dateFormat
+            self.dateLabel.text = dateFormatter.string(from: event.startDate)
+            self.dateLabel.numberOfLines = 1
+            self.dateLabel.sizeToFit()
+        } else {
+            dateFormatter.dateFormat = "E, MM/dd"
+            let startDate = dateFormatter.string(from: event.startDate)
+            let endDate = dateFormatter.string(from: event.endDate)
+            self.dateLabel.text = startDate + " - " + endDate
+            self.dateLabel.numberOfLines = 1
+            self.dateLabel.sizeToFit()
+        }
         
         dateFormatter.dateFormat = Event.timeFormat
         self.timeLabel.text = dateFormatter.string(from: event.startTime) + " - " + dateFormatter.string(from: event.endTime)
@@ -103,19 +111,20 @@ class ViewEventTableViewController: UITableViewController {
         self.detailsLabel.lineBreakMode = .byWordWrapping
         self.detailsLabel.sizeToFit()
         
-        if (going) {
-            if #available(iOS 13.0, *) {
-                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-            }
-        } else {
-            if #available(iOS 13.0, *) {
-                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-            }
-        }
+//        if (going) {
+//            if #available(iOS 13.0, *) {
+//                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//        } else {
+//            if #available(iOS 13.0, *) {
+//                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//        }
+        self.tableView.reloadData()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -125,7 +134,7 @@ class ViewEventTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 8
+        return 6
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -137,8 +146,7 @@ class ViewEventTableViewController: UITableViewController {
         if segue.destination is CreateEventTableViewController {
             let viewController = segue.destination as? CreateEventTableViewController
             viewController?.creating = false
-            viewController?.editCellRow = cellRow
-            viewController?.editCellSection = cellSection
+            viewController?.event = event
         }
     }
 
@@ -187,26 +195,26 @@ class ViewEventTableViewController: UITableViewController {
     }
     */
 
-    @IBAction func goingAction(_ sender: Any) {
-    
-    
-        if (going) {
-            if #available(iOS 13.0, *) {
-                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-            }
-            going = false
-        } else {
-            if #available(iOS 13.0, *) {
-                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-            }
-            going = true
-        }
-        
-    }
+//    @IBAction func goingAction(_ sender: Any) {
+//    
+//    
+//        if (going) {
+//            if #available(iOS 13.0, *) {
+//                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//            going = false
+//        } else {
+//            if #available(iOS 13.0, *) {
+//                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//            going = true
+//        }
+//        
+//    }
     
     
 }

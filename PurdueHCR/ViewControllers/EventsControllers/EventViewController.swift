@@ -15,8 +15,6 @@ var filtered = false
 
 let fbh = FirebaseHelper()
 
-var makeSection: Bool = true
-
 class EventViewController: UITableViewController {
     
     
@@ -29,6 +27,7 @@ class EventViewController: UITableViewController {
     let cellSpacing: CGFloat = 35
     
     override func viewDidLoad() {
+        self.showSpinner(onView: self.view)
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         //eventTableView.reloadData()//
@@ -51,10 +50,7 @@ class EventViewController: UITableViewController {
                 self.tableView.rowHeight = 133
                 self.tableView.sectionHeaderHeight = 2000
                 self.tableView.estimatedSectionHeaderHeight = 2000
-                
-                // Events from database will come sorted.
-                events = Event.sortEvents(events: events)
-            
+                            
                 guard let permission = User.get(.permissionLevel) else {
                     return
                 }
@@ -102,51 +98,93 @@ class EventViewController: UITableViewController {
                     self.navigationItem.leftBarButtonItem = self.FilterEventsBarButton
                     self.title = "All Events"
                 }
+                events = Event.sortEvents(events: events)
                 self.tableView.reloadData()
+                self.removeSpinner()
             }
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.reloadData()
-        // May not need this line, depends how we handle inserting event
-        events = Event.sortEvents(events: events)
-        
+        let selectedRow: IndexPath? = tableView.indexPathForSelectedRow
+        if let selectedRowNotNill = selectedRow {
+            tableView.deselectRow(at: selectedRowNotNill, animated: true)
+        }
+        //self.showSpinner(onView: self.view)
         guard let permission = User.get(.permissionLevel) else {
             return
         }
         let p = permission as! Int
-        
+
         if p == 0 {
             houseImageView.isHidden = false
         }
-        self.tableView.reloadData()
+        
+        if (!filtered) {
+            fbh.getEvents() { (eventsAPI, err) in
+                if (err != nil) {
+                    print("Error in getEvents()")
+                    //self.removeSpinner()
+                } else {
+                    print("Not an error in getEvents()")
+                    filteredEvents = eventsAPI
+                    filteredEvents = Event.sortEvents(events: filteredEvents)
+                    self.tableView.reloadData()
+                    self.removeSpinner()
+                }
+            }
+        } else {
+            fbh.getEventsCreated() { (eventsAPI, err) in
+                if (err != nil) {
+                    print("Error in getEvents()")
+                    //self.removeSpinner()
+                } else {
+                    print("Not an error in getEvents()")
+                    events = eventsAPI
+                    events = Event.sortEvents(events: events)
+                    self.tableView.reloadData()
+                    self.removeSpinner()
+                }
+            }
+        }
     }
     
     @IBAction func switchFilter(_ sender: UIBarButtonItem) {
-        if self.title == "All Events" {
-            // Filter to be only events that the user created
+        self.showSpinner(onView: self.view)
+        if (!filtered) {
+            filtered = true
             self.title = "My Events"
-            //filteredEvents = getFilteredEventsFromDatabase()
-// Next lines will be removed when connected to API. But Maybe Not.
-            guard let userId = User.get(.id) else {
-                return
-            }
-            let id = userId as! String
-            filteredEvents.removeAll()
-            for event in events {
-                if (event.creatorID == id) {
-                    filteredEvents.append(event)
+            fbh.getEventsCreated() { (eventsAPI, err) in
+                if (err != nil) {
+                    print("Error in getEventsCreated()")
+                    self.removeSpinner()
+                } else {
+                    print("Not an error in getEventsCreated()")
+                    filteredEvents = eventsAPI
+                    filteredEvents = Event.sortEvents(events: filteredEvents)
+                    print("EVENTS HAVE BEEN SORTED")
+
+                    self.tableView.reloadData()
+                    self.removeSpinner()
                 }
             }
-// Above lines will be removed when connected to API. But Maybe Not.
-            filtered = true
-            self.tableView.reloadData()
         } else {
             // Unfilter to all events
             self.title = "All Events"
             filtered = false
-            self.tableView.reloadData()
+            fbh.getEvents() { (eventsAPI, err) in
+                if (err != nil) {
+                    print("Error in getEventsCreated()")
+                    self.removeSpinner()
+                } else {
+                    print("Not an error in getEventsCreated()")
+                    events = eventsAPI
+                    events = Event.sortEvents(events: events)
+                    print("EVENTS HAVE BEEN SORTED")
+                    self.tableView.reloadData()
+                    self.removeSpinner()
+                }
+            }
         }
     }
     
@@ -164,11 +202,11 @@ class EventViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
+        print("CALLING NUM UNIQUE DATES")
         if (!filtered) {
             return Event.getNumUniqueDates(events: events)
         } else {
             if (filteredEvents.count != 0) {
-                print("Sections" + String(Event.getNumUniqueDates(events: filteredEvents)))
                 return Event.getNumUniqueDates(events: filteredEvents)
             } else {
                 return 0
@@ -200,11 +238,9 @@ class EventViewController: UITableViewController {
         if (!filtered) {
             event = events[sectionIndex + indexPath.row]
         } else {
-            print("section" + String(sectionIndex))
-            print("row" + String(indexPath.row))
-            print("count" + String(filteredEvents.count))
             event = filteredEvents[sectionIndex + indexPath.row]
         }
+        cell.eventIndex = sectionIndex + indexPath.row
         
         cell.eventName.text = event.name
                 
@@ -217,7 +253,7 @@ class EventViewController: UITableViewController {
         if event.pointType.pointValue == 1 {
             cell.eventPoints.text = "1 Point"
         } else {
-            cell.eventPoints.text = "\(events[sectionIndex + indexPath.row].pointType.pointValue) Points"
+            cell.eventPoints.text = "\(event.pointType.pointValue) Points"
         }
         
         // **** Must update this when the colors array is implemented ****
@@ -245,7 +281,7 @@ class EventViewController: UITableViewController {
         cell.houseColorView.backgroundColor = UIColor(red: 233/255, green: 188/255, blue: 74/255, alpha: 1.0)
         
         cell.houseColorView.layer.cornerRadius = cell.houseColorView.frame.width / 2
-        cell.eventDescription.text = events[sectionIndex + indexPath.row].details
+        cell.eventDescription.text = event.details
         return cell
     }
     
@@ -258,34 +294,43 @@ class EventViewController: UITableViewController {
         
         header.configureContents()
         
-        makeSection = true
         var headerText: String = ""
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Event.dateFormat
-        if section == 0 {
-            if (!filtered) {
-                headerText = dateFormatter.string(from: events[section].startDate)
-            } else {
-                headerText = dateFormatter.string(from: filteredEvents[section].startDate)
-            }
+
+        
+        if (!filtered) {
+            let sectionIndex = Event.startingIndexForSection(section: section, events: events)
+            headerText = dateFormatter.string(from: events[sectionIndex].startDate)
+        } else {
+            let sectionIndex = Event.startingIndexForSection(section: section, events: filteredEvents)
+            headerText = dateFormatter.string(from: filteredEvents[sectionIndex].startDate)
         }
-        else {
-            if (!filtered) {
-                if events[section].startDate == events[section - 1].startDate { //If same date as previous event, don't print date.
-                    makeSection = false
-                    return nil
-                } else {
-                    headerText = dateFormatter.string(from: events[section].startDate)
-                }
-            } else {
-                if filteredEvents[section].startDate == filteredEvents[section - 1].startDate { //If same date as previous event, don't print date.
-                    makeSection = false
-                    return nil
-                } else {
-                    headerText = dateFormatter.string(from: filteredEvents[section].startDate)
-                }
-            }
-        }
+
+//        if section == 0 {
+//            if (!filtered) {
+//                headerText = dateFormatter.string(from: events[section].startDate)
+//            } else {
+//                headerText = dateFormatter.string(from: filteredEvents[section].startDate)
+//            }
+//        }
+//        else {
+//            if (!filtered) {
+//                if events[section].startDate == events[section - 1].startDate { //If same date as previous event, don't print date.
+//                    makeSection = false
+//                    return nil
+//                } else {
+//                    headerText = dateFormatter.string(from: events[section].startDate)
+//                }
+//            } else {
+//                if filteredEvents[section].startDate == filteredEvents[section - 1].startDate { //If same date as previous event, don't print date.
+//                    makeSection = false
+//                    return nil
+//                } else {
+//                    headerText = dateFormatter.string(from: filteredEvents[section].startDate)
+//                }
+//            }
+//        }
         
         header.title.text = headerText
         
@@ -303,8 +348,11 @@ class EventViewController: UITableViewController {
             }
             let viewController = segue.destination as? ViewEventTableViewController
             let eventSender = sender as? EventTableViewCell
-            viewController?.cellRow = self.tableView.indexPath(for: eventSender!)!.row
-            viewController?.cellSection = self.tableView.indexPath(for: eventSender!)!.section
+            if (!filtered) {
+                viewController?.event = events[eventSender!.eventIndex]
+            } else {
+                viewController?.event = filteredEvents[eventSender!.eventIndex]
+            }
         } else if segue.destination is CreateEventTableViewController {
             let viewController = segue.destination as? CreateEventTableViewController
             viewController?.creating = true
@@ -377,6 +425,31 @@ class EventViewController: UITableViewController {
     }
     
     
+}
+var vSpinner : UIView?
+ 
+extension UIViewController {
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(style: .whiteLarge)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        vSpinner = spinnerView
+    }
+    
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            vSpinner?.removeFromSuperview()
+            vSpinner = nil
+        }
+    }
 }
 
 
