@@ -52,6 +52,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    
     }
 
     func setPlaceLabels(house:House){
@@ -94,7 +95,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
     
     @IBAction func openSettings(_ sender: Any) {
         
-        let width : Int = Int(self.view.frame.width - 20)
+        /*let width : Int = Int(self.view.frame.width - 20)
         let height = 280
         let distance = 20
         let buttonWidth = width - (distance * 2)
@@ -142,10 +143,28 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
         p?.showType = .slideInFromBottom
         p?.maskType = .dimmed
         p?.dismissType = .slideOutToBottom
+        p?.show(at: location, in: (self.tabBarController?.view)!)*/
+        
+        let width : Int = Int(self.view.frame.width - 20)
+        let height = 540
+        
+        let contentView = LogoutView(frame: CGRect(x: 0, y:0, width: width, height: height))
+        contentView.delegate = self
+        
+        p = PopupView.init(contentView: contentView)
+        p?.maskType = .dimmed
+        p?.layer.cornerRadius = DefinedValues.radius
+
+        
+        let xPos = self.view.frame.width / 2
+        let yPos = self.view.frame.height / 2
+        let location = CGPoint.init(x: xPos, y: yPos)
+        p?.showType = .slideInFromBottom
+        p?.dismissType = .slideOutToBottom
         p?.show(at: location, in: (self.tabBarController?.view)!)
     }
     
-    @objc func buttonAction(sender: UIButton!) {
+    @objc func dismissRECLogout() {
         p?.dismissType = .slideOutToBottom
         p?.dismiss(animated: true)
     }
@@ -285,7 +304,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
             nextViewController.houseName = self.houses[houseSelectionControl.selectedSegmentIndex]
         }
         else if( segue.identifier == "show_give_award"){
-            let nextViewController = segue.destination as! GrantAwardTableViewController
+            let nextViewController = segue.destination as! SubmitGrantedAwardViewController
             nextViewController.house = self.getHouseWithName(name: self.houses[houseSelectionControl.selectedSegmentIndex])
         }
         

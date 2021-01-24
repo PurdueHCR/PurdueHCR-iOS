@@ -95,7 +95,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         } else {
             DataManager.sharedManager.createQRCode(singleUse: !(multiUseSwitch.isOn), pointID: selectedPoint!.pointID, description: descriptionTextView.text, isEnabled: true) { (code, err) in
                 if (err != nil) {
-                    print("Error: Unabled to create QR code. \(err?.localizedDescription)")
+                    print("Error: Unabled to create QR code. \(String(describing: err?.localizedDescription))")
                     self.generateButton.isEnabled = true
                     self.loadingIcon.stopAnimating()
                     self.loadingIcon.isHidden = true
@@ -118,6 +118,22 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
             nextViewController.link = self.link
         }
         
+    }
+    
+    func filter(points:[PointType]) -> [PointType] {
+        var types = [PointType]()
+        let permissionLevel = PointType.PermissionLevel.init(rawValue: User.get(.permissionLevel) as! Int)!
+        for point in points {
+            // Permission Level 2 is REA/REC, then check if point is enabled, then check RHP/FHP permission
+            if (permissionLevel == PointType.PermissionLevel.rec || (point.isEnabled && checkPermission(typePermission: point.permissionLevel.rawValue, userPermission: permissionLevel))) {
+                types.append(point)
+            }
+        }
+        return types
+    }
+    // Check permission Level when USER is not REA/REC
+    private func checkPermission(typePermission:Int, userPermission:PointType.PermissionLevel) ->Bool {
+        return ((userPermission == PointType.PermissionLevel.rhp && typePermission >= 1) || (userPermission == PointType.PermissionLevel.priv && typePermission == 3) || (userPermission == PointType.PermissionLevel.faculty && typePermission == 3))
     }
 
     @IBAction func switchChanged(_ sender: UISwitch) {

@@ -45,6 +45,7 @@ class FirebaseHelper {
     let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
     let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
     let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
     
     // PRODUCTION URLS
 //    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
@@ -54,6 +55,8 @@ class FirebaseHelper {
 //    let SUBMIT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
 //    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
 //    let EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
+//    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+//    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
     
     init() {
         db = Firestore.firestore()
@@ -323,66 +326,6 @@ class FirebaseHelper {
             }
         }
         
-        //TODO While User.get(house) will work for now, look at doing this a better way
-        /*let house = User.get(.house) as! String
-        var housePointRef: DocumentReference?
-        var houseRef:DocumentReference?
-		let residentID = log.residentId
-        houseRef = self.db.collection(self.HOUSE).document(house)
-        housePointRef = houseRef!.collection(self.POINTS).document(log.logID!)
-        //let userId = log.residentId
-        log.updateApprovalStatus(approved: approved)
-        //TODO: yes this is not entirely thread safe. If some future developer would be so kind as to make this more robust, this would be great
-        //Note: The race conditions only happens with Firebase rn, so if in the future we switch to a different database solution, this may no longer be an issue
-        housePointRef!.getDocument { (document, error) in
-            //make sure that the document exists
-            if let document = document, document.exists {
-                let oldPointLog = PointLog(id: document.documentID, document: document.data()!)
-                //If this is the first handling of this log, check to make sure it was not already approved.
-                if(!updating && oldPointLog.wasHandled){
-                    // someone has already handled it :(
-                    onDone(NSError(domain: "Point request has already been handled", code: 1, userInfo: nil))
-                    
-                }
-                else{
-                    //It has either not been approved yet or is being updated, so you are good to go
-                    //First we check if it is being updated and the old status equals the new status
-                    if(updating && (log.wasRejected() == oldPointLog.wasRejected())){
-                        onDone(NSError(domain: "Point request was already changed.", code: 1, userInfo: nil))
-                    }
-                    else{
-                        //Conditions are met for point updating
-                        housePointRef!.setData(log.convertToDict(),merge:true){err in
-							var message = " the point request"
-							var type = MessageLog.MessageType.reject
-							if (approved) {
-								message = " approved" + message
-								type = MessageLog.MessageType.approve
-							} else {
-								message = " rejected" + message
-							}
-							let firstName = User.get(.firstName) as! String
-							let lastName = User.get(.lastName) as! String
-							message = firstName + " " + lastName + message
-							// TODO: Fix because it may execute the message even if there is an error which would not be ideal
- 							self.addMessageToPontLog(message: message, messageType: type, pointID: log.logID!)
-                            //if approved or update, update total points
-                            if((approved || updating) && err == nil){
-								self.updateHouseAndUserPoints(log: log, residentID: residentID, houseRef: houseRef!, updatePointValue: updating, onDone: {(err:Error?) in
-                                    onDone(err)
-                                })
-                            }
-                            else{
-                                onDone(err)
-                            }
-                        }
-                    }
-                }
-            } else {
-                onDone(NSError(domain: "Document does not exist", code: 2, userInfo: nil))
-            }
-        }*/
-        
         
     }
 	
@@ -630,7 +573,7 @@ class FirebaseHelper {
                 {
                     let requiredPPR = rewardDocument.data()["RequiredPPR"] as! Int
                     let fileName = rewardDocument.data()["FileName"] as! String
-                    let name = rewardDocument.documentID
+                    let name = rewardDocument.data()["Name"] as! String
                     rewardArray.append(Reward(requiredPPR: requiredPPR, fileName: fileName, rewardName: name))
                 }
                 rewardArray.sort(by: {$0.requiredPPR < $1.requiredPPR})
@@ -681,6 +624,68 @@ class FirebaseHelper {
                 onDone(nil)
             }
         }
+    }
+    
+    /// Grant an award to ahouse
+    /// - Parameters:
+    ///   - house: house to give the points
+    ///   - ppr: the points per resident that the house should get
+    ///   - description: description of the award
+    func grantAward( ppr:Int, house:House, description:String, onDone: @escaping (_ err:Error?)->Void){
+        
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(err)
+            } else {
+                
+                let headers = self.generateHTTPHeader(token: token!)
+                let url = URL(string: self.GRANT_AWARD_URL)!
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+//                let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
+                
+                let parameters = ["house":house.houseID, "ppr":ppr, "description":description] as [String : Any]
+                
+                AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        onDone(nil)
+                    case .failure(let error):
+                        if (error.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "This type of point is disabled for now.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        } else if (error.localizedDescription == "The operation couldn’t be completed. (Document Exists error 1.)"){
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "You have already scanned this code.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        }
+                        onDone(error)
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Generate the headers for an AlamoFire HTTP request to the API
+    /// - Parameter token: string of the user's firebase authorization token
+    /// - Returns: HTTP headers
+    private func generateHTTPHeader(token:String) -> HTTPHeaders {
+        let headerVal = "Bearer " + (token)
+        let header = HTTPHeader(name: "Authorization", value: headerVal)
+        let headers = HTTPHeaders(arrayLiteral: header)
+        return headers
     }
     
     /// Helper function to updateUserPoints
@@ -1054,27 +1059,32 @@ class FirebaseHelper {
             }
             var users = [UserModel]()
             for document in querySnapshot!.documents{
-				let firstName = document.data()["FirstName"] as! String
-				let lastName = document.data()["LastName"] as! String
-                let name = firstName + " " + lastName
-                let points = document.data()["TotalPoints"] as! Int
-                let model = UserModel(name: name, points: points)
-                if(users.count < 5){
-                    users.append(model)
-                    users.sort(by: { (um, um2) -> Bool in
-                        return um.totalPoints > um2.totalPoints
-                    })
-                }
-                else{
-                    for i in 0..<5{
-                        if(users[i].totalPoints < model.totalPoints){
-                            users.insert(model, at: i)
-                            users.remove(at: 5)
-                            break;
+                let permissionLevel = document.data()["Permission Level"] as! Int
+                // Only consider residents, privileged residents, and rhps
+                if (permissionLevel == PointType.PermissionLevel.resident.rawValue
+                        || permissionLevel == PointType.PermissionLevel.priv.rawValue
+                        || permissionLevel == PointType.PermissionLevel.rhp.rawValue) {
+                    let firstName = document.data()["FirstName"] as! String
+                    let lastName = document.data()["LastName"] as! String
+                    let name = firstName + " " + lastName
+                    let points = document.data()["TotalPoints"] as! Int
+                    let model = UserModel(name: name, points: points)
+                    if(users.count < 5){
+                        users.append(model)
+                        users.sort(by: { (um, um2) -> Bool in
+                            return um.totalPoints > um2.totalPoints
+                        })
+                    }
+                    else{
+                        for i in 0..<5{
+                            if(users[i].totalPoints < model.totalPoints){
+                                users.insert(model, at: i)
+                                users.remove(at: 5)
+                                break;
+                            }
                         }
                     }
                 }
-                
                 
             }
             onDone(users)

@@ -26,8 +26,6 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 	
     var type:PointType?
     var user:User?
-    var fortyPercent = CGFloat(0.0)
-    var lastChange = 0.0
 	let placeholder = "Tell us what you did!"
     
     override func viewDidLoad() {
@@ -43,17 +41,22 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		descriptionField.text = placeholder
 		descriptionField.textColor = UIColor.lightGray
 		descriptionField.selectedTextRange = descriptionField.textRange(from: descriptionField.beginningOfDocument, to: descriptionField.beginningOfDocument)
-        descriptionField.layer.borderColor = UIColor.lightGray.cgColor
-        descriptionField.layer.borderWidth = 1
+        
+//        descriptionField.layer.borderColor = UIColor.lightGray.cgColor
+//        descriptionField.layer.borderWidth = 1
+
+        descriptionField.backgroundColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+        descriptionField.layer.cornerRadius = DefinedValues.radius
+        
 		//descriptionField.becomeFirstResponder()
         submitButton.layer.cornerRadius = submitButton.frame.height / 2
+    
         
-        fortyPercent = self.view.frame.size.height * 0.45
-        
-		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
-		self.topView.layer.shadowOpacity = 0.5
-		self.topView.layer.shadowOffset = .init(width: 0, height: 5)
-		self.topView.layer.shadowRadius = 3
+        // This top view was originally here so that we could have the shadow effect. Since this effect has been removed, the view should be removed
+//		self.topView.layer.shadowColor = UIColor.darkGray.cgColor
+//		self.topView.layer.shadowOpacity = 0.5
+//		self.topView.layer.shadowOffset = .init(width: 0, height: 5)
+//		self.topView.layer.shadowRadius = 3
 		self.topView.sizeToFit()
 		
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -182,32 +185,34 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
         self.descriptionField.resignFirstResponder()
     }
 
+    var hasMoved = false
+    
+    /// Runs when the keyboard will appear on the screen
     @objc func keyboardWillShow(notification: NSNotification) {
-        moveTextView(textView: self.descriptionField, up: true)
+        // Check if the screen has already been shifted up
+        if (!hasMoved) {
+            // Get the size of the current keyboard
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                
+                // Location of the top of the keyboard on the screen
+                let height = self.view.frame.height - keyboardSize.height - tabBarController!.tabBar.frame.height
+                // Check if keyboard is above the bottom of the text field
+                if (self.descriptionField.frame.maxY > height) {
+                    let diff = self.descriptionField.frame.maxY - height
+                    // Move the view up
+                    self.view.frame.origin.y -= (diff + 20)
+                    hasMoved = true
+                }
+            }
+        }
     }
     
+    
+    /// Runs when the keyboard will disappear from the screen
     @objc func keyboardWillHide(notification: NSNotification) {
-        moveTextView(textView: self.descriptionField, up: false)
-    }
-    
-    func moveTextView(textView:UITextView, up:Bool){
-        if(up && textView.frame.maxY > self.fortyPercent){
-            let movement = self.fortyPercent - textView.frame.maxY
-            self.lastChange = Double(movement)
-            UIView.beginAnimations("TextFieldMove", context: nil)
-            UIView.setAnimationBeginsFromCurrentState(true)
-            UIView.setAnimationDuration(0.3)
-            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-            UIView.commitAnimations()
-        }
-        else if(!up && self.lastChange != 0.0){
-            let movement = CGFloat(self.lastChange * -1.0)
-            self.lastChange = 0.0
-            UIView.beginAnimations("TextFieldMove", context: nil)
-            UIView.setAnimationBeginsFromCurrentState(true)
-            UIView.setAnimationDuration(0.3)
-            self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-            UIView.commitAnimations()
-        }
+        // Restore the view to it's normal location in case it has been
+        //  pushed up to accommodate the keyboard
+        self.view.frame.origin.y = 0
+        hasMoved = false
     }
 }

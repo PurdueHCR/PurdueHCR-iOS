@@ -114,10 +114,9 @@ class DataManager {
     ///   - log: Log to be awarded to the hosue
     ///   - house: House that will be given the award
     ///   - onDone: Closure function the be called once the code hits an error or finish. err is nil if no errors are found.
-    func awardPointsToHouseFromREC(log:PointLog, house:House, onDone:@escaping (_ err:Error?)->Void){
+    func awardPointsToHouseFromREC(ppr: Int, house:House, description:String, onDone:@escaping (_ err:Error?)->Void){
         // This is to seperate the awards from the real earnings from the individual floors in the house
-        log.floorID = "Award"
-        fbh.addPointLog(log: log, preApproved: true, house: house.houseID, isRECGrantingAward: true, onDone: onDone)
+        fbh.grantAward(ppr: ppr, house: house, description: description, onDone: onDone)
     }
 	
 	/// Retrieves the confirmed points
