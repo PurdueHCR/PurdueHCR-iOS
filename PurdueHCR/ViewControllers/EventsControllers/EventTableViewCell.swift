@@ -11,12 +11,12 @@ import UIKit
 class EventTableViewCell: UITableViewCell {
 
     @IBOutlet weak var eventName: UILabel!
-    @IBOutlet weak var eventDate: UILabel!
+    @IBOutlet weak var eventTime: UILabel!
     @IBOutlet weak var eventLocation: UILabel!
     @IBOutlet weak var eventPoints: UILabel!
     @IBOutlet weak var eventDescription: UILabel!
     @IBOutlet weak var houseColorView: UIView!
-    
+    var eventIndex = Int()
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -10,44 +10,121 @@ import UIKit
 
 class ViewEventTableViewController: UITableViewController {
 
-    @IBOutlet weak var goingButton: UIButton!
+//    @IBOutlet weak var goingButton: UIButton!
     @IBOutlet weak var iCalExportButton: UIButton!
     @IBOutlet weak var gCalExportButton: UIButton!
+    @IBOutlet weak var editEventButton: UIBarButtonItem!
     
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var hostLabel: UILabel!
+    @IBOutlet weak var attendeeLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
     
-    var going = true // To be set later when connected to database
-    var event: Event?
+    var going = false // To be set later when connected to database
+    var event = Event()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.allowsSelection = false
+        
         iCalExportButton.layer.cornerRadius = DefinedValues.radius
         gCalExportButton.layer.cornerRadius = DefinedValues.radius
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        let event: Event
+//        if (!filtered) {
+//            event = events[cellSection + cellRow]
+//        } else {
+//            event = filteredEvents[cellSection + cellRow]
+//        }
         
-        self.dateLabel.text = event?.fullDate
-        self.locationLabel.text = event?.location
-        self.hostLabel.text = event?.house
-        self.detailsLabel.text = event?.details
+        let userID = User.get(.id) as! String
         
-        self.detailsLabel.text = "This is a really long description to test the ability of the row height to just keep expanding and expanding until it is large enough to handle a description that is as crazy long as this description is. "
+        if (userID != event.creatorID) {
+            editEventButton.isEnabled = false
+            editEventButton.tintColor = UIColor.white
+        }
         
-        if (going) {
-            if #available(iOS 13.0, *) {
-                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-            }
+        self.nameLabel.text = event.name
+        self.nameLabel.numberOfLines = 1
+        self.nameLabel.sizeToFit()
+        
+        let dateFormatter = DateFormatter()
+        if (event.startDate == event.endDate) {
+            dateFormatter.dateFormat = Event.dateFormat
+            self.dateLabel.text = dateFormatter.string(from: event.startDate)
+            self.dateLabel.numberOfLines = 1
+            self.dateLabel.sizeToFit()
         } else {
-            if #available(iOS 13.0, *) {
-                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-            } else {
-                // Fallback on earlier versions
+            dateFormatter.dateFormat = "E, MM/dd"
+            let startDate = dateFormatter.string(from: event.startDate)
+            let endDate = dateFormatter.string(from: event.endDate)
+            self.dateLabel.text = startDate + " - " + endDate
+            self.dateLabel.numberOfLines = 1
+            self.dateLabel.sizeToFit()
+        }
+        
+        dateFormatter.dateFormat = Event.timeFormat
+        self.timeLabel.text = dateFormatter.string(from: event.startTime) + " - " + dateFormatter.string(from: event.endTime)
+        self.timeLabel.numberOfLines = 1
+        self.timeLabel.sizeToFit()
+        
+        self.locationLabel.text = event.location
+        self.locationLabel.numberOfLines = 1
+        self.locationLabel.sizeToFit()
+        
+        self.hostLabel.text = event.host
+        self.hostLabel.numberOfLines = 1
+        self.hostLabel.sizeToFit()
+        
+        var floors: String = ""
+        if (event.isAllFloors) {
+            floors = "All Floors"
+        } else {
+            var i: Int = 0
+            for floor in event.floors {
+                if (i == event.floors.count - 1) {
+                    floors.append(floor)
+                } else {
+                    floors.append(floor + ", ")
+                }
+                i += 1
             }
         }
         
+        self.attendeeLabel.text = floors
+        self.attendeeLabel.numberOfLines = 1
+        self.attendeeLabel.sizeToFit()
+        
+        self.detailsLabel.text = event.details
+        self.detailsLabel.numberOfLines = 0
+        self.detailsLabel.lineBreakMode = .byWordWrapping
+        self.detailsLabel.sizeToFit()
+        
+//        if (going) {
+//            if #available(iOS 13.0, *) {
+//                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//        } else {
+//            if #available(iOS 13.0, *) {
+//                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//        }
+        self.tableView.reloadData()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -58,6 +135,19 @@ class ViewEventTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 6
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Preparing")
+        if segue.destination is CreateEventTableViewController {
+            let viewController = segue.destination as? CreateEventTableViewController
+            viewController?.creating = false
+            viewController?.event = event
+        }
     }
 
     /*
@@ -105,26 +195,26 @@ class ViewEventTableViewController: UITableViewController {
     }
     */
 
-    @IBAction func goingAction(_ sender: Any) {
-    
-    
-        if (going) {
-            if #available(iOS 13.0, *) {
-                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-            }
-            going = false
-        } else {
-            if #available(iOS 13.0, *) {
-                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-            }
-            going = true
-        }
-        
-    }
+//    @IBAction func goingAction(_ sender: Any) {
+//    
+//    
+//        if (going) {
+//            if #available(iOS 13.0, *) {
+//                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//            going = false
+//        } else {
+//            if #available(iOS 13.0, *) {
+//                goingButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//            going = true
+//        }
+//        
+//    }
     
     
 }
