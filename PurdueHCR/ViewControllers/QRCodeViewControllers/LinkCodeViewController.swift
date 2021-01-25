@@ -32,14 +32,15 @@ class LinkCodeViewController: UIViewController {
         }
         linkDescriptionLabel.text = DataManager.sharedManager.getPointType(value: link!.pointTypeID).pointName
         qrCodeDescriptionTextView.text = link!.description
-        timesUsedLabel.text = "Times Used: " + String(link!.claimedCount)
+        timesUsedLabel.text = String(link!.claimedCount)
         qrCodeDescriptionTextView.isEditable = false
-        qrCodeDescriptionTextView.layer.borderWidth = 1
-        qrCodeDescriptionTextView.layer.borderColor = UIColor.black.cgColor
+        qrCodeDescriptionTextView.layer.cornerRadius = DefinedValues.radius
         activateSwitch.setOn(link!.enabled, animated: false)
         archiveSwitch.setOn(link!.archived, animated: false)
+        
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(back))
         self.navigationItem.leftBarButtonItem = newBackButton
+        self.navigationItem.largeTitleDisplayMode = .never
     }
 
     func generateQRCode(){

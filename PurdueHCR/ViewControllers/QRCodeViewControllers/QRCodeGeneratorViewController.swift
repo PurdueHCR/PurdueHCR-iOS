@@ -27,8 +27,7 @@ class QRCodeGeneratorViewController: UIViewController, UIPickerViewDelegate,UIPi
         pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
         pickerView.reloadAllComponents()
         selectedPoint = pointTypes[0]
-        descriptionTextView.layer.borderColor = UIColor.black.cgColor
-        descriptionTextView.layer.borderWidth = 1
+        descriptionTextView.layer.cornerRadius = DefinedValues.radius
         descriptionTextView.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
