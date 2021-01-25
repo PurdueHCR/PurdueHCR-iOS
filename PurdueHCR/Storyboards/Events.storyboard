@@ -106,7 +106,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Events" largeTitleDisplayMode="always" id="59t-gC-nOf">
+                    <navigationItem key="navigationItem" title="All Events" largeTitleDisplayMode="always" id="59t-gC-nOf">
                         <barButtonItem key="leftBarButtonItem" title="My Events" id="yPH-SI-08m">
                             <connections>
                                 <action selector="switchFilter:" destination="BYZ-38-t0r" id="0x3-Te-RJJ"/>
@@ -633,14 +633,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectedFloorsTableViewCell" id="jIf-MP-ld4" customClass="SelectedFloorsTableViewCell" customModule="PurdueHCR" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="63"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="63.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jIf-MP-ld4" id="bTC-um-2Pf">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="63.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VtX-nK-ogC">
-                                            <rect key="frame" x="30" y="21" width="354" height="21"/>
+                                            <rect key="frame" x="30" y="21" width="354" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -673,7 +673,7 @@
         <scene sceneID="SZp-xb-mjs">
             <objects>
                 <tableViewController id="rkV-g8-krZ" customClass="ViewEventTableViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mYc-Ql-01F">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mYc-Ql-01F">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <sections>
@@ -745,7 +745,7 @@
                                                 <constraint firstItem="dcW-XV-Qwx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="V4A-Ph-T6X" secondAttribute="top" constant="28" id="gkF-hR-eFc"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="pcd-dy-5aj" secondAttribute="trailing" constant="0.5" id="ldz-of-Rpz"/>
                                                 <constraint firstItem="xzL-7s-EJC" firstAttribute="centerX" secondItem="pcd-dy-5aj" secondAttribute="centerX" id="mc8-El-YwT"/>
-                                                <constraint firstItem="xzL-7s-EJC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dcW-XV-Qwx" secondAttribute="trailing" constant="50" id="n3c-jk-FhU"/>
+                                                <constraint firstItem="xzL-7s-EJC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dcW-XV-Qwx" secondAttribute="trailing" constant="20" id="n3c-jk-FhU"/>
                                                 <constraint firstItem="dcW-XV-Qwx" firstAttribute="top" secondItem="diH-IK-kmj" secondAttribute="bottom" constant="1" id="nlg-XM-Rc1"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="diH-IK-kmj" secondAttribute="trailing" constant="50" id="o69-Ik-7U4"/>
                                                 <constraint firstItem="xzL-7s-EJC" firstAttribute="firstBaseline" secondItem="dcW-XV-Qwx" secondAttribute="firstBaseline" id="ohl-LX-4yW"/>
@@ -987,7 +987,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="i9x-eG-wUT"/>
+        <segue reference="RVA-Vd-bqB"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
