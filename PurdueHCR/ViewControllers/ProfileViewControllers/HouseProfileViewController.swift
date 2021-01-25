@@ -39,6 +39,20 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        
+        let defaults = UserDefaults.standard
+        if let new_version = defaults.object(forKey: "last_opened_version") {
+            if ((new_version as! String) != appVersion) {
+                self.performSegue(withIdentifier: "show_whats_new", sender: self)
+                defaults.setValue(appVersion, forKey: "last_opened_version")
+            }
+        } else {
+            self.performSegue(withIdentifier: "show_whats_new", sender: self)
+            defaults.setValue(appVersion, forKey: "last_opened_version")
+        }
+        
+        
         let firstName = User.get(.firstName) as! String
         let lastName = User.get(.lastName) as! String
         self.title = firstName + " " + lastName
@@ -88,7 +102,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         //backgroundTable.backgroundColor = UIColor.white
 		
 		// TODO: A separate method should probably be created for this so that it doesn't have to pass around as much data but instead just returns a boolean whether or not the user has a notification
-		
+        
 		if (self.navigationItem.rightBarButtonItems != nil) {
 			DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs: [PointLog]) in
 				if (pointLogs.capacity > 0) {
@@ -104,7 +118,6 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 		DataManager.sharedManager.refreshSystemPreferences { (systemPreferences) in
 			sysPref = systemPreferences
 			// Error checking here
-			let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 			if (sysPref?.iosVersion != appVersion) {
 				let alertController = UIAlertController.init(title: "Update Available", message: "It looks like you do not have the newest version of PurdueHCR. Please update as soon as posible to ensure you get all the latest and greatest features!", preferredStyle: .alert)
 				let okAction = UIAlertAction.init(title: "Ok", style: .default, handler: .none)
@@ -409,4 +422,31 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
+
+
+// View to display the What's New Page
+//
+// I left this inside this file since they
+// are on the same storyboard and this view
+// requires almost no code.
+class whatsNewViewController: UIViewController {
+    
+    @IBOutlet weak var eventIcon: UIImageView!
+    @IBOutlet weak var qrCodeIcon: UIImageView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        eventIcon.image = #imageLiteral(resourceName: "SF_calendar_badge_plus").withRenderingMode(.alwaysTemplate)
+        eventIcon.tintColor = DefinedValues.systemBlue
+        qrCodeIcon.image = #imageLiteral(resourceName: "QRCode").withRenderingMode(.alwaysTemplate)
+        qrCodeIcon.tintColor = DefinedValues.systemBlue
+    }
+    
+    @IBAction func dismissWhatsNew(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
 }

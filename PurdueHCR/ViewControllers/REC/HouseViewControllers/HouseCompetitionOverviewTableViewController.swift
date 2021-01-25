@@ -52,6 +52,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    
     }
 
     func setPlaceLabels(house:House){
@@ -303,7 +304,7 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
             nextViewController.houseName = self.houses[houseSelectionControl.selectedSegmentIndex]
         }
         else if( segue.identifier == "show_give_award"){
-            let nextViewController = segue.destination as! GrantAwardTableViewController
+            let nextViewController = segue.destination as! SubmitGrantedAwardViewController
             nextViewController.house = self.getHouseWithName(name: self.houses[houseSelectionControl.selectedSegmentIndex])
         }
         

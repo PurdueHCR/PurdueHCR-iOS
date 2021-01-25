@@ -27,6 +27,7 @@ class TabBarController: UITabBarController {
             // Resident Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
+            viewControllers.append(linkEventViewController())
             
             //viewControllers.append(linkEventViewController())
         }
@@ -34,6 +35,9 @@ class TabBarController: UITabBarController {
             // RHP Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
+
+            viewControllers.append(linkEventViewController())
+
             viewControllers.append(linkPointApprovalViewController())
             viewControllers.append(linkQRCodeViewController())
 
@@ -50,6 +54,7 @@ class TabBarController: UITabBarController {
 			//FHP Controllers
 			viewControllers.append(linkProfileViewController())
 			viewControllers.append(linkQRCodeViewController())
+            viewControllers.append(linkEventViewController())
 		}
         else if (p == 4) {
             // Priviledged Resident Controllers

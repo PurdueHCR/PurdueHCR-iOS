@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VqF-NJ-TsV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VqF-NJ-TsV">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -69,11 +70,123 @@
                         <outlet property="backgroundTable" destination="7UZ-lD-f9b" id="Ju5-Iu-5uq"/>
                         <outlet property="notificationsButton" destination="l6y-qp-6I1" id="M40-WM-rNk"/>
                         <outlet property="tableView" destination="7UZ-lD-f9b" id="708-6f-IPu"/>
+                        <segue destination="ttO-5a-Prs" kind="presentation" identifier="show_whats_new" id="m3P-Ep-f2H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyd-ge-ozp" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1485.5999999999999" y="-271.664167916042"/>
+        </scene>
+        <!--Whats New View Controller-->
+        <scene sceneID="KMh-aQ-dxs">
+            <objects>
+                <viewController id="ttO-5a-Prs" customClass="whatsNewViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XAc-2f-sNa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's New in Purdue HCR" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1l-bV-PVh">
+                                <rect key="frame" x="92" y="75" width="230" height="83.666666666666686"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="230" id="QQX-YU-K1m"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWz-1y-7DY">
+                                <rect key="frame" x="25" y="708" width="364" height="50"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ZOK-zq-jBB"/>
+                                </constraints>
+                                <state key="normal" title="Continue">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="dismissWhatsNew:" destination="ttO-5a-Prs" eventType="touchUpInside" id="bpQ-ug-rUG"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piT-VX-z29">
+                                <rect key="frame" x="95" y="321" width="56" height="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SF_calendar_badge_plus" translatesAutoresizingMaskIntoConstraints="NO" id="pnf-8y-5ab">
+                                <rect key="frame" x="30" y="321" width="50" height="50"/>
+                                <color key="tintColor" systemColor="linkColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="IDr-Ga-io2"/>
+                                    <constraint firstAttribute="width" secondItem="pnf-8y-5ab" secondAttribute="height" multiplier="1:1" id="tD9-tM-ujb"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find events happening around the Honors College" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCN-bU-PxX">
+                                <rect key="frame" x="95" y="345" width="289" height="40.666666666666686"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Codes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srt-6b-ImK">
+                                <rect key="frame" x="95" y="435.66666666666669" width="95" height="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RHPs have a fresh new look to the QR codes page" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmy-h9-Djw">
+                                <rect key="frame" x="95" y="459.66666666666669" width="289" height="40.666666666666686"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QRCode" translatesAutoresizingMaskIntoConstraints="NO" id="NPd-Il-AmW">
+                                <rect key="frame" x="30" y="435.66666666666669" width="50" height="50"/>
+                                <color key="tintColor" systemColor="linkColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="NPd-Il-AmW" secondAttribute="height" multiplier="1:1" id="GoA-N8-Oee"/>
+                                    <constraint firstAttribute="width" constant="50" id="Qfq-4h-hOc"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="OQB-mu-1h8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pCN-bU-PxX" firstAttribute="leading" secondItem="piT-VX-z29" secondAttribute="leading" id="3HQ-vr-Akl"/>
+                            <constraint firstItem="pnf-8y-5ab" firstAttribute="leading" secondItem="OQB-mu-1h8" secondAttribute="leading" constant="30" id="5Is-OS-low"/>
+                            <constraint firstItem="pCN-bU-PxX" firstAttribute="top" secondItem="piT-VX-z29" secondAttribute="bottom" constant="2" id="69J-7Z-gZs"/>
+                            <constraint firstItem="OQB-mu-1h8" firstAttribute="trailing" secondItem="pCN-bU-PxX" secondAttribute="trailing" constant="30" id="88o-es-C4B"/>
+                            <constraint firstItem="piT-VX-z29" firstAttribute="top" secondItem="pnf-8y-5ab" secondAttribute="top" id="DzD-q5-Ce2"/>
+                            <constraint firstItem="pnf-8y-5ab" firstAttribute="centerY" secondItem="XAc-2f-sNa" secondAttribute="centerY" constant="-75" id="GRs-At-Hmh"/>
+                            <constraint firstItem="NPd-Il-AmW" firstAttribute="top" secondItem="Srt-6b-ImK" secondAttribute="top" id="HDL-8W-iLp"/>
+                            <constraint firstItem="Srt-6b-ImK" firstAttribute="top" secondItem="pCN-bU-PxX" secondAttribute="bottom" constant="50" id="KRI-wC-U1i"/>
+                            <constraint firstItem="V1l-bV-PVh" firstAttribute="top" secondItem="OQB-mu-1h8" secondAttribute="top" constant="75" id="Lvk-FF-s46"/>
+                            <constraint firstItem="OQB-mu-1h8" firstAttribute="bottom" secondItem="kWz-1y-7DY" secondAttribute="bottom" constant="50" id="OhD-TN-4b2"/>
+                            <constraint firstItem="hmy-h9-Djw" firstAttribute="top" secondItem="Srt-6b-ImK" secondAttribute="bottom" constant="2" id="RiP-kZ-vfh"/>
+                            <constraint firstItem="NPd-Il-AmW" firstAttribute="trailing" secondItem="pnf-8y-5ab" secondAttribute="trailing" id="U5K-fy-3Ml"/>
+                            <constraint firstItem="Srt-6b-ImK" firstAttribute="leading" secondItem="piT-VX-z29" secondAttribute="leading" id="YaJ-Rg-afR"/>
+                            <constraint firstItem="hmy-h9-Djw" firstAttribute="leading" secondItem="piT-VX-z29" secondAttribute="leading" id="a9P-Fi-RF9"/>
+                            <constraint firstItem="kWz-1y-7DY" firstAttribute="leading" secondItem="OQB-mu-1h8" secondAttribute="leading" constant="25" id="cR1-Wk-7cJ"/>
+                            <constraint firstItem="OQB-mu-1h8" firstAttribute="trailing" secondItem="kWz-1y-7DY" secondAttribute="trailing" constant="25" id="e1z-uO-wEH"/>
+                            <constraint firstItem="piT-VX-z29" firstAttribute="leading" secondItem="pnf-8y-5ab" secondAttribute="trailing" constant="15" id="eSr-rL-iaK"/>
+                            <constraint firstItem="hmy-h9-Djw" firstAttribute="trailing" secondItem="pCN-bU-PxX" secondAttribute="trailing" id="rxF-Ej-8Dh"/>
+                            <constraint firstItem="V1l-bV-PVh" firstAttribute="centerX" secondItem="XAc-2f-sNa" secondAttribute="centerX" id="yRb-3V-XDn"/>
+                            <constraint firstItem="NPd-Il-AmW" firstAttribute="leading" secondItem="pnf-8y-5ab" secondAttribute="leading" id="zYL-PK-g9J"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="h1N-f6-dU2"/>
+                    <connections>
+                        <outlet property="eventIcon" destination="pnf-8y-5ab" id="yeH-Mt-3P0"/>
+                        <outlet property="qrCodeIcon" destination="NPd-Il-AmW" id="n27-SI-39I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BiE-y3-UPN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1482.608695652174" y="539.0625"/>
         </scene>
         <!--Submitted Points-->
         <scene sceneID="YF4-kF-k5v">
@@ -279,10 +392,21 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Bell" width="25" height="25"/>
+        <image name="QRCode" width="25" height="25"/>
+        <image name="SF_calendar_badge_plus" width="64" height="64"/>
         <image name="Settings" width="25" height="25"/>
         <image name="profile" width="25" height="25"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

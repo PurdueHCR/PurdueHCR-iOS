@@ -64,6 +64,22 @@ class DataManager {
         })
     }
     
+    static func filter(points:[PointType]) -> [PointType] {
+        var types = [PointType]()
+        let permissionLevel = PointType.PermissionLevel.init(rawValue: User.get(.permissionLevel) as! Int)!
+        for point in points {
+            // Permission Level 2 is REA/REC, then check if point is enabled, then check RHP/FHP permission
+            if (permissionLevel == PointType.PermissionLevel.rec || (point.isEnabled && checkPermission(typePermission: point.permissionLevel.rawValue, userPermission: permissionLevel))) {
+                types.append(point)
+            }
+        }
+        return types
+    }
+    // Check permission Level when USER is not REA/REC
+    static private func checkPermission(typePermission:Int, userPermission:PointType.PermissionLevel) ->Bool {
+        return ((userPermission == PointType.PermissionLevel.rhp && typePermission != 1) || (userPermission == PointType.PermissionLevel.faculty && typePermission == 3))
+    }
+    
     func updatePointLogStatus(log:PointLog, approved:Bool, message:String = "", updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){
         fbh.updatePointLogStatus(log: log, approved: approved, message: message, onDone:{[weak self] (_ err :Error?) in
             if(err != nil){
@@ -98,10 +114,9 @@ class DataManager {
     ///   - log: Log to be awarded to the hosue
     ///   - house: House that will be given the award
     ///   - onDone: Closure function the be called once the code hits an error or finish. err is nil if no errors are found.
-    func awardPointsToHouseFromREC(log:PointLog, house:House, onDone:@escaping (_ err:Error?)->Void){
+    func awardPointsToHouseFromREC(ppr: Int, house:House, description:String, onDone:@escaping (_ err:Error?)->Void){
         // This is to seperate the awards from the real earnings from the individual floors in the house
-        log.floorID = "Award"
-        fbh.addPointLog(log: log, preApproved: true, house: house.houseID, isRECGrantingAward: true, onDone: onDone)
+        fbh.grantAward(ppr: ppr, house: house, description: description, onDone: onDone)
     }
 	
 	/// Retrieves the confirmed points

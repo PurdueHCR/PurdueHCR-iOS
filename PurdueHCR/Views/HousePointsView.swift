@@ -110,7 +110,7 @@ class HousePointsView: UIView {
 
     /// Sketchy return type atm, because we do not know if the ppr will be a double
     ///
-    /// - Returns: <#return value description#>
+    /// - Returns: requiredPPR for reward
 	func getPrevRewardValue() -> Int {
 		var i = 0
 		while( i < rewards.count){

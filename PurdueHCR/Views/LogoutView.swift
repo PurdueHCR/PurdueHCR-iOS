@@ -19,6 +19,7 @@ class LogoutView: UIView {
     @IBOutlet weak var policyButton: UIButton!
     @IBOutlet weak var conditionsButton: UIButton!
     @IBOutlet weak var joinButton: UIButton!
+    @IBOutlet weak var versionLabel: UILabel!
     
     var delegate: UIViewController?
     
@@ -37,6 +38,9 @@ class LogoutView: UIView {
         addSubview(logoutView)
         logoutView.frame = self.bounds
         logoutView.layer.cornerRadius = DefinedValues.radius
+        
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        versionLabel.text = "Version " + (appVersion ?? "")
         
         let closeImage = #imageLiteral(resourceName: "SF_xmark").withRenderingMode(.alwaysTemplate)
         closeButton.setBackgroundImage(closeImage, for: .normal)

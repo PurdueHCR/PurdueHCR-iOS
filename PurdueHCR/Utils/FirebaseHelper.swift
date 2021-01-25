@@ -28,12 +28,24 @@ class FirebaseHelper {
 	let USER_ID = "UserID"
 	let MESSAGES = "Messages"
     
+    // LOCAL URLS
+//    let CREATE_QR_LINK = "https://localhost:5001/purdue-hcr-test/us-central1/link/create"
+//    let HANDLE_URL = "http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
+//    let RANK_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
+//    let SUBMIT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+//    let ADD_MESSAGE_URL = "http://localhost:5001/purdue-hcr-test/uscentral1/point_log/messages"
+//    let GET_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/feed"
+//    let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
+    
     // TEST URLS
 //    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle" //"http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
-//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"//"http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
-//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"//"http://localhost:5001/purdue-hcr-test/us-central1/user/submitPoint"
+//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
 //    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+//    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
+//    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+//    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
     
     // PRODUCTION URLS
     let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
@@ -41,7 +53,9 @@ class FirebaseHelper {
     let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
     let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
     let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-
+    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
+    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
+    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
     
     init() {
         db = Firestore.firestore()
@@ -558,7 +572,7 @@ class FirebaseHelper {
                 {
                     let requiredPPR = rewardDocument.data()["RequiredPPR"] as! Int
                     let fileName = rewardDocument.data()["FileName"] as! String
-                    let name = rewardDocument.documentID
+                    let name = rewardDocument.data()["Name"] as! String
                     rewardArray.append(Reward(requiredPPR: requiredPPR, fileName: fileName, rewardName: name))
                 }
                 rewardArray.sort(by: {$0.requiredPPR < $1.requiredPPR})
@@ -609,6 +623,68 @@ class FirebaseHelper {
                 onDone(nil)
             }
         }
+    }
+    
+    /// Grant an award to ahouse
+    /// - Parameters:
+    ///   - house: house to give the points
+    ///   - ppr: the points per resident that the house should get
+    ///   - description: description of the award
+    func grantAward( ppr:Int, house:House, description:String, onDone: @escaping (_ err:Error?)->Void){
+        
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(err)
+            } else {
+                
+                let headers = self.generateHTTPHeader(token: token!)
+                let url = URL(string: self.GRANT_AWARD_URL)!
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+//                let date = dateFormatter.string(from: (log.dateOccurred?.dateValue())!)
+                
+                let parameters = ["house":house.houseID, "ppr":ppr, "description":description] as [String : Any]
+                
+                AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        onDone(nil)
+                    case .failure(let error):
+                        if (error.localizedDescription == "The operation couldn’t be completed. (Could not submit points because point type is disabled. error 1.)"){
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "This type of point is disabled for now.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        } else if (error.localizedDescription == "The operation couldn’t be completed. (Document Exists error 1.)"){
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Could not submit.", subtitle: "You have already scanned this code.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                let banner = NotificationBanner(title: "Failure", subtitle: "Could not submit points due to server error.", style: .danger)
+                                banner.duration = 2
+                                banner.show()
+                            }
+                        }
+                        onDone(error)
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Generate the headers for an AlamoFire HTTP request to the API
+    /// - Parameter token: string of the user's firebase authorization token
+    /// - Returns: HTTP headers
+    private func generateHTTPHeader(token:String) -> HTTPHeaders {
+        let headerVal = "Bearer " + (token)
+        let header = HTTPHeader(name: "Authorization", value: headerVal)
+        let headers = HTTPHeaders(arrayLiteral: header)
+        return headers
     }
     
     /// Helper function to updateUserPoints
@@ -1082,6 +1158,258 @@ class FirebaseHelper {
             }
         }
     }
+    
+    // Event Functions
+    func addEvent(event: Event, onDone:@escaping (_ err:Error?)->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            //var events: [Event?]?
+            if let err = err {
+                print("Error in addEvent()")
+                //events = nil
+                onDone(err)
+            }
+            let headerVal = "Bearer " + (token ?? "")
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
+            let url = URL(string: self.ADD_EVENT_URL)!
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let startDateString = dateFormatter.string(from: event.startDate)
+            let endDateString = dateFormatter.string(from: event.endDate)
+            dateFormatter.dateFormat = "HH:mm:ss"
+            let startTimeString = dateFormatter.string(from: event.startTime)
+            let endTimeString = dateFormatter.string(from: event.endTime)
+            
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let startDateTime = dateFormatter.date(from: startDateString + " " + startTimeString)
+            let endDateTime = dateFormatter.date(from: endDateString + " " + endTimeString)
+            
+            let enUSPosixLocale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.locale = enUSPosixLocale
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
+            let startDateTimeString = dateFormatter.string(from: startDateTime!)
+            let endDateTimeString = dateFormatter.string(from: endDateTime!)
+           
+//         Example of parameters we need to be sending.
+//         {
+//           "name": "A Very Fun Event",
+//           "details": "A very fun event by me!",
+//           "startDate": "2020-11-08T10:00:00+04:00",
+//           "endDate": "2020-11-08T10:00:00+04:00",
+//           "location": "HCRS 1066",
+//           "pointTypeId": 1,
+//           "floorIds": [
+//             "2N"
+//           ],
+//           "isPublicEvent": false,
+//           "isAllFloors": false,
+//           "host": "The Society"
+//         }
+            let parameters: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
+            
+            print(parameters)
+            
+            AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Any] {
+                    print("Add Event Result:")
+                    print(result)
+                    onDone(nil)
+                } else {
+                    print(response.error!.errorDescription!)
+                }
+            }
+            onDone(RetrievalError.unableToParseResponse)
+        }
+    }
+    
+    
+    func getEvents(onDone:@escaping ([Event], Error?) ->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+         var events: [Event] = [Event]()
+         if let err = err {
+            print("Error in retrieving auth token in getEvents()")
+            onDone(events, err)
+         }
+         let headerVal = "Bearer " + (token ?? "")
+         let header = HTTPHeader(name: "Authorization", value: headerVal)
+         let headers = HTTPHeaders(arrayLiteral: header)
+         let url = URL(string: self.GET_EVENT_URL)!
+         AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+             if let results = response.value as? [String : Any] {
+                // Parse Event Supplied
+                let eventsReturned = results["events"] as! [[String:Any]]
+                
+                for result in eventsReturned {
+                    
+                    let name = result["name"] as! String
+                    let location = result["location"] as! String
+                    let pointTypeId = result["pointTypeId"] as! String
+                    let floorIds = result["floorIds"] as! [String]
+                    let details = result["details"] as! String
+                    let isPublicEvent = result["isPublicEvent"] as! Bool
+                    let startDate = result["startDate"] as! String
+                    let endDate = result["endDate"] as! String
+                    let creatorId = result["creatorId"] as! String
+                    let host = result["host"] as! String
+                    let floorColors = result["floorColors"] as! [String]
+                    let id = result["id"] as! String
+
+                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                    
+                    events.append(event)
+                }
+                
+                onDone(events, nil)
+             } else {
+                print(response)
+                print("Failed Events Attempt")
+             }
+         }
+         onDone(events, RetrievalError.unableToParseResponse)
+        }
+    }
+    
+    func editEvent(event: Event, origID: String, onDone:@escaping (_ err:Error?, _ event: Event?)->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                print("Error in editEvent()")
+                onDone(err, nil)
+            }
+            let headerVal = "Bearer " + (token ?? "")
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
+            let url = URL(string: self.ADD_EVENT_URL)!
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let startDateString = dateFormatter.string(from: event.startDate)
+            let endDateString = dateFormatter.string(from: event.endDate)
+            dateFormatter.dateFormat = "HH:mm:ss"
+            let startTimeString = dateFormatter.string(from: event.startTime)
+            let endTimeString = dateFormatter.string(from: event.endTime)
+            
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let startDateTime = dateFormatter.date(from: startDateString + " " + startTimeString)
+            let endDateTime = dateFormatter.date(from: endDateString + " " + endTimeString)
+            
+            let enUSPosixLocale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.locale = enUSPosixLocale
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
+            let startDateTimeString = dateFormatter.string(from: startDateTime!)
+            let endDateTimeString = dateFormatter.string(from: endDateTime!)
+            
+            let parameters: [String: Any] = ["id":origID, "name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
+            
+            print("Parameters of new event")
+            print(parameters)
+            
+            AF.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Any] {
+                    print("Edit Event Result:")
+                    print(result)
+                    
+                    let name = result["name"] as! String
+                    let location = result["location"] as! String
+                    let pointTypeId = result["pointTypeId"] as! String
+                    let floorIds = result["floorIds"] as! [String]
+                    let details = result["details"] as! String
+                    let isPublicEvent = result["isPublicEvent"] as! Bool
+                    let startDate = result["startDate"] as! String
+                    let endDate = result["endDate"] as! String
+                    let creatorId = result["creatorId"] as! String
+                    let host = result["host"] as! String
+                    let floorColors = result["floorColors"] as! [String]
+                    let id = result["id"] as! String
+
+                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                    
+                    onDone(nil, event)
+                } else {
+                    print(response.error!.errorDescription!)
+                }
+            }
+            onDone(RetrievalError.unableToParseResponse, nil)
+        }
+    }
+    
+    func deleteEvent(origID: String, onDone:@escaping (_ err:Error?)->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                print("Error in deleteEvent()")
+                onDone(err)
+            }
+            let headerVal = "Bearer " + (token ?? "")
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
+            let url = URL(string: self.ADD_EVENT_URL + origID)!
+            
+            let parameters: [String: Any] = ["eventId":origID]
+            
+            print(JSONSerialization.isValidJSONObject(parameters))
+            print(parameters)
+            
+            AF.request(url, method: .delete, parameters: parameters, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Any] {
+                    print("Delete Event Result:")
+                    print(result)
+                    onDone(nil)
+                } else {
+                    print(response.error!.errorDescription!)
+                }
+            }
+            onDone(RetrievalError.unableToParseResponse)
+        }
+    }
+     
+    func getEventsCreated(onDone:@escaping ([Event], Error?) ->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+         var events: [Event] = [Event]()
+         if let err = err {
+            print("Error in getEventsCreated()")
+            onDone(events, err)
+         }
+         let headerVal = "Bearer " + (token ?? "")
+         let header = HTTPHeader(name: "Authorization", value: headerVal)
+         let headers = HTTPHeaders(arrayLiteral: header)
+         let url = URL(string: self.ADD_EVENT_URL)!
+         AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            if let results = response.value as? [String : Any] {
+               // Parse Event Supplied
+               let eventsReturned = results["events"] as! [[String:Any]]
+               
+               for result in eventsReturned {
+                   
+                   let name = result["name"] as! String
+                   let location = result["location"] as! String
+                   let pointTypeId = result["pointTypeId"] as! String
+                   let floorIds = result["floorIds"] as! [String]
+                   let details = result["details"] as! String
+                   let isPublicEvent = result["isPublicEvent"] as! Bool
+                   let startDate = result["startDate"] as! String
+                   let endDate = result["endDate"] as! String
+                   let creatorId = result["creatorId"] as! String
+                   let host = result["host"] as! String
+                   let floorColors = result["floorColors"] as! [String]
+                   let id = result["id"] as! String
+
+                   let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                
+                   events.append(event)
+               }
+               
+               onDone(events, nil)
+            } else {
+               print(response)
+               print("Failed Events Created Attempt")
+            }
+         }
+         onDone(events, RetrievalError.unableToParseResponse)
+        }
+    }
+    
 	
 	/// Retrieves the system preferences for the app
 	///
@@ -1097,7 +1425,8 @@ class FirebaseHelper {
                 let suggestedPointIDs = document.data()!["suggestedPointIDs"] as! String
                 let competitionHiddenMessage = document.data()!["competitionHiddenMessage"] as! String
                 let isCompetitionVisible = document.data()!["isCompetitionVisible"] as! Bool
-                let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, showRewards: showRewards, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs, isCompetitionVisible: isCompetitionVisible, competitionHiddenMessage: competitionHiddenMessage)
+                let floorIds = document.data()!["floorIds"] as! [String]
+                let systemPreferences = SystemPreferences(isHouseEnabled: isHouseEnabled, houseEnabledMessage: houseEnabledMessage, showRewards: showRewards, iosVersion: iosVersion, suggestedPointIDs: suggestedPointIDs, isCompetitionVisible: isCompetitionVisible, competitionHiddenMessage: competitionHiddenMessage, floorIds: floorIds)
 				onDone(systemPreferences)
 			} else {
 				print("Error: Unabled to retrieve SystemPreferences information")

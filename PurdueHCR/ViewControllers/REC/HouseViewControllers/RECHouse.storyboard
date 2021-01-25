@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6w2-J7-5Ki">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6w2-J7-5Ki">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,12 +23,12 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="247" id="X92-zc-Dsj">
                                         <rect key="frame" x="0.0" y="28" width="375" height="247"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X92-zc-Dsj" id="OKK-Wy-xV9">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X92-zc-Dsj" id="OKK-Wy-xV9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="247"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Vh-oL-JqO" customClass="HousePointsCompareView" customModule="PurdueHCR" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="11" width="343" height="225"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="225"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="225" id="IpR-hu-GdB"/>
@@ -35,9 +36,10 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="top" secondItem="OKK-Wy-xV9" secondAttribute="topMargin" id="5kC-Fd-UTV"/>
-                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="leading" secondItem="OKK-Wy-xV9" secondAttribute="leadingMargin" id="er0-H2-s73"/>
-                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="trailing" secondItem="OKK-Wy-xV9" secondAttribute="trailingMargin" id="mOj-ZB-Lvn"/>
+                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="top" secondItem="OKK-Wy-xV9" secondAttribute="top" id="5kC-Fd-UTV"/>
+                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="leading" secondItem="OKK-Wy-xV9" secondAttribute="leading" id="er0-H2-s73"/>
+                                                <constraint firstAttribute="bottom" secondItem="5Vh-oL-JqO" secondAttribute="bottom" id="lFw-Ui-hLb"/>
+                                                <constraint firstItem="5Vh-oL-JqO" firstAttribute="trailing" secondItem="OKK-Wy-xV9" secondAttribute="trailing" id="mOj-ZB-Lvn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -49,7 +51,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="House Competition Visible" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gF2-tp-jbr">
-                                                    <rect key="frame" x="21" y="11" width="202" height="22"/>
+                                                    <rect key="frame" x="21" y="11" width="201" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -82,7 +84,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="House Competition Enabled" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziH-dQ-vVL">
-                                                    <rect key="frame" x="21" y="11" width="214" height="22"/>
+                                                    <rect key="frame" x="21" y="11" width="212.5" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -253,13 +255,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4th Place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTt-fG-izq">
-                                                    <rect key="frame" x="16" y="11" width="222" height="22"/>
+                                                    <rect key="frame" x="8" y="11" width="238" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4th Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkJ-GX-I34">
-                                                    <rect key="frame" x="246" y="11" width="113" height="22"/>
+                                                    <rect key="frame" x="254" y="11" width="113" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="113" id="nPR-iu-HeW"/>
                                                     </constraints>
@@ -362,7 +364,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="zar-Wb-eli" kind="show" identifier="show_give_award" id="FC9-Xt-ufH"/>
+                                            <segue destination="ykx-ft-nb4" kind="show" identifier="show_give_award" id="5rd-L3-NYo"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -483,56 +485,7 @@
             </objects>
             <point key="canvasLocation" x="-892" y="-54"/>
         </scene>
-        <!--Submit Points-->
-        <scene sceneID="VCV-Z2-NIJ">
-            <objects>
-                <tableViewController id="zar-Wb-eli" customClass="GrantAwardTableViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Yze-E2-hVC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="3BE-Tx-ERv" customClass="PointTypeCell" customModule="PurdueHCR" customModuleProvider="target">
-                                <rect key="frame" x="16" y="55.5" width="343" height="43"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3BE-Tx-ERv" id="V8E-d8-dOz">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point Type" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uzn-JZ-3r5">
-                                            <rect key="frame" x="15" y="11" width="313" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Uzn-JZ-3r5" firstAttribute="leading" secondItem="V8E-d8-dOz" secondAttribute="leadingMargin" id="A4e-iV-cgZ"/>
-                                        <constraint firstItem="Uzn-JZ-3r5" firstAttribute="bottom" secondItem="V8E-d8-dOz" secondAttribute="bottomMargin" id="EwS-NT-ZDs"/>
-                                        <constraint firstItem="Uzn-JZ-3r5" firstAttribute="trailing" secondItem="V8E-d8-dOz" secondAttribute="trailingMargin" id="s4T-DD-q1z"/>
-                                        <constraint firstItem="Uzn-JZ-3r5" firstAttribute="top" secondItem="V8E-d8-dOz" secondAttribute="topMargin" id="yhd-8p-Kz3"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="typeLabel" destination="Uzn-JZ-3r5" id="VSj-uc-u4m"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="zar-Wb-eli" id="hNf-ZR-PGa"/>
-                            <outlet property="delegate" destination="zar-Wb-eli" id="069-io-4KJ"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Submit Points" id="gDQ-Vd-upc"/>
-                    <connections>
-                        <segue destination="ykx-ft-nb4" kind="show" identifier="show_award_selected" id="z5o-PH-ESe"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aGG-vq-rJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-26" y="716"/>
-        </scene>
-        <!--Create Submission-->
+        <!--Give Award-->
         <scene sceneID="9jm-ov-afG">
             <objects>
                 <viewController id="ykx-ft-nb4" customClass="SubmitGrantedAwardViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
@@ -540,58 +493,71 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUQ-Ec-i2Z">
-                                <rect key="frame" x="16" y="44" width="343" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="9jb-w9-tby"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Tell us about what you did!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zes-64-fhc">
-                                <rect key="frame" x="16" y="88" width="343" height="190"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Give a description for the award!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zes-64-fhc">
+                                <rect key="frame" x="15" y="98" width="345" height="190"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="190" id="trf-3c-NDc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
-                                    <outlet property="delegate" destination="ykx-ft-nb4" id="V4V-PG-V8s"/>
+                                    <outlet property="delegate" destination="ykx-ft-nb4" id="98h-H1-Iq0"/>
                                 </connections>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points Per Resident" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQc-iF-7L6">
+                                <rect key="frame" x="60" y="60" width="300" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="OmZ-5C-kmm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tex-Z5-fq4">
+                                <rect key="frame" x="15" y="54" width="40" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="7lW-u9-rxC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="7uE-5A-zPq"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="leading" secondItem="zes-64-fhc" secondAttribute="leading" id="4Se-CK-bnu"/>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="trailing" secondItem="350-HR-ZE0" secondAttribute="trailingMargin" id="CMw-6t-yii"/>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="top" secondItem="7uE-5A-zPq" secondAttribute="top" id="CUg-tR-TQm"/>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="trailing" secondItem="zes-64-fhc" secondAttribute="trailing" id="ENl-Fe-t67"/>
-                            <constraint firstItem="zes-64-fhc" firstAttribute="top" secondItem="XUQ-Ec-i2Z" secondAttribute="bottom" constant="8" symbolic="YES" id="fhG-IE-WbN"/>
-                            <constraint firstItem="XUQ-Ec-i2Z" firstAttribute="leading" secondItem="350-HR-ZE0" secondAttribute="leadingMargin" id="sJ4-c1-tPV"/>
+                            <constraint firstItem="zes-64-fhc" firstAttribute="trailing" secondItem="TQc-iF-7L6" secondAttribute="trailing" id="68N-ox-YVx"/>
+                            <constraint firstItem="Tex-Z5-fq4" firstAttribute="leading" secondItem="7uE-5A-zPq" secondAttribute="leading" constant="15" id="AX8-RH-zeJ"/>
+                            <constraint firstItem="zes-64-fhc" firstAttribute="leading" secondItem="Tex-Z5-fq4" secondAttribute="leading" id="Ndw-sj-Phu"/>
+                            <constraint firstItem="7uE-5A-zPq" firstAttribute="trailing" secondItem="TQc-iF-7L6" secondAttribute="trailing" constant="15" id="Ur5-D7-O96"/>
+                            <constraint firstItem="zes-64-fhc" firstAttribute="top" secondItem="Tex-Z5-fq4" secondAttribute="bottom" constant="10" id="V5L-Dd-hy2"/>
+                            <constraint firstItem="TQc-iF-7L6" firstAttribute="leading" secondItem="Tex-Z5-fq4" secondAttribute="trailing" constant="5" id="Y9l-Z6-a5P"/>
+                            <constraint firstItem="TQc-iF-7L6" firstAttribute="centerY" secondItem="Tex-Z5-fq4" secondAttribute="centerY" id="bor-J6-gnb"/>
+                            <constraint firstItem="Tex-Z5-fq4" firstAttribute="top" secondItem="7uE-5A-zPq" secondAttribute="top" constant="10" id="nEJ-Ag-VAQ"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="7uE-5A-zPq"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Create Submission" id="vGp-na-2hD">
+                    <navigationItem key="navigationItem" title="Give Award" largeTitleDisplayMode="always" id="vGp-na-2hD">
                         <barButtonItem key="rightBarButtonItem" title="Submit" id="79Z-0B-3kF">
                             <connections>
-                                <action selector="submit:" destination="ykx-ft-nb4" id="PE6-Jm-Yba"/>
+                                <action selector="submitAward:" destination="ykx-ft-nb4" id="emb-gx-3pl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="descriptionField" destination="zes-64-fhc" id="PEk-WU-2A7"/>
+                        <outlet property="descriptionField" destination="zes-64-fhc" id="aoJ-gu-kr8"/>
+                        <outlet property="pprField" destination="Tex-Z5-fq4" id="Haa-KS-3hG"/>
                         <outlet property="submitButton" destination="79Z-0B-3kF" id="DbE-dh-9QG"/>
-                        <outlet property="typeLabel" destination="XUQ-Ec-i2Z" id="HWI-wv-708"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXF-kv-K3q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="844" y="717"/>
+            <point key="canvasLocation" x="-26" y="656"/>
         </scene>
     </scenes>
     <resources>
         <image name="Settings" width="25" height="25"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
