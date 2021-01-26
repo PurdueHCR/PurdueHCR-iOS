@@ -389,7 +389,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             // FIRE BASE HELPER METHOD TO ADD EVENT
             fbh.addEvent(event: newEvent) { (err) in
                 if (err != nil) {
-                    
+                    self.notify(title: "Error Creating Event", subtitle: "", style: .danger)
+                    self.createEventButton.isEnabled = true
                 } else {
                     
                     self.fbh.getEvents() { (eventsAPI, err) in
@@ -398,8 +399,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                         } else {
                             print("Not an error in getEvents()")
                             events = eventsAPI
-                            self.performSegueToReturnBack(fromEdit: false, event: nil)
                             self.createEventButton.isEnabled = true
+                            self.performSegueToReturnBack(fromEdit: false, event: nil)
                         }
                     }
                 }
@@ -407,7 +408,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         } else {
             fbh.editEvent(event: newEvent, origID: event.eventID) { (err, event) in
                 if (err != nil) {
-                    
+                    self.notify(title: "Error Editing Event", subtitle: "", style: .danger)
+                    self.createEventButton.isEnabled = true
                 } else {
                     print("No error in Edit")
                     
