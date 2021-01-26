@@ -37,7 +37,7 @@ class EventViewController: UITableViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
+                
         fbh.getEvents() { (eventsAPI, err) in
             if (err != nil) {
                 print("Error in getEvents()")
@@ -117,7 +117,7 @@ class EventViewController: UITableViewController {
         let p = permission as! Int
 
         if p == 0 {
-            houseImageView.isHidden = false
+            houseImageView?.isHidden = false
         }
         
         if (!filtered) {
@@ -162,8 +162,6 @@ class EventViewController: UITableViewController {
                     print("Not an error in getEventsCreated()")
                     filteredEvents = eventsAPI
                     filteredEvents = Event.sortEvents(events: filteredEvents)
-                    print("EVENTS HAVE BEEN SORTED")
-
                     self.tableView.reloadData()
                     self.removeSpinner()
                 }
@@ -180,7 +178,6 @@ class EventViewController: UITableViewController {
                     print("Not an error in getEventsCreated()")
                     events = eventsAPI
                     events = Event.sortEvents(events: events)
-                    print("EVENTS HAVE BEEN SORTED")
                     self.tableView.reloadData()
                     self.removeSpinner()
                 }
@@ -202,7 +199,6 @@ class EventViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        print("CALLING NUM UNIQUE DATES")
         if (!filtered) {
             return Event.getNumUniqueDates(events: events)
         } else {
@@ -401,7 +397,7 @@ class EventViewController: UITableViewController {
 
         let xTranslation = max(0, sizeDiff - coeff * sizeDiff)
 
-        houseImageView.transform = CGAffineTransform.identity
+        houseImageView?.transform = CGAffineTransform.identity
             .scaledBy(x: scale, y: scale)
             .translatedBy(x: xTranslation, y: yTranslation)
     }
@@ -451,6 +447,7 @@ extension UIViewController {
         }
     }
 }
+
 
 
 

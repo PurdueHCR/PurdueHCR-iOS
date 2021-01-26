@@ -10,6 +10,7 @@
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
 		AA7A7F8925115CA5002BD54B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */; };
 		AA7A7F8B251182FA002BD54B /* EventTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */; };
+		AA907CAA25BE21C50096A042 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA907CA925BE21C50096A042 /* GoogleService-Info.plist */; };
 		AAAAC631251EDF0300C0E2C8 /* EventHostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAC630251EDF0300C0E2C8 /* EventHostTableViewController.swift */; };
 		AAF279F42555DA7600D7028D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAF279F32555DA7600D7028D /* Events.storyboard */; };
 		AAF279FE2556360200D7028D /* SelectFloorsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF279FD2556360200D7028D /* SelectFloorsTableViewController.swift */; };
@@ -31,7 +32,6 @@
 		B5AE2D4D23DCA68C00B2323C /* FirebaseListenerUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE2D4C23DCA68C00B2323C /* FirebaseListenerUtil.swift */; };
 		B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */; };
 		B5BD40B723C6847200E8D48F /* RECPointDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */; };
-		B5C8C8B925B7CACD00753877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5C8C88C25B7C94900753877 /* GoogleService-Info.plist */; };
 		B5D6AF5524FAE20500CC5E86 /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D6AF5424FAE20500CC5E86 /* LogoutView.xib */; };
 		B5D6AF5724FAE89B00CC5E86 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D6AF5624FAE89B00CC5E86 /* LogoutView.swift */; };
 		B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D88D5623C39688007A19D0 /* TopScorersView.swift */; };
@@ -122,6 +122,7 @@
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		AA907CA925BE21C50096A042 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AAAAC630251EDF0300C0E2C8 /* EventHostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHostTableViewController.swift; sourceTree = "<group>"; };
 		AAF279F32555DA7600D7028D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		AAF279FD2556360200D7028D /* SelectFloorsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectFloorsTableViewController.swift; path = PurdueHCR/Storyboards/SelectFloorsTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -148,7 +149,6 @@
 		B5AE2D4C23DCA68C00B2323C /* FirebaseListenerUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseListenerUtil.swift; sourceTree = "<group>"; };
 		B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HousePointsHistoryViewController.swift; path = PurdueHCR/ViewControllers/ProfileViewControllers/HousePointsHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RECPointDescriptionView.xib; sourceTree = "<group>"; };
-		B5C8C88C25B7C94900753877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5D6AF5424FAE20500CC5E86 /* LogoutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogoutView.xib; sourceTree = "<group>"; };
 		B5D6AF5624FAE89B00CC5E86 /* LogoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		B5D88D5623C39688007A19D0 /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
@@ -272,6 +272,7 @@
 			children = (
 				B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */,
 				B55B2F46253F9BD500A91173 /* GoogleService-Info.plist */,
+				AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -389,7 +390,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				B5C8C88C25B7C94900753877 /* GoogleService-Info.plist */,
+				AA907CA925BE21C50096A042 /* GoogleService-Info.plist */,
 				B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */,
 				B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */,
 				B532665B24F454E1005ABEEC /* PurdueHCRRelease.entitlements */,
@@ -705,7 +706,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5C8C8B925B7CACD00753877 /* GoogleService-Info.plist in Resources */,
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
 				D3355C8F214A25B10037556C /* Profile.storyboard in Resources */,
 				B551BDD321B1004F00CF4F6C /* Register in Resources */,
@@ -725,6 +725,7 @@
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
+				AA907CAA25BE21C50096A042 /* GoogleService-Info.plist in Resources */,
 				AA7A7F8925115CA5002BD54B /* GoogleService-Info.plist in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
@@ -853,7 +854,6 @@
 				D3CC77CE21052CEF00B88F03 /* AppUtils.swift in Sources */,
 				D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */,
 				AAAAC631251EDF0300C0E2C8 /* EventHostTableViewController.swift in Sources */,
-				D3912A6C219CE77B0002E7C7 /* GrantAwardTableViewController.swift in Sources */,
 				D345C96B20F3CC1B00ACDF39 /* FirebaseHelper.swift in Sources */,
 				AA7A7F8B251182FA002BD54B /* EventTableViewHeaderFooterView.swift in Sources */,
 				D3912A6B219CE77B0002E7C7 /* SubmitGrantedAwardViewController.swift in Sources */,
