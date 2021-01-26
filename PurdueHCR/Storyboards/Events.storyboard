@@ -31,7 +31,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XL-76-KTk" userLabel="Event Time">
-                                            <rect key="frame" x="350" y="15" width="54" height="29"/>
+                                            <rect key="frame" x="301" y="15" width="103" height="29"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="103" id="9oK-yI-KL9"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -74,8 +77,8 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="URZ-Rr-4Bc" secondAttribute="trailing" constant="10" id="3S3-jt-RQn"/>
-                                        <constraint firstAttribute="trailing" secondItem="7XL-76-KTk" secondAttribute="trailing" constant="10" id="Bxu-sE-VZy"/>
+                                        <constraint firstAttribute="right" secondItem="URZ-Rr-4Bc" secondAttribute="right" constant="10" id="3S3-jt-RQn"/>
+                                        <constraint firstAttribute="right" secondItem="7XL-76-KTk" secondAttribute="right" constant="10" id="Bxu-sE-VZy"/>
                                         <constraint firstItem="Vmg-FO-qkB" firstAttribute="top" secondItem="7XL-76-KTk" secondAttribute="bottom" constant="8" id="P9l-dg-aAK"/>
                                         <constraint firstItem="ezl-jZ-dvI" firstAttribute="leading" secondItem="irL-7m-jJk" secondAttribute="leading" constant="10" id="QMd-pI-Ow6"/>
                                         <constraint firstAttribute="bottom" secondItem="URZ-Rr-4Bc" secondAttribute="bottom" constant="8" id="ZcY-OY-Ne2"/>
@@ -83,7 +86,7 @@
                                         <constraint firstItem="URZ-Rr-4Bc" firstAttribute="leading" secondItem="bTH-EY-K13" secondAttribute="leading" id="bHz-jP-ktF"/>
                                         <constraint firstItem="7XL-76-KTk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bTH-EY-K13" secondAttribute="trailing" constant="10" id="bJE-GE-mqc"/>
                                         <constraint firstAttribute="bottom" secondItem="ezl-jZ-dvI" secondAttribute="bottom" constant="10" id="gJD-g8-Biz"/>
-                                        <constraint firstAttribute="trailing" secondItem="Vmg-FO-qkB" secondAttribute="trailing" constant="10" id="hIJ-nf-JA0"/>
+                                        <constraint firstAttribute="right" secondItem="Vmg-FO-qkB" secondAttribute="right" constant="10" id="hIJ-nf-JA0"/>
                                         <constraint firstItem="Vmg-FO-qkB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rR3-Ey-3aX" secondAttribute="trailing" constant="10" id="i3i-GF-vcL"/>
                                         <constraint firstItem="bTH-EY-K13" firstAttribute="leading" secondItem="ezl-jZ-dvI" secondAttribute="trailing" constant="10" id="ig9-jI-Fe5"/>
                                         <constraint firstItem="ezl-jZ-dvI" firstAttribute="top" secondItem="irL-7m-jJk" secondAttribute="top" constant="10" id="kix-rT-clX"/>
@@ -603,6 +606,7 @@
                     <connections>
                         <outlet property="chooseHostField" destination="Drw-y7-rS5" id="u1a-e5-2ZK"/>
                         <outlet property="createEventButton" destination="OrE-4V-4gI" id="fEY-An-txf"/>
+                        <outlet property="deleteEventButton" destination="g3W-yo-cPd" id="CuV-fP-M7h"/>
                         <outlet property="hostEventSwitch" destination="0Ui-fA-iVb" id="aPf-24-qvh"/>
                         <outlet property="newEventAllHousesSwitch" destination="gt2-GG-SMA" id="kHo-c7-Cpd"/>
                         <outlet property="newEventCustomFloorButton" destination="Pjf-Lx-Il3" id="bh1-O9-0nZ"/>
@@ -987,7 +991,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RVA-Vd-bqB"/>
+        <segue reference="i9x-eG-wUT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

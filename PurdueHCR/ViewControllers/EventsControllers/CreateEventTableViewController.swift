@@ -27,6 +27,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     @IBOutlet weak var hostEventSwitch: UISwitch!
     @IBOutlet weak var chooseHostField: UITextField!
     @IBOutlet weak var createEventButton: UIButton!
+    @IBOutlet weak var deleteEventButton: UIButton!
     
     
     let fbh = FirebaseHelper()
@@ -40,6 +41,9 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        
         newEventPointType.delegate = self
         newEventPointType.dataSource = self
         
@@ -93,6 +97,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                 newEventCustomFloorButton.setTitle(floorString, for: .normal)
             }
             
+            createEventButton.isEnabled = true
             let p = User.get(.permissionLevel) as! Int
             if (p == 3) {
                 disableFhpFloorsInvited()
@@ -242,6 +247,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             floorsSelected = event.floors
             
             createEventButton.setTitle("Update Event", for: .normal)
+            createEventButton.isEnabled = true
+            deleteEventButton.isEnabled = true
         }
     }
     
@@ -374,6 +381,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     
     @IBAction func createOrEditEvent(_ sender: UIButton) {
         print("Create or edit")
+        createEventButton.isEnabled = false
         let newEvent = createNewEvent()
         if (creating) {
             //events.append(newEvent)
@@ -381,7 +389,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             // FIRE BASE HELPER METHOD TO ADD EVENT
             fbh.addEvent(event: newEvent) { (err) in
                 if (err != nil) {
-                    
+                    self.notify(title: "Error Creating Event", subtitle: "", style: .danger)
+                    self.createEventButton.isEnabled = true
                 } else {
                     
                     self.fbh.getEvents() { (eventsAPI, err) in
@@ -390,6 +399,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                         } else {
                             print("Not an error in getEvents()")
                             events = eventsAPI
+                            self.createEventButton.isEnabled = true
                             self.performSegueToReturnBack(fromEdit: false, event: nil)
                         }
                     }
@@ -398,7 +408,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         } else {
             fbh.editEvent(event: newEvent, origID: event.eventID) { (err, event) in
                 if (err != nil) {
-                    
+                    self.notify(title: "Error Editing Event", subtitle: "", style: .danger)
+                    self.createEventButton.isEnabled = true
                 } else {
                     print("No error in Edit")
                     
@@ -409,6 +420,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                             print("Not an error in getEvents() inside editEvents()")
                             events = eventsAPI
                             self.performSegueToReturnBack(fromEdit: true, event: event)
+                            self.createEventButton.isEnabled = true
                         }
                     }
                 }
@@ -490,6 +502,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         // If this is the case, call edit API and then call read API.
         print("Calling delete event")
         
+        deleteEventButton.isEnabled = false
 
         fbh.deleteEvent(origID: event.eventID) { (err) in
             if (err != nil) {
@@ -505,6 +518,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                         events = eventsAPI
                         self.performSegueToReturnBack(fromEdit: false, event: nil)
                         self.performSegueToReturnBack(fromEdit: false, event: nil)
+                        self.deleteEventButton.isEnabled = true
                     }
                 }
             }
