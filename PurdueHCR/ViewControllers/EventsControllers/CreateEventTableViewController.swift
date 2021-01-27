@@ -47,7 +47,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         newEventPointType.delegate = self
         newEventPointType.dataSource = self
         
-        createEventButton.layer.cornerRadius = 4
+        createEventButton.layer.cornerRadius = DefinedValues.radius
+        deleteEventButton.layer.cornerRadius = DefinedValues.radius
         
         chooseHostField.isEnabled = false
         chooseHostField.textColor = UIColor.gray
@@ -506,7 +507,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
 
         fbh.deleteEvent(origID: event.eventID) { (err) in
             if (err != nil) {
-                
+                self.deleteEventButton.isEnabled = true
+                self.notify(title: "Error Deleting Event", subtitle: "", style: .danger)
             } else {
                 print("No eror")
                 

@@ -134,7 +134,7 @@
         <scene sceneID="SZC-iT-Q5f">
             <objects>
                 <tableViewController id="IUJ-Jc-kjI" userLabel="Create Event Table View Controller" customClass="CreateEventTableViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Cr6-ps-yeD">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Cr6-ps-yeD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -533,15 +533,15 @@
                                             <constraint firstAttribute="bottom" secondItem="uUL-MV-Vq5" secondAttribute="bottom" id="zg8-3e-GE0"/>
                                         </constraints>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="naP-om-njB" userLabel="Create Event Table View Cell">
-                                        <rect key="frame" x="0.0" y="1113" width="414" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="75" id="naP-om-njB" userLabel="Create Event Table View Cell">
+                                        <rect key="frame" x="0.0" y="1113" width="414" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="naP-om-njB" id="Zgp-JZ-1uH">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OrE-4V-4gI">
-                                                    <rect key="frame" x="25" y="10" width="364" height="30"/>
+                                                    <rect key="frame" x="25" y="10" width="364" height="55"/>
                                                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <state key="normal" title="Create Event">
@@ -563,19 +563,16 @@
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
                                         </accessibility>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="bjg-rL-rSL" userLabel="Delete Event Table View Cell">
-                                        <rect key="frame" x="0.0" y="1163" width="414" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="75" id="bjg-rL-rSL" userLabel="Delete Event Table View Cell">
+                                        <rect key="frame" x="0.0" y="1188" width="414" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bjg-rL-rSL" id="aYA-JO-GA5">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3W-yo-cPd" userLabel="Delete Event">
-                                                    <rect key="frame" x="25" y="10" width="364" height="30"/>
+                                                    <rect key="frame" x="25" y="10" width="364" height="55"/>
                                                     <color key="backgroundColor" systemColor="systemRedColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="mnk-8k-dml"/>
-                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                     <state key="normal" title="Delete Event">
@@ -991,7 +988,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="i9x-eG-wUT"/>
+        <segue reference="RVA-Vd-bqB"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

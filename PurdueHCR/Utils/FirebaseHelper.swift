@@ -1164,7 +1164,7 @@ class FirebaseHelper {
         DataManager.sharedManager.getAuthorizationToken { (token, err) in
             //var events: [Event?]?
             if let err = err {
-                print("Error in addEvent()")
+                print("Error getting authorization token")
                 //events = nil
                 onDone(err)
             }
@@ -1220,7 +1220,7 @@ class FirebaseHelper {
                     print(response.error!.errorDescription!)
                 }
             }
-            onDone(RetrievalError.unableToParseResponse)
+            //onDone(RetrievalError.unableToParseResponse)
         }
     }
     
@@ -1232,42 +1232,44 @@ class FirebaseHelper {
             print("Error in retrieving auth token in getEvents()")
             onDone(events, err)
          }
-         let headerVal = "Bearer " + (token ?? "")
-         let header = HTTPHeader(name: "Authorization", value: headerVal)
-         let headers = HTTPHeaders(arrayLiteral: header)
+        let headers = self.generateHTTPHeader(token: token!)
          let url = URL(string: self.GET_EVENT_URL)!
          AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
-             if let results = response.value as? [String : Any] {
-                // Parse Event Supplied
-                let eventsReturned = results["events"] as! [[String:Any]]
-                
-                for result in eventsReturned {
+            switch response.result {
+            case .success:
+                if let results = response.value as? [String : Any] {
+                    // Parse Event Supplied
+                    let eventsReturned = results["events"] as! [[String:Any]]
                     
-                    let name = result["name"] as! String
-                    let location = result["location"] as! String
-                    let pointTypeId = result["pointTypeId"] as! String
-                    let floorIds = result["floorIds"] as! [String]
-                    let details = result["details"] as! String
-                    let isPublicEvent = result["isPublicEvent"] as! Bool
-                    let startDate = result["startDate"] as! String
-                    let endDate = result["endDate"] as! String
-                    let creatorId = result["creatorId"] as! String
-                    let host = result["host"] as! String
-                    let floorColors = result["floorColors"] as! [String]
-                    let id = result["id"] as! String
+                    for result in eventsReturned {
+                       
+                       let name = result["name"] as! String
+                       let location = result["location"] as! String
+                       let pointTypeId = result["pointTypeId"] as! String
+                       let floorIds = result["floorIds"] as! [String]
+                       let details = result["details"] as! String
+                       let isPublicEvent = result["isPublicEvent"] as! Bool
+                       let startDate = result["startDate"] as! String
+                       let endDate = result["endDate"] as! String
+                       let creatorId = result["creatorId"] as! String
+                       let host = result["host"] as! String
+                       let floorColors = result["floorColors"] as! [String]
+                       let id = result["id"] as! String
 
-                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
-                    
-                    events.append(event)
+                       let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                       
+                       events.append(event)
+                   }
+                   
+                   onDone(events, nil)
                 }
-                
-                onDone(events, nil)
-             } else {
+            case .failure:
                 print(response)
                 print("Failed Events Attempt")
+                onDone(events, RetrievalError.unableToParseResponse)
              }
          }
-         onDone(events, RetrievalError.unableToParseResponse)
+         //onDone(events, RetrievalError.unableToParseResponse)
         }
     }
     
@@ -1329,9 +1331,10 @@ class FirebaseHelper {
                     onDone(nil, event)
                 } else {
                     print(response.error!.errorDescription!)
+                    onDone(RetrievalError.unableToParseResponse, nil)
                 }
             }
-            onDone(RetrievalError.unableToParseResponse, nil)
+            //onDone(RetrievalError.unableToParseResponse, nil)
         }
     }
     
@@ -1358,9 +1361,10 @@ class FirebaseHelper {
                     onDone(nil)
                 } else {
                     print(response.error!.errorDescription!)
+                    onDone(RetrievalError.unableToParseResponse)
                 }
             }
-            onDone(RetrievalError.unableToParseResponse)
+            //onDone(RetrievalError.unableToParseResponse)
         }
     }
      
@@ -1404,9 +1408,10 @@ class FirebaseHelper {
             } else {
                print(response)
                print("Failed Events Created Attempt")
+                onDone(events, RetrievalError.unableToParseResponse)
             }
          }
-         onDone(events, RetrievalError.unableToParseResponse)
+         //onDone(events, RetrievalError.unableToParseResponse)
         }
     }
     
