@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class CreateEventTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class CreateEventTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
      
     @IBOutlet weak var newEventName: UITextField!
     @IBOutlet weak var newEventStartDate: UIDatePicker!
@@ -60,6 +60,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         newEventIsPublicLabel.textColor = UIColor.gray
         
         pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
+        
+        newEventStartDate.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         
         self.tableView.reloadData()
     }
@@ -546,6 +548,19 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             let dest = segue.destination as! SelectFloorsTableViewController
             dest.delegate = self
         }
+    }
+    
+    @objc func dateChanged(_ sender: UIDatePicker) {
+        let startDate = sender.date
+        // Make end date the start date plus 1 hour
+        let endDate = startDate.addingTimeInterval(TimeInterval(3600))
+        newEventEndDate.date = endDate
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
 

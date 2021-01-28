@@ -21,7 +21,7 @@ class ViewEventTableViewController: UITableViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var hostLabel: UILabel!
     @IBOutlet weak var attendeeLabel: UILabel!
-    @IBOutlet weak var detailsLabel: UILabel!
+    @IBOutlet weak var detailsLabel: UITextView!
     
     var going = false // To be set later when connected to database
     var event = Event()
@@ -56,7 +56,7 @@ class ViewEventTableViewController: UITableViewController {
         }
         
         self.nameLabel.text = event.name
-        self.nameLabel.numberOfLines = 1
+        //self.nameLabel.numberOfLines = 1
         self.nameLabel.sizeToFit()
         
         let dateFormatter = DateFormatter()
@@ -107,9 +107,9 @@ class ViewEventTableViewController: UITableViewController {
         self.attendeeLabel.sizeToFit()
         
         self.detailsLabel.text = event.details
-        self.detailsLabel.numberOfLines = 0
-        self.detailsLabel.lineBreakMode = .byWordWrapping
+        //self.detailsLabel.translatesAutoresizingMaskIntoConstraints = true
         self.detailsLabel.sizeToFit()
+        self.detailsLabel.isScrollEnabled = false
         
 //        if (going) {
 //            if #available(iOS 13.0, *) {
