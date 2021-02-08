@@ -75,7 +75,6 @@ class HousePointsCompareView: UIView {
             
             let data = BarChartData(dataSets: [fourthplace,secondPlace,firstPlace,thirdPlace,fifthPlace])
             
-            
             chart.rightAxis.enabled = false
             chart.rightAxis.drawLabelsEnabled = false
             chart.rightAxis.drawGridLinesEnabled = false
@@ -90,8 +89,7 @@ class HousePointsCompareView: UIView {
             
             chart.xAxis.enabled = false
             chart.xAxis.drawLabelsEnabled = false
-            
-            
+                        
             chart.drawBordersEnabled = false
             chart.chartDescription?.enabled = false
             chart.setScaleEnabled(false);
@@ -101,12 +99,11 @@ class HousePointsCompareView: UIView {
             chart.legend.horizontalAlignment = Legend.HorizontalAlignment.center
             chart.autoScaleMinMaxEnabled = false
             chart.drawGridBackgroundEnabled = false
-            
-            
-            
-            
+
             chart.data = data
 
+            chart.xAxis.labelFont = UIFont.systemFont(ofSize: 15)
+            chart.animate(yAxisDuration: TimeInterval(1))
             
             //All other additions to this function will go here
             

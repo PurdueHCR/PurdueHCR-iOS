@@ -28,10 +28,18 @@ class ProfileView: UIView {
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var blackButton: UIButton!
     
+    // Rank labels for when both ranks are visible
+    @IBOutlet weak var bothRankView: UIView!
+    @IBOutlet weak var semesterRankBoth: UILabel!
+    @IBOutlet weak var yearRankBoth: UILabel!
+    
+    // For when only semester rank visible
+    @IBOutlet weak var semesterRankView: UIView!
+    @IBOutlet weak var semesterRankOnlyLabel: UILabel!
+    
+    
     var p : PopupView?
     
-    //@IBOutlet var achievementLabel: UILabel!
-//    @IBOutlet var pointsButton: UILabel! // change back to button for the Medals update
 	
     var transitionFunc: () ->() = {print("NO IMPLEMENTATION")}
     var isCompetitionVisible: Bool = true
@@ -114,7 +122,12 @@ class ProfileView: UIView {
                 if let err = err {
                     print(err.localizedDescription)
                 } else {
-                    self.rankNumberLabel.text = "#" + houseRank!.description
+                    let yearRank = "#" + houseRank!.description
+                    let semesterRank = "#" + semesterRank!.description
+                    self.rankNumberLabel.text = yearRank
+                    self.yearRankBoth.text = yearRank
+                    self.semesterRankBoth.text = semesterRank
+                    self.semesterRankOnlyLabel.text = semesterRank
                 }
             }
             
@@ -127,9 +140,7 @@ class ProfileView: UIView {
         
         totalPointsLabel.adjustsFontSizeToFitWidth = true
         totalPointsLabel.text = (User.get(.points) as! Int).description
-		
         totalPointsLabel.accessibilityIdentifier = "Resident Points"
-        
         
     }
     
