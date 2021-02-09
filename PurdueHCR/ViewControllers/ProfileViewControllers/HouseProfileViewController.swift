@@ -94,6 +94,9 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 houseImageView.widthAnchor.constraint(equalTo: houseImageView.heightAnchor)
                 ])
 		}
+        else if (permission == PointType.PermissionLevel.ea) {
+            self.navigationItem.rightBarButtonItems = nil
+        }
         /*if #available(iOS 13.0, *) {
             backgroundTable.backgroundColor = UIColor.systemGray5
         } else {
@@ -201,8 +204,13 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         
         let row = indexPath.row
         let isFHP = (permission == PointType.PermissionLevel.faculty)
-        
-        if (row == 0 && !isFHP) {
+        let isEA = (permission == PointType.PermissionLevel.ea)
+        let showProfileView = row == 0 && !isFHP && !isEA
+        let showCompareView = (!isFHP && !isEA && row == 1) || ((isFHP || isEA) && row == 0)
+        let showRewardsView = ((!isFHP && !isEA && row == 2) || (isFHP && row == 1)) && showRewards
+        let showTopScorersView = isFHP && row == 2 || (isFHP && row == 1 && !showRewards)
+    
+        if (showProfileView) {
             if (profileView == nil) {
                 profileView = ProfileView.init()
 //                profileView?.layer.shadowColor = UIColor.darkGray.cgColor
@@ -230,7 +238,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: profileView, attribute: .height, multiplier: 1, constant: padding+5)
             NSLayoutConstraint.activate([cellHeight])
         }
-        else if ((!isFHP && row == 1) || (isFHP && row == 0)) {
+        else if (showCompareView) {
             if (compareView == nil) {
                 compareView = HousePointsCompareView.init()
 //                compareView?.layer.shadowColor = UIColor.darkGray.cgColor
@@ -257,7 +265,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: compareView, attribute: .height, multiplier: 1, constant: padding)
             NSLayoutConstraint.activate([cellHeight])
         }
-        else if (((!isFHP && row == 2) || (isFHP && row == 1)) && showRewards) {
+        else if (showRewardsView) {
             if (houseView == nil) {
                 houseView = HousePointsView.init()
 //                houseView?.layer.shadowColor = UIColor.darkGray.cgColor
@@ -280,7 +288,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
             let cellHeight = NSLayoutConstraint(item: cell!, attribute: .height, relatedBy: .equal, toItem: houseView, attribute: .height, multiplier: 1, constant: padding)
             NSLayoutConstraint.activate([cellHeight])
         }
-        else if (isFHP && row == 2 || (isFHP && row == 1 && !showRewards)) {
+        else if (showTopScorersView) {
             if (topScorersView == nil) {
                 topScorersView = TopScorersView.init()
 //                topScorersView?.layer.shadowColor = UIColor.darkGray.cgColor

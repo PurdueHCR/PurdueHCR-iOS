@@ -23,7 +23,7 @@ class TabBarController: UITabBarController {
         }
         let p = permission as! Int
         var viewControllers : [UIViewController] = []
-        if (p == 0){
+        if (p == PointType.PermissionLevel.resident.rawValue){
             // Resident Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
@@ -31,7 +31,7 @@ class TabBarController: UITabBarController {
             
             //viewControllers.append(linkEventViewController())
         }
-        else if (p == 1){
+        else if (p == PointType.PermissionLevel.rhp.rawValue){
             // RHP Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
@@ -42,7 +42,7 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkQRCodeViewController())
 
         }
-        else if (p == 2){
+        else if (p == PointType.PermissionLevel.rec.rawValue){
             // REA/REC Controllers
             viewControllers.append(linkRECHouseViewController())
             viewControllers.append(linkQRCodeViewController())
@@ -50,16 +50,22 @@ class TabBarController: UITabBarController {
             viewControllers.append(linkRECRewardsViewController())
 
         }
-		else if (p == 3) {
+		else if (p == PointType.PermissionLevel.faculty.rawValue) {
 			//FHP Controllers
 			viewControllers.append(linkProfileViewController())
 			viewControllers.append(linkQRCodeViewController())
             viewControllers.append(linkEventViewController())
 		}
-        else if (p == 4) {
+        else if (p == PointType.PermissionLevel.priv.rawValue) {
             // Priviledged Resident Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
+            viewControllers.append(linkQRCodeViewController())
+        }
+        else if (p == PointType.PermissionLevel.ea.rawValue) {
+            // External Advisor Controllers
+            viewControllers.append(linkProfileViewController())
+            viewControllers.append(linkEventViewController())
             viewControllers.append(linkQRCodeViewController())
         }
         // Do any additional setup after loading the view.
