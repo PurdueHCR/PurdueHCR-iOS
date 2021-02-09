@@ -21,14 +21,17 @@ class ProfileView: UIView {
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var totalPointsLabel: UILabel!
 	@IBOutlet weak var viewPointsButton: UIButton!
-    @IBOutlet weak var rankNumberLabel: UILabel!
-    @IBOutlet weak var rankHeaderLabel: UILabel!
     @IBOutlet weak var houseEmblem: UIButton!
     @IBOutlet weak var houseNameLabel: UILabel!
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var blackButton: UIButton!
+
+    // For when only year rank visible
+    @IBOutlet weak var rankHeaderLabel: UILabel!
+    @IBOutlet weak var yearRankLabel: UILabel!
+    @IBOutlet weak var yearRankView: UIView!
     
-    // Rank labels for when both ranks are visible
+    // For when both ranks are visible
     @IBOutlet weak var bothRankView: UIView!
     @IBOutlet weak var semesterRankBoth: UILabel!
     @IBOutlet weak var yearRankBoth: UILabel!
@@ -37,9 +40,9 @@ class ProfileView: UIView {
     @IBOutlet weak var semesterRankView: UIView!
     @IBOutlet weak var semesterRankOnlyLabel: UILabel!
     
+    var rankViewIndex = 0
     
     var p : PopupView?
-    
 	
     var transitionFunc: () ->() = {print("NO IMPLEMENTATION")}
     var isCompetitionVisible: Bool = true
@@ -55,13 +58,26 @@ class ProfileView: UIView {
     }
     
     private func commonInit(){
-        
-        
         Bundle.main.loadNibNamed("ProfileView", owner: self, options: nil)
         addSubview(backgroundView)
         
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.switchRankViews(_:)))
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(self.switchRankViews(_:)))
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(self.switchRankViews(_:)))
+        bothRankView.addGestureRecognizer(tap)
+        semesterRankView.addGestureRecognizer(tap2)
+        yearRankView.addGestureRecognizer(tap3)
+
+        let defaults = UserDefaults.standard
+        if let layoutIndex = defaults.object(forKey: "rank_layout_index") {
+            rankViewIndex = layoutIndex as! Int
+        } else {
+            defaults.setValue(rankViewIndex, forKey: "rank_layout_index")
+        }
+        layoutRankViews()
 		
         viewPointsButton.layer.cornerRadius = viewPointsButton.layer.frame.height / 2
 		
@@ -124,7 +140,7 @@ class ProfileView: UIView {
                 } else {
                     let yearRank = "#" + houseRank!.description
                     let semesterRank = "#" + semesterRank!.description
-                    self.rankNumberLabel.text = yearRank
+                    self.yearRankLabel.text = yearRank
                     self.yearRankBoth.text = yearRank
                     self.semesterRankBoth.text = semesterRank
                     self.semesterRankOnlyLabel.text = semesterRank
@@ -132,7 +148,7 @@ class ProfileView: UIView {
             }
             
         } else {
-            self.rankNumberLabel.text = "🙈"
+            self.yearRankLabel.text = "🙈"
         }
     }
     
@@ -142,6 +158,40 @@ class ProfileView: UIView {
         totalPointsLabel.text = (User.get(.points) as! Int).description
         totalPointsLabel.accessibilityIdentifier = "Resident Points"
         
+    }
+    
+    // Setup which rank view is visible
+    func layoutRankViews() {
+        let defaults = UserDefaults.standard
+        switch (rankViewIndex) {
+        case 0:
+            semesterRankView.isHidden = false
+            yearRankView.isHidden = true
+            bothRankView.isHidden = true
+            defaults.setValue(rankViewIndex, forKey: "rank_layout_index")
+            rankViewIndex = 1
+            break
+        case 1:
+            semesterRankView.isHidden = true
+            yearRankView.isHidden = false
+            bothRankView.isHidden = true
+            defaults.setValue(rankViewIndex, forKey: "rank_layout_index")
+            rankViewIndex = 2
+            break
+        case 2:
+            semesterRankView.isHidden = true
+            yearRankView.isHidden = true
+            bothRankView.isHidden = false
+            defaults.setValue(rankViewIndex, forKey: "rank_layout_index")
+            rankViewIndex = 0
+            break
+        default:
+            break
+        }
+    }
+    
+    @objc func switchRankViews(_ sender: UITapGestureRecognizer? = nil) {
+        layoutRankViews()
     }
     
     @IBAction func showHouseCodes(_ sender: Any) {
