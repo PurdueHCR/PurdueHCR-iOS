@@ -23,6 +23,7 @@ class ViewEventTableViewController: UITableViewController {
     @IBOutlet weak var attendeeLabel: UILabel!
     @IBOutlet weak var detailsLabel: UITextView!
     
+    var delegate: EventViewController?
     var going = false // To be set later when connected to database
     var event = Event()
     
@@ -147,6 +148,7 @@ class ViewEventTableViewController: UITableViewController {
             let viewController = segue.destination as? CreateEventTableViewController
             viewController?.creating = false
             viewController?.event = event
+            viewController?.delegate = delegate
         }
     }
 

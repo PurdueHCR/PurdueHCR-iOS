@@ -13,6 +13,9 @@ var events: [Event] = [Event]()
 var filteredEvents: [Event] = [Event]()
 var filtered = false
 
+// Variable to store if child view has asked us to reload
+// Should only reload after create, edit, or delete
+
 let fbh = FirebaseHelper()
 
 class EventViewController: UITableViewController {
@@ -22,6 +25,7 @@ class EventViewController: UITableViewController {
     @IBOutlet weak var AddEventBarButton: UIBarButtonItem!
     @IBOutlet weak var FilterEventsBarButton: UIBarButtonItem!
     
+    var shouldReload = false
     var houseImageView: UIImageView!
     
     let cellSpacing: CGFloat = 35
@@ -42,7 +46,6 @@ class EventViewController: UITableViewController {
             if (err != nil) {
                 print("Error in getEvents()")
             } else {
-                print("Not an error in getEvents()")
                 events = eventsAPI
                 
                 self.tableView.register(EventTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
@@ -120,13 +123,20 @@ class EventViewController: UITableViewController {
             houseImageView?.isHidden = false
         }
         
+        if (shouldReload) {
+            // Child told us to reload data
+            shouldReload = false
+            reloadData()
+        }
+    }
+    
+    func reloadData() {
         if (!filtered) {
             fbh.getEvents() { (eventsAPI, err) in
                 if (err != nil) {
                     print("Error in getEvents()")
                     //self.removeSpinner()
                 } else {
-                    print("Not an error in getEvents()")
                     filteredEvents = eventsAPI
                     filteredEvents = Event.sortEvents(events: filteredEvents)
                     self.tableView.reloadData()
@@ -139,7 +149,6 @@ class EventViewController: UITableViewController {
                     print("Error in getEvents()")
                     //self.removeSpinner()
                 } else {
-                    print("Not an error in getEvents()")
                     events = eventsAPI
                     events = Event.sortEvents(events: events)
                     self.tableView.reloadData()
@@ -220,8 +229,8 @@ class EventViewController: UITableViewController {
         cell.layer.masksToBounds = true
         
         // Creates vertical space between same-day events (no date in between them)
-        cell.layer.borderWidth = 4
-        cell.layer.borderColor = UIColor.white.cgColor
+        //cell.layer.borderWidth = 4
+        //cell.layer.borderColor = UIColor.white.cgColor
          
         let sectionIndex: Int
         if (!filtered) {
@@ -285,23 +294,23 @@ class EventViewController: UITableViewController {
         return cellSpacing
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! EventTableViewHeaderFooterView
-        
-        header.configureContents()
-        
-        var headerText: String = ""
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Event.dateFormat
-
-        
-        if (!filtered) {
-            let sectionIndex = Event.startingIndexForSection(section: section, events: events)
-            headerText = dateFormatter.string(from: events[sectionIndex].startDate)
-        } else {
-            let sectionIndex = Event.startingIndexForSection(section: section, events: filteredEvents)
-            headerText = dateFormatter.string(from: filteredEvents[sectionIndex].startDate)
-        }
+//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! EventTableViewHeaderFooterView
+//
+//        header.configureContents()
+//
+//        var headerText: String = ""
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = Event.dateFormat
+//
+//
+//        if (!filtered) {
+//            let sectionIndex = Event.startingIndexForSection(section: section, events: events)
+//            headerText = dateFormatter.string(from: events[sectionIndex].startDate)
+//        } else {
+//            let sectionIndex = Event.startingIndexForSection(section: section, events: filteredEvents)
+//            headerText = dateFormatter.string(from: filteredEvents[sectionIndex].startDate)
+//        }
 
 //        if section == 0 {
 //            if (!filtered) {
@@ -328,10 +337,10 @@ class EventViewController: UITableViewController {
 //            }
 //        }
         
-        header.title.text = headerText
-        
-        return header
-    }
+//        header.title.text = headerText
+//
+//        return header
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is ViewEventTableViewController {
@@ -344,6 +353,7 @@ class EventViewController: UITableViewController {
             }
             let viewController = segue.destination as? ViewEventTableViewController
             let eventSender = sender as? EventTableViewCell
+            viewController?.delegate = self
             if (!filtered) {
                 viewController?.event = events[eventSender!.eventIndex]
             } else {
@@ -352,6 +362,7 @@ class EventViewController: UITableViewController {
         } else if segue.destination is CreateEventTableViewController {
             let viewController = segue.destination as? CreateEventTableViewController
             viewController?.creating = true
+            viewController?.delegate = self
         }
     }
     
