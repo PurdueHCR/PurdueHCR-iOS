@@ -102,8 +102,7 @@ class HousePointsCompareView: UIView {
 
             chart.data = data
 
-            chart.xAxis.labelFont = UIFont.systemFont(ofSize: 15)
-            chart.animate(yAxisDuration: TimeInterval(1))
+            chart.data?.setValueFont(UIFont.systemFont(ofSize: 9))
             
             //All other additions to this function will go here
             
