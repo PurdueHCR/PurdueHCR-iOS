@@ -55,7 +55,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         
         let firstName = User.get(.firstName) as! String
         let lastName = User.get(.lastName) as! String
-        self.title = firstName + " " + lastName
+        self.navigationItem.title = firstName + " " + lastName
         
         refresher = UIRefreshControl()
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
