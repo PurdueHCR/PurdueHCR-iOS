@@ -35,6 +35,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     var pointTypes: [PointType] = [PointType]()
     var pointTypesIndex = 0
     
+    var delegate: EventViewController?
+    
     var creating: Bool = true // True if view is for creating and event. False if view is for editing/deleting an event.
     var event = Event()
     
@@ -47,7 +49,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         newEventPointType.delegate = self
         newEventPointType.dataSource = self
         
-        createEventButton.layer.cornerRadius = 4
+        createEventButton.layer.cornerRadius = DefinedValues.radius
+        deleteEventButton.layer.cornerRadius = DefinedValues.radius
         
         chooseHostField.isEnabled = false
         chooseHostField.textColor = UIColor.gray
@@ -407,7 +410,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                         if (err != nil) {
                             print("Error in getEvents()")
                         } else {
-                            print("Not an error in getEvents()")
+                            self.delegate?.shouldReload = true
                             events = eventsAPI
                             self.createEventButton.isEnabled = true
                             self.performSegueToReturnBack(fromEdit: false, event: nil)
@@ -427,7 +430,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                         if (err != nil) {
                             print("Error in getEvents() inside editEvents()")
                         } else {
-                            print("Not an error in getEvents() inside editEvents()")
+                            self.delegate?.shouldReload = true
                             events = eventsAPI
                             self.performSegueToReturnBack(fromEdit: true, event: event)
                             self.createEventButton.isEnabled = true
@@ -439,7 +442,6 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     }
     
     func createNewEvent() -> Event {
-        print("In create")
         let name = newEventName.text!
         
         let dateFormatter = DateFormatter()
@@ -516,7 +518,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
 
         fbh.deleteEvent(origID: event.eventID) { (err) in
             if (err != nil) {
-                
+                self.deleteEventButton.isEnabled = true
+                self.notify(title: "Error Deleting Event", subtitle: "", style: .danger)
             } else {
                 print("No eror")
                 
@@ -529,6 +532,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                         self.performSegueToReturnBack(fromEdit: false, event: nil)
                         self.performSegueToReturnBack(fromEdit: false, event: nil)
                         self.deleteEventButton.isEnabled = true
+                        self.delegate?.shouldReload = true
                     }
                 }
             }

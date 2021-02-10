@@ -34,19 +34,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jzu-Uv-Eu4">
-                                <rect key="frame" x="0.0" y="44" width="414" height="160"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="175"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="160" id="dUk-Qf-y6l"/>
+                                    <constraint firstAttribute="height" constant="175" id="dUk-Qf-y6l"/>
                                 </constraints>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Can scan multiple times:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiX-kw-LBb">
-                                <rect key="frame" x="20" y="204" width="186" height="39"/>
+                                <rect key="frame" x="20" y="219" width="186" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="KDe-eT-Bkh">
-                                <rect key="frame" x="351" y="208" width="51" height="31"/>
+                                <rect key="frame" x="351" y="223" width="51" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="0wZ-ib-tfE"/>
                                 </constraints>
@@ -55,7 +55,7 @@
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pqy-7r-qWZ">
-                                <rect key="frame" x="76" y="383" width="262" height="40"/>
+                                <rect key="frame" x="76" y="398" width="262" height="40"/>
                                 <color key="backgroundColor" red="0.81014880150000002" green="0.79813140849999997" blue="0.86967431750000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="GM2-Ut-3pp"/>
@@ -79,7 +79,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter point description here." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7zI-S4-lwL">
-                                <rect key="frame" x="20" y="247" width="374" height="128"/>
+                                <rect key="frame" x="20" y="262" width="374" height="128"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="fCD-5J-x6c"/>
@@ -88,7 +88,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                             </textView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="613-9m-V54">
-                                <rect key="frame" x="197" y="393" width="20" height="20"/>
+                                <rect key="frame" x="197" y="408" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qOZ-Db-HBF"/>
@@ -212,10 +212,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icz-Ou-EmI">
-                                <rect key="frame" x="0.0" y="96" width="414" height="640"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUQ-79-rrv" userLabel="Subview">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="640"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="QR Code Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SGc-Wc-EST">
                                                 <rect key="frame" x="25" y="340" width="374" height="50"/>
@@ -239,7 +239,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Archived" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3U2-1o-BnY">
-                                                <rect key="frame" x="268" y="456.33333333333337" width="67" height="20.333333333333314"/>
+                                                <rect key="frame" x="268" y="456.33333333333331" width="67" height="20.333333333333314"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -323,7 +323,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2B-Ag-b1q">
-                                                <rect key="frame" x="63.333333333333343" y="435.33333333333337" width="19" height="36"/>
+                                                <rect key="frame" x="63.333333333333343" y="435.33333333333331" width="19" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="30"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -396,7 +396,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wz4-yh-41l"/>
+        <segue reference="dzV-p3-AiX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
