@@ -23,7 +23,7 @@ class EventViewController: UITableViewController {
     
     //@IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var AddEventBarButton: UIBarButtonItem!
-    @IBOutlet weak var FilterEventsBarButton: UIBarButtonItem!
+    @IBOutlet weak var filterEventsBarButton: UIBarButtonItem!
     
     var shouldReload = false
     var houseImageView: UIImageView!
@@ -41,14 +41,15 @@ class EventViewController: UITableViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        //tableView.separatorStyle = .singleLine
+        tableView.separatorColor = UIColor.black
                 
         fbh.getEvents() { (eventsAPI, err) in
             if (err != nil) {
                 print("Error in getEvents()")
             } else {
                 events = eventsAPI
-                
-                self.tableView.register(EventTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
                 
                 self.tableView.rowHeight = 133
                 self.tableView.sectionHeaderHeight = 2000
@@ -91,14 +92,14 @@ class EventViewController: UITableViewController {
                         self.houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
                         self.houseImageView.widthAnchor.constraint(equalTo: self.houseImageView.heightAnchor)
                     ])
-                    self.FilterEventsBarButton.isEnabled = false
-                    self.FilterEventsBarButton.title = ""
+                    self.filterEventsBarButton.isEnabled = false
+                    self.filterEventsBarButton.title = ""
                 } else {
                     self.navigationItem.rightBarButtonItems = nil
                     self.navigationItem.rightBarButtonItem = self.AddEventBarButton
-                    self.FilterEventsBarButton.title = "Filter"
+                    self.filterEventsBarButton.title = "Filter"
                     self.navigationItem.leftBarButtonItems = nil
-                    self.navigationItem.leftBarButtonItem = self.FilterEventsBarButton
+                    self.navigationItem.leftBarButtonItem = self.filterEventsBarButton
                     self.title = "All Events"
                 }
                 events = Event.sortEvents(events: events)
@@ -131,8 +132,10 @@ class EventViewController: UITableViewController {
     }
     
     func reloadData() {
+        filterEventsBarButton.isEnabled = false
         if (!filtered) {
             fbh.getEvents() { (eventsAPI, err) in
+                self.filterEventsBarButton.isEnabled = true
                 if (err != nil) {
                     print("Error in getEvents()")
                     //self.removeSpinner()
@@ -145,6 +148,7 @@ class EventViewController: UITableViewController {
             }
         } else {
             fbh.getEventsCreated() { (eventsAPI, err) in
+                self.filterEventsBarButton.isEnabled = true
                 if (err != nil) {
                     print("Error in getEvents()")
                     //self.removeSpinner()
@@ -159,11 +163,13 @@ class EventViewController: UITableViewController {
     }
     
     @IBAction func switchFilter(_ sender: UIBarButtonItem) {
+        filterEventsBarButton.isEnabled = false
         self.showSpinner(onView: self.view)
         if (!filtered) {
             filtered = true
             self.title = "My Events"
             fbh.getEventsCreated() { (eventsAPI, err) in
+                self.filterEventsBarButton.isEnabled = true
                 if (err != nil) {
                     print("Error in getEventsCreated()")
                     self.removeSpinner()
@@ -180,6 +186,7 @@ class EventViewController: UITableViewController {
             self.title = "All Events"
             filtered = false
             fbh.getEvents() { (eventsAPI, err) in
+                self.filterEventsBarButton.isEnabled = true
                 if (err != nil) {
                     print("Error in getEventsCreated()")
                     self.removeSpinner()
@@ -291,26 +298,29 @@ class EventViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // May be a better place for this register, but this just ensure it's done before it's needed
+        self.tableView.register(EventTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        
         return cellSpacing
     }
 
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! EventTableViewHeaderFooterView
-//
-//        header.configureContents()
-//
-//        var headerText: String = ""
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = Event.dateFormat
-//
-//
-//        if (!filtered) {
-//            let sectionIndex = Event.startingIndexForSection(section: section, events: events)
-//            headerText = dateFormatter.string(from: events[sectionIndex].startDate)
-//        } else {
-//            let sectionIndex = Event.startingIndexForSection(section: section, events: filteredEvents)
-//            headerText = dateFormatter.string(from: filteredEvents[sectionIndex].startDate)
-//        }
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! EventTableViewHeaderFooterView
+
+        header.configureContents()
+
+        var headerText: String = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Event.dateFormat
+
+
+        if (!filtered) {
+            let sectionIndex = Event.startingIndexForSection(section: section, events: events)
+            headerText = dateFormatter.string(from: events[sectionIndex].startDate)
+        } else {
+            let sectionIndex = Event.startingIndexForSection(section: section, events: filteredEvents)
+            headerText = dateFormatter.string(from: filteredEvents[sectionIndex].startDate)
+        }
 
 //        if section == 0 {
 //            if (!filtered) {
@@ -337,10 +347,10 @@ class EventViewController: UITableViewController {
 //            }
 //        }
         
-//        header.title.text = headerText
-//
-//        return header
-//    }
+        header.title.text = headerText
+
+        return header
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is ViewEventTableViewController {

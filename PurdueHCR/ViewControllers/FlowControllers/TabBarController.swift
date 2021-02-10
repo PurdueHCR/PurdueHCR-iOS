@@ -53,8 +53,8 @@ class TabBarController: UITabBarController {
 		else if (p == PointType.PermissionLevel.faculty.rawValue) {
 			//FHP Controllers
 			viewControllers.append(linkProfileViewController())
-			viewControllers.append(linkQRCodeViewController())
             viewControllers.append(linkEventViewController())
+            viewControllers.append(linkQRCodeViewController())
 		}
         else if (p == PointType.PermissionLevel.priv.rawValue) {
             // Priviledged Resident Controllers
