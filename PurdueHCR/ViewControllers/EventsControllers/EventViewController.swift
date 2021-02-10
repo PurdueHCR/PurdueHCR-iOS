@@ -100,7 +100,7 @@ class EventViewController: UITableViewController {
                     self.filterEventsBarButton.title = "Filter"
                     self.navigationItem.leftBarButtonItems = nil
                     self.navigationItem.leftBarButtonItem = self.filterEventsBarButton
-                    self.title = "All Events"
+                    self.navigationItem.title = "All Events"
                 }
                 events = Event.sortEvents(events: events)
                 self.tableView.reloadData()
@@ -167,7 +167,7 @@ class EventViewController: UITableViewController {
         self.showSpinner(onView: self.view)
         if (!filtered) {
             filtered = true
-            self.title = "My Events"
+            self.navigationItem.title = "My Events"
             fbh.getEventsCreated() { (eventsAPI, err) in
                 self.filterEventsBarButton.isEnabled = true
                 if (err != nil) {
@@ -183,7 +183,7 @@ class EventViewController: UITableViewController {
             }
         } else {
             // Unfilter to all events
-            self.title = "All Events"
+            self.navigationItem.title = "All Events"
             filtered = false
             fbh.getEvents() { (eventsAPI, err) in
                 self.filterEventsBarButton.isEnabled = true
