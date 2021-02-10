@@ -104,6 +104,11 @@ class EventViewController: UITableViewController {
                 events = Event.sortEvents(events: events)
                 self.tableView.reloadData()
                 self.removeSpinner()
+                if (events.isEmpty) {
+                    self.emptyMessage(message: "No Upcoming Events")
+                } else {
+                    self.killEmptyMessage()
+                }
             }
         }
     }
@@ -143,7 +148,7 @@ class EventViewController: UITableViewController {
                     events = Event.sortEvents(events: events)
                     self.tableView.reloadData()
                     self.removeSpinner()
-                    if (events.count == 0) {
+                    if (events.isEmpty) {
                         self.emptyMessage(message: "No Upcoming Events")
                     } else {
                         self.killEmptyMessage()
@@ -161,7 +166,7 @@ class EventViewController: UITableViewController {
                     filteredEvents = Event.sortEvents(events: filteredEvents)
                     self.tableView.reloadData()
                     self.removeSpinner()
-                    if (filteredEvents.count == 0) {
+                    if (filteredEvents.isEmpty) {
                         self.emptyMessage(message: "No Upcoming Events")
                     } else {
                         self.killEmptyMessage()
