@@ -13,9 +13,6 @@ var events: [Event] = [Event]()
 var filteredEvents: [Event] = [Event]()
 var filtered = false
 
-// Variable to store if child view has asked us to reload
-// Should only reload after create, edit, or delete
-
 let fbh = FirebaseHelper()
 
 class EventViewController: UITableViewController {
@@ -25,6 +22,8 @@ class EventViewController: UITableViewController {
     @IBOutlet weak var AddEventBarButton: UIBarButtonItem!
     @IBOutlet weak var filterEventsBarButton: UIBarButtonItem!
     
+    // Variable to store if child view has asked us to reload
+    // Should only reload after create, edit, or delete
     var shouldReload = false
     var houseImageView: UIImageView!
     
@@ -127,27 +126,14 @@ class EventViewController: UITableViewController {
         if (shouldReload) {
             // Child told us to reload data
             shouldReload = false
-            reloadData()
+            refreshData()
         }
     }
     
-    func reloadData() {
+    func refreshData() {
         filterEventsBarButton.isEnabled = false
         if (!filtered) {
             fbh.getEvents() { (eventsAPI, err) in
-                self.filterEventsBarButton.isEnabled = true
-                if (err != nil) {
-                    print("Error in getEvents()")
-                    //self.removeSpinner()
-                } else {
-                    filteredEvents = eventsAPI
-                    filteredEvents = Event.sortEvents(events: filteredEvents)
-                    self.tableView.reloadData()
-                    self.removeSpinner()
-                }
-            }
-        } else {
-            fbh.getEventsCreated() { (eventsAPI, err) in
                 self.filterEventsBarButton.isEnabled = true
                 if (err != nil) {
                     print("Error in getEvents()")
@@ -157,48 +143,46 @@ class EventViewController: UITableViewController {
                     events = Event.sortEvents(events: events)
                     self.tableView.reloadData()
                     self.removeSpinner()
+                    if (events.count == 0) {
+                        self.emptyMessage(message: "No Upcoming Events")
+                    } else {
+                        self.killEmptyMessage()
+                    }
+                }
+            }
+        } else {
+            fbh.getEventsCreated() { (eventsAPI, err) in
+                self.filterEventsBarButton.isEnabled = true
+                if (err != nil) {
+                    print("Error in getEvents()")
+                    //self.removeSpinner()
+                } else {
+                    filteredEvents = eventsAPI
+                    filteredEvents = Event.sortEvents(events: filteredEvents)
+                    self.tableView.reloadData()
+                    self.removeSpinner()
+                    if (filteredEvents.count == 0) {
+                        self.emptyMessage(message: "No Upcoming Events")
+                    } else {
+                        self.killEmptyMessage()
+                    }
                 }
             }
         }
     }
     
     @IBAction func switchFilter(_ sender: UIBarButtonItem) {
-        filterEventsBarButton.isEnabled = false
         self.showSpinner(onView: self.view)
         if (!filtered) {
+            // Show only My Events
             filtered = true
             self.navigationItem.title = "My Events"
-            fbh.getEventsCreated() { (eventsAPI, err) in
-                self.filterEventsBarButton.isEnabled = true
-                if (err != nil) {
-                    print("Error in getEventsCreated()")
-                    self.removeSpinner()
-                } else {
-                    print("Not an error in getEventsCreated()")
-                    filteredEvents = eventsAPI
-                    filteredEvents = Event.sortEvents(events: filteredEvents)
-                    self.tableView.reloadData()
-                    self.removeSpinner()
-                }
-            }
         } else {
-            // Unfilter to all events
+            // Unfilter to All Events
             self.navigationItem.title = "All Events"
             filtered = false
-            fbh.getEvents() { (eventsAPI, err) in
-                self.filterEventsBarButton.isEnabled = true
-                if (err != nil) {
-                    print("Error in getEventsCreated()")
-                    self.removeSpinner()
-                } else {
-                    print("Not an error in getEventsCreated()")
-                    events = eventsAPI
-                    events = Event.sortEvents(events: events)
-                    self.tableView.reloadData()
-                    self.removeSpinner()
-                }
-            }
         }
+        refreshData()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

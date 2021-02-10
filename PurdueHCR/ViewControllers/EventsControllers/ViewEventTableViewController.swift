@@ -91,6 +91,9 @@ class ViewEventTableViewController: UITableViewController {
         var floors: String = ""
         if (event.isAllFloors) {
             floors = "All Floors"
+        }
+        else if (event.isPublicEvent) {
+            floors = "Public Event"
         } else {
             var i: Int = 0
             for floor in event.floors {

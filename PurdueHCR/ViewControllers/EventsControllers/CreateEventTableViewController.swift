@@ -18,6 +18,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     @IBOutlet weak var newEventMyFloorLabel: UILabel!
     @IBOutlet weak var newEventMyFloorSwitch: UISwitch!
     @IBOutlet weak var newEventMyHouseSwitch: UISwitch!
+    @IBOutlet weak var newEventMyHouseLabel: UILabel!
     @IBOutlet weak var newEventAllHousesSwitch: UISwitch!
     @IBOutlet weak var newEventIsPublicLabel: UILabel!
     @IBOutlet weak var newEventIsPublicSwitch: UISwitch!
@@ -55,12 +56,31 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         chooseHostField.isEnabled = false
         chooseHostField.textColor = UIColor.gray
         
-        newEventMyFloorSwitch.isOn = true
-        newEventMyHouseSwitch.isOn = false
-        newEventAllHousesSwitch.isOn = false
-        newEventIsPublicSwitch.isOn = false
-        newEventIsPublicSwitch.isEnabled = false
-        newEventIsPublicLabel.textColor = UIColor.gray
+        if (User.get(.permissionLevel) as! Int == PointType.PermissionLevel.ea.rawValue) {
+            // EAs don't have a house or floor
+            newEventMyFloorSwitch.isOn = false
+            newEventMyHouseSwitch.isOn = false
+            newEventAllHousesSwitch.isOn = true
+            newEventIsPublicSwitch.isOn = false
+            newEventIsPublicSwitch.isEnabled = true
+            
+            newEventIsPublicLabel.textColor = UIColor.black
+            newEventMyFloorLabel.textColor = UIColor.gray
+            newEventMyHouseLabel.textColor = UIColor.gray
+            
+            newEventMyFloorSwitch.isEnabled = false
+            newEventMyHouseSwitch.isEnabled = false
+            newEventCustomFloorButton.isHidden = true
+        } else {
+            newEventMyFloorSwitch.isOn = true
+            newEventMyHouseSwitch.isOn = false
+            newEventAllHousesSwitch.isOn = false
+            newEventIsPublicSwitch.isOn = false
+            newEventIsPublicSwitch.isEnabled = false
+            
+            newEventIsPublicLabel.textColor = UIColor.gray
+        }
+        
         
         newEventName.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
         
@@ -112,7 +132,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             
             createEventButton.isEnabled = true
             let p = User.get(.permissionLevel) as! Int
-            if (p == 3) {
+            if (p == PointType.PermissionLevel.faculty.rawValue) {
                 disableFhpFloorsInvited()
             }
         } else {
@@ -248,7 +268,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                 }
             }
             let p = User.get(.permissionLevel) as! Int
-            if (p == 3) {
+            if (p == PointType.PermissionLevel.faculty.rawValue) {
                 if (newEventMyFloorSwitch.isOn) {
                     newEventMyFloorSwitch.isOn = false
                     newEventMyHouseSwitch.isOn = true
@@ -473,7 +493,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             floors.append(floorId)
         } else if (newEventMyHouseSwitch.isOn) {
             let p = User.get(.permissionLevel) as! Int
-            if (p == 3) {
+            if (p == PointType.PermissionLevel.faculty.rawValue) {
                 floors = convertHouseToFloors()
             } else {
                 let floorId = User.get(.floorID) as! String

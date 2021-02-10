@@ -629,6 +629,7 @@
                         <outlet property="newEventLocation" destination="JeF-6E-RGW" id="3yO-Sl-xpC"/>
                         <outlet property="newEventMyFloorLabel" destination="IW5-R7-yra" id="Jka-30-NWz"/>
                         <outlet property="newEventMyFloorSwitch" destination="0bO-H8-HaQ" id="naD-Dw-FnW"/>
+                        <outlet property="newEventMyHouseLabel" destination="oME-xK-sBf" id="KT1-fo-hqj"/>
                         <outlet property="newEventMyHouseSwitch" destination="55I-6R-W3f" id="l4s-31-i1b"/>
                         <outlet property="newEventName" destination="IKB-Tn-RWZ" id="nhf-GE-jIX"/>
                         <outlet property="newEventPointType" destination="nGX-0Q-5CR" id="TZW-mr-yhN"/>
