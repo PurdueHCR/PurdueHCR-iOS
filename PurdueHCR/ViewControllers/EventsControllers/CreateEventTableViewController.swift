@@ -59,6 +59,14 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         newEventIsPublicSwitch.isEnabled = false
         newEventIsPublicLabel.textColor = UIColor.gray
         
+        newEventName.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        
+        newEventLocation.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        
+        newEventDescription.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        
+        chooseHostField.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        
         pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
         
         self.tableView.reloadData()
