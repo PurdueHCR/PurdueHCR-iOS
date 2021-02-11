@@ -53,7 +53,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POINTS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deV-62-o9R">
-                    <rect key="frame" x="5" y="68.5" width="215.5" height="20"/>
+                    <rect key="frame" x="5" y="70.5" width="215.5" height="20"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -101,17 +101,17 @@
                     <rect key="frame" x="345.5" y="0.0" width="215.5" height="171"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOUSE RANK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EuR-Ph-oaF">
-                            <rect key="frame" x="0.0" y="67.5" width="215.5" height="21"/>
+                            <rect key="frame" x="0.0" y="69.5" width="215.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(YEAR)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Esw-El-bAc">
-                            <rect key="frame" x="75.5" y="88.5" width="65" height="12"/>
+                            <rect key="frame" x="75.5" y="90.5" width="65" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="65" id="9cM-42-Yor"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="8"/>
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -134,22 +134,25 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ijZ-fa-PHZ">
-                    <rect key="frame" x="345.5" y="55" width="215.5" height="111"/>
+                    <rect key="frame" x="345.5" y="50" width="215.5" height="116"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOUSE RANK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuv-Bq-yQg">
-                            <rect key="frame" x="0.0" y="2.5" width="215.5" height="21"/>
+                            <rect key="frame" x="0.0" y="9.5" width="215.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BRR-Rv-DVB">
-                            <rect key="frame" x="0.0" y="25.5" width="138.5" height="26.5"/>
+                            <rect key="frame" x="0.0" y="31.5" width="138.5" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="IgQ-Ja-Wyn"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEMESTER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8X6-fw-md6">
-                            <rect key="frame" x="145.5" y="32" width="65" height="13.5"/>
+                            <rect key="frame" x="145.5" y="37.5" width="65" height="13.5"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="65" id="Sz5-Q7-GDv"/>
                             </constraints>
@@ -158,13 +161,16 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YEAR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8sA-v0-f64">
-                            <rect key="frame" x="145.5" y="60.5" width="65" height="13.5"/>
+                            <rect key="frame" x="145.5" y="63.5" width="65" height="13.5"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTI-Si-Keb">
-                            <rect key="frame" x="0.0" y="54" width="138.5" height="26.5"/>
+                            <rect key="frame" x="0.0" y="57.5" width="138.5" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="CZS-oo-ZIe"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -179,10 +185,10 @@
                         <constraint firstItem="BRR-Rv-DVB" firstAttribute="leading" secondItem="ijZ-fa-PHZ" secondAttribute="leading" id="MVh-ib-w3i"/>
                         <constraint firstAttribute="trailing" secondItem="wuv-Bq-yQg" secondAttribute="trailing" id="RBL-UT-7c0"/>
                         <constraint firstItem="XTI-Si-Keb" firstAttribute="leading" secondItem="ijZ-fa-PHZ" secondAttribute="leading" id="Rcf-0p-hx8"/>
-                        <constraint firstItem="wuv-Bq-yQg" firstAttribute="top" secondItem="ijZ-fa-PHZ" secondAttribute="top" constant="2.5" id="Seg-gu-3JY"/>
-                        <constraint firstItem="BRR-Rv-DVB" firstAttribute="top" secondItem="wuv-Bq-yQg" secondAttribute="bottom" constant="2" id="TGT-3k-bzL"/>
+                        <constraint firstItem="wuv-Bq-yQg" firstAttribute="top" secondItem="ijZ-fa-PHZ" secondAttribute="top" constant="9.5" id="Seg-gu-3JY"/>
+                        <constraint firstItem="BRR-Rv-DVB" firstAttribute="top" secondItem="wuv-Bq-yQg" secondAttribute="bottom" constant="1" id="TGT-3k-bzL"/>
                         <constraint firstItem="XTI-Si-Keb" firstAttribute="trailing" secondItem="BRR-Rv-DVB" secondAttribute="trailing" id="XHz-SY-4Dj"/>
-                        <constraint firstItem="XTI-Si-Keb" firstAttribute="top" secondItem="BRR-Rv-DVB" secondAttribute="bottom" constant="2" id="ag0-63-zbJ"/>
+                        <constraint firstItem="XTI-Si-Keb" firstAttribute="top" secondItem="BRR-Rv-DVB" secondAttribute="bottom" constant="1" id="ag0-63-zbJ"/>
                         <constraint firstItem="8X6-fw-md6" firstAttribute="leading" secondItem="BRR-Rv-DVB" secondAttribute="trailing" constant="7" id="gQB-cz-Mwj"/>
                         <constraint firstItem="wuv-Bq-yQg" firstAttribute="leading" secondItem="ijZ-fa-PHZ" secondAttribute="leading" id="hVb-Yy-7Le"/>
                         <constraint firstItem="8X6-fw-md6" firstAttribute="centerY" secondItem="BRR-Rv-DVB" secondAttribute="centerY" id="mji-7O-uq0"/>
@@ -193,17 +199,17 @@
                     <rect key="frame" x="345.5" y="0.0" width="215.5" height="171"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOUSE RANK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-87-XeP">
-                            <rect key="frame" x="0.0" y="67.5" width="215.5" height="21"/>
+                            <rect key="frame" x="0.0" y="69.5" width="215.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(SEMESTER)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4FZ-G7-Bmr">
-                            <rect key="frame" x="75.5" y="88.5" width="65" height="12"/>
+                            <rect key="frame" x="75.5" y="90.5" width="65" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="65" id="vRS-EG-N1X"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="8"/>
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -230,13 +236,13 @@
             <constraints>
                 <constraint firstItem="ijZ-fa-PHZ" firstAttribute="leading" secondItem="cDB-Of-F4H" secondAttribute="trailing" constant="5" id="07f-fR-QTs"/>
                 <constraint firstItem="bgP-31-Sb2" firstAttribute="centerX" secondItem="Frq-3U-lhf" secondAttribute="centerX" id="0tZ-Ic-Z0j"/>
-                <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="deV-62-o9R" secondAttribute="bottom" constant="12" id="4j0-Z8-Xj1"/>
+                <constraint firstItem="Fdf-wP-pFp" firstAttribute="top" secondItem="deV-62-o9R" secondAttribute="bottom" constant="10" id="4j0-Z8-Xj1"/>
                 <constraint firstItem="jt1-LE-iWS" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-7.5" id="9sS-fO-dLI"/>
                 <constraint firstItem="Z4b-tF-fZ9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="AFl-e7-Do5"/>
                 <constraint firstItem="cDB-Of-F4H" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Ahj-8l-oUS"/>
                 <constraint firstItem="ijZ-fa-PHZ" firstAttribute="leading" secondItem="0cO-8j-ggd" secondAttribute="leading" id="Bk1-Hb-8fE"/>
                 <constraint firstItem="ijZ-fa-PHZ" firstAttribute="trailing" secondItem="0cO-8j-ggd" secondAttribute="trailing" id="D1U-hq-9Wb"/>
-                <constraint firstItem="ijZ-fa-PHZ" firstAttribute="top" secondItem="Z4b-tF-fZ9" secondAttribute="bottom" constant="5" id="FlD-oX-RJy"/>
+                <constraint firstItem="ijZ-fa-PHZ" firstAttribute="top" secondItem="Z4b-tF-fZ9" secondAttribute="bottom" id="FlD-oX-RJy"/>
                 <constraint firstItem="deV-62-o9R" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="HwK-Tp-CG2"/>
                 <constraint firstItem="Fdf-wP-pFp" firstAttribute="trailing" secondItem="deV-62-o9R" secondAttribute="trailing" id="Iv2-78-u3o"/>
                 <constraint firstItem="0cO-8j-ggd" firstAttribute="leading" secondItem="l7n-NM-EYe" secondAttribute="leading" id="KEF-QA-fLn"/>
