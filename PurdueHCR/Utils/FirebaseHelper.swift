@@ -28,7 +28,7 @@ class FirebaseHelper {
 	let USER_ID = "UserID"
 	let MESSAGES = "Messages"
     
-    // LOCAL URLS
+    //----- LOCAL URLS ------//
 //    let CREATE_QR_LINK = "https://localhost:5001/purdue-hcr-test/us-central1/link/create"
 //    let HANDLE_URL = "http://localhost:5001/purdue-hcr-test/us-central1/point_log/handle"
 //    let RANK_URL = "http://localhost:5001/purdue-hcr-test/us-central1/user/auth-rank"
@@ -37,25 +37,25 @@ class FirebaseHelper {
 //    let GET_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/feed"
 //    let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
     
-    // TEST URLS
-    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
-    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
-    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
-    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
-    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
-    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
+    //----- TEST URLS ------//
+//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+//    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
+//    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+//    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
     
-//    // PRODUCTION URLS
-//    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
-//    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
-//    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-//    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
-//    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-//    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
-//    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
-//    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
+    //------ PRODUCTION URLS ------//
+    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
+    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
+    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
+    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
     
     init() {
         db = Firestore.firestore()
@@ -1164,7 +1164,7 @@ class FirebaseHelper {
         DataManager.sharedManager.getAuthorizationToken { (token, err) in
             //var events: [Event?]?
             if let err = err {
-                print("Error in addEvent()")
+                print("Error getting authorization token")
                 //events = nil
                 onDone(err)
             }
@@ -1220,7 +1220,7 @@ class FirebaseHelper {
                     print(response.error!.errorDescription!)
                 }
             }
-            onDone(RetrievalError.unableToParseResponse)
+            //onDone(RetrievalError.unableToParseResponse)
         }
     }
     
@@ -1232,42 +1232,44 @@ class FirebaseHelper {
             print("Error in retrieving auth token in getEvents()")
             onDone(events, err)
          }
-         let headerVal = "Bearer " + (token ?? "")
-         let header = HTTPHeader(name: "Authorization", value: headerVal)
-         let headers = HTTPHeaders(arrayLiteral: header)
+        let headers = self.generateHTTPHeader(token: token!)
          let url = URL(string: self.GET_EVENT_URL)!
          AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
-             if let results = response.value as? [String : Any] {
-                // Parse Event Supplied
-                let eventsReturned = results["events"] as! [[String:Any]]
-                
-                for result in eventsReturned {
+            switch response.result {
+            case .success:
+                if let results = response.value as? [String : Any] {
+                    // Parse Event Supplied
+                    let eventsReturned = results["events"] as! [[String:Any]]
                     
-                    let name = result["name"] as! String
-                    let location = result["location"] as! String
-                    let pointTypeId = result["pointTypeId"] as! String
-                    let floorIds = result["floorIds"] as! [String]
-                    let details = result["details"] as! String
-                    let isPublicEvent = result["isPublicEvent"] as! Bool
-                    let startDate = result["startDate"] as! String
-                    let endDate = result["endDate"] as! String
-                    let creatorId = result["creatorId"] as! String
-                    let host = result["host"] as! String
-                    let floorColors = result["floorColors"] as! [String]
-                    let id = result["id"] as! String
+                    for result in eventsReturned {
+                       
+                       let name = result["name"] as! String
+                       let location = result["location"] as! String
+                       let pointTypeId = result["pointTypeId"] as! String
+                       let floorIds = result["floorIds"] as! [String]
+                       let details = result["details"] as! String
+                       let isPublicEvent = result["isPublicEvent"] as! Bool
+                       let startDate = result["startDate"] as! String
+                       let endDate = result["endDate"] as! String
+                       let creatorId = result["creatorId"] as! String
+                       let host = result["host"] as! String
+                       let floorColors = result["floorColors"] as! [String]
+                       let id = result["id"] as! String
 
-                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
-                    
-                    events.append(event)
+                       let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                       
+                       events.append(event)
+                   }
+                   
+                   onDone(events, nil)
                 }
-                
-                onDone(events, nil)
-             } else {
+            case .failure:
                 print(response)
                 print("Failed Events Attempt")
+                onDone(events, RetrievalError.unableToParseResponse)
              }
          }
-         onDone(events, RetrievalError.unableToParseResponse)
+         //onDone(events, RetrievalError.unableToParseResponse)
         }
     }
     
@@ -1329,9 +1331,10 @@ class FirebaseHelper {
                     onDone(nil, event)
                 } else {
                     print(response.error!.errorDescription!)
+                    onDone(RetrievalError.unableToParseResponse, nil)
                 }
             }
-            onDone(RetrievalError.unableToParseResponse, nil)
+            //onDone(RetrievalError.unableToParseResponse, nil)
         }
     }
     
@@ -1358,9 +1361,10 @@ class FirebaseHelper {
                     onDone(nil)
                 } else {
                     print(response.error!.errorDescription!)
+                    onDone(RetrievalError.unableToParseResponse)
                 }
             }
-            onDone(RetrievalError.unableToParseResponse)
+            //onDone(RetrievalError.unableToParseResponse)
         }
     }
      
@@ -1404,9 +1408,10 @@ class FirebaseHelper {
             } else {
                print(response)
                print("Failed Events Created Attempt")
+                onDone(events, RetrievalError.unableToParseResponse)
             }
          }
-         onDone(events, RetrievalError.unableToParseResponse)
+         //onDone(events, RetrievalError.unableToParseResponse)
         }
     }
     

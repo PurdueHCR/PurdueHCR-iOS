@@ -49,6 +49,11 @@ class UserPointsTableViewController: UITableViewController {
 			self.tableView.refreshControl?.endRefreshing()
 			self.activityIndicator.stopAnimating()
 			self.navigationItem.hidesBackButton = false
+            if (self.notificationLogs.isEmpty) {
+                self.emptyMessage(message: "No submitted points")
+            } else {
+                self.killEmptyMessage()
+            }
 		})
 	}
 
@@ -83,8 +88,6 @@ class UserPointsTableViewController: UITableViewController {
 			else {
                 if (activityIndicator.isAnimating) {
                     emptyMessage(message: "Loading...")
-                } else {
-                    emptyMessage(message: "No submitted points")
                 }
 				//navigationItem.searchController = nil
 				return 0
