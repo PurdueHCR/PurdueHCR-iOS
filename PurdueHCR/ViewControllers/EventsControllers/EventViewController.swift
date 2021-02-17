@@ -27,6 +27,8 @@ class EventViewController: UITableViewController {
     var shouldReload = false
     var houseImageView: UIImageView!
     
+    var refresher: UIRefreshControl?
+    
     let cellSpacing: CGFloat = 35
     
     override func viewDidLoad() {
@@ -43,6 +45,11 @@ class EventViewController: UITableViewController {
         
         //tableView.separatorStyle = .singleLine
         tableView.separatorColor = UIColor.black
+        
+        refresher = UIRefreshControl()
+        refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refresher
                 
         fbh.getEvents() { (eventsAPI, err) in
             if (err != nil) {
@@ -135,7 +142,7 @@ class EventViewController: UITableViewController {
         }
     }
     
-    func refreshData() {
+    @objc func refreshData() {
         filterEventsBarButton.isEnabled = false
         if (!filtered) {
             fbh.getEvents() { (eventsAPI, err) in
@@ -144,6 +151,7 @@ class EventViewController: UITableViewController {
                     print("Error in getEvents()")
                     //self.removeSpinner()
                 } else {
+                    self.tableView.refreshControl?.endRefreshing()
                     events = eventsAPI
                     events = Event.sortEvents(events: events)
                     self.tableView.reloadData()
@@ -162,6 +170,7 @@ class EventViewController: UITableViewController {
                     print("Error in getEvents()")
                     //self.removeSpinner()
                 } else {
+                    self.tableView.refreshControl?.endRefreshing()
                     filteredEvents = eventsAPI
                     filteredEvents = Event.sortEvents(events: filteredEvents)
                     self.tableView.reloadData()

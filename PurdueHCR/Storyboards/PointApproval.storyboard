@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ehx-jP-2Fn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ehx-jP-2Fn">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,7 +47,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YV1-Pd-R6G">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YV1-Pd-R6G">
                                 <rect key="frame" x="325" y="532" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="D82-iq-Cu9"/>
@@ -62,6 +62,7 @@
                                 <rect key="frame" x="335" y="542" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="nez-ld-HG3"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Guh-2G-5nC" firstAttribute="bottom" secondItem="nez-ld-HG3" secondAttribute="bottom" constant="-145" id="2aH-lo-koq"/>
@@ -76,7 +77,6 @@
                             <constraint firstItem="YV1-Pd-R6G" firstAttribute="top" secondItem="Guh-2G-5nC" secondAttribute="bottom" constant="10" id="t8B-N4-PDQ"/>
                             <constraint firstItem="YV1-Pd-R6G" firstAttribute="leading" secondItem="jmt-qn-nZ3" secondAttribute="trailing" constant="10" id="ybd-Vh-nYd"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="nez-ld-HG3"/>
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="TDD-db-bPi" id="hr0-xD-5jg"/>
@@ -285,7 +285,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="0Cb-0I-gSI"/>
+        <segue reference="vd2-Hg-7bX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Send" width="536" height="536"/>
