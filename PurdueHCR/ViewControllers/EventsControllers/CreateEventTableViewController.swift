@@ -65,7 +65,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             newEventIsPublicSwitch.isEnabled = true
             
             newEventIsPublicLabel.textColor = UIColor.black
-            newEventMyFloeorLabel.textColor = UIColor.gray
+            newEventMyFloorLabel.textColor = UIColor.gray
             newEventMyHouseLabel.textColor = UIColor.gray
             
             newEventMyFloorSwitch.isEnabled = false
