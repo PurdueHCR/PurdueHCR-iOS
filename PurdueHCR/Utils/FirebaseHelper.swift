@@ -56,7 +56,6 @@ class FirebaseHelper {
     let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
     let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
     let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
-
     
     init() {
         db = Firestore.firestore()
