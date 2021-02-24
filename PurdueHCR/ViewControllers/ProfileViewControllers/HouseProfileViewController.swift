@@ -41,17 +41,17 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         
-        // Commented out since do not want to display what's new on this version
-//        let defaults = UserDefaults.standard
-//        if let new_version = defaults.object(forKey: "last_opened_version") {
-//            if ((new_version as! String) != appVersion) {
-//                self.performSegue(withIdentifier: "show_whats_new", sender: self)
-//                defaults.setValue(appVersion, forKey: "last_opened_version")
-//            }
-//        } else {
-//            self.performSegue(withIdentifier: "show_whats_new", sender: self)
-//            defaults.setValue(appVersion, forKey: "last_opened_version")
-//        }
+        
+        let defaults = UserDefaults.standard
+        if let new_version = defaults.object(forKey: "last_opened_version") {
+            if ((new_version as! String) != appVersion) {
+                self.performSegue(withIdentifier: "show_whats_new", sender: self)
+                defaults.setValue(appVersion, forKey: "last_opened_version")
+            }
+        } else {
+            self.performSegue(withIdentifier: "show_whats_new", sender: self)
+            defaults.setValue(appVersion, forKey: "last_opened_version")
+        }
         
         
         let firstName = User.get(.firstName) as! String

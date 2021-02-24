@@ -112,13 +112,13 @@
                                     <action selector="dismissWhatsNew:" destination="ttO-5a-Prs" eventType="touchUpInside" id="bpQ-ug-rUG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piT-VX-z29">
-                                <rect key="frame" x="95" y="321" width="56" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Semester Rank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piT-VX-z29">
+                                <rect key="frame" x="95" y="321" width="125" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SF_calendar_badge_plus" translatesAutoresizingMaskIntoConstraints="NO" id="pnf-8y-5ab">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RewardIcon" translatesAutoresizingMaskIntoConstraints="NO" id="pnf-8y-5ab">
                                 <rect key="frame" x="30" y="321" width="50" height="50"/>
                                 <color key="tintColor" systemColor="linkColor"/>
                                 <constraints>
@@ -126,26 +126,26 @@
                                     <constraint firstAttribute="width" secondItem="pnf-8y-5ab" secondAttribute="height" multiplier="1:1" id="tD9-tM-ujb"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find events happening around the Honors College" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCN-bU-PxX">
-                                <rect key="frame" x="95" y="345" width="289" height="40.666666666666686"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on your House Rank to switch between yearly rank and semester rank" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCN-bU-PxX">
+                                <rect key="frame" x="95" y="345" width="289" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Codes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srt-6b-ImK">
-                                <rect key="frame" x="95" y="435.66666666666669" width="95" height="22"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Codes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srt-6b-ImK">
+                                <rect key="frame" x="95" y="456" width="95" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RHPs have a fresh new look to the QR codes page" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmy-h9-Djw">
-                                <rect key="frame" x="95" y="459.66666666666669" width="289" height="40.666666666666686"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RHPs have a fresh new look to the QR codes page" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmy-h9-Djw">
+                                <rect key="frame" x="95" y="480" width="289" height="40.666666666666629"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QRCode" translatesAutoresizingMaskIntoConstraints="NO" id="NPd-Il-AmW">
-                                <rect key="frame" x="30" y="435.66666666666669" width="50" height="50"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QRCode" translatesAutoresizingMaskIntoConstraints="NO" id="NPd-Il-AmW">
+                                <rect key="frame" x="30" y="456" width="50" height="50"/>
                                 <color key="tintColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="NPd-Il-AmW" secondAttribute="height" multiplier="1:1" id="GoA-N8-Oee"/>
@@ -393,7 +393,7 @@
     <resources>
         <image name="Bell" width="25" height="25"/>
         <image name="QRCode" width="25" height="25"/>
-        <image name="SF_calendar_badge_plus" width="64" height="64"/>
+        <image name="RewardIcon" width="25" height="25"/>
         <image name="Settings" width="25" height="25"/>
         <image name="profile" width="25" height="25"/>
         <systemColor name="linkColor">
