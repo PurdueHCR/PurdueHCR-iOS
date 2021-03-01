@@ -18,6 +18,7 @@ class CreateEventTableViewController: UITableViewController {
     @IBOutlet weak var newEventMyFloorLabel: UILabel!
     @IBOutlet weak var newEventMyFloorSwitch: UISwitch!
     @IBOutlet weak var newEventMyHouseSwitch: UISwitch!
+    @IBOutlet weak var newEventMyHouseLabel: UILabel!
     @IBOutlet weak var newEventAllHousesSwitch: UISwitch!
     @IBOutlet weak var newEventIsPublicLabel: UILabel!
     @IBOutlet weak var newEventIsPublicSwitch: UISwitch!
@@ -35,6 +36,8 @@ class CreateEventTableViewController: UITableViewController {
     static var pointTypes: [PointType] = [PointType]()
     static var pointTypesIndex = -1
     
+    var delegate: EventViewController?
+    
     var creating: Bool = true // True if view is for creating and event. False if view is for editing/deleting an event.
     var event = Event()
     
@@ -49,14 +52,43 @@ class CreateEventTableViewController: UITableViewController {
         chooseHostField.isEnabled = false
         chooseHostField.textColor = UIColor.gray
         
-        newEventMyFloorSwitch.isOn = true
-        newEventMyHouseSwitch.isOn = false
-        newEventAllHousesSwitch.isOn = false
-        newEventIsPublicSwitch.isOn = false
-        newEventIsPublicSwitch.isEnabled = false
-        newEventIsPublicLabel.textColor = UIColor.gray
+        if (User.get(.permissionLevel) as! Int == PointType.PermissionLevel.ea.rawValue) {
+            // EAs don't have a house or floor
+            newEventMyFloorSwitch.isOn = false
+            newEventMyHouseSwitch.isOn = false
+            newEventAllHousesSwitch.isOn = true
+            newEventIsPublicSwitch.isOn = false
+            newEventIsPublicSwitch.isEnabled = true
+            
+            newEventIsPublicLabel.textColor = UIColor.black
+            newEventMyFloorLabel.textColor = UIColor.gray
+            newEventMyHouseLabel.textColor = UIColor.gray
+            
+            newEventMyFloorSwitch.isEnabled = false
+            newEventMyHouseSwitch.isEnabled = false
+            newEventCustomFloorButton.isHidden = true
+        } else {
+            newEventMyFloorSwitch.isOn = true
+            newEventMyHouseSwitch.isOn = false
+            newEventAllHousesSwitch.isOn = false
+            newEventIsPublicSwitch.isOn = false
+            newEventIsPublicSwitch.isEnabled = false
+            
+            newEventIsPublicLabel.textColor = UIColor.gray
+        }
+        
+        
+        newEventName.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        
+        newEventLocation.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        
+        newEventDescription.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        
+        chooseHostField.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
         
         CreateEventTableViewController.pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
+        
+        newEventStartDate.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         
         self.tableView.reloadData()
     }
@@ -103,7 +135,7 @@ class CreateEventTableViewController: UITableViewController {
             
             createEventButton.isEnabled = true
             let p = User.get(.permissionLevel) as! Int
-            if (p == 3) {
+            if (p == PointType.PermissionLevel.faculty.rawValue) {
                 disableFhpFloorsInvited()
             }
         } else {
@@ -240,7 +272,7 @@ class CreateEventTableViewController: UITableViewController {
                 }
             }
             let p = User.get(.permissionLevel) as! Int
-            if (p == 3) {
+            if (p == PointType.PermissionLevel.faculty.rawValue) {
                 if (newEventMyFloorSwitch.isOn) {
                     newEventMyFloorSwitch.isOn = false
                     newEventMyHouseSwitch.isOn = true
@@ -390,7 +422,7 @@ class CreateEventTableViewController: UITableViewController {
                         if (err != nil) {
                             print("Error in getEvents()")
                         } else {
-                            print("Not an error in getEvents()")
+                            self.delegate?.shouldReload = true
                             events = eventsAPI
                             self.createEventButton.isEnabled = true
                             self.performSegueToReturnBack(fromEdit: false, event: nil)
@@ -410,7 +442,7 @@ class CreateEventTableViewController: UITableViewController {
                         if (err != nil) {
                             print("Error in getEvents() inside editEvents()")
                         } else {
-                            print("Not an error in getEvents() inside editEvents()")
+                            self.delegate?.shouldReload = true
                             events = eventsAPI
                             self.performSegueToReturnBack(fromEdit: true, event: event)
                             self.createEventButton.isEnabled = true
@@ -422,7 +454,6 @@ class CreateEventTableViewController: UITableViewController {
     }
     
     func createNewEvent() -> Event {
-        print("In create")
         let name = newEventName.text!
         
         let dateFormatter = DateFormatter()
@@ -454,7 +485,7 @@ class CreateEventTableViewController: UITableViewController {
             floors.append(floorId)
         } else if (newEventMyHouseSwitch.isOn) {
             let p = User.get(.permissionLevel) as! Int
-            if (p == 3) {
+            if (p == PointType.PermissionLevel.faculty.rawValue) {
                 floors = convertHouseToFloors()
             } else {
                 let floorId = User.get(.floorID) as! String
@@ -499,7 +530,8 @@ class CreateEventTableViewController: UITableViewController {
 
         fbh.deleteEvent(origID: event.eventID) { (err) in
             if (err != nil) {
-                
+                self.deleteEventButton.isEnabled = true
+                self.notify(title: "Error Deleting Event", subtitle: "", style: .danger)
             } else {
                 print("No eror")
                 
@@ -512,6 +544,7 @@ class CreateEventTableViewController: UITableViewController {
                         self.performSegueToReturnBack(fromEdit: false, event: nil)
                         self.performSegueToReturnBack(fromEdit: false, event: nil)
                         self.deleteEventButton.isEnabled = true
+                        self.delegate?.shouldReload = true
                     }
                 }
             }
@@ -543,6 +576,19 @@ class CreateEventTableViewController: UITableViewController {
             let dest = segue.destination as! SelectPointTypeTableViewController
             dest.delegate = self
         }
+    }
+    
+    @objc func dateChanged(_ sender: UIDatePicker) {
+        let startDate = sender.date
+        // Make end date the start date plus 1 hour
+        let endDate = startDate.addingTimeInterval(TimeInterval(3600))
+        newEventEndDate.date = endDate
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
 

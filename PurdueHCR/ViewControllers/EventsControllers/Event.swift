@@ -185,12 +185,12 @@ class Event {
         var ret = 1
         var currentDate = events[0].startDate
         
-        for i in 1...events.count-1 {
-            if (events[i].startDate == currentDate) {
-                continue;
+        for (_, elem) in events.enumerated() {
+            if (elem.startDate == currentDate) {
+                continue
             } else {
                 ret += 1
-                currentDate = events[i].startDate
+                currentDate = elem.startDate
             }
             
         }

@@ -68,9 +68,9 @@ class HouseCodeViewController: UIViewController, UITextFieldDelegate {
 		let lastName = lastNameField.text
 		let code = codeField.text
 		
+        self.joinButton.isEnabled = false
 		
 		// TODO: Determine what the correct test case of this is
-		// TODO: Disable join button after pressing until need to press again
 		if (firstName == "" || lastName == ""){
 			self.notify(title: "Failed to Sign Up", subtitle: "Please enter your preferred first and last name.", style: .danger)
 			self.joinButton.isEnabled = true
