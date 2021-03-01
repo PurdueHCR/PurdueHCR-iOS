@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class CreateEventTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class CreateEventTableViewController: UITableViewController {
      
     @IBOutlet weak var newEventName: UITextField!
     @IBOutlet weak var newEventStartDate: UIDatePicker!
@@ -23,7 +23,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     @IBOutlet weak var newEventIsPublicSwitch: UISwitch!
     @IBOutlet weak var newEventCustomFloorButton: UIButton!
     @IBOutlet weak var newEventDescription: UITextField!
-    @IBOutlet weak var newEventPointType: UIPickerView!
+    @IBOutlet weak var newEventPointType: UIButton!
     @IBOutlet weak var hostEventSwitch: UISwitch!
     @IBOutlet weak var chooseHostField: UITextField!
     @IBOutlet weak var createEventButton: UIButton!
@@ -32,8 +32,8 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
     
     let fbh = FirebaseHelper()
     var floorsSelected: [String] = [String]()
-    var pointTypes: [PointType] = [PointType]()
-    var pointTypesIndex = 0
+    static var pointTypes: [PointType] = [PointType]()
+    static var pointTypesIndex = -1
     
     var creating: Bool = true // True if view is for creating and event. False if view is for editing/deleting an event.
     var event = Event()
@@ -43,10 +43,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         // Do any additional setup after loading the view.
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-        
-        newEventPointType.delegate = self
-        newEventPointType.dataSource = self
-        
+                
         createEventButton.layer.cornerRadius = 4
         
         chooseHostField.isEnabled = false
@@ -59,7 +56,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         newEventIsPublicSwitch.isEnabled = false
         newEventIsPublicLabel.textColor = UIColor.gray
         
-        pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
+        CreateEventTableViewController.pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
         
         self.tableView.reloadData()
     }
@@ -95,6 +92,13 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
                     i += 1
                 }
                 newEventCustomFloorButton.setTitle(floorString, for: .normal)
+            }
+            
+            print("Create" + String(CreateEventTableViewController.pointTypesIndex))
+            if (CreateEventTableViewController.pointTypesIndex != -1) {
+                newEventPointType.setTitle(CreateEventTableViewController.pointTypes[CreateEventTableViewController.pointTypesIndex].pointName, for: .normal)
+            } else {
+                newEventPointType.setTitle("Select Point Type...", for: .normal)
             }
             
             createEventButton.isEnabled = true
@@ -134,13 +138,14 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             newEventEndDate.date = endDateTime!
             
             var pointTypeIndex = 0
-            for pointType in pointTypes {
+            for pointType in CreateEventTableViewController.pointTypes {
                 if (pointType.pointID == event.pointType.pointID) {
+                    CreateEventTableViewController.pointTypesIndex = pointTypeIndex
                     break
                 }
                 pointTypeIndex += 1
             }
-            newEventPointType.selectRow(pointTypeIndex, inComponent: 0, animated: false)
+            newEventPointType.setTitle(CreateEventTableViewController.pointTypes[CreateEventTableViewController.pointTypesIndex].pointName, for: .normal)
             
             if (event.isAllFloors) {
                 newEventAllHousesSwitch.isOn = true
@@ -276,18 +281,6 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         let cell = tableView.cellForRow(at: indexPath)
         cell!.selectionStyle = .none
         return nil
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pointTypes[row].pointName
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pointTypes.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        pointTypesIndex = row
     }
     
     func disableFhpFloorsInvited() {
@@ -441,7 +434,7 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
         
         let location = newEventLocation.text!
         
-        let pointType = pointTypes[pointTypesIndex]
+        let pointType = CreateEventTableViewController.pointTypes[CreateEventTableViewController.pointTypesIndex]
         
         let host: String
         if hostEventSwitch.isOn {
@@ -546,6 +539,10 @@ class CreateEventTableViewController: UITableViewController, UIPickerViewDataSou
             let dest = segue.destination as! SelectFloorsTableViewController
             dest.delegate = self
         }
+        if (segue.destination is SelectPointTypeTableViewController) {
+            let dest = segue.destination as! SelectPointTypeTableViewController
+            dest.delegate = self
+        }
     }
     
 
@@ -616,5 +613,13 @@ extension CreateEventTableViewController: SelectFloorsDelegate {
             }
             i += 1
         }
+    }
+}
+
+extension CreateEventTableViewController: SelectPointTypeDelegate {
+    func updatePointTypeData(pointTypeSelected: Int) {
+        print("In the extension")
+        CreateEventTableViewController.pointTypesIndex = pointTypeSelected
+        print("New val: " + String(CreateEventTableViewController.pointTypesIndex))
     }
 }
