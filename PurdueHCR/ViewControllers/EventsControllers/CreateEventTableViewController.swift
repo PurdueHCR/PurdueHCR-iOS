@@ -591,6 +591,75 @@ class CreateEventTableViewController: UITableViewController {
         return true
     }
     
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if self.view.window != nil {
+            if textView.textColor == UIColor.lightGray {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        
+        let currentText:String = textView.text
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if updatedText.isEmpty {
+            
+            textView.text = placeholder
+            textView.textColor = UIColor.lightGray
+            
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        }
+            
+        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+            textView.textColor = UIColor.black
+            textView.text = ""
+        }
+
+        return updatedText.count <= 240
+    }
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        self.descriptionField.resignFirstResponder()
+    }
+
+    var hasMoved = false
+    
+    /// Runs when the keyboard will appear on the screen
+    @objc func keyboardWillShow(notification: NSNotification) {
+        // Check if the screen has already been shifted up
+        if (!hasMoved) {
+            // Get the size of the current keyboard
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                
+                // Location of the top of the keyboard on the screen
+                let height = self.view.frame.height - keyboardSize.height - tabBarController!.tabBar.frame.height
+                // Check if keyboard is above the bottom of the text field
+                if (self.descriptionField.frame.maxY > height) {
+                    let diff = self.descriptionField.frame.maxY - height
+                    // Move the view up
+                    self.view.frame.origin.y -= (diff + 20)
+                    hasMoved = true
+                }
+            }
+        }
+    }
+    
+    
+    /// Runs when the keyboard will disappear from the screen
+    @objc func keyboardWillHide(notification: NSNotification) {
+        // Restore the view to it's normal location in case it has been
+        //  pushed up to accommodate the keyboard
+        self.view.frame.origin.y = 0
+        hasMoved = false
+    }
+    
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

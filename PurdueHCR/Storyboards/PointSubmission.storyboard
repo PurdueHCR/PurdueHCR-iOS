@@ -51,17 +51,6 @@
                                         <color key="titleColor" systemColor="labelColor"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Nr-zoQ">
-                                    <rect key="frame" x="212" y="149.66666666666666" width="192" height="105.33333333333334"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="100" id="jCp-KT-0Iy"/>
-                                    </constraints>
-                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="5" maxY="10"/>
-                                    <state key="normal">
-                                        <color key="titleColor" systemColor="labelColor"/>
-                                    </state>
-                                </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VF-Uz-9DU">
                                     <rect key="frame" x="15" y="39.666666666666664" width="25" height="24.999999999999993"/>
                                     <constraints>
@@ -112,6 +101,17 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Nr-zoQ">
+                                    <rect key="frame" x="212" y="149" width="192" height="105.33333333333334"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="jCp-KT-0Iy"/>
+                                    </constraints>
+                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="5" maxY="10"/>
+                                    <state key="normal">
+                                        <color key="titleColor" systemColor="labelColor"/>
+                                    </state>
+                                </button>
                             </subviews>
                             <viewLayoutGuide key="safeArea" id="Tpu-Nm-riX"/>
                             <color key="backgroundColor" red="0.89787995819999999" green="0.89772564170000002" blue="0.91833287480000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
