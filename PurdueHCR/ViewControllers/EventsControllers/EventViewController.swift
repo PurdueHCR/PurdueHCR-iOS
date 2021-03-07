@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import PopupKit
 
 var events: [Event] = [Event]()
 var filteredEvents: [Event] = [Event]()
@@ -66,7 +67,7 @@ class EventViewController: UITableViewController {
                 }
                 let p = permission as! Int
 
-                if p == 0 {
+                if (p == 0) {
                     let navigationBar = self.navigationController!.navigationBar
                     self.navigationItem.rightBarButtonItems = nil
                     let houseName = User.get(.house) as! String

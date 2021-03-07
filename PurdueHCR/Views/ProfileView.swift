@@ -197,12 +197,7 @@ class ProfileView: UIView {
     @IBAction func showHouseCodes(_ sender: Any) {
         guard let del = self.delegate else { return }
         let parent = del as! HouseProfileViewController
-        //let color = UIColor.lightGray
         let width : Int = Int(parent.view.frame.width - 70)
-        let height = 185
-        //let distance = 20
-        //let buttonWidth = width - (distance * 2)
-        //let borderWidth : CGFloat = 2
         
         let contentView = UIView()
         contentView.backgroundColor = UIColor.white
@@ -215,7 +210,7 @@ class ProfileView: UIView {
         var lastPosition = 25
         let codesTitle = UILabel(frame: CGRect(x: 0, y: lastPosition, width: width, height: 20))
         codesTitle.text = "HOUSE CODES"
-        codesTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        codesTitle.font = .systemFont(ofSize: 21, weight: .medium)
         codesTitle.textColor = UIColor.darkGray
         codesTitle.textAlignment = .center
         
@@ -226,13 +221,25 @@ class ProfileView: UIView {
             if (code.house == User.get(.house) as! String) {
                 if (!code.codeName.contains("RHP")) {
                     lastPosition += 5
-                    let codeName = UITextView(frame: CGRect(x: 20, y: lastPosition, width: width - 20, height: 30))
-                    codeName.isScrollEnabled = false
-                    codeName.isEditable = false
-                    codeName.text = code.codeName + ": " + code.code
-                    codeName.font = .systemFont(ofSize: 15, weight: .regular)
+                    // Displays name of code
+                    let codeTitle = UITextView(frame: CGRect(x: 15, y: lastPosition, width: width - 95 - 15, height: 30))
+                    codeTitle.isScrollEnabled = false
+                    codeTitle.isEditable = false
+                    codeTitle.text = code.codeName + ":"
+                    codeTitle.font = .systemFont(ofSize: 17, weight: .regular)
+                    codeTitle.textAlignment = .right
+                    
+                    // Displays actual code value
+                    let codeValue = UITextView(frame: CGRect(x: width - 95, y: lastPosition, width: 80, height: 30))
+                    codeValue.isScrollEnabled = false
+                    codeValue.isEditable = false
+                    codeValue.text = code.code
+                    codeValue.font = .systemFont(ofSize: 17, weight: .regular)
+                    codeValue.textAlignment = .right
+                    
                     lastPosition += 30
-                    contentView.addSubview(codeName)
+                    contentView.addSubview(codeTitle)
+                    contentView.addSubview(codeValue)
                 }
             }
         }

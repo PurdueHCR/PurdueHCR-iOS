@@ -81,5 +81,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Calendar access is needed to export events to your device&apos;s calendar app</string>
 </dict>
 </plist>

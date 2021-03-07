@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import EventKit
+import EventKitUI
 
-class ViewEventTableViewController: UITableViewController {
+class ViewEventTableViewController: UITableViewController, EKEventEditViewDelegate {
+    
 
 //    @IBOutlet weak var goingButton: UIButton!
     @IBOutlet weak var iCalExportButton: UIButton!
@@ -138,7 +141,7 @@ class ViewEventTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 6
+        return 7
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -154,7 +157,106 @@ class ViewEventTableViewController: UITableViewController {
             viewController?.delegate = delegate
         }
     }
+    
+    func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func exportToiCal(_ sender: Any) {
+        let eventStore = EKEventStore()
 
+        switch EKEventStore.authorizationStatus(for: .event) {
+        case .authorized:
+            insertEvent(store: eventStore)
+            case .denied:
+                print("Access denied")
+            case .notDetermined:
+                eventStore.requestAccess(to: .event, completion:
+                  {[weak self] (granted: Bool, error: Error?) -> Void in
+                      if granted {
+                        self!.insertEvent(store: eventStore)
+                      } else {
+                            print("Access denied")
+                      }
+                })
+                default:
+                    print("Case default")
+        }
+    }
+    
+    @IBAction func exporToGCal(_ sender: Any) {
+        var (startDate, endDate) = getCalendarDateFromEventDate(startDate: event.startDate, startTime: event.startTime, endDate: event.endDate, endTime: event.endTime)
+        print(startDate)
+        print(endDate)
+        
+        // WILL ALSO NEED TO CHANGE NAME AND OTHER FIELDS
+        // HTML requires '&' instead of spaces
+        let eventName = event.name.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
+        
+        let df = DateFormatter()
+        df.dateFormat = "yyyyMMdd'T'HHmmss"
+        df.timeZone = TimeZone(abbreviation: "ES")
+        let startDateString = df.string(from: startDate)
+        let endDateString = df.string(from: endDate)
+        let urlString = "http://calendar.google.com/?action=create&title=" + eventName + "&dates=" + startDateString + "/" + endDateString
+        let url = URL(string: urlString)!
+        if UIApplication.shared.canOpenURL(url)
+        {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+         } else {
+            //redirect to safari because the user doesn't have Google Calendar
+            let safariString = "https://www.google.com/calendar/render?action=TEMPLATE&text=" + eventName + "&dates=" + startDateString + "/" + endDateString
+            UIApplication.shared.open(URL(string: safariString)!)
+        }
+    }
+    
+    // Inspired by: https://www.ioscreator.com/tutorials/add-event-calendar-ios-tutorial
+    func insertEvent(store: EKEventStore) {
+        let calendar = store.defaultCalendarForNewEvents
+        let iCalEvent = EKEvent(eventStore: store)
+        iCalEvent.calendar = calendar
+            
+        iCalEvent.title = event.name
+        
+        let (startDate, endDate) = getCalendarDateFromEventDate(startDate: event.startDate, startTime: event.startTime, endDate: event.endDate, endTime: event.endTime)
+        
+        iCalEvent.startDate = startDate
+        iCalEvent.endDate = endDate
+        iCalEvent.notes = event.details
+        iCalEvent.location = event.location
+            
+        presentEventCalendarDetailModal(event: iCalEvent, store: store)
+    }
+    
+    func getCalendarDateFromEventDate(startDate:Date, startTime:Date, endDate:Date, endTime:Date) -> (startDate: Date, endDate: Date) {
+        // Get the hour and minutes from the start time and add them to the start date
+        let tempCal = Calendar.current
+        var hour = tempCal.component(.hour, from: event.startTime)
+        var minute = tempCal.component(.minute, from: event.startTime)
+        var startDate = event.startDate
+        startDate = tempCal.date(byAdding: .minute, value: minute, to: startDate) ?? startDate
+        startDate = tempCal.date(byAdding: .hour, value: hour, to: startDate) ?? startDate
+    
+        // Get the hour and minutes from the end time and add them to the end date
+        hour = tempCal.component(.hour, from: event.endTime)
+        minute = tempCal.component(.minute, from: event.endTime)
+        var endDate = event.endDate
+        endDate = tempCal.date(byAdding: .minute, value: minute, to: endDate) ?? endDate
+        endDate = tempCal.date(byAdding: .hour, value: hour, to: endDate) ?? endDate
+        
+        return (startDate, endDate)
+    }
+    
+    // Inspired by: https://medium.com/@fede_nieto/manage-calendar-events-with-eventkit-and-eventkitui-with-swift-74e1ecbe2524
+    func presentEventCalendarDetailModal(event: EKEvent, store: EKEventStore) {
+        let eventModalVC = EKEventEditViewController()
+        eventModalVC.event = event
+        eventModalVC.eventStore = store
+        eventModalVC.editViewDelegate = self
+        self.present(eventModalVC, animated: true, completion: nil)
+    }
+    
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
