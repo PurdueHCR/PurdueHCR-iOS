@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -110,7 +111,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Y4m-Ob-gK0"/>
-                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="27G-ic-2Pg" firstAttribute="centerX" secondItem="W4d-ka-VCi" secondAttribute="centerX" id="2GO-4L-l6P"/>
                             <constraint firstItem="W4d-ka-VCi" firstAttribute="top" secondItem="27G-ic-2Pg" secondAttribute="bottom" constant="50" id="2g0-qP-ps5"/>
@@ -281,7 +282,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="j9d-5n-MOa"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="KzN-Dx-jfn" firstAttribute="leading" secondItem="MsZ-qn-cb6" secondAttribute="trailing" constant="5" id="01q-jM-pw4"/>
                             <constraint firstItem="mCh-EH-SkA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="j9d-5n-MOa" secondAttribute="leading" constant="50" id="0Ia-vl-XxH"/>
@@ -419,7 +420,7 @@
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="56t-bi-Ubc"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="MX4-Kd-2Ix" firstAttribute="leading" secondItem="56t-bi-Ubc" secondAttribute="leading" constant="20" id="105-tz-EwA"/>
                             <constraint firstItem="AAt-dC-TeU" firstAttribute="top" secondItem="BOM-dl-79c" secondAttribute="bottom" constant="30" id="1dz-ql-kcq"/>
@@ -484,7 +485,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rha-g0-3yP"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eVk-uE-fAn" firstAttribute="centerX" secondItem="ION-eH-0K6" secondAttribute="centerX" id="0Sq-T6-EkU"/>
                             <constraint firstAttribute="trailing" secondItem="DNk-LV-nij" secondAttribute="trailing" constant="40" id="1ay-LT-7aP"/>
@@ -510,12 +511,15 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="fz4-dE-SKe"/>
-        <segue reference="7Rm-Z3-CLZ"/>
+        <segue reference="VrF-dY-ied"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="emblem" width="1000" height="1000"/>
         <systemColor name="scrollViewTexturedBackgroundColor">
             <color red="0.43529411764705878" green="0.44313725490196082" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
