@@ -45,10 +45,10 @@ class TabBarController: UITabBarController {
         else if (p == PointType.PermissionLevel.rec.rawValue){
             // REA/REC Controllers
             viewControllers.append(linkRECHouseViewController())
+            viewControllers.append(linkEventViewController())
             viewControllers.append(linkQRCodeViewController())
             viewControllers.append(linkRECPointOptionsViewController())
             viewControllers.append(linkRECRewardsViewController())
-
         }
 		else if (p == PointType.PermissionLevel.faculty.rawValue) {
 			//FHP Controllers
@@ -60,6 +60,7 @@ class TabBarController: UITabBarController {
             // Priviledged Resident Controllers
             viewControllers.append(linkProfileViewController())
             viewControllers.append(linkPointSubmissionViewController())
+            viewControllers.append(linkEventViewController())
             viewControllers.append(linkQRCodeViewController())
         }
         else if (p == PointType.PermissionLevel.ea.rawValue) {

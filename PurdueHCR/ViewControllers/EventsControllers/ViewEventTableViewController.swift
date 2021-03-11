@@ -113,7 +113,7 @@ class ViewEventTableViewController: UITableViewController {
         self.detailsLabel.text = event.details
         //self.detailsLabel.translatesAutoresizingMaskIntoConstraints = true
         self.detailsLabel.sizeToFit()
-        self.detailsLabel.isScrollEnabled = false
+        //self.detailsLabel.isScrollEnabled = false
         
 //        if (going) {
 //            if #available(iOS 13.0, *) {
