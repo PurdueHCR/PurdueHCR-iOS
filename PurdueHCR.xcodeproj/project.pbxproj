@@ -22,7 +22,6 @@
 		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
 		B53A88C525A0F938009A0983 /* MachineInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = B53A88C425A0F938009A0983 /* MachineInfo.xib */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
-		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B55B7E4F2601828B00E5635B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B55B7E492601825B00E5635B /* GoogleService-Info.plist */; };
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
 		B5720C5525F85D3A00E83C47 /* LaundryMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5720C5325F85D3900E83C47 /* LaundryMachineView.swift */; };
@@ -146,7 +145,6 @@
 		B53A88C425A0F938009A0983 /* MachineInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MachineInfo.xib; sourceTree = "<group>"; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B5539817255B5CF5006FD21B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
 		B555F30A2552298B002D1151 /* LaundryMachine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaundryMachine.xib; sourceTree = "<group>"; };
 		B55B2F46253F9BD500A91173 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B55B7E492601825B00E5635B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -363,7 +361,6 @@
 				D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */,
 				D3D062B620E7F73C00E8B3A3 /* DataManager.swift */,
 				D3CC77CD21052CEF00B88F03 /* AppUtils.swift */,
-				B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */,
 				B5AE2D4623DCA07100B2323C /* FirebaseListener.swift */,
 				B5AE2D4823DCA34F00B2323C /* FirebaseCollectionListener.swift */,
 				B5AE2D4A23DCA35D00B2323C /* FirebaseDocumentListener.swift */,
@@ -863,7 +860,6 @@
 				B5ED711324A7D7C400080A52 /* EventViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
 				D3912A74219CE7960002E7C7 /* RECPointOptionTableViewController.swift in Sources */,
-				B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */,
 				D3CC77CB210428B600B88F03 /* TabBarController.swift in Sources */,
 				B5720C5625F85D3A00E83C47 /* MachineInfoView.swift in Sources */,
 				B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */,

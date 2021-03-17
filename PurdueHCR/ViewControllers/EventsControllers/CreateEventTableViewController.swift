@@ -47,7 +47,8 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
                 
-        createEventButton.layer.cornerRadius = 4
+        createEventButton.layer.cornerRadius = DefinedValues.radius
+        deleteEventButton.layer.cornerRadius = DefinedValues.radius
         
         chooseHostField.isEnabled = false
         chooseHostField.textColor = UIColor.gray
