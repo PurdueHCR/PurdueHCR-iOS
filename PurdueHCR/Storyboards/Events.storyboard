@@ -967,6 +967,9 @@
                                                     <state key="normal" title="Google Calendar">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="exporToGCal:" destination="rkV-g8-krZ" eventType="touchUpInside" id="o9m-K0-MFu"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgF-9j-xpa">
                                                     <rect key="frame" x="20" y="30" width="183" height="45"/>
@@ -974,6 +977,9 @@
                                                     <state key="normal" title="Apple Calendar">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="exportToiCal:" destination="rkV-g8-krZ" eventType="touchUpInside" id="Dql-ez-iHc"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1050,7 +1056,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RVA-Vd-bqB"/>
+        <segue reference="i9x-eG-wUT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

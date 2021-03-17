@@ -30,11 +30,12 @@ class LogoutView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        commonInit()
+        //commonInit()
     }
     
     func commonInit() {
         Bundle.main.loadNibNamed("LogoutView", owner: self, options: nil)
+        
         addSubview(logoutView)
         logoutView.frame = self.bounds
         logoutView.layer.cornerRadius = DefinedValues.radius
