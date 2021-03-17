@@ -278,7 +278,6 @@
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="showSettings:" destination="zGs-DW-f3U" id="IjD-zz-uBn"/>
-                                <segue destination="Cd7-AL-Pgh" kind="show" id="tf2-vT-iNB"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Bell" style="done" id="76R-xb-ZfK">
@@ -359,21 +358,24 @@
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Codes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srt-6b-ImK">
-                                <rect key="frame" x="95" y="456" width="95" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events for All Users" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srt-6b-ImK">
+                                <rect key="frame" x="95" y="456" width="161" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RHPs have a fresh new look to the QR codes page" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmy-h9-Djw">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RECs and Privileged Residents can now create and view events" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmy-h9-Djw">
                                 <rect key="frame" x="95" y="480" width="289" height="40.666666666666629"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QRCode" translatesAutoresizingMaskIntoConstraints="NO" id="NPd-Il-AmW">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SF_calendar_badge_plus" translatesAutoresizingMaskIntoConstraints="NO" id="NPd-Il-AmW">
                                 <rect key="frame" x="30" y="456" width="50" height="50"/>
                                 <color key="tintColor" systemColor="linkColor"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="NPd-Il-AmW" secondAttribute="height" multiplier="1:1" id="GoA-N8-Oee"/>
                                     <constraint firstAttribute="width" constant="50" id="Qfq-4h-hOc"/>
@@ -413,7 +415,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BiE-y3-UPN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1482.608695652174" y="539.0625"/>
+            <point key="canvasLocation" x="2867" y="275"/>
         </scene>
         <!--Submitted Points-->
         <scene sceneID="YF4-kF-k5v">
@@ -616,12 +618,11 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="BDD-9V-dOb"/>
-        <segue reference="5Uc-hq-VhE"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Bell" width="25" height="25"/>
-        <image name="QRCode" width="25" height="25"/>
         <image name="RewardIcon" width="25" height="25"/>
+        <image name="SF_calendar_badge_plus" width="64" height="64"/>
         <image name="Settings" width="25" height="25"/>
         <image name="profile" width="25" height="25"/>
         <systemColor name="linkColor">
@@ -630,11 +631,17 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

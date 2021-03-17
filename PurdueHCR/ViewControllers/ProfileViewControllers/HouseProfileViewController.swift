@@ -447,9 +447,9 @@ class whatsNewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        eventIcon.image = #imageLiteral(resourceName: "SF_calendar_badge_plus").withRenderingMode(.alwaysTemplate)
+        eventIcon.image = #imageLiteral(resourceName: "RewardIcon").withRenderingMode(.alwaysTemplate)
         eventIcon.tintColor = DefinedValues.systemBlue
-        qrCodeIcon.image = #imageLiteral(resourceName: "QRCode").withRenderingMode(.alwaysTemplate)
+        qrCodeIcon.image = #imageLiteral(resourceName: "SF_calendar_badge_plus").withRenderingMode(.alwaysTemplate)
         qrCodeIcon.tintColor = DefinedValues.systemBlue
     }
     
