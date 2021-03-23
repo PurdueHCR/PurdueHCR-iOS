@@ -56,7 +56,7 @@
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pqy-7r-qWZ">
                                 <rect key="frame" x="76" y="398" width="262" height="40"/>
-                                <color key="backgroundColor" red="0.81014880150000002" green="0.79813140849999997" blue="0.86967431750000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="GM2-Ut-3pp"/>
                                 </constraints>
@@ -92,7 +92,7 @@
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qOZ-Db-HBF"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="613-9m-V54" firstAttribute="centerX" secondItem="Pqy-7r-qWZ" secondAttribute="centerX" id="8v6-8h-j5I"/>
                             <constraint firstItem="hiX-kw-LBb" firstAttribute="leading" secondItem="51m-7L-IVd" secondAttribute="leadingMargin" id="D1j-y7-Fh8"/>
@@ -410,6 +410,9 @@
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

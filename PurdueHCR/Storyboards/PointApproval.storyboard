@@ -157,7 +157,7 @@
                             <outlet property="delegate" destination="TSA-qS-UEd" id="VwB-em-UcV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Approvals" id="pRB-rv-Zvx">
+                    <navigationItem key="navigationItem" title="Approvals" largeTitleDisplayMode="always" id="pRB-rv-Zvx">
                         <barButtonItem key="rightBarButtonItem" title="History" id="3rg-SZ-u9Q">
                             <connections>
                                 <segue destination="Yyz-RD-CqG" kind="show" id="Mnl-Sm-ys8"/>
@@ -285,7 +285,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="vd2-Hg-7bX"/>
+        <segue reference="0Cb-0I-gSI"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Send" width="536" height="536"/>
