@@ -102,7 +102,7 @@ class HousePointsCompareView: UIView {
 
             chart.data = data
 
-            chart.data?.setValueFont(UIFont.systemFont(ofSize: 9))
+            chart.data?.setValueFont(UIFont.systemFont(ofSize: 10))
             
             //All other additions to this function will go here
             
