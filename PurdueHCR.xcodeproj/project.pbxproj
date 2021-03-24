@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
+		AA237274260AB9BA00A4C6B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA237273260AB9BA00A4C6B5 /* GoogleService-Info.plist */; };
 		AA7A7F8B251182FA002BD54B /* EventTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */; };
 		AA7C742B25DC64CE007A8076 /* SelectPointTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7C742A25DC64CE007A8076 /* SelectPointTypeTableViewController.swift */; };
 		AA95F66525DF02FC0003BEDF /* SelectPointTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95F66425DF02FC0003BEDF /* SelectPointTypeTableViewCell.swift */; };
@@ -22,7 +23,6 @@
 		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
 		B53A88C525A0F938009A0983 /* MachineInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = B53A88C425A0F938009A0983 /* MachineInfo.xib */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
-		B55B7E4F2601828B00E5635B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B55B7E492601825B00E5635B /* GoogleService-Info.plist */; };
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
 		B5720C5525F85D3A00E83C47 /* LaundryMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5720C5325F85D3900E83C47 /* LaundryMachineView.swift */; };
 		B5720C5625F85D3A00E83C47 /* MachineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5720C5425F85D3900E83C47 /* MachineInfoView.swift */; };
@@ -124,6 +124,7 @@
 		172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.release.xcconfig"; sourceTree = "<group>"; };
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AA237273260AB9BA00A4C6B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		AA7C742A25DC64CE007A8076 /* SelectPointTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPointTypeTableViewController.swift; sourceTree = "<group>"; };
@@ -147,7 +148,6 @@
 		B5539817255B5CF5006FD21B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B555F30A2552298B002D1151 /* LaundryMachine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaundryMachine.xib; sourceTree = "<group>"; };
 		B55B2F46253F9BD500A91173 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B55B7E492601825B00E5635B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		B5720C5325F85D3900E83C47 /* LaundryMachineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachineView.swift; sourceTree = "<group>"; };
 		B5720C5425F85D3900E83C47 /* MachineInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineInfoView.swift; sourceTree = "<group>"; };
@@ -333,8 +333,8 @@
 		D30FBEE020FC0403000DD221 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B5720C5225F85CDB00E83C47 /* LaundryControllers */,
 				B5ED710B24A7D7C400080A52 /* EventsControllers */,
+				B5720C5225F85CDB00E83C47 /* LaundryControllers */,
 				D3912A63219CE75D0002E7C7 /* RECViewControllers */,
 				D39D442F210E73FB0030F424 /* FlowControllers */,
 				D39D4430210E74090030F424 /* UserCreation */,
@@ -416,7 +416,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				B55B7E492601825B00E5635B /* GoogleService-Info.plist */,
+				AA237273260AB9BA00A4C6B5 /* GoogleService-Info.plist */,
 				B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */,
 				B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */,
 				B532665B24F454E1005ABEEC /* PurdueHCRRelease.entitlements */,
@@ -734,7 +734,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B55B7E4F2601828B00E5635B /* GoogleService-Info.plist in Resources */,
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
 				D3355C8F214A25B10037556C /* Profile.storyboard in Resources */,
 				B551BDD321B1004F00CF4F6C /* Register in Resources */,
@@ -754,6 +753,7 @@
 				AAF279F42555DA7600D7028D /* Events.storyboard in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */,
+				AA237274260AB9BA00A4C6B5 /* GoogleService-Info.plist in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
