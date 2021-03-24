@@ -82,12 +82,16 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
         
         
         newEventName.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        newEventName.layer.cornerRadius = DefinedValues.radius
         
         newEventLocation.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        newEventLocation.layer.cornerRadius = DefinedValues.radius
         
         newEventDescription.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        newEventDescription.layer.cornerRadius = DefinedValues.radius
         
         chooseHostField.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        chooseHostField.layer.cornerRadius = DefinedValues.radius
         
         CreateEventTableViewController.pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
         
