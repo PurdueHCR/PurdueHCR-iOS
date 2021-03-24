@@ -411,11 +411,16 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
         print("Create or edit")
         createEventButton.isEnabled = false
         let newEvent = createNewEvent()
+        if (newEvent == nil) {
+            self.notify(title: "Please fill out all fields correctly", subtitle: "", style: .danger)
+            self.createEventButton.isEnabled = true
+            return
+        }
         if (creating) {
             //events.append(newEvent)
             
             // FIRE BASE HELPER METHOD TO ADD EVENT
-            fbh.addEvent(event: newEvent) { (err) in
+            fbh.addEvent(event: newEvent!) { (err) in
                 if (err != nil) {
                     self.notify(title: "Error Creating Event", subtitle: "", style: .danger)
                     self.createEventButton.isEnabled = true
@@ -425,6 +430,7 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
                         if (err != nil) {
                             print("Error in getEvents()")
                         } else {
+                            print("No error creating event")
                             self.delegate?.shouldReload = true
                             events = eventsAPI
                             self.createEventButton.isEnabled = true
@@ -434,7 +440,7 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
                 }
             }
         } else {
-            fbh.editEvent(event: newEvent, origID: event.eventID) { (err, event) in
+            fbh.editEvent(event: newEvent!, origID: event.eventID) { (err, event) in
                 if (err != nil) {
                     self.notify(title: "Error Editing Event", subtitle: "", style: .danger)
                     self.createEventButton.isEnabled = true
@@ -456,18 +462,30 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
         }
     }
     
-    func createNewEvent() -> Event {
+    func createNewEvent() -> Event? {
         let name = newEventName.text!
+        if (name == "" || name == "Name...") {
+            return nil
+        }
         
+        let startDate = newEventStartDate.date
+        let endDate = newEventEndDate.date
+        if (endDate < startDate) {
+            return nil
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Event.dateFormat + " " + Event.timeFormat
-        let startDateTime = dateFormatter.string(from: newEventStartDate.date)
-        let endDateTime = dateFormatter.string(from: newEventEndDate.date)
-        print("CreatedStartDateTime = " + startDateTime)
-        print("CreatedEndDateTime = " + endDateTime)
+        let startDateTime = dateFormatter.string(from: startDate)
+        let endDateTime = dateFormatter.string(from: endDate)
         
         let location = newEventLocation.text!
+        if (location == "" || location == "Location...") {
+            return nil
+        }
         
+        if (CreateEventTableViewController.pointTypesIndex == -1) {
+            return nil
+        }
         let pointType = CreateEventTableViewController.pointTypes[CreateEventTableViewController.pointTypesIndex]
         
         let host: String
@@ -477,6 +495,9 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
             host = firstName + " " + lastName
         } else {
             host = chooseHostField.text!
+            if (host == "" || host == "Specify Host...") {
+                return nil
+            }
         }
         
         var floors = [String]()
@@ -514,10 +535,16 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
                 isPublicEvent = true
             }
         } else {
+            if (floorsSelected.isEmpty) {
+                return nil
+            }
             floors = floorsSelected
         }
         
         let details = newEventDescription.text!
+        if (details == "") {
+            return nil
+        }
         
         let creatorID = User.get(.id) as! String
         

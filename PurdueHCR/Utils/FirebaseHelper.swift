@@ -38,24 +38,24 @@ class FirebaseHelper {
 //    let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
     
     //----- TEST URLS ------//
-//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
-//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
-//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
-//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
-//    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
-//    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
-//    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
+    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
+    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
+    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
     
     //------ PRODUCTION URLS ------//
-    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
-    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
-    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
-    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
-    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
+//    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+//    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+//    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
+//    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
+//    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
     
     init() {
         db = Firestore.firestore()
@@ -1160,71 +1160,6 @@ class FirebaseHelper {
     }
     
     // Event Functions
-    func addEvent(event: Event, onDone:@escaping (_ err:Error?)->Void) {
-        DataManager.sharedManager.getAuthorizationToken { (token, err) in
-            //var events: [Event?]?
-            if let err = err {
-                print("Error getting authorization token")
-                //events = nil
-                onDone(err)
-            }
-            let headerVal = "Bearer " + (token ?? "")
-            let header = HTTPHeader(name: "Authorization", value: headerVal)
-            let headers = HTTPHeaders(arrayLiteral: header)
-            let url = URL(string: self.ADD_EVENT_URL)!
-
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let startDateString = dateFormatter.string(from: event.startDate)
-            let endDateString = dateFormatter.string(from: event.endDate)
-            dateFormatter.dateFormat = "HH:mm:ss"
-            let startTimeString = dateFormatter.string(from: event.startTime)
-            let endTimeString = dateFormatter.string(from: event.endTime)
-            
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let startDateTime = dateFormatter.date(from: startDateString + " " + startTimeString)
-            let endDateTime = dateFormatter.date(from: endDateString + " " + endTimeString)
-            
-            let enUSPosixLocale = Locale(identifier: "en_US_POSIX")
-            dateFormatter.locale = enUSPosixLocale
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-            dateFormatter.calendar = Calendar(identifier: .gregorian)
-            let startDateTimeString = dateFormatter.string(from: startDateTime!)
-            let endDateTimeString = dateFormatter.string(from: endDateTime!)
-           
-//         Example of parameters we need to be sending.
-//         {
-//           "name": "A Very Fun Event",
-//           "details": "A very fun event by me!",
-//           "startDate": "2020-11-08T10:00:00+04:00",
-//           "endDate": "2020-11-08T10:00:00+04:00",
-//           "location": "HCRS 1066",
-//           "pointTypeId": 1,
-//           "floorIds": [
-//             "2N"
-//           ],
-//           "isPublicEvent": false,
-//           "isAllFloors": false,
-//           "host": "The Society"
-//         }
-            let parameters: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
-            
-            print(parameters)
-            
-            AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-                if let result = response.value as? [String : Any] {
-                    print("Add Event Result:")
-                    print(result)
-                    onDone(nil)
-                } else {
-                    print(response.error!.errorDescription!)
-                }
-            }
-            //onDone(RetrievalError.unableToParseResponse)
-        }
-    }
-    
-    
     func getEvents(onDone:@escaping ([Event], Error?) ->Void) {
         DataManager.sharedManager.getAuthorizationToken { (token, err) in
          var events: [Event] = [Event]()
@@ -1270,6 +1205,57 @@ class FirebaseHelper {
              }
          }
          //onDone(events, RetrievalError.unableToParseResponse)
+        }
+    }
+    
+    func addEvent(event: Event, onDone:@escaping (_ err:Error?)->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            //var events: [Event?]?
+            if let err = err {
+                print("Error getting authorization token")
+                //events = nil
+                onDone(err)
+            }
+            let headerVal = "Bearer " + (token ?? "")
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
+            let url = URL(string: self.ADD_EVENT_URL)!
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let startDateString = dateFormatter.string(from: event.startDate)
+            let endDateString = dateFormatter.string(from: event.endDate)
+            dateFormatter.dateFormat = "HH:mm:ss"
+            let startTimeString = dateFormatter.string(from: event.startTime)
+            let endTimeString = dateFormatter.string(from: event.endTime)
+            
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let startDateTime = dateFormatter.date(from: startDateString + " " + startTimeString)
+            let endDateTime = dateFormatter.date(from: endDateString + " " + endTimeString)
+            
+            let enUSPosixLocale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.locale = enUSPosixLocale
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
+            let startDateTimeString = dateFormatter.string(from: startDateTime!)
+            let endDateTimeString = dateFormatter.string(from: endDateTime!)
+           
+            let parameters: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
+            
+            print(parameters)
+            
+            AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Any] {
+                    print("Add Event Result:")
+                    print(result)
+                    onDone(nil)
+                } else {
+                    print("Error description")
+                    print(response.error!.errorDescription!)
+                    // Parse out error type to get code that made it fail.
+                    onDone(RetrievalError.unableToParseResponse)
+                }
+            }
         }
     }
     
