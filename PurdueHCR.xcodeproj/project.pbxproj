@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
-		AA237274260AB9BA00A4C6B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA237273260AB9BA00A4C6B5 /* GoogleService-Info.plist */; };
 		AA7A7F8B251182FA002BD54B /* EventTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */; };
 		AA7C742B25DC64CE007A8076 /* SelectPointTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7C742A25DC64CE007A8076 /* SelectPointTypeTableViewController.swift */; };
 		AA95F66525DF02FC0003BEDF /* SelectPointTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95F66425DF02FC0003BEDF /* SelectPointTypeTableViewCell.swift */; };
@@ -46,6 +45,7 @@
 		B5ED711624A7D7C400080A52 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711024A7D7C400080A52 /* VerifyViewController.swift */; };
 		B5ED711724A7D7C400080A52 /* AddEventBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */; };
 		B5ED711924A7E73200080A52 /* ViewEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */; };
+		B5EF6BB4260C2EB400129573 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5EF6BB3260C2EB400129573 /* GoogleService-Info.plist */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -124,7 +124,6 @@
 		172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.release.xcconfig"; sourceTree = "<group>"; };
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		AA237273260AB9BA00A4C6B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		AA7C742A25DC64CE007A8076 /* SelectPointTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPointTypeTableViewController.swift; sourceTree = "<group>"; };
@@ -172,6 +171,7 @@
 		B5ED711024A7D7C400080A52 /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventBarButton.swift; sourceTree = "<group>"; };
 		B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEventTableViewController.swift; sourceTree = "<group>"; };
+		B5EF6BB3260C2EB400129573 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -416,7 +416,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				AA237273260AB9BA00A4C6B5 /* GoogleService-Info.plist */,
+				B5EF6BB3260C2EB400129573 /* GoogleService-Info.plist */,
 				B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */,
 				B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */,
 				B532665B24F454E1005ABEEC /* PurdueHCRRelease.entitlements */,
@@ -753,7 +753,7 @@
 				AAF279F42555DA7600D7028D /* Events.storyboard in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */,
-				AA237274260AB9BA00A4C6B5 /* GoogleService-Info.plist in Resources */,
+				B5EF6BB4260C2EB400129573 /* GoogleService-Info.plist in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
