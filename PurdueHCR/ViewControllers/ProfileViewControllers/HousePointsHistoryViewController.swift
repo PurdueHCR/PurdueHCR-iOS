@@ -25,8 +25,10 @@ class HousePointsHistoryViewController: UITableViewController, UISearchResultsUp
 	
 	override func viewDidLoad() {
         
-		self.navigationItem.hidesBackButton = true
-    	self.activityIndicator.startAnimating()
+		//self.navigationItem.hidesBackButton = true
+        self.navigationItem.largeTitleDisplayMode = .never
+        
+        self.activityIndicator.startAnimating()
 		super.viewDidLoad()
 
 		activityIndicator.center = self.view.center

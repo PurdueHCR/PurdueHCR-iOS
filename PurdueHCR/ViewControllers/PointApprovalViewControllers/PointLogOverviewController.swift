@@ -31,6 +31,8 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.largeTitleDisplayMode = .never
+        
         self.sendActivityIndicator.stopAnimating()
         self.sendActivityIndicator.isHidden = true
         

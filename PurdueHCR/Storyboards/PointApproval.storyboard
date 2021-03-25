@@ -271,8 +271,8 @@
             <objects>
                 <navigationController storyboardIdentifier="Point_Approval_Initial" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ehx-jP-2Fn" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Approve" id="Vu3-rQ-YVp"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Phd-tY-wNJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Phd-tY-wNJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -285,7 +285,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="vd2-Hg-7bX"/>
+        <segue reference="0Cb-0I-gSI"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Send" width="536" height="536"/>
