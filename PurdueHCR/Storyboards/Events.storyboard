@@ -624,6 +624,7 @@
                         <outlet property="newEventLocation" destination="JeF-6E-RGW" id="3yO-Sl-xpC"/>
                         <outlet property="newEventMyFloorLabel" destination="IW5-R7-yra" id="Jka-30-NWz"/>
                         <outlet property="newEventMyFloorSwitch" destination="0bO-H8-HaQ" id="naD-Dw-FnW"/>
+                        <outlet property="newEventMyHouseLabel" destination="oME-xK-sBf" id="DZ7-90-3KX"/>
                         <outlet property="newEventMyHouseSwitch" destination="55I-6R-W3f" id="l4s-31-i1b"/>
                         <outlet property="newEventName" destination="IKB-Tn-RWZ" id="nhf-GE-jIX"/>
                         <outlet property="newEventPointType" destination="Moe-GW-uC2" id="c63-ZK-iMA"/>
@@ -1054,7 +1055,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="i9x-eG-wUT"/>
+        <segue reference="RVA-Vd-bqB"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="calendar.circle.fill" catalog="system" width="128" height="121"/>
