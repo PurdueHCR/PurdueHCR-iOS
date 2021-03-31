@@ -1190,8 +1190,10 @@ class FirebaseHelper {
                        let host = result["host"] as! String
                        let floorColors = result["floorColors"] as! [String]
                        let id = result["id"] as! String
+                       let virtualLink = result["virtualLink"] as! String
+                    
 
-                       let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                       let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
                        
                        events.append(event)
                    }
@@ -1311,8 +1313,9 @@ class FirebaseHelper {
                     let host = result["host"] as! String
                     let floorColors = result["floorColors"] as! [String]
                     let id = result["id"] as! String
+                    let virtualLink = result["virtualEvent"] as! String
 
-                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
                     
                     onDone(nil, event)
                 } else {
@@ -1384,8 +1387,9 @@ class FirebaseHelper {
                    let host = result["host"] as! String
                    let floorColors = result["floorColors"] as! [String]
                    let id = result["id"] as! String
+                   let virtualLink = result["virtualLink"] as! String
 
-                   let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                   let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
                 
                    events.append(event)
                }

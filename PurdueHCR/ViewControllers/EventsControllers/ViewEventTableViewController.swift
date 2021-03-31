@@ -25,6 +25,7 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     @IBOutlet weak var hostLabel: UILabel!
     @IBOutlet weak var attendeeLabel: UILabel!
     @IBOutlet weak var detailsLabel: UITextView!
+    @IBOutlet weak var hyperlinkLabel: UILabel!
     
     var delegate: EventViewController?
     var going = false // To be set later when connected to database
@@ -111,6 +112,14 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
         self.attendeeLabel.numberOfLines = 1
         self.attendeeLabel.sizeToFit()
         
+        if (event.virtualLink != "") {
+            self.hyperlinkLabel.text = event.virtualLink
+        } else {
+            // Empty link so hide the cell
+            let hyperlinkCell = tableView.cellForRow(at: IndexPath(row: 5, section: 1))
+            NSLayoutConstraint.activate([NSLayoutConstraint(item: hyperlinkCell, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 0)])
+        }
+        
         self.detailsLabel.text = event.details
         //self.detailsLabel.translatesAutoresizingMaskIntoConstraints = true
         self.detailsLabel.sizeToFit()
@@ -183,12 +192,8 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     }
     
     @IBAction func exporToGCal(_ sender: Any) {
-        var (startDate, endDate) = getCalendarDateFromEventDate(startDate: event.startDate, startTime: event.startTime, endDate: event.endDate, endTime: event.endTime)
-        print(startDate)
-        print(endDate)
+        let (startDate, endDate) = getCalendarDateFromEventDate(startDate: event.startDate, startTime: event.startTime, endDate: event.endDate, endTime: event.endTime)
         
-        // WILL ALSO NEED TO CHANGE NAME AND OTHER FIELDS
-        // HTML requires '&' instead of spaces
         let eventName = event.name.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
         
         let df = DateFormatter()
