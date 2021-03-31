@@ -84,11 +84,9 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
         self.timeLabel.sizeToFit()
         
         self.locationLabel.text = event.location
-        self.locationLabel.numberOfLines = 1
         self.locationLabel.sizeToFit()
         
         self.hostLabel.text = event.host
-        self.hostLabel.numberOfLines = 1
         self.hostLabel.sizeToFit()
         
         var floors: String = ""
