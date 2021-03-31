@@ -25,7 +25,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Login">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -42,6 +42,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="6ZE-TP-k9l"/>
                                 </constraints>
+                                <color key="textColor" systemColor="opaqueSeparatorColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
@@ -62,6 +63,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="JSp-lM-Aic"/>
                                 </constraints>
+                                <color key="textColor" systemColor="opaqueSeparatorColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
                                 <userDefinedRuntimeAttributes>
@@ -203,7 +205,7 @@
                                     <constraint firstAttribute="height" constant="50" id="yag-Dk-UA4"/>
                                 </constraints>
                                 <state key="normal" title="Sign up">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <connections>
                                     <action selector="submitSignUp:" destination="ilj-Rk-Dkf" eventType="touchUpInside" id="6v6-6x-Jzn"/>
@@ -219,7 +221,6 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7Q-C6-YT2">
                                 <rect key="frame" x="82" y="792" width="250" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="yXv-f3-FPt"/>
                                 </constraints>
@@ -390,7 +391,7 @@
                                     <constraint firstAttribute="width" constant="250" id="EeQ-VM-ExA"/>
                                 </constraints>
                                 <state key="normal" title="Join House">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <connections>
                                     <action selector="joinHouse:" destination="U6d-VH-hFW" eventType="touchUpInside" id="F17-87-a2K"/>
@@ -399,7 +400,6 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LZT-VA-Jgt">
                                 <rect key="frame" x="82" y="792" width="250" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Qdv-rn-6FQ"/>
                                 </constraints>
@@ -510,11 +510,17 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fz4-dE-SKe"/>
-        <segue reference="VrF-dY-ied"/>
+        <segue reference="yTX-dg-aIZ"/>
+        <segue reference="7Rm-Z3-CLZ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="emblem" width="1000" height="1000"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="scrollViewTexturedBackgroundColor">
             <color red="0.43529411764705878" green="0.44313725490196082" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

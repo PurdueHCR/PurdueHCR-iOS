@@ -35,15 +35,28 @@ class HouseCodeViewController: UIViewController, UITextFieldDelegate {
 		
 		firstNameField.layer.cornerRadius = 10
 		firstNameField.layer.masksToBounds = true
-		firstNameField.backgroundColor = systemGray5
+        if #available(iOS 13.0, *) {
+            firstNameField.backgroundColor = UIColor.systemGray5
+        } else {
+            firstNameField.backgroundColor = DefinedValues.systemGray5
+        }
+		
 		
 		lastNameField.layer.cornerRadius = 10
 		lastNameField.layer.masksToBounds = true
-		lastNameField.backgroundColor = systemGray5
+        if #available(iOS 13.0, *) {
+            lastNameField.backgroundColor = UIColor.systemGray5
+        } else {
+            lastNameField.backgroundColor = DefinedValues.systemGray5
+        }
 		
 		codeField.layer.cornerRadius = 10
 		codeField.layer.masksToBounds = true
-		codeField.backgroundColor = systemGray5
+        if #available(iOS 13.0, *) {
+            codeField.backgroundColor = UIColor.systemGray5
+        } else {
+            codeField.backgroundColor = DefinedValues.systemGray5
+        }
 		
 		joinButton.layer.cornerRadius = 10
 		joinButton.layer.masksToBounds = true

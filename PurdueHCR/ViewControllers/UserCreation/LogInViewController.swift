@@ -58,13 +58,22 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		
         username.layer.cornerRadius = 10
         username.layer.masksToBounds = true
-		username.backgroundColor = systemGray5
+		//username.backgroundColor = systemGray5
+        if #available(iOS 13.0, *) {
+            username.backgroundColor = UIColor.systemGray5
+        } else {
+         username.backgroundColor = systemGray5
+        }
         //username.layer.borderWidth = 1
         //username.layer.borderColor = UIColor.lightGray.cgColor
 		username.tag = 0
         password.layer.cornerRadius = 10
         password.layer.masksToBounds = true
-		password.backgroundColor = systemGray5
+        if #available(iOS 13.0, *) {
+            password.backgroundColor = UIColor.systemGray5
+        } else {
+         password.backgroundColor = systemGray5
+        }
         //password.layer.borderWidth = 1
         //password.layer.borderColor = UIColor.lightGray.cgColor
 		password.tag = 1
