@@ -212,10 +212,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icz-Ou-EmI">
-                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                                <rect key="frame" x="0.0" y="96" width="414" height="640"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUQ-79-rrv" userLabel="Subview">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="640"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="QR Code Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SGc-Wc-EST">
                                                 <rect key="frame" x="25" y="340" width="374" height="50"/>
@@ -239,7 +239,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Archived" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3U2-1o-BnY">
-                                                <rect key="frame" x="268" y="456.33333333333331" width="67" height="20.333333333333314"/>
+                                                <rect key="frame" x="268" y="456.33333333333337" width="67" height="20.333333333333314"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -323,7 +323,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2B-Ag-b1q">
-                                                <rect key="frame" x="63.333333333333343" y="435.33333333333331" width="19" height="36"/>
+                                                <rect key="frame" x="63.333333333333343" y="435.33333333333337" width="19" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="30"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -396,7 +396,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dzV-p3-AiX"/>
+        <segue reference="wz4-yh-41l"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

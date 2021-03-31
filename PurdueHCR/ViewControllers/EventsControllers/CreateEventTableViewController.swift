@@ -29,6 +29,7 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
     @IBOutlet weak var chooseHostField: UITextField!
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var deleteEventButton: UIButton!
+    @IBOutlet weak var linkField: UITextField!
     
     
     let fbh = FirebaseHelper()
@@ -80,18 +81,12 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
             newEventIsPublicLabel.textColor = UIColor.gray
         }
         
-        
-        newEventName.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        // Round the corners of fields
         newEventName.layer.cornerRadius = DefinedValues.radius
-        
-        newEventLocation.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
         newEventLocation.layer.cornerRadius = DefinedValues.radius
-        
-        newEventDescription.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
         newEventDescription.layer.cornerRadius = DefinedValues.radius
-        
-        chooseHostField.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
         chooseHostField.layer.cornerRadius = DefinedValues.radius
+        linkField.layer.cornerRadius = DefinedValues.radius
         
         CreateEventTableViewController.pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
         
@@ -303,16 +298,14 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if (creating) {
-            return 9
-        } else {
             return 10
+        } else {
+            return 11
         }
     }
     
@@ -552,7 +545,12 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
         
         let creatorID = User.get(.id) as! String
         
-        return Event(name: name, location: location, pointType: pointType, floors: floors, details: details, isPublicEvent: isPublicEvent, isAllFloors: isAllFloors, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host)
+        var virtualLink = ""
+        if (linkField.text != "") {
+            virtualLink = linkField.text!
+        }
+        
+        return Event(name: name, location: location, pointType: pointType, floors: floors, details: details, isPublicEvent: isPublicEvent, isAllFloors: isAllFloors, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host, virtualLink: virtualLink)
     }
     
     @IBAction func deleteEvent(_ sender: UIButton) {

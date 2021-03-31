@@ -25,7 +25,7 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     @IBOutlet weak var hostLabel: UILabel!
     @IBOutlet weak var attendeeLabel: UILabel!
     @IBOutlet weak var detailsLabel: UITextView!
-    @IBOutlet weak var hyperlinkLabel: UILabel!
+    @IBOutlet weak var hyperlinkTextView: UITextView!
     
     var delegate: EventViewController?
     var going = false // To be set later when connected to database
@@ -113,11 +113,13 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
         self.attendeeLabel.sizeToFit()
         
         if (event.virtualLink != "") {
-            self.hyperlinkLabel.text = event.virtualLink
+            self.hyperlinkTextView.text = event.virtualLink
+            self.hyperlinkTextView.dataDetectorTypes = .link
+            self.hyperlinkTextView.sizeToFit()
         } else {
             // Empty link so hide the cell
-            let hyperlinkCell = tableView.cellForRow(at: IndexPath(row: 5, section: 1))
-            NSLayoutConstraint.activate([NSLayoutConstraint(item: hyperlinkCell, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 0)])
+//            let hyperlinkCell = tableView.cellForRow(at: IndexPath(row: 5, section: 1))
+//            NSLayoutConstraint.activate([NSLayoutConstraint(item: hyperlinkCell, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 0)])
         }
         
         self.detailsLabel.text = event.details
@@ -142,13 +144,11 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 7
+        return 8
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

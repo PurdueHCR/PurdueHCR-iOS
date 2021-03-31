@@ -38,24 +38,24 @@ class FirebaseHelper {
 //    let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
     
     //----- TEST URLS ------//
-//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
-//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
-//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
-//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
-//    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
-//    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
-//    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
+    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
+    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
+    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
     
     //------ PRODUCTION URLS ------//
-    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
-    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
-    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
-    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
-    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
+//    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+//    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+//    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
+//    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
+//    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
     
     init() {
         db = Firestore.firestore()
@@ -1190,7 +1190,7 @@ class FirebaseHelper {
                        let host = result["host"] as! String
                        let floorColors = result["floorColors"] as! [String]
                        let id = result["id"] as! String
-                       let virtualLink = result["virtualLink"] as! String
+                       let virtualLink = result["virtualLink"] as? String ?? ""
                     
 
                        let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
@@ -1242,7 +1242,7 @@ class FirebaseHelper {
             let startDateTimeString = dateFormatter.string(from: startDateTime!)
             let endDateTimeString = dateFormatter.string(from: endDateTime!)
            
-            let parameters: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
+            let parameters: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host, "virtualLink":event.virtualLink]
             
             print(parameters)
             
@@ -1291,7 +1291,7 @@ class FirebaseHelper {
             let startDateTimeString = dateFormatter.string(from: startDateTime!)
             let endDateTimeString = dateFormatter.string(from: endDateTime!)
             
-            let parameters: [String: Any] = ["id":origID, "name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
+            let parameters: [String: Any] = ["id":origID, "name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host, "virtualLink":event.virtualLink]
             
             print("Parameters of new event")
             print(parameters)
@@ -1313,7 +1313,7 @@ class FirebaseHelper {
                     let host = result["host"] as! String
                     let floorColors = result["floorColors"] as! [String]
                     let id = result["id"] as! String
-                    let virtualLink = result["virtualEvent"] as! String
+                    let virtualLink = result["virtualLink"] as? String ?? ""
 
                     let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
                     
@@ -1387,7 +1387,7 @@ class FirebaseHelper {
                    let host = result["host"] as! String
                    let floorColors = result["floorColors"] as! [String]
                    let id = result["id"] as! String
-                   let virtualLink = result["virtualLink"] as! String
+                   let virtualLink = result["virtualLink"] as? String ?? ""
 
                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
                 
