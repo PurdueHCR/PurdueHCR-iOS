@@ -586,6 +586,7 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
     }
     
     func performSegueToReturnBack(fromEdit: Bool, event: Event?)  {
+        CreateEventTableViewController.pointTypesIndex = -1
         if let nav = self.navigationController {
             if (fromEdit) {
                 nav.popViewController(animated: true)

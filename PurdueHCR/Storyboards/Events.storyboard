@@ -639,6 +639,7 @@
                         <outlet property="newEventLocation" destination="JeF-6E-RGW" id="3yO-Sl-xpC"/>
                         <outlet property="newEventMyFloorLabel" destination="IW5-R7-yra" id="Jka-30-NWz"/>
                         <outlet property="newEventMyFloorSwitch" destination="0bO-H8-HaQ" id="naD-Dw-FnW"/>
+                        <outlet property="newEventMyHouseLabel" destination="oME-xK-sBf" id="DZ7-90-3KX"/>
                         <outlet property="newEventMyHouseSwitch" destination="55I-6R-W3f" id="l4s-31-i1b"/>
                         <outlet property="newEventName" destination="IKB-Tn-RWZ" id="nhf-GE-jIX"/>
                         <outlet property="newEventPointType" destination="Moe-GW-uC2" id="c63-ZK-iMA"/>
@@ -844,7 +845,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DL6-fd-1sR">
-                                                    <rect key="frame" x="20" y="46" width="66" height="20"/>
+                                                    <rect key="frame" x="20" y="46" width="369" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="UY8-Ca-Qyc"/>
                                                     </constraints>
@@ -856,6 +857,7 @@
                                             <constraints>
                                                 <constraint firstItem="DL6-fd-1sR" firstAttribute="top" secondItem="NFc-oj-Rxa" secondAttribute="bottom" constant="10" id="136-5C-DIu"/>
                                                 <constraint firstItem="NFc-oj-Rxa" firstAttribute="leading" secondItem="JTW-Id-YGY" secondAttribute="leadingMargin" id="1r4-w8-vlV"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="DL6-fd-1sR" secondAttribute="trailing" constant="5" id="52u-am-TRG"/>
                                                 <constraint firstItem="DL6-fd-1sR" firstAttribute="leading" secondItem="JTW-Id-YGY" secondAttribute="leadingMargin" id="6w3-Xz-Pob"/>
                                                 <constraint firstAttribute="bottom" secondItem="DL6-fd-1sR" secondAttribute="bottom" constant="5" id="ReI-Zt-fw7"/>
                                                 <constraint firstItem="NFc-oj-Rxa" firstAttribute="top" secondItem="JTW-Id-YGY" secondAttribute="top" constant="16" id="kek-NA-Vrh"/>
@@ -870,7 +872,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Host" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHZ-rR-S5u">
-                                                    <rect key="frame" x="20" y="35" width="36" height="20"/>
+                                                    <rect key="frame" x="20" y="35" width="369" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="m87-6w-wAV"/>
                                                     </constraints>
@@ -890,6 +892,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="32U-d5-gt4" firstAttribute="top" secondItem="h12-4Z-D6H" secondAttribute="top" constant="5" id="1kP-b0-gVf"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="rHZ-rR-S5u" secondAttribute="trailing" constant="5" id="Ud0-7F-fYW"/>
                                                 <constraint firstItem="rHZ-rR-S5u" firstAttribute="top" secondItem="32U-d5-gt4" secondAttribute="bottom" constant="10" id="cmZ-Q6-GiE"/>
                                                 <constraint firstItem="rHZ-rR-S5u" firstAttribute="leading" secondItem="h12-4Z-D6H" secondAttribute="leadingMargin" id="ffv-Mm-VXe"/>
                                                 <constraint firstItem="32U-d5-gt4" firstAttribute="leading" secondItem="h12-4Z-D6H" secondAttribute="leading" constant="20" symbolic="YES" id="wfj-Sk-TbM"/>
@@ -1081,7 +1084,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="i9x-eG-wUT"/>
+        <segue reference="RVA-Vd-bqB"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="calendar.circle.fill" catalog="system" width="128" height="121"/>
