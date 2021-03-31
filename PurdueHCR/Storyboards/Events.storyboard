@@ -996,13 +996,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Link goes here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LJP-0l-Zat">
-                                                    <rect key="frame" x="15" y="30" width="394" height="33"/>
+                                                    <rect key="frame" x="15" y="30" width="394" height="36.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="vRH-E7-kMN"/>
                                                     </constraints>
                                                     <color key="textColor" systemColor="labelColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="url"/>
                                                 </textView>
                                             </subviews>

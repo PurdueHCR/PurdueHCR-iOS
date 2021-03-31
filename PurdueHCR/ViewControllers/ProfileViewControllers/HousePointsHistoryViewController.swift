@@ -13,6 +13,8 @@ class ResolvedCell: UITableViewCell {
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var descriptionLabel: UILabel!
 	@IBOutlet weak var reasonLabel: UILabel!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
 }
 
 class HousePointsHistoryViewController: UITableViewController, UISearchResultsUpdating {
@@ -99,15 +101,25 @@ class HousePointsHistoryViewController: UITableViewController, UISearchResultsUp
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResolvedCell
 		cell.activeView.layer.cornerRadius = cell.activeView.frame.width / 2
+        
+        let monthFormatter = DateFormatter()
+        monthFormatter.dateFormat = "MMM"
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "d"
+        
 		if(isFiltering()){
             if (filteredPoints[indexPath.row].wasRejected() == true) {
                 cell.activeView.backgroundColor = DefinedValues.systemRed
             } else {
                 cell.activeView.backgroundColor = DefinedValues.systemGreen
             }
-			cell.descriptionLabel.text = filteredPoints[indexPath.row].pointDescription
-			cell.reasonLabel.text = filteredPoints[indexPath.row].type.pointName
-			cell.nameLabel.text = filteredPoints[indexPath.row].firstName + " " + filteredPoints[indexPath.row].lastName
+            let point = filteredPoints[indexPath.row]
+			cell.descriptionLabel.text = point.pointDescription
+			cell.reasonLabel.text = point.type.pointName
+			cell.nameLabel.text = point.firstName + " " + point.lastName
+            
+            cell.monthLabel.text = monthFormatter.string(from: point.dateSubmitted!.dateValue())
+            cell.dayLabel.text = dayFormatter.string(from: point.dateSubmitted!.dateValue())
 		}
 		else{
             if (displayedLogs[indexPath.row].wasRejected() == true) {
@@ -118,6 +130,10 @@ class HousePointsHistoryViewController: UITableViewController, UISearchResultsUp
 			cell.reasonLabel?.text = displayedLogs[indexPath.row].type.pointName
 			cell.nameLabel?.text = displayedLogs[indexPath.row].firstName + " " + displayedLogs[indexPath.row].lastName
 			cell.descriptionLabel?.text = displayedLogs[indexPath.row].pointDescription
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM"
+            cell.monthLabel.text = dateFormatter.string(from: displayedLogs[indexPath.row].dateSubmitted!.dateValue())
+            cell.dayLabel.text = dayFormatter.string(from: displayedLogs[indexPath.row].dateSubmitted!.dateValue())
 		}
 		return cell
 	}

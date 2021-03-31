@@ -11,13 +11,14 @@ import FirebaseFirestore
 
 class PointDescriptionView: UIView {
     @IBOutlet var residentLabel: UILabel!
-	@IBOutlet weak var dateLabel: UILabel!
+	@IBOutlet weak var dateOccurredLabel: UILabel!
 	@IBOutlet var pointTypeDescriptionLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
 	@IBOutlet weak var grayView: UIView!
 	@IBOutlet weak var icon: UIImageView!
-	
+    @IBOutlet weak var dateSubmittedLabel: UILabel!
+    
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -48,8 +49,10 @@ class PointDescriptionView: UIView {
         descriptionLabel.text = pointLog.pointDescription
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "MMM dd, yyyy"
-        let date = pointLog.dateSubmitted!.dateValue()
-        dateLabel.text = dateFormatter.string(from: date)
+        let dateOccurred = pointLog.dateSubmitted!.dateValue()
+        dateOccurredLabel.text = dateFormatter.string(from: dateOccurred)
+        let dateSubmitted = pointLog.dateSubmitted!.dateValue()
+        dateSubmittedLabel.text = dateFormatter.string(from: dateSubmitted)
     }
     
 
