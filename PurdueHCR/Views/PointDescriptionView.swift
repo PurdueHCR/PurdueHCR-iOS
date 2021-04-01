@@ -49,7 +49,7 @@ class PointDescriptionView: UIView {
         descriptionLabel.text = pointLog.pointDescription
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "MMM dd, yyyy"
-        let dateOccurred = pointLog.dateSubmitted!.dateValue()
+        let dateOccurred = pointLog.dateOccurred!.dateValue()
         dateOccurredLabel.text = dateFormatter.string(from: dateOccurred)
         let dateSubmitted = pointLog.dateSubmitted!.dateValue()
         dateSubmittedLabel.text = dateFormatter.string(from: dateSubmitted)

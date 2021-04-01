@@ -281,6 +281,13 @@
                             <outlet property="delegate" destination="Yyz-RD-CqG" id="s4b-jh-rHI"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="History" largeTitleDisplayMode="never" id="rET-gL-8PN">
+                        <barButtonItem key="rightBarButtonItem" title="Filter" id="emu-Pu-Nst">
+                            <connections>
+                                <action selector="filterPoints:" destination="Yyz-RD-CqG" id="DjU-sN-pLN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="v84-jY-ASU" kind="show" identifier="cell_push" id="0Cb-0I-gSI"/>
                     </connections>

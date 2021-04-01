@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PopupKit
 
 class ResolvedCell: UITableViewCell {
 	@IBOutlet weak var activeView: UIView!
@@ -24,6 +25,8 @@ class HousePointsHistoryViewController: UITableViewController, UISearchResultsUp
 	var activityIndicator = UIActivityIndicatorView()
     var displayedLogs = [PointLog]()
     var refresher: UIRefreshControl?
+    
+    var p : PopupView?
 	
 	override func viewDidLoad() {
         
@@ -311,5 +314,69 @@ class HousePointsHistoryViewController: UITableViewController, UISearchResultsUp
 	func isFiltering() -> Bool {
 		return searchController.isActive && !searchBarIsEmpty()
 	}
+    
+    @IBAction func filterPoints(_ sender: Any) {
+        let width : Int = Int(self.view.frame.width - 20)
+        let height = 205
+        
+        let contentView = FilterHistoryView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        contentView.delegate = self
+        p = PopupView(contentView: contentView)
+        p?.showType = .slideInFromBottom
+        p?.maskType = .dimmed
+        p?.dismissType = .slideOutToBottom
+        
+        let xPos :CGFloat = self.view.frame.width / 2
+        let yPos = self.view.frame.height / 2
+        let location = CGPoint.init(x: xPos, y: yPos)
+        //p?.showType = .slideInFromBottom
+        p?.dismissType = .slideOutToBottom
+        p?.show(at: location, in: (self.tabBarController?.view)!)
+    }
+    
+    func dismissFilterPopup() {
+        p?.dismiss(animated: true)
+    }
+    
+}
 
+class FilterHistoryView : UIView {
+    
+    @IBOutlet weak var sortByControl: UISegmentedControl!
+    @IBOutlet weak var ascDescControl: UISegmentedControl!
+    @IBOutlet weak var filterButton: UIButton!
+    @IBOutlet var backgroundView: UIView!
+    @IBOutlet weak var closeButton: UIButton!
+    
+    var delegate : HousePointsHistoryViewController?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        Bundle.main.loadNibNamed("FilterHistoryView", owner: self, options: nil)
+        addSubview(backgroundView)
+        backgroundView.frame = self.bounds
+        
+        filterButton.layer.cornerRadius = DefinedValues.radius
+       
+        let closeImage = #imageLiteral(resourceName: "SF_xmark").withRenderingMode(.alwaysTemplate)
+        closeButton.setBackgroundImage(closeImage, for: .normal)
+        closeButton.tintColor = UIColor.lightGray
+        closeButton.setTitle("", for: .normal)
+
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction func filterAndDismiss(_ sender: Any) {
+        
+        delegate?.dismissFilterPopup()
+        
+    }
+    
+    @IBAction func closeView(_ sender: Any) {
+        delegate?.dismissFilterPopup()
+    }
+    
 }

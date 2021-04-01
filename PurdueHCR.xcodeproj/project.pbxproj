@@ -15,6 +15,7 @@
 		AAF279F42555DA7600D7028D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAF279F32555DA7600D7028D /* Events.storyboard */; };
 		AAF279FE2556360200D7028D /* SelectFloorsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF279FD2556360200D7028D /* SelectFloorsTableViewController.swift */; };
 		AAF27A042556392900D7028D /* SelectedFloorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF27A032556392900D7028D /* SelectedFloorsTableViewCell.swift */; };
+		B50507BF261562130051A799 /* FilterHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50507BE261562130051A799 /* FilterHistoryView.xib */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
 		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
 		B511D55F2615034800B3361C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B511D55E2615034800B3361C /* GoogleService-Info.plist */; };
@@ -134,6 +135,7 @@
 		AAF27A032556392900D7028D /* SelectedFloorsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectedFloorsTableViewCell.swift; path = PurdueHCR/Storyboards/SelectedFloorsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B50507BE261562130051A799 /* FilterHistoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterHistoryView.xib; sourceTree = "<group>"; };
 		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		B50E6C9122F1202A00505AA3 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		B511D55E2615034800B3361C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */,
 				D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */,
 				D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */,
+				B50507BE261562130051A799 /* FilterHistoryView.xib */,
 			);
 			path = PointApprovalViewControllers;
 			sourceTree = "<group>";
@@ -735,6 +738,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
+				B50507BF261562130051A799 /* FilterHistoryView.xib in Resources */,
 				D3355C8F214A25B10037556C /* Profile.storyboard in Resources */,
 				B551BDD321B1004F00CF4F6C /* Register in Resources */,
 				D3355C8D214A253D0037556C /* PointSubmission.storyboard in Resources */,
