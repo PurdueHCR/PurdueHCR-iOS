@@ -229,7 +229,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAR" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-6L-ZVu">
-                                            <rect key="frame" x="314" y="14" width="50" height="18"/>
+                                            <rect key="frame" x="314" y="21" width="50" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="9Cn-H8-tS5"/>
                                                 <constraint firstAttribute="height" constant="18" id="zqt-B3-Kkx"/>
@@ -239,7 +239,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBN-ax-Haz">
-                                            <rect key="frame" x="308" y="32" width="62" height="31.5"/>
+                                            <rect key="frame" x="308" y="39" width="62" height="31.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -263,7 +263,7 @@
                                         <constraint firstItem="fh2-19-8fg" firstAttribute="leading" secondItem="phJ-7K-YXL" secondAttribute="leadingMargin" constant="5" id="t9O-YC-GFT"/>
                                         <constraint firstAttribute="bottom" secondItem="FaU-tN-vPn" secondAttribute="bottom" constant="5" id="y25-Cg-VZR"/>
                                         <constraint firstAttribute="trailing" secondItem="fBN-ax-Haz" secondAttribute="trailing" constant="5" id="y8f-68-Rzf"/>
-                                        <constraint firstItem="fBN-ax-Haz" firstAttribute="centerY" secondItem="phJ-7K-YXL" secondAttribute="centerY" id="zey-tA-Y6y"/>
+                                        <constraint firstItem="fBN-ax-Haz" firstAttribute="centerY" secondItem="phJ-7K-YXL" secondAttribute="centerY" constant="7" id="zey-tA-Y6y"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -282,9 +282,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="History" largeTitleDisplayMode="never" id="rET-gL-8PN">
-                        <barButtonItem key="rightBarButtonItem" title="Filter" id="emu-Pu-Nst">
+                        <barButtonItem key="rightBarButtonItem" title="Sort" id="emu-Pu-Nst">
                             <connections>
-                                <action selector="filterPoints:" destination="Yyz-RD-CqG" id="DjU-sN-pLN"/>
+                                <action selector="sortPoints:" destination="Yyz-RD-CqG" id="DjU-sN-pLN"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
