@@ -106,7 +106,7 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
             activityIndicator.isHidden = true
             return
         }
-        if(description == placeholder){
+        if (description == placeholder){
             notify(title: "Failure", subtitle: "Please tell us more about what you did!", style: .danger)
             submitButton.isEnabled = true
             submitButton.backgroundColor = self.view.tintColor
@@ -133,14 +133,14 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		let residentId = User.get(.id) as! String
         
         
-        // Check if date is more than two weeks old
+        // Check if date is more than four weeks old
         var dateComponent = DateComponents()
         dateComponent.month = 0
-        dateComponent.day = -15
+        dateComponent.day = -29
         dateComponent.year = 0
         let pastDate = Calendar.current.date(byAdding: dateComponent, to: Date())!
         if (datePicker.date < pastDate) {
-            self.notify(title: "Date Error", subtitle: "Points must be submitted within two weeks of occurring", style: .danger)
+            self.notify(title: "Date Error", subtitle: "Points must be submitted within four weeks of occurring", style: .danger)
             self.submitButton.isEnabled = true
             self.submitButton.backgroundColor = self.view.tintColor
             self.activityIndicator.isHidden = true
