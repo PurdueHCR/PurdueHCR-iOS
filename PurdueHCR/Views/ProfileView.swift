@@ -149,6 +149,9 @@ class ProfileView: UIView {
             
         } else {
             self.yearRankLabel.text = "🙈"
+            self.yearRankBoth.text = "🙈"
+            self.semesterRankBoth.text = "🙈"
+            self.semesterRankOnlyLabel.text = "🙈"
         }
     }
     
