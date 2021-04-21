@@ -219,7 +219,11 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 //                profileView?.layer.shadowOffset = CGSize.zero
 //                profileView?.layer.shadowRadius = shadowRadius
                 profileView?.layer.cornerRadius = DefinedValues.radius
-                profileView?.backgroundColor = UIColor.white
+                if #available(iOS 13.0, *) {
+                    profileView?.backgroundColor = UIColor.systemBackground
+                } else {
+                    profileView?.backgroundColor = UIColor.white
+                }
                 profileView?.clipsToBounds = false
                 profileView?.layer.masksToBounds = false
                 profileView?.delegate = self
@@ -249,7 +253,11 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 compareView?.layer.cornerRadius = DefinedValues.radius
                 compareView?.clipsToBounds = false
                 compareView?.layer.masksToBounds = false
-                compareView?.backgroundColor = UIColor.white
+                if #available(iOS 13.0, *) {
+                    compareView?.backgroundColor = UIColor.systemBackground
+                } else {
+                    compareView?.backgroundColor = UIColor.white
+                }
             }
             cell.contentView.clipsToBounds = false
             cell.clipsToBounds = false
@@ -297,7 +305,11 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 //                topScorersView?.layer.shadowOffset = CGSize.zero
 //                topScorersView?.layer.shadowRadius = shadowRadius
                 topScorersView?.layer.cornerRadius = DefinedValues.radius
-                //topScorersView?.backgroundColor = UIColor.white
+                if #available(iOS 13.0, *) {
+                    topScorersView?.backgroundColor = UIColor.systemBackground
+                } else {
+                    topScorersView?.backgroundColor = UIColor.white
+                }
                 topScorersView?.autoresizingMask = [.flexibleHeight]
                 topScorersView?.sizeToFit()
             }
