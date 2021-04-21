@@ -43,6 +43,7 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
         
         iCalExportButton.layer.cornerRadius = DefinedValues.radius
         gCalExportButton.layer.cornerRadius = DefinedValues.radius
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,10 +117,6 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
             self.hyperlinkTextView.text = event.virtualLink
             self.hyperlinkTextView.dataDetectorTypes = .link
             self.hyperlinkTextView.sizeToFit()
-        } else {
-            // Empty link so hide the cell
-//            let hyperlinkCell = tableView.cellForRow(at: IndexPath(row: 5, section: 1))
-//            NSLayoutConstraint.activate([NSLayoutConstraint(item: hyperlinkCell, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 0)])
         }
         
         self.detailsLabel.text = event.details
@@ -152,6 +149,9 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath.row == 5 && event.virtualLink == "") {
+            return 0
+        }
         return UITableView.automaticDimension
     }
     

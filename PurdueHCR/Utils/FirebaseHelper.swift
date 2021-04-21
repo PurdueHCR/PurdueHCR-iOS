@@ -47,6 +47,7 @@ class FirebaseHelper {
 //    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
 //    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
 //
+    
     //------ PRODUCTION URLS ------//
     let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
     let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
