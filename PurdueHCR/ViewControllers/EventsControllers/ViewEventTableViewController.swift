@@ -228,6 +228,9 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
         iCalEvent.endDate = endDate
         iCalEvent.notes = event.details
         iCalEvent.location = event.location
+        if (event.virtualLink != "") {
+            iCalEvent.url = URL(string: event.virtualLink)
+        }
             
         presentEventCalendarDetailModal(event: iCalEvent, store: store)
     }
