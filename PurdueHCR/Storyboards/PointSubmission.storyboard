@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,7 +23,7 @@
                             <subviews>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxG-nO-IHC">
                                     <rect key="frame" x="10" y="34.666666666666657" width="192" height="105"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                                     <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="5" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor"/>
@@ -31,7 +31,7 @@
                                 </button>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T56-zh-yfn">
                                     <rect key="frame" x="212" y="34.666666666666657" width="192" height="105"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="enY-fe-bcA"/>
                                     </constraints>
@@ -42,7 +42,7 @@
                                 </button>
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EUF-zY-xVw">
                                     <rect key="frame" x="10" y="149.66666666666666" width="192" height="105.33333333333334"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                                     <constraints>
                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="ivQ-e7-stZ"/>
                                     </constraints>
@@ -53,7 +53,7 @@
                                 </button>
                                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Nr-zoQ">
                                     <rect key="frame" x="212" y="149.66666666666666" width="192" height="105.33333333333334"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="jCp-KT-0Iy"/>
                                     </constraints>
@@ -114,7 +114,7 @@
                                 </label>
                             </subviews>
                             <viewLayoutGuide key="safeArea" id="Tpu-Nm-riX"/>
-                            <color key="backgroundColor" red="0.89787995819999999" green="0.89772564170000002" blue="0.91833287480000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" systemColor="systemGray5Color"/>
                             <constraints>
                                 <constraint firstItem="T56-zh-yfn" firstAttribute="top" secondItem="cxG-nO-IHC" secondAttribute="top" id="17v-TH-TSa"/>
                                 <constraint firstItem="cxG-nO-IHC" firstAttribute="top" secondItem="ZeL-by-2gK" secondAttribute="bottom" constant="2" id="1Lw-3h-PmZ"/>
@@ -152,7 +152,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="yVr-tB-MLu" customClass="PointTypeCell" customModule="PurdueHCR" customModuleProvider="target">
-                                <rect key="frame" x="20" y="310.33333206176758" width="374" height="42.666667938232422"/>
+                                <rect key="frame" x="20" y="304" width="374" height="42.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yVr-tB-MLu" id="931-wJ-N6Y">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="42.666667938232422"/>
@@ -413,6 +413,12 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
