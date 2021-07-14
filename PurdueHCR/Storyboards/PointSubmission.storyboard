@@ -289,7 +289,7 @@
                                                         </constraints>
                                                     </activityIndicatorView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                 <constraints>
                                                     <constraint firstItem="N1k-ec-IwP" firstAttribute="top" secondItem="zbW-t0-8sl" secondAttribute="bottom" constant="5" id="5nq-uY-poc"/>
                                                     <constraint firstAttribute="trailing" secondItem="zbW-t0-8sl" secondAttribute="trailing" constant="15" id="6eC-wF-20c"/>
@@ -318,7 +318,7 @@
                                                     <constraint firstAttribute="height" constant="190" id="88W-6v-Gyo"/>
                                                 </constraints>
                                                 <inset key="scrollIndicatorInsets" minX="1" minY="1" maxX="1" maxY="1"/>
-                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                 <userDefinedRuntimeAttributes>
@@ -346,7 +346,7 @@
                                                 </date>
                                             </datePicker>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <constraints>
                                             <constraint firstItem="HvT-ph-Y7E" firstAttribute="top" secondItem="BhU-ko-xyN" secondAttribute="bottom" constant="12" id="CSC-jP-OSh"/>
                                             <constraint firstAttribute="bottom" secondItem="fGY-ye-561" secondAttribute="bottom" constant="20" id="DbC-jz-faf"/>
@@ -363,6 +363,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <constraints>
                                     <constraint firstItem="CNA-Qv-Ft3" firstAttribute="top" secondItem="YGC-eD-Xkz" secondAttribute="top" id="333-qT-ln2"/>
                                     <constraint firstAttribute="trailing" secondItem="CNA-Qv-Ft3" secondAttribute="trailing" id="Khc-ys-m0J"/>

@@ -45,7 +45,12 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 //        descriptionField.layer.borderColor = UIColor.lightGray.cgColor
 //        descriptionField.layer.borderWidth = 1
 
-        descriptionField.backgroundColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+        if #available(iOS 13.0, *) {
+            descriptionField.backgroundColor = UIColor.systemGray5
+        } else {
+            // Fallback on earlier versions
+            descriptionField.backgroundColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+        }
         descriptionField.layer.cornerRadius = DefinedValues.radius
         
 		//descriptionField.becomeFirstResponder()

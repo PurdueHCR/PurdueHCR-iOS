@@ -58,7 +58,12 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		let buttonSize = CGSize.init(width: width, height: height)
 		
 		typeMessageField.layer.cornerRadius = typeMessageField.frame.height / 2
-		typeMessageField.layer.borderColor = UIColor.lightGray.cgColor
+        if #available(iOS 13.0, *) {
+            typeMessageField.layer.borderColor = UIColor.systemGray5.cgColor
+        } else {
+            typeMessageField.layer.borderColor = UIColor.lightGray.cgColor
+        }
+    
 		typeMessageField.borderStyle = .none
 		typeMessageField.layer.borderWidth = 1
 		
@@ -230,7 +235,12 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			let pointDescriptionView = PointDescriptionView()
 			pointDescriptionView.setLog(pointLog: pointLog!)
 			pointDescriptionView.layer.cornerRadius = radius
-			pointDescriptionView.layer.shadowColor = UIColor.darkGray.cgColor
+            if #available(iOS 13.0, *) {
+                pointDescriptionView.layer.shadowColor = UIColor.systemGray2.cgColor
+            } else {
+                pointDescriptionView.layer.shadowColor = UIColor.darkGray.cgColor
+            }
+            
 			pointDescriptionView.layer.shadowOpacity = 0.5
 			pointDescriptionView.layer.shadowOffset = CGSize.zero
 			pointDescriptionView.layer.shadowRadius = 5

@@ -42,7 +42,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="6ZE-TP-k9l"/>
                                 </constraints>
-                                <color key="textColor" systemColor="opaqueSeparatorColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
@@ -63,7 +62,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="JSp-lM-Aic"/>
                                 </constraints>
-                                <color key="textColor" systemColor="opaqueSeparatorColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
                                 <userDefinedRuntimeAttributes>
@@ -511,15 +509,12 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="yTX-dg-aIZ"/>
-        <segue reference="VrF-dY-ied"/>
+        <segue reference="7Rm-Z3-CLZ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="emblem" width="1000" height="1000"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="scrollViewTexturedBackgroundColor">
             <color red="0.43529411764705878" green="0.44313725490196082" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
