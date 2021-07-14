@@ -1160,6 +1160,56 @@ class FirebaseHelper {
     }
     
     // Event Functions
+    func getEvents(onDone:@escaping ([Event], Error?) ->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+         var events: [Event] = [Event]()
+         if let err = err {
+            print("Error in retrieving auth token in getEvents()")
+            onDone(events, err)
+         }
+        let headers = self.generateHTTPHeader(token: token!)
+         let url = URL(string: self.GET_EVENT_URL)!
+         AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            switch response.result {
+            case .success:
+                if let results = response.value as? [String : Any] {
+                    // Parse Event Supplied
+                    let eventsReturned = results["events"] as! [[String:Any]]
+                    
+                    for result in eventsReturned {
+                       
+                       let name = result["name"] as! String
+                       let location = result["location"] as! String
+                       let pointTypeId = result["pointTypeId"] as! String
+                       let floorIds = result["floorIds"] as! [String]
+                       let details = result["details"] as! String
+                       let isPublicEvent = result["isPublicEvent"] as! Bool
+                       let startDate = result["startDate"] as! String
+                       let endDate = result["endDate"] as! String
+                       let creatorId = result["creatorId"] as! String
+                       let host = result["host"] as! String
+                       let floorColors = result["floorColors"] as! [String]
+                       let id = result["id"] as! String
+                       let virtualLink = result["virtualLink"] as? String ?? ""
+                    
+
+                       let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
+                       
+                       events.append(event)
+                   }
+                   
+                   onDone(events, nil)
+                }
+            case .failure:
+                print(response)
+                print("Failed Events Attempt")
+                onDone(events, RetrievalError.unableToParseResponse)
+             }
+         }
+         //onDone(events, RetrievalError.unableToParseResponse)
+        }
+    }
+    
     func addEvent(event: Event, onDone:@escaping (_ err:Error?)->Void) {
         DataManager.sharedManager.getAuthorizationToken { (token, err) in
             //var events: [Event?]?
@@ -1192,22 +1242,7 @@ class FirebaseHelper {
             let startDateTimeString = dateFormatter.string(from: startDateTime!)
             let endDateTimeString = dateFormatter.string(from: endDateTime!)
            
-//         Example of parameters we need to be sending.
-//         {
-//           "name": "A Very Fun Event",
-//           "details": "A very fun event by me!",
-//           "startDate": "2020-11-08T10:00:00+04:00",
-//           "endDate": "2020-11-08T10:00:00+04:00",
-//           "location": "HCRS 1066",
-//           "pointTypeId": 1,
-//           "floorIds": [
-//             "2N"
-//           ],
-//           "isPublicEvent": false,
-//           "isAllFloors": false,
-//           "host": "The Society"
-//         }
-            let parameters: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
+            let parameters: [String: Any] = ["name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host, "virtualLink":event.virtualLink]
             
             print(parameters)
             
@@ -1217,59 +1252,12 @@ class FirebaseHelper {
                     print(result)
                     onDone(nil)
                 } else {
+                    print("Error description")
                     print(response.error!.errorDescription!)
+                    // Parse out error type to get code that made it fail.
+                    onDone(RetrievalError.unableToParseResponse)
                 }
             }
-            //onDone(RetrievalError.unableToParseResponse)
-        }
-    }
-    
-    
-    func getEvents(onDone:@escaping ([Event], Error?) ->Void) {
-        DataManager.sharedManager.getAuthorizationToken { (token, err) in
-         var events: [Event] = [Event]()
-         if let err = err {
-            print("Error in retrieving auth token in getEvents()")
-            onDone(events, err)
-         }
-        let headers = self.generateHTTPHeader(token: token!)
-         let url = URL(string: self.GET_EVENT_URL)!
-         AF.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
-            switch response.result {
-            case .success:
-                if let results = response.value as? [String : Any] {
-                    // Parse Event Supplied
-                    let eventsReturned = results["events"] as! [[String:Any]]
-                    
-                    for result in eventsReturned {
-                       
-                       let name = result["name"] as! String
-                       let location = result["location"] as! String
-                       let pointTypeId = result["pointTypeId"] as! String
-                       let floorIds = result["floorIds"] as! [String]
-                       let details = result["details"] as! String
-                       let isPublicEvent = result["isPublicEvent"] as! Bool
-                       let startDate = result["startDate"] as! String
-                       let endDate = result["endDate"] as! String
-                       let creatorId = result["creatorId"] as! String
-                       let host = result["host"] as! String
-                       let floorColors = result["floorColors"] as! [String]
-                       let id = result["id"] as! String
-
-                       let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
-                       
-                       events.append(event)
-                   }
-                   
-                   onDone(events, nil)
-                }
-            case .failure:
-                print(response)
-                print("Failed Events Attempt")
-                onDone(events, RetrievalError.unableToParseResponse)
-             }
-         }
-         //onDone(events, RetrievalError.unableToParseResponse)
         }
     }
     
@@ -1303,7 +1291,7 @@ class FirebaseHelper {
             let startDateTimeString = dateFormatter.string(from: startDateTime!)
             let endDateTimeString = dateFormatter.string(from: endDateTime!)
             
-            let parameters: [String: Any] = ["id":origID, "name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host]
+            let parameters: [String: Any] = ["id":origID, "name":event.name, "details":event.details, "startDate":startDateTimeString, "endDate":endDateTimeString, "location":event.location, "pointTypeId":event.pointType.pointID, "floorIds":event.floors, "isPublicEvent":event.isPublicEvent, "isAllFloors":event.isAllFloors, "host":event.host, "virtualLink":event.virtualLink]
             
             print("Parameters of new event")
             print(parameters)
@@ -1325,8 +1313,9 @@ class FirebaseHelper {
                     let host = result["host"] as! String
                     let floorColors = result["floorColors"] as! [String]
                     let id = result["id"] as! String
+                    let virtualLink = result["virtualLink"] as? String ?? ""
 
-                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                    let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
                     
                     onDone(nil, event)
                 } else {
@@ -1398,8 +1387,9 @@ class FirebaseHelper {
                    let host = result["host"] as! String
                    let floorColors = result["floorColors"] as! [String]
                    let id = result["id"] as! String
+                   let virtualLink = result["virtualLink"] as? String ?? ""
 
-                   let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id)
+                   let event = Event(name: name, location: location, pointTypeId: pointTypeId, floors: floorIds, details: details, isPublicEvent: isPublicEvent, startDateTime: startDate, endDateTime: endDate, creatorID: creatorId, host: host, floorColors: floorColors, id: id, virtualLink: virtualLink)
                 
                    events.append(event)
                }

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class CreateEventTableViewController: UITableViewController {
+class CreateEventTableViewController: UITableViewController, UITextViewDelegate {
      
     @IBOutlet weak var newEventName: UITextField!
     @IBOutlet weak var newEventStartDate: UIDatePicker!
@@ -23,12 +23,13 @@ class CreateEventTableViewController: UITableViewController {
     @IBOutlet weak var newEventIsPublicLabel: UILabel!
     @IBOutlet weak var newEventIsPublicSwitch: UISwitch!
     @IBOutlet weak var newEventCustomFloorButton: UIButton!
-    @IBOutlet weak var newEventDescription: UITextField!
+    @IBOutlet weak var newEventDescription: UITextView!
     @IBOutlet weak var newEventPointType: UIButton!
     @IBOutlet weak var hostEventSwitch: UISwitch!
     @IBOutlet weak var chooseHostField: UITextField!
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var deleteEventButton: UIButton!
+    @IBOutlet weak var linkField: UITextField!
     
     
     let fbh = FirebaseHelper()
@@ -47,10 +48,13 @@ class CreateEventTableViewController: UITableViewController {
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
                 
-        createEventButton.layer.cornerRadius = 4
+        createEventButton.layer.cornerRadius = DefinedValues.radius
+        deleteEventButton.layer.cornerRadius = DefinedValues.radius
         
         chooseHostField.isEnabled = false
         chooseHostField.textColor = UIColor.gray
+        
+        newEventDescription.text = "";
         
         if (User.get(.permissionLevel) as! Int == PointType.PermissionLevel.ea.rawValue) {
             // EAs don't have a house or floor
@@ -77,14 +81,12 @@ class CreateEventTableViewController: UITableViewController {
             newEventIsPublicLabel.textColor = UIColor.gray
         }
         
-        
-        newEventName.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
-        
-        newEventLocation.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
-        
-        newEventDescription.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
-        
-        chooseHostField.backgroundColor = UIColor(red:238.0/255.0,green:238.0/255.0,blue:239.0/255.0,alpha: 1.0)
+        // Round the corners of fields
+        newEventName.layer.cornerRadius = DefinedValues.radius
+        newEventLocation.layer.cornerRadius = DefinedValues.radius
+        newEventDescription.layer.cornerRadius = DefinedValues.radius
+        chooseHostField.layer.cornerRadius = DefinedValues.radius
+        linkField.layer.cornerRadius = DefinedValues.radius
         
         CreateEventTableViewController.pointTypes = DataManager.filter(points: DataManager.sharedManager.getPoints()!)
         
@@ -296,16 +298,14 @@ class CreateEventTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if (creating) {
-            return 9
-        } else {
             return 10
+        } else {
+            return 11
         }
     }
     
@@ -408,11 +408,16 @@ class CreateEventTableViewController: UITableViewController {
         print("Create or edit")
         createEventButton.isEnabled = false
         let newEvent = createNewEvent()
+        if (newEvent == nil) {
+            self.notify(title: "Please fill out all fields correctly", subtitle: "", style: .danger)
+            self.createEventButton.isEnabled = true
+            return
+        }
         if (creating) {
             //events.append(newEvent)
             
             // FIRE BASE HELPER METHOD TO ADD EVENT
-            fbh.addEvent(event: newEvent) { (err) in
+            fbh.addEvent(event: newEvent!) { (err) in
                 if (err != nil) {
                     self.notify(title: "Error Creating Event", subtitle: "", style: .danger)
                     self.createEventButton.isEnabled = true
@@ -422,6 +427,7 @@ class CreateEventTableViewController: UITableViewController {
                         if (err != nil) {
                             print("Error in getEvents()")
                         } else {
+                            print("No error creating event")
                             self.delegate?.shouldReload = true
                             events = eventsAPI
                             self.createEventButton.isEnabled = true
@@ -431,7 +437,7 @@ class CreateEventTableViewController: UITableViewController {
                 }
             }
         } else {
-            fbh.editEvent(event: newEvent, origID: event.eventID) { (err, event) in
+            fbh.editEvent(event: newEvent!, origID: event.eventID) { (err, event) in
                 if (err != nil) {
                     self.notify(title: "Error Editing Event", subtitle: "", style: .danger)
                     self.createEventButton.isEnabled = true
@@ -453,18 +459,30 @@ class CreateEventTableViewController: UITableViewController {
         }
     }
     
-    func createNewEvent() -> Event {
+    func createNewEvent() -> Event? {
         let name = newEventName.text!
+        if (name == "" || name == "Name...") {
+            return nil
+        }
         
+        let startDate = newEventStartDate.date
+        let endDate = newEventEndDate.date
+        if (endDate < startDate) {
+            return nil
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Event.dateFormat + " " + Event.timeFormat
-        let startDateTime = dateFormatter.string(from: newEventStartDate.date)
-        let endDateTime = dateFormatter.string(from: newEventEndDate.date)
-        print("CreatedStartDateTime = " + startDateTime)
-        print("CreatedEndDateTime = " + endDateTime)
+        let startDateTime = dateFormatter.string(from: startDate)
+        let endDateTime = dateFormatter.string(from: endDate)
         
         let location = newEventLocation.text!
+        if (location == "" || location == "Location...") {
+            return nil
+        }
         
+        if (CreateEventTableViewController.pointTypesIndex == -1) {
+            return nil
+        }
         let pointType = CreateEventTableViewController.pointTypes[CreateEventTableViewController.pointTypesIndex]
         
         let host: String
@@ -474,6 +492,9 @@ class CreateEventTableViewController: UITableViewController {
             host = firstName + " " + lastName
         } else {
             host = chooseHostField.text!
+            if (host == "" || host == "Specify Host...") {
+                return nil
+            }
         }
         
         var floors = [String]()
@@ -511,14 +532,25 @@ class CreateEventTableViewController: UITableViewController {
                 isPublicEvent = true
             }
         } else {
+            if (floorsSelected.isEmpty) {
+                return nil
+            }
             floors = floorsSelected
         }
         
         let details = newEventDescription.text!
+        if (details == "") {
+            return nil
+        }
         
         let creatorID = User.get(.id) as! String
         
-        return Event(name: name, location: location, pointType: pointType, floors: floors, details: details, isPublicEvent: isPublicEvent, isAllFloors: isAllFloors, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host)
+        var virtualLink = ""
+        if (linkField.text != "") {
+            virtualLink = linkField.text!
+        }
+        
+        return Event(name: name, location: location, pointType: pointType, floors: floors, details: details, isPublicEvent: isPublicEvent, isAllFloors: isAllFloors, startDateTime: startDateTime, endDateTime: endDateTime, creatorID: creatorID, host: host, virtualLink: virtualLink)
     }
     
     @IBAction func deleteEvent(_ sender: UIButton) {
@@ -552,6 +584,7 @@ class CreateEventTableViewController: UITableViewController {
     }
     
     func performSegueToReturnBack(fromEdit: Bool, event: Event?)  {
+        CreateEventTableViewController.pointTypesIndex = -1
         if let nav = self.navigationController {
             if (fromEdit) {
                 nav.popViewController(animated: true)
@@ -586,12 +619,81 @@ class CreateEventTableViewController: UITableViewController {
     }
     
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        return true
+//    }
+//
+//    func textViewDidChangeSelection(_ textView: UITextView) {
+//        if self.view.window != nil {
+//            if textView.textColor == UIColor.lightGray {
+//                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+//            }
+//        }
+//    }
+//
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//
+//        if text == "\n" {
+//            textView.resignFirstResponder()
+//            return false
+//        }
+//
+//        let currentText:String = textView.text
+//        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+//
+//        if updatedText.isEmpty {
+//
+//            //textView.text = placeholder
+//            textView.textColor = UIColor.lightGray
+//
+//            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+//        }
+//
+//        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+//            textView.textColor = UIColor.black
+//            textView.text = ""
+//        }
+//
+//        return updatedText.count <= 240
+//    }
+//
+//    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+//        self.newEventDescription.resignFirstResponder()
+//    }
+//
+//    var hasMoved = false
+//
+//    /// Runs when the keyboard will appear on the screen
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        // Check if the screen has already been shifted up
+//        if (!hasMoved) {
+//            // Get the size of the current keyboard
+//            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//
+//                // Location of the top of the keyboard on the screen
+//                let height = self.view.frame.height - keyboardSize.height - tabBarController!.tabBar.frame.height
+//                // Check if keyboard is above the bottom of the text field
+//                if (self.newEventDescription.frame.maxY > height) {
+//                    let diff = self.newEventDescription.frame.maxY - height
+//                    // Move the view up
+//                    self.view.frame.origin.y -= (diff + 20)
+//                    hasMoved = true
+//                }
+//            }
+//        }
+//    }
+//
+//
+//    /// Runs when the keyboard will disappear from the screen
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        // Restore the view to it's normal location in case it has been
+//        //  pushed up to accommodate the keyboard
+//        self.view.frame.origin.y = 0
+//        hasMoved = false
+//    }
+//
     
-
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

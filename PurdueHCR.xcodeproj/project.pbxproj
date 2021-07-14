@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
-		AA162C7C25D36B3300701749 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA162C7B25D36B3300701749 /* GoogleService-Info.plist */; };
 		AA7A7F8B251182FA002BD54B /* EventTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */; };
 		AA7C742B25DC64CE007A8076 /* SelectPointTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7C742A25DC64CE007A8076 /* SelectPointTypeTableViewController.swift */; };
 		AA95F66525DF02FC0003BEDF /* SelectPointTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95F66425DF02FC0003BEDF /* SelectPointTypeTableViewCell.swift */; };
@@ -16,15 +15,18 @@
 		AAF279F42555DA7600D7028D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAF279F32555DA7600D7028D /* Events.storyboard */; };
 		AAF279FE2556360200D7028D /* SelectFloorsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF279FD2556360200D7028D /* SelectFloorsTableViewController.swift */; };
 		AAF27A042556392900D7028D /* SelectedFloorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF27A032556392900D7028D /* SelectedFloorsTableViewCell.swift */; };
+		B50507BF261562130051A799 /* SortHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50507BE261562130051A799 /* SortHistoryView.xib */; };
 		B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50E6C8F22F10E0B00505AA3 /* MessageView.xib */; };
 		B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6C9122F1202A00505AA3 /* MessageView.swift */; };
 		B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B713C2252F02600C46C11 /* UITestRECSystemPreferences.swift */; };
 		B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */; };
 		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
+		B53A88C525A0F938009A0983 /* MachineInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = B53A88C425A0F938009A0983 /* MachineInfo.xib */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
-		B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */; };
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
-		B5658AF225CCF19F0057976C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5658AF125CCF19F0057976C /* GoogleService-Info.plist */; };
+		B5720C5525F85D3A00E83C47 /* LaundryMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5720C5325F85D3900E83C47 /* LaundryMachineView.swift */; };
+		B5720C5625F85D3A00E83C47 /* MachineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5720C5425F85D3900E83C47 /* MachineInfoView.swift */; };
+		B5720C5C25F85D8800E83C47 /* LaundryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5720C5B25F85D8800E83C47 /* LaundryViewController.swift */; };
 		B57D553B23E2322400495F19 /* Pods_PurdueHCR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */; };
 		B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B57FC19123E3924700DC22B2 /* TopScorersView.xib */; };
 		B599D98222F62F030033173C /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599D98122F62F030033173C /* NotificationsViewController.swift */; };
@@ -37,6 +39,7 @@
 		B5D6AF5524FAE20500CC5E86 /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D6AF5424FAE20500CC5E86 /* LogoutView.xib */; };
 		B5D6AF5724FAE89B00CC5E86 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D6AF5624FAE89B00CC5E86 /* LogoutView.swift */; };
 		B5D88D5723C39688007A19D0 /* TopScorersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D88D5623C39688007A19D0 /* TopScorersView.swift */; };
+		B5DC7AA126228940001ECCF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5DC7AA026228940001ECCF9 /* GoogleService-Info.plist */; };
 		B5ED711224A7D7C400080A52 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710C24A7D7C400080A52 /* Event.swift */; };
 		B5ED711324A7D7C400080A52 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710D24A7D7C400080A52 /* EventViewController.swift */; };
 		B5ED711424A7D7C400080A52 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710E24A7D7C400080A52 /* EventTableViewCell.swift */; };
@@ -44,7 +47,6 @@
 		B5ED711624A7D7C400080A52 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711024A7D7C400080A52 /* VerifyViewController.swift */; };
 		B5ED711724A7D7C400080A52 /* AddEventBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */; };
 		B5ED711924A7E73200080A52 /* ViewEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */; };
-		B5FB964F25D4733C009BF311 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5FB964E25D4733C009BF311 /* GoogleService-Info.plist */; };
 		D30FBEDF20FBCCA3000DD221 /* RHPApprovalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */; };
 		D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30FBEEE20FC0B13000DD221 /* ProfileView.swift */; };
 		D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30FBEF020FC0B24000DD221 /* ProfileView.xib */; };
@@ -123,7 +125,6 @@
 		172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.release.xcconfig"; sourceTree = "<group>"; };
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		AA162C7B25D36B3300701749 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		AA7C742A25DC64CE007A8076 /* SelectPointTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPointTypeTableViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +135,7 @@
 		AAF27A032556392900D7028D /* SelectedFloorsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectedFloorsTableViewCell.swift; path = PurdueHCR/Storyboards/SelectedFloorsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		AC46DC5DEBA94D842B2EC887 /* Pods-PurdueHCR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.release.xcconfig"; sourceTree = "<group>"; };
 		AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCRUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B50507BE261562130051A799 /* SortHistoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SortHistoryView.xib; sourceTree = "<group>"; };
 		B50E6C8F22F10E0B00505AA3 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		B50E6C9122F1202A00505AA3 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCRDebug.entitlements; sourceTree = "<group>"; };
@@ -142,11 +144,15 @@
 		B532665B24F454E1005ABEEC /* PurdueHCRRelease.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = PurdueHCRRelease.entitlements; sourceTree = "<group>"; };
 		B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCR.entitlements; sourceTree = "<group>"; };
 		B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseCodeViewController.swift; sourceTree = "<group>"; };
+		B53A88C425A0F938009A0983 /* MachineInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MachineInfo.xib; sourceTree = "<group>"; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
-		B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMaxLengths.swift; sourceTree = "<group>"; };
+		B5539817255B5CF5006FD21B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		B555F30A2552298B002D1151 /* LaundryMachine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaundryMachine.xib; sourceTree = "<group>"; };
 		B55B2F46253F9BD500A91173 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
-		B5658AF125CCF19F0057976C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5720C5325F85D3900E83C47 /* LaundryMachineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachineView.swift; sourceTree = "<group>"; };
+		B5720C5425F85D3900E83C47 /* MachineInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachineInfoView.swift; sourceTree = "<group>"; };
+		B5720C5B25F85D8800E83C47 /* LaundryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryViewController.swift; sourceTree = "<group>"; };
 		B57FC19123E3924700DC22B2 /* TopScorersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopScorersView.xib; sourceTree = "<group>"; };
 		B599D98122F62F030033173C /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		B5AE2D4623DCA07100B2323C /* FirebaseListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseListener.swift; sourceTree = "<group>"; };
@@ -159,6 +165,8 @@
 		B5D6AF5624FAE89B00CC5E86 /* LogoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		B5D88D5623C39688007A19D0 /* TopScorersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScorersView.swift; sourceTree = "<group>"; };
 		B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5DB27E625E88EC100BB72C0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5DC7AA026228940001ECCF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5ED710C24A7D7C400080A52 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		B5ED710D24A7D7C400080A52 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		B5ED710E24A7D7C400080A52 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
@@ -166,7 +174,6 @@
 		B5ED711024A7D7C400080A52 /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		B5ED711124A7D7C400080A52 /* AddEventBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventBarButton.swift; sourceTree = "<group>"; };
 		B5ED711824A7E73200080A52 /* ViewEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEventTableViewController.swift; sourceTree = "<group>"; };
-		B5FB964E25D4733C009BF311 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Real/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHPApprovalTableViewController.swift; sourceTree = "<group>"; };
 		D30FBEEE20FC0B13000DD221 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D30FBEF020FC0B24000DD221 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -280,6 +287,8 @@
 				B5D88D5823C51E69007A19D0 /* GoogleService-Info.plist */,
 				B55B2F46253F9BD500A91173 /* GoogleService-Info.plist */,
 				AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */,
+				B5539817255B5CF5006FD21B /* GoogleService-Info.plist */,
+				B5DB27E625E88EC100BB72C0 /* GoogleService-Info.plist */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -291,6 +300,16 @@
 				AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B5720C5225F85CDB00E83C47 /* LaundryControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B5720C5B25F85D8800E83C47 /* LaundryViewController.swift */,
+				B5720C5325F85D3900E83C47 /* LaundryMachineView.swift */,
+				B5720C5425F85D3900E83C47 /* MachineInfoView.swift */,
+			);
+			path = LaundryControllers;
 			sourceTree = "<group>";
 		};
 		B5ED710B24A7D7C400080A52 /* EventsControllers */ = {
@@ -317,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				B5ED710B24A7D7C400080A52 /* EventsControllers */,
+				B5720C5225F85CDB00E83C47 /* LaundryControllers */,
 				D3912A63219CE75D0002E7C7 /* RECViewControllers */,
 				D39D442F210E73FB0030F424 /* FlowControllers */,
 				D39D4430210E74090030F424 /* UserCreation */,
@@ -343,7 +363,6 @@
 				D345C96A20F3CC1B00ACDF39 /* FirebaseHelper.swift */,
 				D3D062B620E7F73C00E8B3A3 /* DataManager.swift */,
 				D3CC77CD21052CEF00B88F03 /* AppUtils.swift */,
-				B55449582176F11300A914C2 /* TextFieldMaxLengths.swift */,
 				B5AE2D4623DCA07100B2323C /* FirebaseListener.swift */,
 				B5AE2D4823DCA34F00B2323C /* FirebaseCollectionListener.swift */,
 				B5AE2D4A23DCA35D00B2323C /* FirebaseDocumentListener.swift */,
@@ -399,7 +418,7 @@
 		D30FC90020DF35D800201E74 /* PurdueHCR */ = {
 			isa = PBXGroup;
 			children = (
-				AA162C7B25D36B3300701749 /* GoogleService-Info.plist */,
+				B5DC7AA026228940001ECCF9 /* GoogleService-Info.plist */,
 				B51BDD7524DF8759003EA6AE /* PurdueHCRDebug.entitlements */,
 				B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */,
 				B532665B24F454E1005ABEEC /* PurdueHCRRelease.entitlements */,
@@ -429,6 +448,8 @@
 				B5BD40B623C6847200E8D48F /* RECPointDescriptionView.xib */,
 				B57FC19123E3924700DC22B2 /* TopScorersView.xib */,
 				B5D6AF5424FAE20500CC5E86 /* LogoutView.xib */,
+				B555F30A2552298B002D1151 /* LaundryMachine.xib */,
+				B53A88C425A0F938009A0983 /* MachineInfo.xib */,
 			);
 			name = ViewXIB;
 			path = "New Group";
@@ -540,6 +561,7 @@
 				B5B7E98623D8CF5C00CE1866 /* HousePointsHistoryViewController.swift */,
 				D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */,
 				D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */,
+				B50507BE261562130051A799 /* SortHistoryView.xib */,
 			);
 			path = PointApprovalViewControllers;
 			sourceTree = "<group>";
@@ -716,6 +738,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D30FC90B20DF35D900201E74 /* Assets.xcassets in Resources */,
+				B50507BF261562130051A799 /* SortHistoryView.xib in Resources */,
 				D3355C8F214A25B10037556C /* Profile.storyboard in Resources */,
 				B551BDD321B1004F00CF4F6C /* Register in Resources */,
 				D3355C8D214A253D0037556C /* PointSubmission.storyboard in Resources */,
@@ -724,17 +747,18 @@
 				D3CC77C72103EFAF00B88F03 /* HousePointsCompareView.xib in Resources */,
 				B5D6AF5524FAE20500CC5E86 /* LogoutView.xib in Resources */,
 				B5BD40B723C6847200E8D48F /* RECPointDescriptionView.xib in Resources */,
+				B53A88C525A0F938009A0983 /* MachineInfo.xib in Resources */,
 				D3912A6E219CE77B0002E7C7 /* RECHouse.storyboard in Resources */,
 				D30FBEF120FC0B24000DD221 /* ProfileView.xib in Resources */,
 				D3355C93214A267E0037556C /* PointApproval.storyboard in Resources */,
 				D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */,
 				D30FC90920DF35D800201E74 /* Main.storyboard in Resources */,
 				B50E6C9022F10E0B00505AA3 /* MessageView.xib in Resources */,
+				B5DC7AA126228940001ECCF9 /* GoogleService-Info.plist in Resources */,
 				AAF279F42555DA7600D7028D /* Events.storyboard in Resources */,
 				D3912A75219CE7960002E7C7 /* RECPointOptions.storyboard in Resources */,
 				B57FC19223E3924700DC22B2 /* TopScorersView.xib in Resources */,
 				D33F43AF210A9FB100D3982D /* PointDescriptionView.xib in Resources */,
-				AA162C7C25D36B3300701749 /* GoogleService-Info.plist in Resources */,
 				D3912A7C219CE7A90002E7C7 /* RECRewards.storyboard in Resources */,
 				D3BC48BB210E9B0900D46088 /* HousePointsView.xib in Resources */,
 			);
@@ -840,11 +864,12 @@
 				B5ED711324A7D7C400080A52 /* EventViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
 				D3912A74219CE7960002E7C7 /* RECPointOptionTableViewController.swift in Sources */,
-				B55449592176F11300A914C2 /* TextFieldMaxLengths.swift in Sources */,
 				D3CC77CB210428B600B88F03 /* TabBarController.swift in Sources */,
+				B5720C5625F85D3A00E83C47 /* MachineInfoView.swift in Sources */,
 				B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */,
 				B5AE2D4B23DCA35D00B2323C /* FirebaseDocumentListener.swift in Sources */,
 				D3912A73219CE7960002E7C7 /* RECPointCreationTableViewController.swift in Sources */,
+				B5720C5C25F85D8800E83C47 /* LaundryViewController.swift in Sources */,
 				B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */,
 				B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */,
 				B5ED711924A7E73200080A52 /* ViewEventTableViewController.swift in Sources */,
@@ -870,6 +895,7 @@
 				B5AE2D4D23DCA68C00B2323C /* FirebaseListenerUtil.swift in Sources */,
 				D33F43AA2106982100D3982D /* AnimatedLoadingViewController.swift in Sources */,
 				D3CC77C92103EFED00B88F03 /* HousePointsCompareView.swift in Sources */,
+				B5720C5525F85D3A00E83C47 /* LaundryMachineView.swift in Sources */,
 				B5AE2D4723DCA07100B2323C /* FirebaseListener.swift in Sources */,
 				D3912A6A219CE77B0002E7C7 /* HouseTableViewController.swift in Sources */,
 				D3912A7A219CE7A90002E7C7 /* RECRewardCreationTableViewController.swift in Sources */,
@@ -1062,7 +1088,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.3;
+				MARKETING_VERSION = 1.8.7;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1086,7 +1112,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.3;
+				MARKETING_VERSION = 1.8.7;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

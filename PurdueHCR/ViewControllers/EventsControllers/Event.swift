@@ -25,11 +25,12 @@ class Event {
     var creatorID: String
     var floorColors: [String]/*[RGB-Color] (Not sure what typing I will use for this field*/
     var eventID: String
+    var virtualLink: String
     
     static let dateFormat: String = "E, MMM d yyyy"
     static let timeFormat: String = "h:mm a"
         
-    init (name: String, location: String, pointType: PointType, floors: [String], details: String, isPublicEvent: Bool, isAllFloors: Bool, startDateTime: String, endDateTime: String, creatorID: String, host: String) {
+    init (name: String, location: String, pointType: PointType, floors: [String], details: String, isPublicEvent: Bool, isAllFloors: Bool, startDateTime: String, endDateTime: String, creatorID: String, host: String, virtualLink: String) {
         self.name = name;
         self.details = details
         self.location = location
@@ -59,9 +60,11 @@ class Event {
         
         self.floorColors = [""]
         self.eventID = ""
+        
+        self.virtualLink = virtualLink
     }
     
-    init (name: String, location: String, pointTypeId: String, floors: [String], details: String, isPublicEvent: Bool, startDateTime: String, endDateTime: String, creatorID: String, host: String, floorColors: [String], id: String) {
+    init (name: String, location: String, pointTypeId: String, floors: [String], details: String, isPublicEvent: Bool, startDateTime: String, endDateTime: String, creatorID: String, host: String, floorColors: [String], id: String, virtualLink: String) {
         self.name = name
         self.location = location
         
@@ -107,6 +110,7 @@ class Event {
         self.host = host
         self.floorColors = floorColors
         self.eventID = id
+        self.virtualLink = virtualLink
     }
     
     init () {
@@ -125,6 +129,7 @@ class Event {
         self.creatorID = ""
         self.floorColors = [""]/*[RGB-Color] (Not sure what typing I will use for this field*/
         self.eventID = ""
+        self.virtualLink = ""
     }
     
     func setEventID(id: String) {

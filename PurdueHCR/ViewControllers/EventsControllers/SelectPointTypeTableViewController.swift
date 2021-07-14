@@ -61,15 +61,7 @@ class SelectPointTypeTableViewController: UITableViewController {
             selectedCell.accessoryType = .checkmark
             self.delegate?.updatePointTypeData(pointTypeSelected: pointTypeSelectedIndex)
         }
-//        if (!floorsSelected[indexPath.row]) {
-//            floorsSelected[indexPath.row] = true
-//            selectedCell.accessoryType = .checkmark
-//            self.delegate?.updateData(selected: floorsSelected, floors: floors)
-//        } else {
-//            floorsSelected[indexPath.row] = false
-//            selectedCell.accessoryType = .none
-//            self.delegate?.updateData(selected: floorsSelected, floors: floors)
-//        }
+        self.navigationController?.popViewController(animated: true)
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

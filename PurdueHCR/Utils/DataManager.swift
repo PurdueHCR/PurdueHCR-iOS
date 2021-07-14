@@ -78,7 +78,7 @@ class DataManager {
     // Check permission Level when USER is not REA/REC
     static private func checkPermission(typePermission:Int, userPermission:PointType.PermissionLevel) ->Bool {
         return ((userPermission == PointType.PermissionLevel.rhp && typePermission != 1) || (userPermission == PointType.PermissionLevel.faculty && typePermission == 3) ||
-            (userPermission == PointType.PermissionLevel.ea && typePermission == 3))
+                    (userPermission == PointType.PermissionLevel.ea && typePermission == 3) || (userPermission == PointType.PermissionLevel.priv && typePermission == 3))
     }
     
     func updatePointLogStatus(log:PointLog, approved:Bool, message:String = "", updating:Bool = false, onDone:@escaping (_ err:Error?)->Void){

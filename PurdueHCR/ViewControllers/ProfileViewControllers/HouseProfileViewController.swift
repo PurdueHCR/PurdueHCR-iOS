@@ -41,17 +41,18 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         
-        // Commented out since do not want to display what's new on this version
-//        let defaults = UserDefaults.standard
-//        if let new_version = defaults.object(forKey: "last_opened_version") {
-//            if ((new_version as! String) != appVersion) {
-//                self.performSegue(withIdentifier: "show_whats_new", sender: self)
-//                defaults.setValue(appVersion, forKey: "last_opened_version")
-//            }
-//        } else {
-//            self.performSegue(withIdentifier: "show_whats_new", sender: self)
-//            defaults.setValue(appVersion, forKey: "last_opened_version")
-//        }
+        
+        // Comment out when what's new page not needed
+        let defaults = UserDefaults.standard
+        if let new_version = defaults.object(forKey: "last_opened_version") {
+            if ((new_version as! String) != appVersion) {
+                self.performSegue(withIdentifier: "show_whats_new", sender: self)
+                defaults.setValue(appVersion, forKey: "last_opened_version")
+            }
+        } else {
+            self.performSegue(withIdentifier: "show_whats_new", sender: self)
+            defaults.setValue(appVersion, forKey: "last_opened_version")
+        }
         
         
         let firstName = User.get(.firstName) as! String
@@ -453,16 +454,16 @@ fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ inp
 // requires almost no code.
 class whatsNewViewController: UIViewController {
     
-    @IBOutlet weak var eventIcon: UIImageView!
-    @IBOutlet weak var qrCodeIcon: UIImageView!
+    @IBOutlet weak var firstIcon: UIImageView!
+    @IBOutlet weak var secondIcon: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        eventIcon.image = #imageLiteral(resourceName: "SF_calendar_badge_plus").withRenderingMode(.alwaysTemplate)
-        eventIcon.tintColor = DefinedValues.systemBlue
-        qrCodeIcon.image = #imageLiteral(resourceName: "QRCode").withRenderingMode(.alwaysTemplate)
-        qrCodeIcon.tintColor = DefinedValues.systemBlue
+        firstIcon.image = #imageLiteral(resourceName: "SF_calendar_badge_plus").withRenderingMode(.alwaysTemplate)
+        firstIcon.tintColor = DefinedValues.systemBlue
+        secondIcon.image = #imageLiteral(resourceName: "Settings").withRenderingMode(.alwaysTemplate)
+        secondIcon.tintColor = DefinedValues.systemBlue
     }
     
     @IBAction func dismissWhatsNew(_ sender: Any) {
