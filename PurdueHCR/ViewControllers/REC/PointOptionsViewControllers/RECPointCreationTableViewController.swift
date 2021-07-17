@@ -38,7 +38,8 @@ class RECPointCreationTableViewController: UITableViewController, UITextViewDele
         }
         else{
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .done, target: self, action: #selector(updatePointType))
-            nameTextView.text = type!.pointDescription
+            nameTextView.text = type!.pointName
+            descriptionTextView.text = type!.pointDescription
             residentsCanSubmitSwitch.isOn = type!.residentCanSubmit
             setPermissionLevel(value: type!.permissionLevel)
             permissionSlider.value = Float(abs(type!.permissionLevel.rawValue))
