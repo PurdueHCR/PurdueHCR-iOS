@@ -109,6 +109,8 @@
 		D3D062C520E822BA00E8B3A3 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */; };
 		D3D062C720E82A6500E8B3A3 /* TypeSubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */; };
 		D749F3782339A24B00410434 /* SuggestedPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D749F3772339A24B00410434 /* SuggestedPointsView.swift */; };
+		D79E87AC26A379C700F0C0BB /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D79E87AB26A379C700F0C0BB /* Stickers.xcassets */; };
+		D79E87B026A379C700F0C0BB /* PurdueHCR Stickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D79E87A926A379C600F0C0BB /* PurdueHCR Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,7 +121,28 @@
 			remoteGlobalIDString = D30FC8FD20DF35D800201E74;
 			remoteInfo = PurdueHCR;
 		};
+		D79E87AE26A379C700F0C0BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D30FC8F620DF35D700201E74 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D79E87A826A379C600F0C0BB;
+			remoteInfo = "PurdueHCR Stickers";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D79E87B126A379C700F0C0BB /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D79E87B026A379C700F0C0BB /* PurdueHCR Stickers.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,6 +263,9 @@
 		D3D062C420E822BA00E8B3A3 /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		D3D062C620E82A6500E8B3A3 /* TypeSubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSubmitViewController.swift; sourceTree = "<group>"; };
 		D749F3772339A24B00410434 /* SuggestedPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedPointsView.swift; sourceTree = "<group>"; };
+		D79E87A926A379C600F0C0BB /* PurdueHCR Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "PurdueHCR Stickers.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D79E87AB26A379C700F0C0BB /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		D79E87AD26A379C700F0C0BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2069A978FC04FB762BECDEB /* Pods-PurdueHCR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCR/Pods-PurdueHCR.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -399,6 +425,7 @@
 			children = (
 				D30FC90020DF35D800201E74 /* PurdueHCR */,
 				D36DFEBC220F2EF40062184C /* PurdueHCRUITests */,
+				D79E87AA26A379C600F0C0BB /* PurdueHCR Stickers */,
 				D30FC8FF20DF35D800201E74 /* Products */,
 				54A6A3EE8AE04E29868B02EB /* Pods */,
 				AB577E93D3B4B5BCEA137EE1 /* Frameworks */,
@@ -411,6 +438,7 @@
 			children = (
 				D30FC8FE20DF35D800201E74 /* PurdueHCR.app */,
 				D36DFEBB220F2EF40062184C /* PurdueHCRUITests.xctest */,
+				D79E87A926A379C600F0C0BB /* PurdueHCR Stickers.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -645,6 +673,15 @@
 			path = RECPages;
 			sourceTree = "<group>";
 		};
+		D79E87AA26A379C600F0C0BB /* PurdueHCR Stickers */ = {
+			isa = PBXGroup;
+			children = (
+				D79E87AB26A379C700F0C0BB /* Stickers.xcassets */,
+				D79E87AD26A379C700F0C0BB /* Info.plist */,
+			);
+			path = "PurdueHCR Stickers";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -657,10 +694,12 @@
 				D30FC8FB20DF35D800201E74 /* Frameworks */,
 				D30FC8FC20DF35D800201E74 /* Resources */,
 				8AB907A4EBDADFAD07571479 /* [CP] Embed Pods Frameworks */,
+				D79E87B126A379C700F0C0BB /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D79E87AF26A379C700F0C0BB /* PBXTargetDependency */,
 			);
 			name = PurdueHCR;
 			productName = "Platinum Points";
@@ -687,6 +726,21 @@
 			productReference = D36DFEBB220F2EF40062184C /* PurdueHCRUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		D79E87A826A379C600F0C0BB /* PurdueHCR Stickers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D79E87B426A379C700F0C0BB /* Build configuration list for PBXNativeTarget "PurdueHCR Stickers" */;
+			buildPhases = (
+				D79E87A726A379C600F0C0BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PurdueHCR Stickers";
+			productName = "PurdueHCR Stickers";
+			productReference = D79E87A926A379C600F0C0BB /* PurdueHCR Stickers.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -711,6 +765,9 @@
 						LastSwiftMigration = 1020;
 						TestTargetID = D30FC8FD20DF35D800201E74;
 					};
+					D79E87A826A379C600F0C0BB = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
 				};
 			};
 			buildConfigurationList = D30FC8F920DF35D700201E74 /* Build configuration list for PBXProject "PurdueHCR" */;
@@ -728,6 +785,7 @@
 			targets = (
 				D30FC8FD20DF35D800201E74 /* PurdueHCR */,
 				D36DFEBA220F2EF40062184C /* PurdueHCRUITests */,
+				D79E87A826A379C600F0C0BB /* PurdueHCR Stickers */,
 			);
 		};
 /* End PBXProject section */
@@ -768,6 +826,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D79E87A726A379C600F0C0BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79E87AC26A379C700F0C0BB /* Stickers.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -944,6 +1010,11 @@
 			isa = PBXTargetDependency;
 			target = D30FC8FD20DF35D800201E74 /* PurdueHCR */;
 			targetProxy = D36DFEC0220F2EF40062184C /* PBXContainerItemProxy */;
+		};
+		D79E87AF26A379C700F0C0BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D79E87A826A379C600F0C0BB /* PurdueHCR Stickers */;
+			targetProxy = D79E87AE26A379C700F0C0BB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1168,6 +1239,42 @@
 			};
 			name = Release;
 		};
+		D79E87B226A379C700F0C0BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SLB9ULV5R2;
+				INFOPLIST_FILE = "PurdueHCR Stickers/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "DecodeProgramming.HCRPoint.PurdueHCR-Stickers";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D79E87B326A379C700F0C0BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SLB9ULV5R2;
+				INFOPLIST_FILE = "PurdueHCR Stickers/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "DecodeProgramming.HCRPoint.PurdueHCR-Stickers";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1194,6 +1301,15 @@
 			buildConfigurations = (
 				D36DFEC3220F2EF40062184C /* Debug */,
 				D36DFEC4220F2EF40062184C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D79E87B426A379C700F0C0BB /* Build configuration list for PBXNativeTarget "PurdueHCR Stickers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D79E87B226A379C700F0C0BB /* Debug */,
+				D79E87B326A379C700F0C0BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
