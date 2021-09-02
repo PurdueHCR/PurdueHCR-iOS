@@ -169,25 +169,48 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
         controller.dismiss(animated: true, completion: nil)
     }
     
+    func calendarAccessDenied() {
+        let alertController = UIAlertController(title: "Calendar Access Denied", message: "You must allow access to your calendar under Settings > Purdue HCR > Calendars", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     @IBAction func exportToiCal(_ sender: Any) {
         let eventStore = EKEventStore()
 
         switch EKEventStore.authorizationStatus(for: .event) {
         case .authorized:
             insertEvent(store: eventStore)
-            case .denied:
-                print("Access denied")
-            case .notDetermined:
-                eventStore.requestAccess(to: .event, completion:
-                  {[weak self] (granted: Bool, error: Error?) -> Void in
-                      if granted {
-                        self!.insertEvent(store: eventStore)
-                      } else {
-                            print("Access denied")
-                      }
-                })
-                default:
-                    print("Case default")
+            break
+        case .denied:
+            calendarAccessDenied()
+            break
+        case .notDetermined:
+            eventStore.requestAccess(to: .event) { accessGranted, err in
+                if (accessGranted) {
+                    DispatchQueue.main.async {
+                        self.insertEvent(store: eventStore)
+                    }
+                   
+                } else {
+                    DispatchQueue.main.async {
+                        self.calendarAccessDenied()
+                    }
+                    
+                }
+            }
+            
+//            eventStore.requestAccess(to: .event, completion:
+//              {[weak self] (granted: Bool, error: Error?) -> Void in
+//                  if granted {
+//                    self?.insertEvent(store: eventStore)
+//                  } else {
+//                    self?.calendarAccessDenied()
+//                  }
+//            })
+            break;
+        default:
+            print("Case default")
         }
     }
     

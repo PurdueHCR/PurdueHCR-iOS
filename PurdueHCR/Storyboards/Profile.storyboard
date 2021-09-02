@@ -338,13 +338,13 @@
                                     <action selector="dismissWhatsNew:" destination="ttO-5a-Prs" eventType="touchUpInside" id="bpQ-ug-rUG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submission Date Limit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piT-VX-z29">
-                                <rect key="frame" x="95" y="336" width="184" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iMessage Sticker Packs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piT-VX-z29">
+                                <rect key="frame" x="95" y="336" width="194" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RewardIcon" translatesAutoresizingMaskIntoConstraints="NO" id="pnf-8y-5ab">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="pnf-8y-5ab">
                                 <rect key="frame" x="30" y="336" width="50" height="50"/>
                                 <color key="tintColor" systemColor="linkColor"/>
                                 <constraints>
@@ -352,7 +352,7 @@
                                     <constraint firstAttribute="width" secondItem="pnf-8y-5ab" secondAttribute="height" multiplier="1:1" id="tD9-tM-ujb"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submissions for points occuring over four weeks ago are no longer accepted" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCN-bU-PxX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can now send your favorite Purdue HCR house icons in iMessage" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCN-bU-PxX">
                                 <rect key="frame" x="95" y="360" width="303" height="40.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
@@ -621,7 +621,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Bell" width="25" height="25"/>
-        <image name="RewardIcon" width="25" height="25"/>
+        <image name="HCRIcon" width="986" height="986"/>
         <image name="SF_calendar_badge_plus" width="64" height="64"/>
         <image name="Settings" width="25" height="25"/>
         <image name="profile" width="25" height="25"/>
