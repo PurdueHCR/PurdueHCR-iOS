@@ -38,6 +38,7 @@ class FirebaseHelper {
 //    let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
     
     //----- TEST URLS ------//
+
 //    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
 //    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
 //    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
