@@ -119,6 +119,11 @@ class ProfileView: UIView {
         houseEmblem.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         houseEmblem.isEnabled = true
         houseEmblem.imageView?.alpha = 1.0
+        if #available(iOS 13.0, *) {
+            houseEmblem.backgroundColor = UIColor.systemBackground
+        } else {
+            // Fallback on earlier versions
+        }
         
         var houses = DataManager.sharedManager.getHouses()!
         let house = houses.remove(at: houses.firstIndex(of: House(id: houseName, points: 0, hexColor:""))!)
@@ -214,7 +219,11 @@ class ProfileView: UIView {
         let codesTitle = UILabel(frame: CGRect(x: 0, y: lastPosition, width: width, height: 20))
         codesTitle.text = "HOUSE CODES"
         codesTitle.font = .systemFont(ofSize: 21, weight: .medium)
-        codesTitle.textColor = UIColor.darkGray
+        if #available(iOS 13.0, *) {
+            codesTitle.textColor = UIColor.systemGray2
+        } else {
+            codesTitle.textColor = UIColor.darkGray
+        }
         codesTitle.textAlignment = .center
         
         lastPosition += 35
