@@ -39,11 +39,21 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		self.hideKeyboardWhenTappedAround()
 		
 		self.imageView.image = #imageLiteral(resourceName: "emblem")
-		self.imageView.layer.shadowColor = UIColor.gray.cgColor
-		self.imageView.layer.shadowRadius = 2
-		self.imageView.layer.shadowOpacity = 100
-		self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
-		
+        if #available(iOS 12.0, *), #available(iOS 13.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+
+            } else {
+                self.imageView.layer.shadowColor = UIColor.gray.cgColor
+                self.imageView.layer.shadowRadius = 2
+                self.imageView.layer.shadowOpacity = 100
+                self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+            }
+        } else {
+            self.imageView.layer.shadowColor = UIColor.gray.cgColor
+            self.imageView.layer.shadowRadius = 2
+            self.imageView.layer.shadowOpacity = 100
+            self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+        }
 		activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.gray

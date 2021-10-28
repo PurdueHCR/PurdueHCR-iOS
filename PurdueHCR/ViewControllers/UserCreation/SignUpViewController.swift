@@ -41,29 +41,22 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 		self.hideKeyboardWhenTappedAround()
 		
 		self.imageView.image = #imageLiteral(resourceName: "emblem")
-//		self.imageView.layer.shadowColor = UIColor.gray.cgColor
-//        if #available(iOS 13.0, *) {
-//            self.imageView.layer.shadowColor = UIColor.systemGray5.cgColor
-//        } else {
-//            // Fallback on earlier versions
-//            self.imageView.layer.shadowColor = UIColor.gray.cgColor
-//        }
-        
-//        if #available(iOS 12.0, *), #available(iOS 13.0, *) {
-//            if self.traitCollection.userInterfaceStyle == .dark {
+
+        if #available(iOS 12.0, *), #available(iOS 13.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
 //                self.imageView.image = nil
-//            } else {
-//                self.imageView.layer.shadowColor = UIColor.gray.cgColor
-//                self.imageView.layer.shadowRadius = 2
-//                self.imageView.layer.shadowOpacity = 100
-//                self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
-//            }
-//        } else {
-//            self.imageView.layer.shadowColor = UIColor.gray.cgColor
-//            self.imageView.layer.shadowRadius = 2
-//            self.imageView.layer.shadowOpacity = 100
-//            self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
-//        }
+            } else {
+                self.imageView.layer.shadowColor = UIColor.gray.cgColor
+                self.imageView.layer.shadowRadius = 2
+                self.imageView.layer.shadowOpacity = 100
+                self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+            }
+        } else {
+            self.imageView.layer.shadowColor = UIColor.gray.cgColor
+            self.imageView.layer.shadowRadius = 2
+            self.imageView.layer.shadowOpacity = 100
+            self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+        }
         
 		
 		DataManager.sharedManager.refreshHouses(onDone: {(h:[House]) in
