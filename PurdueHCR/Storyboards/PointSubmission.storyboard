@@ -17,6 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="sectionIndexBackgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="scB-PW-YJU">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="255"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -84,7 +85,7 @@
                                 </label>
                                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Nr-zoQ">
                                     <rect key="frame" x="212" y="149.66666666666666" width="192" height="105.33333333333334"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="jCp-KT-0Iy"/>
                                     </constraints>
@@ -114,7 +115,7 @@
                                 </label>
                             </subviews>
                             <viewLayoutGuide key="safeArea" id="Tpu-Nm-riX"/>
-                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="T56-zh-yfn" firstAttribute="top" secondItem="cxG-nO-IHC" secondAttribute="top" id="17v-TH-TSa"/>
                                 <constraint firstItem="cxG-nO-IHC" firstAttribute="top" secondItem="ZeL-by-2gK" secondAttribute="bottom" constant="2" id="1Lw-3h-PmZ"/>
@@ -165,6 +166,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                                     <constraints>
                                         <constraint firstItem="OKd-7U-Oa6" firstAttribute="leading" secondItem="931-wJ-N6Y" secondAttribute="leadingMargin" id="UDs-Pn-ch4"/>
                                         <constraint firstItem="OKd-7U-Oa6" firstAttribute="bottom" secondItem="931-wJ-N6Y" secondAttribute="bottomMargin" id="jG0-Du-aLA"/>
@@ -172,6 +174,7 @@
                                         <constraint firstItem="OKd-7U-Oa6" firstAttribute="trailing" secondItem="931-wJ-N6Y" secondAttribute="trailingMargin" id="sBh-pm-ZBZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="typeLabel" destination="OKd-7U-Oa6" id="sGM-8j-wfV"/>
                                 </connections>
@@ -204,7 +207,9 @@
         <scene sceneID="ymG-0j-Wqh">
             <objects>
                 <navigationController storyboardIdentifier="Point_Submission_Initial" id="GaJ-ht-lTq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Submit Points" image="submit" selectedImage="submit" id="VQv-Mm-WXr"/>
+                    <tabBarItem key="tabBarItem" title="Submit Points" image="submit" selectedImage="submit" id="VQv-Mm-WXr">
+                        <color key="badgeColor" systemColor="systemBackgroundColor"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z1Z-nv-EXB">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -414,9 +419,6 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

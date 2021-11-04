@@ -45,8 +45,14 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 		
-		tableView.separatorColor = DefinedValues.systemGray5
-		tableView.backgroundColor = DefinedValues.systemGray5
+        if #available(iOS 13.0, *) {
+            tableView.separatorColor = UIColor.systemGray5
+            tableView.backgroundColor = UIColor.systemGray5
+        } else {
+            // Fallback on earlier versions
+            tableView.separatorColor = DefinedValues.systemGray5
+            tableView.backgroundColor = DefinedValues.systemGray5
+        }
 		let height : CGFloat = 60
 		let width : CGFloat = (self.view.frame.width - 60) / 2
 		let offset : CGFloat = 20

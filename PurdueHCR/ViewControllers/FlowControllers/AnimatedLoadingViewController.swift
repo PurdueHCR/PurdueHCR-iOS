@@ -38,10 +38,21 @@ class AnimatedLoadingViewController: UIViewController {
 			self.imageView.layer.borderColor = UIColor.black.cgColor
 			let height = self.imageView.frame.height
 			self.imageView.layer.cornerRadius = height/2
-			self.imageView.layer.shadowColor = UIColor.gray.cgColor
-			self.imageView.layer.shadowRadius = 2
-			self.imageView.layer.shadowOpacity = 100
-			self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+            if #available(iOS 12.0, *), #available(iOS 13.0, *) {
+                if self.traitCollection.userInterfaceStyle == .dark {
+
+                } else {
+                    self.imageView.layer.shadowColor = UIColor.gray.cgColor
+                    self.imageView.layer.shadowRadius = 2
+                    self.imageView.layer.shadowOpacity = 100
+                    self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+                }
+            } else {
+                self.imageView.layer.shadowColor = UIColor.gray.cgColor
+                self.imageView.layer.shadowRadius = 2
+                self.imageView.layer.shadowOpacity = 100
+                self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+            }
             
             signOutButton.layer.borderWidth = 1.0
             signOutButton.layer.borderColor = UIColor.black.cgColor

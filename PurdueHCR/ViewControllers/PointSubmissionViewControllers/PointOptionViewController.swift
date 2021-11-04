@@ -95,7 +95,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         }
         
         if #available(iOS 13.0, *) {
-            self.tableView.backgroundColor = UIColor.systemGray5
+            self.tableView.backgroundColor = UIColor.systemBackground   
         } else {
             self.tableView.backgroundColor = DefinedValues.systemGray5
         }
