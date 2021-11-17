@@ -51,6 +51,54 @@ class EventViewController: UITableViewController {
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refresher
+        
+        guard let permission = User.get(.permissionLevel) else {
+            return
+        }
+        let p = permission as! Int
+
+        if (p == 0) {
+            let navigationBar = self.navigationController!.navigationBar
+            self.navigationItem.rightBarButtonItems = nil
+            let houseName = User.get(.house) as! String
+            self.houseImageView = UIImageView()
+            
+            if (houseName == "Platinum"){
+                self.houseImageView.image = #imageLiteral(resourceName: "Platinum")
+            }
+            else if(houseName == "Copper"){
+                self.houseImageView.image = #imageLiteral(resourceName: "Copper")
+            }
+            else if(houseName == "Palladium"){
+                self.houseImageView.image = #imageLiteral(resourceName: "Palladium")
+            }
+            else if(houseName == "Silver"){
+                self.houseImageView.image = #imageLiteral(resourceName: "Silver")
+            }
+            else if(houseName == "Titanium"){
+                self.houseImageView.image = #imageLiteral(resourceName: "Titanium")
+            }
+            
+            navigationBar.addSubview(self.houseImageView)
+            self.houseImageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
+            self.houseImageView.clipsToBounds = true
+            self.houseImageView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                self.houseImageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
+                self.houseImageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
+                self.houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
+                self.houseImageView.widthAnchor.constraint(equalTo: self.houseImageView.heightAnchor)
+            ])
+            self.filterEventsBarButton.isEnabled = false
+            self.filterEventsBarButton.title = ""
+        } else {
+            self.navigationItem.rightBarButtonItems = nil
+            self.navigationItem.rightBarButtonItem = self.AddEventBarButton
+            self.filterEventsBarButton.title = "Filter"
+            self.navigationItem.leftBarButtonItems = nil
+            self.navigationItem.leftBarButtonItem = self.filterEventsBarButton
+            self.navigationItem.title = "All Events"
+        }
                 
         fbh.getEvents() { (eventsAPI, err) in
             if (err != nil) {
@@ -62,53 +110,7 @@ class EventViewController: UITableViewController {
                 self.tableView.sectionHeaderHeight = 2000
                 self.tableView.estimatedSectionHeaderHeight = 2000
                             
-                guard let permission = User.get(.permissionLevel) else {
-                    return
-                }
-                let p = permission as! Int
-
-                if (p == 0) {
-                    let navigationBar = self.navigationController!.navigationBar
-                    self.navigationItem.rightBarButtonItems = nil
-                    let houseName = User.get(.house) as! String
-                    self.houseImageView = UIImageView()
-                    
-                    if (houseName == "Platinum"){
-                        self.houseImageView.image = #imageLiteral(resourceName: "Platinum")
-                    }
-                    else if(houseName == "Copper"){
-                        self.houseImageView.image = #imageLiteral(resourceName: "Copper")
-                    }
-                    else if(houseName == "Palladium"){
-                        self.houseImageView.image = #imageLiteral(resourceName: "Palladium")
-                    }
-                    else if(houseName == "Silver"){
-                        self.houseImageView.image = #imageLiteral(resourceName: "Silver")
-                    }
-                    else if(houseName == "Titanium"){
-                        self.houseImageView.image = #imageLiteral(resourceName: "Titanium")
-                    }
-                    
-                    navigationBar.addSubview(self.houseImageView)
-                    self.houseImageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
-                    self.houseImageView.clipsToBounds = true
-                    self.houseImageView.translatesAutoresizingMaskIntoConstraints = false
-                    NSLayoutConstraint.activate([
-                        self.houseImageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
-                        self.houseImageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
-                        self.houseImageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
-                        self.houseImageView.widthAnchor.constraint(equalTo: self.houseImageView.heightAnchor)
-                    ])
-                    self.filterEventsBarButton.isEnabled = false
-                    self.filterEventsBarButton.title = ""
-                } else {
-                    self.navigationItem.rightBarButtonItems = nil
-                    self.navigationItem.rightBarButtonItem = self.AddEventBarButton
-                    self.filterEventsBarButton.title = "Filter"
-                    self.navigationItem.leftBarButtonItems = nil
-                    self.navigationItem.leftBarButtonItem = self.filterEventsBarButton
-                    self.navigationItem.title = "All Events"
-                }
+                
                 events = Event.sortEvents(events: events)
                 self.tableView.reloadData()
                 self.removeSpinner()
