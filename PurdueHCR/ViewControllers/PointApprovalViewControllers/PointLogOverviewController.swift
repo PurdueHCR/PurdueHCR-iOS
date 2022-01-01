@@ -45,14 +45,8 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 		
-        if #available(iOS 13.0, *) {
-            tableView.separatorColor = UIColor.systemGray5
-            tableView.backgroundColor = UIColor.systemGray5
-        } else {
-            // Fallback on earlier versions
-            tableView.separatorColor = DefinedValues.systemGray5
-            tableView.backgroundColor = DefinedValues.systemGray5
-        }
+        tableView.separatorColor = .clear
+        
 		let height : CGFloat = 60
 		let width : CGFloat = (self.view.frame.width - 60) / 2
 		let offset : CGFloat = 20
@@ -64,14 +58,14 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		let buttonSize = CGSize.init(width: width, height: height)
 		
 		typeMessageField.layer.cornerRadius = typeMessageField.frame.height / 2
-        if #available(iOS 13.0, *) {
-            typeMessageField.layer.borderColor = UIColor.systemGray5.cgColor
-        } else {
-            typeMessageField.layer.borderColor = UIColor.lightGray.cgColor
-        }
+//        if #available(iOS 13.0, *) {
+//            typeMessageField.layer.borderColor = UIColor.systemGray5.cgColor
+//        } else {
+//            typeMessageField.layer.borderColor = UIColor.lightGray.cgColor
+//        }
     
-		typeMessageField.borderStyle = .none
-		typeMessageField.layer.borderWidth = 1
+//		typeMessageField.borderStyle = .none
+//		typeMessageField.layer.borderWidth = 1
 		
 		sendButton.backgroundColor = tabBarController?.tabBar.tintColor
 		sendButton.tintColor = UIColor.white
@@ -235,7 +229,11 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		for view in cell.subviews {
 			view.removeFromSuperview()
 		}
-		cell.backgroundColor = DefinedValues.systemGray5
+        if #available(iOS 13.0, *) {
+            cell.backgroundColor = .systemBackground
+        } else {
+            cell.backgroundColor = DefinedValues.systemGray5
+        }
 		
 		if (indexPath.row == 0) {
 			let pointDescriptionView = PointDescriptionView()

@@ -62,6 +62,7 @@ class ProfileView: UIView {
         addSubview(backgroundView)
         
         backgroundView.frame = self.bounds
+        backgroundView.layer.cornerRadius = DefinedValues.radius
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.switchRankViews(_:)))

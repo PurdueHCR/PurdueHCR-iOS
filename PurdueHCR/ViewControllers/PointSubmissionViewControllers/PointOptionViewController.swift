@@ -94,12 +94,6 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
             
         }
         
-        if #available(iOS 13.0, *) {
-            self.tableView.backgroundColor = UIColor.systemBackground   
-        } else {
-            self.tableView.backgroundColor = DefinedValues.systemGray5
-        }
-        
         let indexString = DataManager.sharedManager.systemPreferences?.suggestedPointIDs.split(separator: ",")
         let id0 = Int(indexString![0].description)
         let id1 = Int(indexString![1].description)

@@ -43,6 +43,8 @@ class HousePointsCompareView: UIView {
         Bundle.main.loadNibNamed("HousePointsCompareView", owner: self, options: nil)
         addSubview(backgroundView)
         
+        backgroundView.layer.cornerRadius = DefinedValues.radius
+        
         competitionVisible = DataManager.sharedManager.systemPreferences!.isCompetitionVisible
         
         backgroundView.frame = self.bounds

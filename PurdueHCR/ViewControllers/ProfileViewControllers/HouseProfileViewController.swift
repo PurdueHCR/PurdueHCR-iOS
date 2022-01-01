@@ -16,7 +16,7 @@ import PopupKit
 class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
 	@IBOutlet weak var settingsButton: UIBarButtonItem!
-	@IBOutlet weak var notificationsButton: UIButton!
+	@IBOutlet weak var notificationsButton: UIBarButtonItem!
     @IBOutlet var backgroundTable: UITableView!
     
     var refresher: UIRefreshControl?
@@ -39,8 +39,9 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         
+        
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         
         // Comment out when what's new page not needed
         let defaults = UserDefaults.standard
@@ -110,12 +111,17 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         
 		if (self.navigationItem.rightBarButtonItems != nil) {
 			DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs: [PointLog]) in
-				if (pointLogs.capacity > 0) {
-					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
-				}
-				else {
-					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
-				}
+//				if (pointLogs.capacity > 0) {
+//					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
+//				}
+//				else {
+//					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+//				}
+//                if #available(iOS 13.0, *) {
+//                    self.notificationsButton.tintColor = .label
+//                } else {
+//                    self.notificationsButton.tintColor = .white
+//                }
 			})
 		}
 		
@@ -153,12 +159,12 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         })
 		if (navigationItem.rightBarButtonItems != nil) {
 			DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs: [PointLog]) in
-				if (pointLogs.capacity > 0) {
-					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
-				}
-				else {
-					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
-				}
+//				if (pointLogs.capacity > 0) {
+//					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
+//				}
+//				else {
+//					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+//				}
                 self.messageLogs = pointLogs
                 self.messageLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
 			})
@@ -373,7 +379,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "show_notifications") {
-            self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+            self.notificationsButton.image = UIImage(imageLiteralResourceName: "Bell")
             let nextVC = segue.destination as! NotificationsTableViewController
             nextVC.displayedLogs = messageLogs
         }

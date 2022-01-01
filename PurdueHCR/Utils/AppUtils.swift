@@ -86,13 +86,17 @@ extension UITableViewController {
         let messageLabel = UILabel(frame: rect)
         messageLabel.text = message
 		messageLabel.accessibilityIdentifier = "Empty Message"
-        messageLabel.textColor = UIColor.black
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = .center;
+        if #available(iOS 13.0, *) {
+            messageLabel.textColor = UIColor.label
+        } else {
+            messageLabel.textColor = .black
+        }
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
         //messageLabel.font = UIFont(name: "TrebuchetMS", size: 15)
         messageLabel.sizeToFit()
-        tableView.backgroundView = messageLabel;
-        tableView.separatorStyle = .none;
+        tableView.backgroundView = messageLabel
+        tableView.separatorStyle = .none
     }
     func killEmptyMessage(){
         tableView.backgroundView = nil
