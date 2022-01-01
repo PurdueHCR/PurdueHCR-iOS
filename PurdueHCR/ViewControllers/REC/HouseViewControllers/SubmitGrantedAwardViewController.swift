@@ -101,7 +101,11 @@ class SubmitGrantedAwardViewController: UIViewController, UITextViewDelegate {
         }
             
         else if textView.textColor == UIColor.lightGray && !text.isEmpty {
-            textView.textColor = UIColor.black
+            if #available(iOS 13.0, *) {
+                textView.textColor = .label
+            } else {
+                textView.textColor = .black
+            }
             textView.text = ""
         }
 
