@@ -56,6 +56,10 @@ class RECRewardsTableViewController: UITableViewController {
         cell.nameLabel.text = rewards![indexPath.row].rewardName
         cell.pointsLabel.text = rewards![indexPath.row].requiredPPR.description
         cell.rewardImageView.image = rewards![indexPath.row].image!
+        if #available(iOS 13.0, *) {
+            cell.rewardImageView.image = cell.rewardImageView.image!.withTintColor(.white, renderingMode: .alwaysTemplate)
+            cell.rewardImageView.tintColor = .label
+        }
         return cell
     }
     

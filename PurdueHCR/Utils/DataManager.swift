@@ -449,10 +449,31 @@ class DataManager {
         fbh.getHouseRank(residentID: residentID, house: house, onDone: onDone)
     }
     
-    func createReward(reward:Reward, image:UIImage, onDone:@escaping(_ err:Error?) ->Void){
-        fbh.uploadImageWithFilename(filename: reward.fileName, img: image) { (err) in
+    func createReward(reward:Reward, image:UIImage, onDone:@escaping(_ err:Error?) ->Void) {
+        fbh.uploadImageWithFilename(filename: reward.fileName, img: image) { (downloadURL, err) in
             if(err == nil){
+                reward.downloadURL = downloadURL
                 self.fbh.createReward(reward: reward, onDone: { (error) in
+                    onDone(error)
+                })
+            }
+            else{
+                onDone(err)
+            }
+        }
+    }
+    
+    func updateReward(reward:Reward, image:UIImage, oldFilename:String, onDone:@escaping(_ err:Error?) ->Void) {
+        fbh.deletePictureWithFilename(filename: oldFilename) { err in
+            if (err != nil) {
+                print("Error deleting old picture while trying to update picture: \(err!.localizedDescription)")
+            }
+        }
+        
+        fbh.uploadImageWithFilename(filename: reward.fileName, img: image) { (downloadURL, err) in
+            if(err == nil){
+                reward.downloadURL = downloadURL
+                self.fbh.updateReward(reward: reward, onDone: { (error) in
                     onDone(error)
                 })
             }
