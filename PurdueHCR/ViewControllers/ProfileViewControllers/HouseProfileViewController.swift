@@ -111,17 +111,12 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         
 		if (self.navigationItem.rightBarButtonItems != nil) {
 			DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs: [PointLog]) in
-//				if (pointLogs.capacity > 0) {
-//					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
-//				}
-//				else {
-//					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
-//				}
-//                if #available(iOS 13.0, *) {
-//                    self.notificationsButton.tintColor = .label
-//                } else {
-//                    self.notificationsButton.tintColor = .white
-//                }
+				if (pointLogs.capacity > 0) {
+                    self.notificationsButton.image = #imageLiteral(resourceName: "BellNotification")
+				}
+				else {
+                    self.notificationsButton.image = #imageLiteral(resourceName: "Bell")
+				}
 			})
 		}
 		

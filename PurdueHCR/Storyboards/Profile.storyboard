@@ -280,7 +280,7 @@
                                 <action selector="showSettings:" destination="zGs-DW-f3U" id="IjD-zz-uBn"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Sign Out" image="Bell" id="6jR-pc-eHO">
+                        <barButtonItem key="rightBarButtonItem" title="Notifications" image="Bell" id="6jR-pc-eHO">
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
                                 <segue destination="69o-Cx-E5f" kind="show" identifier="show_notifications" id="Rg5-OY-m87"/>
@@ -616,7 +616,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Jag-4i-NqT"/>
+        <segue reference="BDD-9V-dOb"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Bell" width="25" height="25"/>
