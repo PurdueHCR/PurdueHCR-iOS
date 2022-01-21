@@ -22,6 +22,7 @@
 		B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FD0CA22B849AC009682CB /* UserPointsTableViewController.swift */; };
 		B53685D422DFD73700A0D0B5 /* HouseCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */; };
 		B53A88C525A0F938009A0983 /* MachineInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = B53A88C425A0F938009A0983 /* MachineInfo.xib */; };
+		B549E50F279A3EA9008E77C8 /* EditSubmissionPointTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B549E50E279A3EA9008E77C8 /* EditSubmissionPointTypeViewController.swift */; };
 		B551BDD321B1004F00CF4F6C /* Register in Resources */ = {isa = PBXBuildFile; fileRef = B551BDD221B1004F00CF4F6C /* Register */; };
 		B56508BE22E3BBDB00AF7C97 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56508BD22E3BBDB00AF7C97 /* SplashScreenViewController.swift */; };
 		B5720C5525F85D3A00E83C47 /* LaundryMachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5720C5325F85D3900E83C47 /* LaundryMachineView.swift */; };
@@ -168,6 +169,7 @@
 		B532665C24F456F2005ABEEC /* PurdueHCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PurdueHCR.entitlements; sourceTree = "<group>"; };
 		B53685D322DFD73700A0D0B5 /* HouseCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseCodeViewController.swift; sourceTree = "<group>"; };
 		B53A88C425A0F938009A0983 /* MachineInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MachineInfo.xib; sourceTree = "<group>"; };
+		B549E50E279A3EA9008E77C8 /* EditSubmissionPointTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSubmissionPointTypeViewController.swift; sourceTree = "<group>"; };
 		B551BDD221B1004F00CF4F6C /* Register */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Register; sourceTree = "<group>"; };
 		B5539817255B5CF5006FD21B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B555F30A2552298B002D1151 /* LaundryMachine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaundryMachine.xib; sourceTree = "<group>"; };
@@ -590,6 +592,7 @@
 				D30FBEDE20FBCCA3000DD221 /* RHPApprovalTableViewController.swift */,
 				D30FBEF2210380F3000DD221 /* PointLogOverviewController.swift */,
 				B50507BE261562130051A799 /* SortHistoryView.xib */,
+				B549E50E279A3EA9008E77C8 /* EditSubmissionPointTypeViewController.swift */,
 			);
 			path = PointApprovalViewControllers;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				B5720C5625F85D3A00E83C47 /* MachineInfoView.swift in Sources */,
 				B50E6C9222F1202A00505AA3 /* MessageView.swift in Sources */,
 				B5AE2D4B23DCA35D00B2323C /* FirebaseDocumentListener.swift in Sources */,
+				B549E50F279A3EA9008E77C8 /* EditSubmissionPointTypeViewController.swift in Sources */,
 				D3912A73219CE7960002E7C7 /* RECPointCreationTableViewController.swift in Sources */,
 				B5720C5C25F85D8800E83C47 /* LaundryViewController.swift in Sources */,
 				B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */,
