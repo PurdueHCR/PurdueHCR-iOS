@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VqF-NJ-TsV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VqF-NJ-TsV">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -70,8 +70,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cWS-PY-tuG">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1326"/>
                                         <subviews>
-                                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b4w-Q6-TUp">
-                                                <rect key="frame" x="10" y="8" width="394" height="475.33333333333326"/>
+                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b4w-Q6-TUp">
+                                                <rect key="frame" x="10" y="0.0" width="394" height="1091"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="100" id="jdr-Tf-iSP"/>
                                                 </constraints>
@@ -79,8 +79,8 @@
                                                     <segue destination="4Yl-S9-X3a" kind="embed" identifier="show_collection" id="o1g-p4-ooC"/>
                                                 </connections>
                                             </containerView>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="45" estimatedRowHeight="45" sectionHeaderHeight="10" sectionFooterHeight="4" translatesAutoresizingMaskIntoConstraints="NO" id="eBc-um-D3O">
-                                                <rect key="frame" x="0.0" y="522" width="414" height="200"/>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="45" estimatedRowHeight="45" sectionHeaderHeight="10" sectionFooterHeight="4" translatesAutoresizingMaskIntoConstraints="NO" id="eBc-um-D3O">
+                                                <rect key="frame" x="0.0" y="1126" width="414" height="200"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="500" id="X8C-Dh-kOO"/>
                                                     <constraint firstAttribute="height" constant="200" id="jIO-AV-FjQ"/>
@@ -137,8 +137,8 @@
                                                     <outlet property="delegate" destination="Cd7-AL-Pgh" id="reD-5Q-g62"/>
                                                 </connections>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Honors North" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsW-ds-fnD">
-                                                <rect key="frame" x="20" y="491" width="374" height="28.666666666666629"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Honors North" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsW-ds-fnD">
+                                                <rect key="frame" x="20" y="1101" width="374" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="Iwq-81-jhp"/>
                                                 </constraints>
@@ -146,8 +146,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXt-w1-pc0">
-                                                <rect key="frame" x="373.33333333333331" y="495" width="20.666666666666686" height="23.666666666666629"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXt-w1-pc0">
+                                                <rect key="frame" x="373.33333333333331" y="1104.3333333333333" width="20.666666666666686" height="18.333333333333258"/>
                                                 <connections>
                                                     <action selector="infoButtonAction:" destination="Cd7-AL-Pgh" eventType="touchUpInside" id="jsY-YG-Wfr"/>
                                                 </connections>
@@ -222,7 +222,7 @@
             <objects>
                 <collectionViewController id="4Yl-S9-X3a" customClass="LaundryCollectionViewController" customModule="PurdueHCR" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" id="SUY-m1-i06">
-                        <rect key="frame" x="0.0" y="0.0" width="394" height="475.33333333333331"/>
+                        <rect key="frame" x="0.0" y="0.0" width="394" height="1091"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="cBU-I3-ydt">

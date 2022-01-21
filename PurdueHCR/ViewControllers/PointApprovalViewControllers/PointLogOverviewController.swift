@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, CustomViewDelegate {
 	
 	@IBOutlet var backgroundView: UIView!
 	@IBOutlet weak var tableView: UITableView!
@@ -69,6 +69,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		let isRHP : Bool = User.get(.permissionLevel) as! Int == 1
 		// If the user is an RHP add approve/reject buttons to the view
 		if (isRHP) {
+            
 			approveButton = UIButton.init(type: .custom)
 			approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
 			rejectButton = UIButton.init(type: .custom)
@@ -228,6 +229,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		
 		if (indexPath.row == 0) {
 			let pointDescriptionView = PointDescriptionView()
+            pointDescriptionView.delegate = self
 			pointDescriptionView.setLog(pointLog: pointLog!)
 			pointDescriptionView.layer.cornerRadius = radius
 			pointDescriptionView.layer.shadowColor = UIColor.darkGray.cgColor
@@ -285,6 +287,20 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		return UITableView.automaticDimension
 	}
 	
+    
+    func segueToProfilePointView() {
+        self.performSegue(withIdentifier: "change_point_type", sender: self)
+    }
+    
+    func goToNextScene() {
+        let storyboard = UIStoryboard(name: "PointApproval", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "EditPointTypeController")
+        vc.title = "Edit Point Type"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    
 	// TODO: Update this implementation. I can't imagine it being very efficient or scalable. Plus it doesn't use constants so changing constraints elsewhere would completely throw this off
     
 	@objc func keyboardWillShow(notification: NSNotification) {
