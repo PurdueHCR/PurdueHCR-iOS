@@ -57,6 +57,12 @@ class EditSubmissionPointTypeViewController: UITableViewController {
         
         self.updateButton.isEnabled = false
         
+        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let barButton = UIBarButtonItem(customView: activityIndicator)
+        self.navigationItem.rightBarButtonItems?.append(barButton)
+        activityIndicator.startAnimating()
+        activityIndicator.hidesWhenStopped = true
+        
         
         if let indexPath = self.tableView.indexPathForSelectedRow {
             
@@ -66,12 +72,15 @@ class EditSubmissionPointTypeViewController: UITableViewController {
                 // User has selected a new point type id
                 
                 FirebaseHelper().updatePointLogPointTypeId(pointLogID: pointLog!.logID!, newPointTypeID: newPointTypeID.pointID) { err in
+                    activityIndicator.stopAnimating()
                     self.updateButton.isEnabled = true
                     if (err == nil) {
+                        
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
             } else {
+                activityIndicator.stopAnimating()
                 self.updateButton.isEnabled = true
                 self.navigationController?.popViewController(animated: true)
             }
