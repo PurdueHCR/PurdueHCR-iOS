@@ -192,8 +192,9 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
                     }
                 }
                 else if (self.preViewContr is NotificationsTableViewController) {
+                    // Note: we don't have the same if statment for the notification controller because the point should be removed on returning
                     if let notificationsViewContr = (self.preViewContr as! NotificationsTableViewController?){
-                        notificationsViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
+                        notificationsViewContr.tableView.selectRow(at: self.indexPath!, animated: false, scrollPosition: .none)
                     }
                 }
                 else if (self.preViewContr is RHPApprovalTableViewController) {
@@ -201,6 +202,8 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
                         rhpApprovalViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
                     }
                 }
+                
+                
             }
         }
         
