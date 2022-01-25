@@ -232,20 +232,20 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
             pointDescriptionView.delegate = self
 			pointDescriptionView.setLog(pointLog: pointLog!)
 			pointDescriptionView.layer.cornerRadius = radius
-			pointDescriptionView.layer.shadowColor = UIColor.darkGray.cgColor
+			pointDescriptionView.layer.shadowColor = UIColor.lightGray.cgColor
 			pointDescriptionView.layer.shadowOpacity = 0.5
 			pointDescriptionView.layer.shadowOffset = CGSize.zero
-			pointDescriptionView.layer.shadowRadius = 5
+			pointDescriptionView.layer.shadowRadius = 4
 			cell.addSubview(pointDescriptionView)
 		
 			pointDescriptionView.translatesAutoresizingMaskIntoConstraints = false
 			let horizontalConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
-			let verticalConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 35)
+			let verticalConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 22)
 			let widthConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
 			
 			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
 			
-			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: pointDescriptionView, attribute: .height, multiplier: 1, constant: 45)
+			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: pointDescriptionView, attribute: .height, multiplier: 1, constant: 35)
 			NSLayoutConstraint.activate([cellHeight])
 			
 			
@@ -254,10 +254,10 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			let messageView = MessageView.init()
 			messageView.setLog(messageLog: messageLogs[indexPath.row - 1])
 			messageView.layer.cornerRadius = radius
-			messageView.layer.shadowColor = UIColor.darkGray.cgColor
+			messageView.layer.shadowColor = UIColor.lightGray.cgColor
 			messageView.layer.shadowOpacity = 0.5
 			messageView.layer.shadowOffset = CGSize.zero
-			messageView.layer.shadowRadius = 5
+			messageView.layer.shadowRadius = 4
 			messageView.messageLabel.autoresizingMask = [.flexibleHeight]
 			messageView.autoresizingMask = [.flexibleHeight]
 			messageView.sizeToFit()
@@ -265,11 +265,11 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			
 			messageView.translatesAutoresizingMaskIntoConstraints = false
 			let horizontalConstraint = NSLayoutConstraint(item: messageView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
-			let verticalConstraint = NSLayoutConstraint(item: messageView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 35)
+			let verticalConstraint = NSLayoutConstraint(item: messageView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 22)
 			let widthConstraint = NSLayoutConstraint(item: messageView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
 			
 			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
-			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: messageView, attribute: .height, multiplier: 1, constant: 45)
+			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: messageView, attribute: .height, multiplier: 1, constant: 35)
 			NSLayoutConstraint.activate([cellHeight])
 			
 		}
