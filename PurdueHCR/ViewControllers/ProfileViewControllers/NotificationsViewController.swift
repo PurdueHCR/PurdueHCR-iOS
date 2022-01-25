@@ -160,6 +160,17 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 			}
 		})
 	}
+    
+    func updateSinglePointLog(pointLog: PointLog, indexPath: IndexPath) {
+        if(self.isFiltering()){
+            self.filteredPoints[indexPath.row] = pointLog
+        }
+        else{
+            self.displayedLogs[indexPath.row] = pointLog
+        }
+        self.tableView.setEditing(false, animated: true)
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Segue to the second view controlleh

@@ -15,9 +15,16 @@ class EditSubmissionPointTypeViewController: UITableViewController {
     var lastSelection : IndexPath?
     var pointLog : PointLog?
     
+    var activityIndicator : UIActivityIndicatorView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let barButton = UIBarButtonItem(customView: activityIndicator!)
+        self.navigationItem.rightBarButtonItems?.append(barButton)
+        activityIndicator!.hidesWhenStopped = true
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -57,11 +64,7 @@ class EditSubmissionPointTypeViewController: UITableViewController {
         
         self.updateButton.isEnabled = false
         
-        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let barButton = UIBarButtonItem(customView: activityIndicator)
-        self.navigationItem.rightBarButtonItems?.append(barButton)
-        activityIndicator.startAnimating()
-        activityIndicator.hidesWhenStopped = true
+        self.activityIndicator!.startAnimating()
         
         
         if let indexPath = self.tableView.indexPathForSelectedRow {
@@ -72,7 +75,7 @@ class EditSubmissionPointTypeViewController: UITableViewController {
                 // User has selected a new point type id
                 
                 FirebaseHelper().updatePointLogPointTypeId(pointLogID: pointLog!.logID!, newPointTypeID: newPointTypeID.pointID) { err in
-                    activityIndicator.stopAnimating()
+                    self.activityIndicator!.stopAnimating()
                     self.updateButton.isEnabled = true
                     if (err == nil) {
                         
@@ -80,7 +83,7 @@ class EditSubmissionPointTypeViewController: UITableViewController {
                     }
                 }
             } else {
-                activityIndicator.stopAnimating()
+                self.activityIndicator!.stopAnimating()
                 self.updateButton.isEnabled = true
                 self.navigationController?.popViewController(animated: true)
             }

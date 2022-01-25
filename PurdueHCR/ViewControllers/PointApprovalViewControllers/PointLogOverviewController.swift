@@ -180,6 +180,27 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
                 print(err?.localizedDescription)
             } else {
                 self.pointLog = pointLog
+                
+                if (self.preViewContr is HousePointsHistoryViewController) {
+                    if let pointSubmittedViewContr = (self.preViewContr as! HousePointsHistoryViewController?) {
+                        pointSubmittedViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
+                    }
+                }
+                else if (self.preViewContr is UserPointsTableViewController) {
+                    if let userPointsViewContr = (self.preViewContr as! UserPointsTableViewController?){
+                        userPointsViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
+                    }
+                }
+                else if (self.preViewContr is NotificationsTableViewController) {
+                    if let notificationsViewContr = (self.preViewContr as! NotificationsTableViewController?){
+                        notificationsViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
+                    }
+                }
+                else if (self.preViewContr is RHPApprovalTableViewController) {
+                    if let rhpApprovalViewContr = (self.preViewContr as! RHPApprovalTableViewController?){
+                        rhpApprovalViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
+                    }
+                }
             }
         }
         
