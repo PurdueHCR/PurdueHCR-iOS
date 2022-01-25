@@ -37,6 +37,7 @@ class FirebaseHelper {
 //    let GET_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/feed"
 //    let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
 //    let UPDATE_POINT_LOG_TYPE_URL = "http://localhost:5001/purdue-hcr-test/uscentral1/point_log/updateSubmissionPointType"
+//    let GET_POINT_LOG_BY_ID_URL = "http://localhost:5001/purdue-hcr-test/uscentral1/point_log/getPointLogById"
     
     //----- TEST URLS ------//
 
@@ -49,6 +50,7 @@ class FirebaseHelper {
     let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
     let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
     let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/updateSubmissionPointType"
+    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/getPointLogById"
     
     //------ PRODUCTION URLS ------//
 //    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
@@ -60,6 +62,7 @@ class FirebaseHelper {
 //    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
 //    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
 //    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/updateSubmissionPointType"
+//    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/getPointLogById"
     
     init() {
         db = Firestore.firestore()
@@ -537,6 +540,33 @@ class FirebaseHelper {
 //		}
 		
 	}
+    
+    func getPointLogByID(pointLogID: String, onDone:@escaping (_ pointLog:PointLog?, _ err:Error?)->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(nil, err)
+            } else {
+                let headers = self.generateHTTPHeader(token: token!)
+                let url = URL(string: self.GET_POINT_LOG_BY_ID_URL)!
+                let parameters = ["log_id":pointLogID] as [String : Any]
+                AF.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        if let val = response.value as? [String : Any] {
+                            let log = val["pointLog"] as! [String:Any]
+                            onDone(PointLog(id: pointLogID, data: log), nil)
+                        } else {
+                            onDone(nil, nil)
+                        }
+                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        onDone(nil, error)
+                    }
+                }
+            }
+        }
+    }
     
     func refreshUserInformation(onDone:@escaping (_ err:Error?)->Void){
         let userRef = self.db.collection(self.USERS).document(User.get(.id) as! String)

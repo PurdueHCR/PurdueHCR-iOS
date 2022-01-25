@@ -38,9 +38,9 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
         
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+		refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 		tableView.refreshControl = refresher
-		resfreshData()
+		//refreshData()
         
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -110,10 +110,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
-		DataManager.sharedManager.getMessagesForPointLog(pointLog: pointLog!, onDone: { (messageLogs:[MessageLog]) in
-			self.messageLogs = messageLogs
-			self.resfreshData()
-		})
+        self.refreshData()
 	}
 	
     override func didReceiveMemoryWarning() {
@@ -176,7 +173,16 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
         self.navigationController?.popViewController(animated: true)
     }
 	
-	@objc func resfreshData(){
+	@objc func refreshData(){
+        
+        FirebaseHelper().getPointLogByID(pointLogID: pointLog!.logID!) { pointLog, err in
+            if (err != nil) {
+                print(err?.localizedDescription)
+            } else {
+                self.pointLog = pointLog
+            }
+        }
+        
 		DataManager.sharedManager.getMessagesForPointLog(pointLog: pointLog!, onDone: { (messageLogs:[MessageLog]) in
 			// TODO: Probably a cleaner implementation of this??
 			self.messageLogs = messageLogs

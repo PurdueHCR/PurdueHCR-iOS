@@ -180,6 +180,49 @@ class PointLog {
 		// TODO: Is the above Shreve part actually working???
     }
     
+    
+    /// Initialization method for points pulled from Cloud Function API
+    ///
+    /// - Parameters:
+    ///   - id: FirebaseId of the log
+    ///   - document: Dictionary that was returned from the database
+    init(id:String, data:[String:Any]){
+        
+        self.logID = id
+        
+        self.floorID = data["FloorID"] as! String
+        self.pointDescription = data["Description"] as! String
+        self.firstName = data["ResidentFirstName"] as! String
+        self.lastName = data["ResidentLastName"] as! String
+        self.residentId = data["ResidentId"] as! String
+        self.approvedBy = data["ApprovedBy"] as! String?
+        if (data["ApprovedOn"] != nil) {
+            let approvedOnDict = data["ApprovedOn"] as? [String:Any]
+            self.approvedOn = Timestamp(seconds: approvedOnDict!["_seconds"] as! Int64, nanoseconds: approvedOnDict!["_nanoseconds"] as! Int32)
+        }
+        
+        let dateOccurredDict = data["DateOccurred"] as! [String:Any]
+        self.dateOccurred = Timestamp(seconds: dateOccurredDict["_seconds"] as! Int64, nanoseconds: dateOccurredDict["_nanoseconds"] as! Int32)
+        let dateSubmittedDict = data["DateSubmitted"] as! [String:Any]
+        self.dateSubmitted = Timestamp(seconds: dateSubmittedDict["_seconds"] as! Int64, nanoseconds: dateSubmittedDict["_nanoseconds"] as! Int32)
+        self.rhpNotifications = data["RHPNotifications"] as! Int
+        self.residentNotifications = data["ResidentNotifications"] as! Int
+        
+        let idValue = (data["PointTypeID"] as! Int)
+        if(idValue < 1){
+            self.wasHandled = false
+        }
+        else{
+            self.wasHandled = true
+        }
+        self.type = DataManager.sharedManager.getPointType(value: abs(idValue))
+        /*if(floorID == "Shreve"){
+            firstName = SHREVE_RESIDENT + firstName
+        }*/
+        
+        // TODO: Is the above Shreve part actually working???
+    }
+    
     func wasRejected() -> Bool {
         return self.pointDescription.contains(REJECTED_STRING)
     }

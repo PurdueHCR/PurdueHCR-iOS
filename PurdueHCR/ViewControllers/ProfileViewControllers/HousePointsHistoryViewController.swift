@@ -45,17 +45,17 @@ class HousePointsHistoryViewController: UITableViewController, UISearchResultsUp
 		view.addSubview(activityIndicator)
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+		refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 		tableView.refreshControl = refresher
 		searchController.searchResultsUpdater = self
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.placeholder = "Search Points"
 		navigationItem.searchController = searchController
 		definesPresentationContext = true
-        resfreshData()
+        refreshData()
 	}
 	
-	@objc func resfreshData(){
+	@objc func refreshData(){
         DataManager.sharedManager.refreshResolvedPointLogs(onDone: { (pointLogs:[PointLog]) in
             
             self.displayedLogs = pointLogs
@@ -407,7 +407,7 @@ class SortHistoryView : UIView {
         if (ascDescControl.selectedSegmentIndex == 1) {
             delegate?.sortDescending = false
         }
-        delegate?.resfreshData()
+        delegate?.refreshData()
         delegate?.dismissSortPopup()
     }
     

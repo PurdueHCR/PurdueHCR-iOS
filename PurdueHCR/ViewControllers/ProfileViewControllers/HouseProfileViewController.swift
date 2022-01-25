@@ -136,7 +136,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
     }
 	
-    // TODO: Fix refreshing of views
+    
     @objc func refreshData() {
         
         // I'm not sure this is the best way to do this...

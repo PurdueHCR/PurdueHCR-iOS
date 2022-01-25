@@ -28,7 +28,7 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 		
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+		refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 		tableView.refreshControl = refresher
 		//searchController.searchResultsUpdater = self
 		//searchController.obscuresBackgroundDuringPresentation = false
@@ -37,7 +37,7 @@ class NotificationsTableViewController: UITableViewController, UISearchResultsUp
 		definesPresentationContext = true
 	}
 	
-	@objc func resfreshData(){
+	@objc func refreshData(){
         self.activityIndicator.startAnimating()
 		DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs:[PointLog]) in
 			self.displayedLogs = pointLogs

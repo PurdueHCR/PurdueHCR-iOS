@@ -25,12 +25,12 @@ class RHPApprovalTableViewController: UITableViewController {
         displayedLogs = DataManager.sharedManager.getUnconfirmedPointLogs() ?? [PointLog]()
         refresher = UIRefreshControl()
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+        refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refresher
-		resfreshData()
+		refreshData()
     }
     
-    @objc func resfreshData(){
+    @objc func refreshData(){
         DataManager.sharedManager.refreshUnconfirmedPointLogs(onDone: { (pointLogs:[PointLog]) in
             self.displayedLogs = pointLogs
             self.tableView.reloadData()

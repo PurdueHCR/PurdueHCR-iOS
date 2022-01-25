@@ -21,7 +21,7 @@ class RECPointOptionTableViewController: PointOptionViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.resfreshData()
+        self.refreshData()
     }
 
 
