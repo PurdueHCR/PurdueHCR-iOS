@@ -36,28 +36,30 @@ class FirebaseHelper {
 //    let ADD_MESSAGE_URL = "http://localhost:5001/purdue-hcr-test/uscentral1/point_log/messages"
 //    let GET_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/feed"
 //    let ADD_EVENT_URL = "http://localhost:5001/purdue-hcr-test/us-central1/event/"
+//    let UPDATE_POINT_LOG_TYPE_URL = "http://localhost:5001/purdue-hcr-test/uscentral1/point_log/updateSubmissionPointType"
     
     //----- TEST URLS ------//
 
-//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
-//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
-//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
-//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
-//    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
-//    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
-//    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
-//
+    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
+    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
+    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
+    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/updateSubmissionPointType"
     
     //------ PRODUCTION URLS ------//
-    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
-    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
-    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
-    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
-    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
+//    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+//    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+//    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
+//    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
+//    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
+//    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/updateSubmissionPointType"
     
     init() {
         db = Firestore.firestore()
@@ -327,7 +329,39 @@ class FirebaseHelper {
             }
         }
         
-        
+    }
+    
+    /// update the point type id of a point log
+    ///
+    /// - Parameters:
+    ///   - pointLogID: id of log to update
+    ///   - newPointTypeID: id of the new point type for the log
+    func updatePointLogPointTypeId(pointLogID: String, newPointTypeID: Int, onDone: @escaping (_ err:Error?)->Void) {
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                let banner = NotificationBanner(title: "Failure", subtitle: "Could not update the point log's point type.", style: .danger)
+                banner.duration = 2
+                banner.show()
+                onDone(err)
+            } else {
+                
+                let headers = self.generateHTTPHeader(token: token!)
+                let url = URL(string: self.UPDATE_POINT_LOG_TYPE_URL)!
+                let parameters = ["log_id":pointLogID, "new_point_type_id":newPointTypeID] as [String : Any]
+                AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        onDone(nil)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        let banner = NotificationBanner(title: "Failure", subtitle: "Could not update the point log's point type.", style: .danger)
+                        banner.duration = 2
+                        banner.show()
+                        onDone(error)
+                    }
+                }
+            }
+        }
     }
 	
 	/// Retrives the points that have been previously resolved

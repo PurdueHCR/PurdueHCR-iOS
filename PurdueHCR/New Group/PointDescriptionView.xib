@@ -14,6 +14,7 @@
                 <outlet property="dateOccurredLabel" destination="0V3-lL-An7" id="zaK-TQ-fLq"/>
                 <outlet property="dateSubmittedLabel" destination="IjX-DL-46C" id="i5u-uY-Ij2"/>
                 <outlet property="descriptionLabel" destination="1Oh-90-35P" id="k2L-1L-jPY"/>
+                <outlet property="editButton" destination="pZf-OZ-GVc" id="VNm-w8-X9K"/>
                 <outlet property="grayView" destination="bsK-JN-4Tu" id="336-zP-J6l"/>
                 <outlet property="icon" destination="eHD-nv-Bhh" id="riR-Ip-bHq"/>
                 <outlet property="pointTypeDescriptionLabel" destination="CL9-tJ-bLY" id="Es1-B5-ByT"/>
@@ -112,9 +113,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZf-OZ-GVc">
-                    <rect key="frame" x="276" y="5" width="78" height="25"/>
+                    <rect key="frame" x="307.5" y="5" width="46.5" height="25"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="filled" title="Edit Type">
+                    <buttonConfiguration key="configuration" style="filled" title="Edit">
                         <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
                     </buttonConfiguration>
                     <connections>

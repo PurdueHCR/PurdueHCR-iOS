@@ -21,6 +21,7 @@ class PointDescriptionView: UIView {
 	@IBOutlet weak var grayView: UIView!
 	@IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var dateSubmittedLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
     
     
     override init(frame: CGRect){
@@ -44,6 +45,11 @@ class PointDescriptionView: UIView {
 		icon.image = #imageLiteral(resourceName: "Send")
 		grayView.layer.cornerRadius = DefinedValues.radius
 		grayView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        if (User.get(.permissionLevel) as! Int != PointType.PermissionLevel.rhp.rawValue) {
+            editButton.isEnabled = false
+            editButton.isHidden = true
+        }
         
         
         

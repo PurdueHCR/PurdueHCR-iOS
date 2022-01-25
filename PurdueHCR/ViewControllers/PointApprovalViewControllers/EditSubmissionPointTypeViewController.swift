@@ -9,7 +9,12 @@
 import UIKit
 
 class EditSubmissionPointTypeViewController: UITableViewController {
-
+   
+    @IBOutlet weak var updateButton: UIBarButtonItem!
+    
+    var lastSelection : IndexPath?
+    var pointLog : PointLog?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,6 +39,7 @@ class EditSubmissionPointTypeViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "pointTypeCell", for: indexPath)
 
         if #available(iOS 14.0, *) {
@@ -43,14 +49,51 @@ class EditSubmissionPointTypeViewController: UITableViewController {
         } else {
             cell.textLabel?.text = DataManager.sharedManager.pointTypes[indexPath.row].pointName
         }
-        
-        
-        
 
         return cell
     }
     
+    @IBAction func updatePointType(_ sender: Any) {
+        
+        self.updateButton.isEnabled = false
+        
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow {
+            
+            let newPointTypeID = DataManager.sharedManager.pointTypes[indexPath.row]
+            
+            if (self.pointLog!.type.pointID != newPointTypeID.pointID) {
+                // User has selected a new point type id
+                
+                FirebaseHelper().updatePointLogPointTypeId(pointLogID: pointLog!.logID!, newPointTypeID: newPointTypeID.pointID) { err in
+                    self.updateButton.isEnabled = true
+                    if (err == nil) {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            } else {
+                self.updateButton.isEnabled = true
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+            
+            
+            
+        }
+        
+    
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.lastSelection != nil {
+                self.tableView.cellForRow(at: self.lastSelection!)?.accessoryType = .none
+            }
 
+        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+
+            self.lastSelection = indexPath
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

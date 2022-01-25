@@ -125,7 +125,16 @@
                             <outlet property="delegate" destination="Fay-4N-5op" id="IdE-xe-Zba"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="41g-fd-4Ij"/>
+                    <navigationItem key="navigationItem" id="41g-fd-4Ij">
+                        <barButtonItem key="rightBarButtonItem" title="Update" id="7Ey-va-yT4">
+                            <connections>
+                                <action selector="updatePointType:" destination="Fay-4N-5op" id="495-td-Ap6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="updateButton" destination="7Ey-va-yT4" id="BYg-lv-904"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6t-nl-SYL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

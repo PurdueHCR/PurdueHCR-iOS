@@ -294,8 +294,9 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
     
     func goToNextScene() {
         let storyboard = UIStoryboard(name: "PointApproval", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "EditPointTypeController")
+        let vc = storyboard.instantiateViewController(withIdentifier: "EditPointTypeController") as! EditSubmissionPointTypeViewController
         vc.title = "Edit Point Type"
+        vc.pointLog = self.pointLog
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
