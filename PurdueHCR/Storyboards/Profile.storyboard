@@ -341,40 +341,40 @@
                                     <action selector="dismissWhatsNew:" destination="ttO-5a-Prs" eventType="touchUpInside" id="bpQ-ug-rUG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iMessage Sticker Packs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piT-VX-z29">
-                                <rect key="frame" x="95" y="336" width="194" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit point type after submission" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piT-VX-z29">
+                                <rect key="frame" x="95" y="336" width="261" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HCRIcon" translatesAutoresizingMaskIntoConstraints="NO" id="pnf-8y-5ab">
-                                <rect key="frame" x="30" y="336" width="50" height="50"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.pencil" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pnf-8y-5ab">
+                                <rect key="frame" x="30" y="336.33333333333331" width="50" height="48.333333333333343"/>
                                 <color key="tintColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="IDr-Ga-io2"/>
                                     <constraint firstAttribute="width" secondItem="pnf-8y-5ab" secondAttribute="height" multiplier="1:1" id="tD9-tM-ujb"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can now send your favorite Purdue HCR house icons in iMessage" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCN-bU-PxX">
-                                <rect key="frame" x="95" y="360" width="303" height="40.666666666666686"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RHPs can now edit a point's type after it has been submitted so the resident does not need to resubmit" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCN-bU-PxX">
+                                <rect key="frame" x="95" y="360" width="303" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RHP History Filters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srt-6b-ImK">
-                                <rect key="frame" x="95" y="450.66666666666669" width="155" height="22"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RHP History Filters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srt-6b-ImK">
+                                <rect key="frame" x="95" y="471" width="155" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RHPs now have options for filtering already submitted points in the history page" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmy-h9-Djw">
-                                <rect key="frame" x="95" y="474.66666666666669" width="303" height="61.000000000000057"/>
+                                <rect key="frame" x="95" y="495" width="303" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SF_calendar_badge_plus" translatesAutoresizingMaskIntoConstraints="NO" id="NPd-Il-AmW">
-                                <rect key="frame" x="30" y="450.66666666666669" width="50" height="50"/>
+                                <rect key="frame" x="30" y="471" width="50" height="50"/>
                                 <color key="tintColor" systemColor="linkColor"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="YES"/>
@@ -624,10 +624,10 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Bell" width="25" height="25"/>
-        <image name="HCRIcon" width="986" height="986"/>
         <image name="SF_calendar_badge_plus" width="64" height="64"/>
         <image name="Settings" width="25" height="25"/>
         <image name="profile" width="25" height="25"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
