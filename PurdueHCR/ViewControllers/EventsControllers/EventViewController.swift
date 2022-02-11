@@ -33,8 +33,13 @@ class EventViewController: UITableViewController {
     let cellSpacing: CGFloat = 35
     
     override func viewDidLoad() {
+        
         self.showSpinner(onView: self.view)
         super.viewDidLoad()
+        
+        //add hide button after view did load
+        AddEventBarButton.customView?.isHidden = true; // YES/NO not working with the button; likely bc different view controllers 
+        
         // Do any additional setup after loading the view.
         //eventTableView.reloadData()//
 

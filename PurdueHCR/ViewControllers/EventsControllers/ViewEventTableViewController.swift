@@ -18,6 +18,16 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     @IBOutlet weak var gCalExportButton: UIButton!
     @IBOutlet weak var editEventButton: UIBarButtonItem!
     
+    //
+    @IBOutlet weak var GoToEvents: UIButton!
+    
+    @IBAction func toggle(_ sender: Any)
+    {
+        print("hi")
+        //GoToEvents.label = "yo"
+    }
+    //add button here
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -26,6 +36,8 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     @IBOutlet weak var attendeeLabel: UILabel!
     @IBOutlet weak var detailsLabel: UITextView!
     @IBOutlet weak var hyperlinkTextView: UITextView!
+    
+   
     
     var delegate: EventViewController?
     var going = false // To be set later when connected to database
