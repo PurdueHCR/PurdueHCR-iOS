@@ -43,16 +43,16 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         
         
         // Comment out when what's new page not needed
-//        let defaults = UserDefaults.standard
-//        if let new_version = defaults.object(forKey: "last_opened_version") {
-//            if ((new_version as! String) != appVersion) {
-//                self.performSegue(withIdentifier: "show_whats_new", sender: self)
-//                defaults.setValue(appVersion, forKey: "last_opened_version")
-//            }
-//        } else {
-//            self.performSegue(withIdentifier: "show_whats_new", sender: self)
-//            defaults.setValue(appVersion, forKey: "last_opened_version")
-//        }
+        let defaults = UserDefaults.standard
+        if let new_version = defaults.object(forKey: "last_opened_version") {
+            if ((new_version as! String) != appVersion) {
+                self.performSegue(withIdentifier: "show_whats_new", sender: self)
+                defaults.setValue(appVersion, forKey: "last_opened_version")
+            }
+        } else {
+            self.performSegue(withIdentifier: "show_whats_new", sender: self)
+            defaults.setValue(appVersion, forKey: "last_opened_version")
+        }
         
         
         let firstName = User.get(.firstName) as! String
@@ -136,7 +136,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
     }
 	
-    // TODO: Fix refreshing of views
+    
     @objc func refreshData() {
         
         // I'm not sure this is the best way to do this...
@@ -448,9 +448,10 @@ class whatsNewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        firstIcon.image = #imageLiteral(resourceName: "SF_calendar_badge_plus").withRenderingMode(.alwaysTemplate)
+        //firstIcon.image = #imageLiteral(resourceName: "SF_calendar_badge_plus").withRenderingMode(.alwaysTemplate)
         firstIcon.tintColor = DefinedValues.systemBlue
-        secondIcon.image = #imageLiteral(resourceName: "Settings").withRenderingMode(.alwaysTemplate)
+        
+        //secondIcon.image = #imageLiteral(resourceName: "Settings").withRenderingMode(.alwaysTemplate)
         secondIcon.tintColor = DefinedValues.systemBlue
     }
     

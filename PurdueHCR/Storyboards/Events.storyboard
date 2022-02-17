@@ -1067,7 +1067,7 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbn-7v-dUo">
                                                     <rect key="frame" x="211" y="43" width="183" height="45"/>
-                                                    <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                                    <color key="backgroundColor" red="0.80412371134020622" green="0.66774664628409064" blue="0.043911519364654067" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="vOm-0T-n0K"/>
                                                     </constraints>
@@ -1080,7 +1080,7 @@
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgF-9j-xpa">
                                                     <rect key="frame" x="20" y="43" width="183" height="45"/>
-                                                    <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                                    <color key="backgroundColor" systemColor="labelColor"/>
                                                     <state key="normal" title="Apple Calendar">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
@@ -1177,9 +1177,6 @@
         </systemColor>
         <systemColor name="systemFillColor">
             <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

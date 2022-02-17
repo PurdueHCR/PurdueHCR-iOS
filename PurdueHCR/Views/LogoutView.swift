@@ -49,7 +49,7 @@ class LogoutView: UIView {
         closeButton.setTitle("", for: .normal)
         
         configureButtonStyle(button: joinButton)
-        joinButton.backgroundColor = DefinedValues.systemGray4
+        joinButton.backgroundColor = DefinedValues.systemBlue
         
         policyButton.layer.cornerRadius = DefinedValues.radius
         conditionsButton.layer.cornerRadius = DefinedValues.radius

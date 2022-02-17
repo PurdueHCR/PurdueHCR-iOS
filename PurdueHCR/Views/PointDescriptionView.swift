@@ -10,6 +10,9 @@ import UIKit
 import FirebaseFirestore
 
 class PointDescriptionView: UIView {
+    
+    weak var delegate: CustomViewDelegate?
+    
     @IBOutlet var residentLabel: UILabel!
 	@IBOutlet weak var dateOccurredLabel: UILabel!
 	@IBOutlet var pointTypeDescriptionLabel: UILabel!
@@ -18,6 +21,7 @@ class PointDescriptionView: UIView {
 	@IBOutlet weak var grayView: UIView!
 	@IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var dateSubmittedLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
     
     
     override init(frame: CGRect){
@@ -41,6 +45,14 @@ class PointDescriptionView: UIView {
 		icon.image = #imageLiteral(resourceName: "Send")
 		grayView.layer.cornerRadius = DefinedValues.radius
 		grayView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        if (User.get(.permissionLevel) as! Int != PointType.PermissionLevel.rhp.rawValue) {
+            editButton.isEnabled = false
+            editButton.isHidden = true
+        }
+        
+        
+        
     }
     
     func setLog(pointLog: PointLog) {
@@ -55,6 +67,9 @@ class PointDescriptionView: UIView {
         dateSubmittedLabel.text = dateFormatter.string(from: dateSubmitted)
     }
     
-
+    @IBAction func editPointType(_ sender: Any) {
+        delegate?.goToNextScene()
+    }
+    
     
 }

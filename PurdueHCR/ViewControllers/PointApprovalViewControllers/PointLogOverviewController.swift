@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class PointLogOverviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, CustomViewDelegate {
 	
 	@IBOutlet var backgroundView: UIView!
 	@IBOutlet weak var tableView: UITableView!
@@ -38,9 +38,9 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
         
 		refresher = UIRefreshControl()
 		refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+		refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 		tableView.refreshControl = refresher
-		resfreshData()
+		//refreshData()
         
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -69,6 +69,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		let isRHP : Bool = User.get(.permissionLevel) as! Int == 1
 		// If the user is an RHP add approve/reject buttons to the view
 		if (isRHP) {
+            
 			approveButton = UIButton.init(type: .custom)
 			approveButton?.frame = CGRect.init(origin: approveOrigin, size: buttonSize)
 			rejectButton = UIButton.init(type: .custom)
@@ -109,10 +110,7 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
-		DataManager.sharedManager.getMessagesForPointLog(pointLog: pointLog!, onDone: { (messageLogs:[MessageLog]) in
-			self.messageLogs = messageLogs
-			self.resfreshData()
-		})
+        self.refreshData()
 	}
 	
     override func didReceiveMemoryWarning() {
@@ -175,7 +173,40 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
         self.navigationController?.popViewController(animated: true)
     }
 	
-	@objc func resfreshData(){
+	@objc func refreshData(){
+        
+        FirebaseHelper().getPointLogByID(pointLogID: pointLog!.logID!) { pointLog, err in
+            if (err != nil) {
+                print(err?.localizedDescription)
+            } else {
+                self.pointLog = pointLog
+                
+                if (self.preViewContr is HousePointsHistoryViewController) {
+                    if let pointSubmittedViewContr = (self.preViewContr as! HousePointsHistoryViewController?) {
+                        pointSubmittedViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
+                    }
+                }
+                else if (self.preViewContr is UserPointsTableViewController) {
+                    if let userPointsViewContr = (self.preViewContr as! UserPointsTableViewController?){
+                        userPointsViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
+                    }
+                }
+                else if (self.preViewContr is NotificationsTableViewController) {
+                    // Note: we don't have the same if statment for the notification controller because the point should be removed on returning
+                    if let notificationsViewContr = (self.preViewContr as! NotificationsTableViewController?){
+                        notificationsViewContr.tableView.selectRow(at: self.indexPath!, animated: false, scrollPosition: .none)
+                    }
+                }
+                else if (self.preViewContr is RHPApprovalTableViewController) {
+                    if let rhpApprovalViewContr = (self.preViewContr as! RHPApprovalTableViewController?){
+                        rhpApprovalViewContr.updateSinglePointLog(pointLog: pointLog!, indexPath: self.indexPath!)
+                    }
+                }
+                
+                
+            }
+        }
+        
 		DataManager.sharedManager.getMessagesForPointLog(pointLog: pointLog!, onDone: { (messageLogs:[MessageLog]) in
 			// TODO: Probably a cleaner implementation of this??
 			self.messageLogs = messageLogs
@@ -228,22 +259,23 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		
 		if (indexPath.row == 0) {
 			let pointDescriptionView = PointDescriptionView()
+            pointDescriptionView.delegate = self
 			pointDescriptionView.setLog(pointLog: pointLog!)
 			pointDescriptionView.layer.cornerRadius = radius
-			pointDescriptionView.layer.shadowColor = UIColor.darkGray.cgColor
+			pointDescriptionView.layer.shadowColor = UIColor.lightGray.cgColor
 			pointDescriptionView.layer.shadowOpacity = 0.5
 			pointDescriptionView.layer.shadowOffset = CGSize.zero
-			pointDescriptionView.layer.shadowRadius = 5
+			pointDescriptionView.layer.shadowRadius = 4
 			cell.addSubview(pointDescriptionView)
 		
 			pointDescriptionView.translatesAutoresizingMaskIntoConstraints = false
 			let horizontalConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
-			let verticalConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 35)
+			let verticalConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 22)
 			let widthConstraint = NSLayoutConstraint(item: pointDescriptionView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
 			
 			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
 			
-			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: pointDescriptionView, attribute: .height, multiplier: 1, constant: 45)
+			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: pointDescriptionView, attribute: .height, multiplier: 1, constant: 35)
 			NSLayoutConstraint.activate([cellHeight])
 			
 			
@@ -252,10 +284,10 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			let messageView = MessageView.init()
 			messageView.setLog(messageLog: messageLogs[indexPath.row - 1])
 			messageView.layer.cornerRadius = radius
-			messageView.layer.shadowColor = UIColor.darkGray.cgColor
+			messageView.layer.shadowColor = UIColor.lightGray.cgColor
 			messageView.layer.shadowOpacity = 0.5
 			messageView.layer.shadowOffset = CGSize.zero
-			messageView.layer.shadowRadius = 5
+			messageView.layer.shadowRadius = 4
 			messageView.messageLabel.autoresizingMask = [.flexibleHeight]
 			messageView.autoresizingMask = [.flexibleHeight]
 			messageView.sizeToFit()
@@ -263,11 +295,11 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 			
 			messageView.translatesAutoresizingMaskIntoConstraints = false
 			let horizontalConstraint = NSLayoutConstraint(item: messageView, attribute: .centerX, relatedBy: .equal, toItem: cell, attribute: .centerX, multiplier: 1, constant: 0)
-			let verticalConstraint = NSLayoutConstraint(item: messageView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 35)
+			let verticalConstraint = NSLayoutConstraint(item: messageView, attribute: .top, relatedBy: .equal, toItem: cell, attribute: .top, multiplier: 1, constant: 22)
 			let widthConstraint = NSLayoutConstraint(item: messageView, attribute: .width, relatedBy: .equal, toItem: cell, attribute: .width, multiplier: 1, constant: -20)
 			
 			NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint])
-			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: messageView, attribute: .height, multiplier: 1, constant: 45)
+			let cellHeight = NSLayoutConstraint(item: cell, attribute: .height, relatedBy: .equal, toItem: messageView, attribute: .height, multiplier: 1, constant: 35)
 			NSLayoutConstraint.activate([cellHeight])
 			
 		}
@@ -285,6 +317,21 @@ class PointLogOverviewController: UIViewController, UITableViewDelegate, UITable
 		return UITableView.automaticDimension
 	}
 	
+    
+    func segueToProfilePointView() {
+        self.performSegue(withIdentifier: "change_point_type", sender: self)
+    }
+    
+    func goToNextScene() {
+        let storyboard = UIStoryboard(name: "PointApproval", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "EditPointTypeController") as! EditSubmissionPointTypeViewController
+        vc.title = "Edit Point Type"
+        vc.pointLog = self.pointLog
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    
 	// TODO: Update this implementation. I can't imagine it being very efficient or scalable. Plus it doesn't use constants so changing constraints elsewhere would completely throw this off
     
 	@objc func keyboardWillShow(notification: NSNotification) {

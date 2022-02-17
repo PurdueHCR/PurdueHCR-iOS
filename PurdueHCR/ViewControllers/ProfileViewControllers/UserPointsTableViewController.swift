@@ -28,7 +28,7 @@ class UserPointsTableViewController: UITableViewController {
 		
 		self.refresher = UIRefreshControl()
 		self.refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		self.refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+		self.refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 		tableView.refreshControl = self.refresher
 		
         /*self.searchController.searchResultsUpdater = self
@@ -36,12 +36,12 @@ class UserPointsTableViewController: UITableViewController {
 		self.searchController.searchBar.placeholder = "Search Points"
 		self.navigationItem.searchController = searchController*/
 		definesPresentationContext = true
-        resfreshData()
+        refreshData()
 	}
     
 
 	
-	@objc func resfreshData(){
+	@objc func refreshData(){
 		DataManager.sharedManager.getAllPointLogsForUser(residentID: (User).get(.id) as! String, house: (User).get(.house) as! String, onDone: { (pointLogs:[PointLog]) in
 			self.notificationLogs = pointLogs
             self.notificationLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
@@ -207,6 +207,12 @@ class UserPointsTableViewController: UITableViewController {
 			}
 		})
 	}
+    
+    func updateSinglePointLog(pointLog: PointLog, indexPath: IndexPath) {
+        self.notificationLogs[indexPath.row] = pointLog
+        self.tableView.setEditing(false, animated: true)
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Segue to the second view controller

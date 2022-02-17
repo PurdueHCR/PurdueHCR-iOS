@@ -49,7 +49,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         super.viewDidLoad()
         refresher = UIRefreshControl()
         refresher?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher?.addTarget(self, action: #selector(resfreshData), for: .valueChanged)
+        refresher?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refresher
         
 		self.pointSystem = self.sortIntoPointGroupsWithPermission(arr: DataManager.sharedManager.pointTypes)
@@ -157,7 +157,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
         if let index = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: index, animated: true)
         }
-        resfreshData()
+        refreshData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -310,7 +310,7 @@ class PointOptionViewController: UITableViewController, UISearchResultsUpdating{
     
     
     
-    @objc func resfreshData(){
+    @objc func refreshData(){
 		DataManager.sharedManager.refreshSystemPreferences { (sysPref) in
 			if (sysPref != nil) {
 				DataManager.sharedManager.refreshPointTypes(onDone: {(types:[PointType]) in
