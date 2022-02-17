@@ -11,5 +11,6 @@ import UIKit
 class AddEventBarButton: UIBarButtonItem {
     override func awakeFromNib() {
         super.awakeFromNib()
+        
     }
 }

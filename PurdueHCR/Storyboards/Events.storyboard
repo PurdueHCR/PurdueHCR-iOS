@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--EventsViewController-->
+        <!--EventViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="EventsViewController" id="BYZ-38-t0r" customClass="EventViewController" customModule="PurdueHCR" sceneMemberID="viewController">
+                <viewController title="EventsViewController" id="BYZ-38-t0r" userLabel="EventViewController" customClass="EventViewController" customModule="PurdueHCR" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="55J-3l-nms">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1109,6 +1109,25 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vhn-cW-sOH" id="TGV-Jt-2wo">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2VN-8P-2CJ">
+                                                    <rect key="frame" x="174" y="0.0" width="67" height="48"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="tinted">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="Go to events"/>
+                                                        </attributedString>
+                                                        <color key="baseForegroundColor" systemColor="systemGreenColor"/>
+                                                        <color key="baseBackgroundColor" systemColor="systemPinkColor"/>
+                                                    </buttonConfiguration>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2VN-8P-2CJ" firstAttribute="leading" secondItem="TGV-Jt-2wo" secondAttribute="leading" constant="174" id="PvB-II-f2P"/>
+                                                <constraint firstAttribute="trailing" secondItem="2VN-8P-2CJ" secondAttribute="trailing" constant="173" id="Y8V-ft-W9d"/>
+                                                <constraint firstAttribute="bottom" secondItem="2VN-8P-2CJ" secondAttribute="bottom" constant="13" id="q4k-it-5e4"/>
+                                                <constraint firstItem="2VN-8P-2CJ" firstAttribute="top" secondItem="TGV-Jt-2wo" secondAttribute="top" id="uYk-Kj-0l6"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -1127,6 +1146,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="GoToEvents" destination="qBL-VF-HiT" id="oCR-mC-Z6u"/>
                         <outlet property="attendeeLabel" destination="JM3-Xx-ZoR" id="ew5-nB-L37"/>
                         <outlet property="dateLabel" destination="dcW-XV-Qwx" id="ePp-LB-Muj"/>
                         <outlet property="detailsLabel" destination="p3p-g0-a7u" id="deK-wN-aX9"/>
@@ -1180,6 +1200,12 @@
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
