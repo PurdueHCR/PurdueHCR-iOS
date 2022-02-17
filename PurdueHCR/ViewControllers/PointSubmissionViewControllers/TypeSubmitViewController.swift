@@ -34,7 +34,6 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		typeLabel.sizeToFit()
 		descriptionLabel.text = type!.pointDescription
 		descriptionLabel.sizeToFit()
-        descriptionLabel.textColor = UIColor.darkGray
         let firstName = User.get(.firstName) as! String
 		let lastName = User.get(.lastName) as! String
 		nameLabel.text = firstName + " " + lastName
@@ -45,7 +44,12 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 //        descriptionField.layer.borderColor = UIColor.lightGray.cgColor
 //        descriptionField.layer.borderWidth = 1
 
-        descriptionField.backgroundColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+//        if #available(iOS 13.0, *) {
+//            descriptionField.backgroundColor = UIColor.systemGray5
+//        } else {
+//            // Fallback on earlier versions
+//            descriptionField.backgroundColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+//        }
         descriptionField.layer.cornerRadius = DefinedValues.radius
         
 		//descriptionField.becomeFirstResponder()
@@ -191,7 +195,11 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		}
 			
 		else if textView.textColor == UIColor.lightGray && !text.isEmpty {
-			textView.textColor = UIColor.black
+            if #available(iOS 13.0, *) {
+                textView.textColor = UIColor.label
+            } else {
+                textView.textColor = .black
+            }
 			textView.text = ""
 		}
 

@@ -52,6 +52,13 @@ class HouseCompetitionOverviewTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        
+        if #available(iOS 13.0, *) {
+            settingsButton.tintColor = .label
+        } else {
+            settingsButton.tintColor = .black
+        }
     
     }
 

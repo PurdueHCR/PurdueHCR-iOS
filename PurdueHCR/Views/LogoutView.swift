@@ -64,7 +64,6 @@ class LogoutView: UIView {
     
     func configureButtonStyle(button: UIButton) {
         button.tintColor = UIColor.white
-        button.backgroundColor = DefinedValues.systemBlue
         button.layer.cornerRadius = DefinedValues.radius
     }
     

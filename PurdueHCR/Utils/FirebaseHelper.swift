@@ -40,6 +40,22 @@ class FirebaseHelper {
 //    let GET_POINT_LOG_BY_ID_URL = "http://localhost:5001/purdue-hcr-test/uscentral1/point_log/getPointLogById"
     
     //----- TEST URLS ------//
+    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
+    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
+    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
+    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/updateSubmissionPointType"
+    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/getPointLogById"
+    let CREATE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
+    let UPDATE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
+    let DELETE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
+    
+
+//    ----- TEST URLS ------//
 //    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
 //    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
 //    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
@@ -48,20 +64,10 @@ class FirebaseHelper {
 //    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
 //    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
 //    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
-//    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/updateSubmissionPointType"
-//    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/getPointLogById"
+    //    let CREATE_REWARD_URL = ""
+    //    let UPDATE_REWARD_URL = ""
+    //    let DELETE_REWARD_URL = ""
     
-    //------ PRODUCTION URLS ------//
-    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
-    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
-    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
-    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
-    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
-    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/updateSubmissionPointType"
-    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/getPointLogById"
     
     init() {
         db = Firestore.firestore()
@@ -635,10 +641,11 @@ class FirebaseHelper {
             } else {
                 for rewardDocument in querySnapshot!.documents
                 {
+                    let downloadURL = rewardDocument.data()["DownloadURL"] as! String
                     let requiredPPR = rewardDocument.data()["RequiredPPR"] as! Int
                     let fileName = rewardDocument.data()["FileName"] as! String
                     let name = rewardDocument.data()["Name"] as! String
-                    rewardArray.append(Reward(requiredPPR: requiredPPR, fileName: fileName, rewardName: name))
+                    rewardArray.append(Reward(requiredPPR: requiredPPR, fileName: fileName, rewardName: name, downloadURL: downloadURL, id: rewardDocument.documentID))
                 }
                 rewardArray.sort(by: {$0.requiredPPR < $1.requiredPPR})
                 onDone(rewardArray)
@@ -1178,51 +1185,94 @@ class FirebaseHelper {
         }
     }
     
-    func deleteReward(reward:Reward, onDone:@escaping (_ err:Error?) -> Void){
+    func deleteReward(reward:Reward, onDone:@escaping (_ err:Error?) -> Void) {
+        
+        // todo: when setting url for AF, add the reward ID to the end of the request
         var ref: DocumentReference? = nil
-        ref = self.db.collection("Rewards").document(reward.rewardName)
+        ref = self.db.collection("Rewards").document(reward.id)
         ref!.delete { (error) in
             onDone(error)
         }
     }
     
-    func deletePictureWithFilename(filename:String,onDone:@escaping ( _ err:Error?) ->Void ){
+    func deletePictureWithFilename(filename:String,onDone:@escaping ( _ err:Error?) ->Void ) {
         let pathReference = storage.reference(withPath: filename)
         pathReference.delete { (error) in
             onDone(error)
         }
     }
     
-    func uploadImageWithFilename(filename:String,img:UIImage, onDone:@escaping (_ err:Error?)->Void){
+    func uploadImageWithFilename(filename:String,img:UIImage, onDone:@escaping (_ downloadURL: String, _ err:Error?)->Void){
         let ref = self.storage.reference().child(filename)
         let data = img.pngData()!
         print("DATA SIZE: ",data.count)
         if(data.count > 20 * 1024 * 1024){
-            onDone(NSError(domain: "Image is too large", code: 1, userInfo: nil))
+            onDone("", NSError(domain: "Image is too large", code: 1, userInfo: nil))
         }
         else{
             ref.putData(data, metadata: nil) { (storage, error) in
-                onDone(error)
+                ref.downloadURL { url, err in
+                    onDone(url!.absoluteString, err)
+                }
             }
         }
         
     }
     
     func createReward(reward:Reward, onDone:@escaping (_ err:Error?)->Void){
-        var ref: DocumentReference? = nil
-        ref = self.db.collection("Rewards").document(reward.rewardName)
-        ref!.getDocument { (document, error) in
-            if let document = document, document.exists {
-                onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
-            } else {
-                ref!.setData([
-                    "FileName" : reward.fileName,
-                    "RequiredPPR" : reward.requiredPPR
-                ]){ err in
-                    onDone(err)
+        
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(err)
+            }
+            let headerVal = "Bearer " + (token ?? "")
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
+            let url = URL(string: self.UPDATE_REWARD_URL)!
+            let parameters : [String : Any] = ["id":reward.id, "fileName":reward.fileName, "downloadURL":reward.downloadURL, "name":reward.rewardName, "requiredPPR":reward.requiredPPR]
+            AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Int] {
+                    onDone(nil)
                 }
             }
         }
+        
+        
+//        var ref: DocumentReference? = nil
+//        ref = self.db.collection("Rewards").document(reward.rewardName)
+//        ref!.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                onDone(NSError(domain: "Document Exists", code: 1, userInfo: nil))
+//            } else {
+//                ref!.setData([
+//                    "Name" : reward.rewardName,
+//                    "FileName" : reward.fileName,
+//                    "RequiredPPR" : reward.requiredPPR
+//                ]){ err in
+//                    onDone(err)
+//                }
+//            }
+//        }
+    }
+    
+    func updateReward(reward:Reward, onDone:@escaping (_ err:Error?)->Void){
+        
+        DataManager.sharedManager.getAuthorizationToken { (token, err) in
+            if let err = err {
+                onDone(err)
+            }
+            let headerVal = "Bearer " + (token ?? "")
+            let header = HTTPHeader(name: "Authorization", value: headerVal)
+            let headers = HTTPHeaders(arrayLiteral: header)
+            let url = URL(string: self.UPDATE_REWARD_URL)!
+            let parameters : [String : Any] = ["id":reward.id, "fileName":reward.fileName, "downloadURL":reward.downloadURL, "name":reward.rewardName, "requiredPPR":reward.requiredPPR]
+            AF.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+                if let result = response.value as? [String : Int] {
+                    onDone(nil)
+                }
+            }
+        }
+        
     }
     
     // Event Functions

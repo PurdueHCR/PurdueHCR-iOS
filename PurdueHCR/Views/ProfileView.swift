@@ -62,6 +62,7 @@ class ProfileView: UIView {
         addSubview(backgroundView)
         
         backgroundView.frame = self.bounds
+        backgroundView.layer.cornerRadius = DefinedValues.radius
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.switchRankViews(_:)))
@@ -101,24 +102,35 @@ class ProfileView: UIView {
         let houseName = User.get(.house) as! String
        
         if(houseName == "Platinum"){
-            houseImage = UIImage.init(imageLiteralResourceName: "Platinum").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            houseImage = #imageLiteral(resourceName: "Platinum").withRenderingMode(.alwaysOriginal)
+//            UIImage.init(imageLiteralResourceName: "Platinum").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
         }
         else if(houseName == "Copper"){
-            houseImage = UIImage.init(imageLiteralResourceName: "Copper").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            houseImage = #imageLiteral(resourceName: "Copper").withRenderingMode(.alwaysOriginal)
+            
+//            UIImage.init(imageLiteralResourceName: "Copper").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
         }
         else if(houseName == "Palladium"){
-            houseImage = UIImage.init(imageLiteralResourceName: "Palladium").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            houseImage = #imageLiteral(resourceName: "Palladium").withRenderingMode(.alwaysOriginal)
+            //UIImage.init(imageLiteralResourceName: "Palladium").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
         }
         else if(houseName == "Silver"){
-            houseImage = UIImage.init(imageLiteralResourceName: "Silver").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            houseImage = #imageLiteral(resourceName: "Silver").withRenderingMode(.alwaysOriginal)
+            //UIImage.init(imageLiteralResourceName: "Silver").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
         }
         else if(houseName == "Titanium"){
-            houseImage = UIImage.init(imageLiteralResourceName: "Titanium").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            houseImage = #imageLiteral(resourceName: "Titanium").withRenderingMode(.alwaysOriginal)
+            //UIImage.init(imageLiteralResourceName: "Titanium").withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
         }
         houseEmblem.setImage(houseImage, for: .normal)
         houseEmblem.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         houseEmblem.isEnabled = true
         houseEmblem.imageView?.alpha = 1.0
+        if #available(iOS 13.0, *) {
+            houseEmblem.backgroundColor = UIColor.systemBackground
+        } else {
+            // Fallback on earlier versions
+        }
         
         var houses = DataManager.sharedManager.getHouses()!
         let house = houses.remove(at: houses.firstIndex(of: House(id: houseName, points: 0, hexColor:""))!)
@@ -203,7 +215,11 @@ class ProfileView: UIView {
         let width : Int = Int(parent.view.frame.width - 70)
 
         let contentView = UIView()
-        contentView.backgroundColor = UIColor.white
+        if #available(iOS 13.0, *) {
+            contentView.backgroundColor = .systemBackground
+        } else {
+            contentView.backgroundColor = .white
+        }
         contentView.layer.cornerRadius = DefinedValues.radius
         
         p = PopupView.init(contentView: contentView)
@@ -214,7 +230,11 @@ class ProfileView: UIView {
         let codesTitle = UILabel(frame: CGRect(x: 0, y: lastPosition, width: width, height: 20))
         codesTitle.text = "HOUSE CODES"
         codesTitle.font = .systemFont(ofSize: 21, weight: .medium)
-        codesTitle.textColor = UIColor.darkGray
+        if #available(iOS 13.0, *) {
+            codesTitle.textColor = .secondaryLabel
+        } else {
+            codesTitle.textColor = UIColor.darkGray
+        }
         codesTitle.textAlignment = .center
         
         lastPosition += 35

@@ -169,6 +169,13 @@ class HouseTableViewController: UITableViewController {
             self.menu?.hideMenu()
         } else {
             self.menu?.showMenuFromView(self.view)
+            if #available(iOS 13.0, *) {
+                self.menu?.itemColor = .secondarySystemFill
+                self.menu?.itemFontColor = .label
+            } else {
+                self.menu?.itemColor = .white
+                self.menu?.itemFontColor = .black
+            }
         }
     }
     
@@ -180,7 +187,12 @@ class HouseTableViewController: UITableViewController {
         let widthConstraint = NSLayoutConstraint.init(item: contentView, attribute: .width, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: width)
         NSLayoutConstraint.activate([widthConstraint])
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.backgroundColor = UIColor.white
+        if #available(iOS 13.0, *) {
+            contentView.backgroundColor = .secondarySystemFill
+        } else {
+            // Fallback on earlier versions
+            contentView.backgroundColor = .white
+        }
         contentView.layer.cornerRadius = DefinedValues.radius
         contentView.nameLabel?.text = logCount[indexPath.row].name
         contentView.descriptionLabel?.text = logCount[indexPath.row].description

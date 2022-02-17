@@ -375,11 +375,15 @@ class Reward {
     var rewardName: String
     var fileName: String
     var image: UIImage?
+    var downloadURL: String
+    var id: String
     
-    init(requiredPPR:Int, fileName:String, rewardName:String){
+    init(requiredPPR:Int, fileName:String, rewardName:String, downloadURL: String, id:String){
         self.requiredPPR = requiredPPR
         self.fileName = fileName
         self.rewardName = rewardName
+        self.downloadURL = downloadURL
+        self.id = id
     }
     
 }

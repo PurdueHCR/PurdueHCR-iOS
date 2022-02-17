@@ -39,11 +39,21 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		self.hideKeyboardWhenTappedAround()
 		
 		self.imageView.image = #imageLiteral(resourceName: "emblem")
-		self.imageView.layer.shadowColor = UIColor.gray.cgColor
-		self.imageView.layer.shadowRadius = 2
-		self.imageView.layer.shadowOpacity = 100
-		self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
-		
+        if #available(iOS 12.0, *), #available(iOS 13.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+
+            } else {
+                self.imageView.layer.shadowColor = UIColor.gray.cgColor
+                self.imageView.layer.shadowRadius = 2
+                self.imageView.layer.shadowOpacity = 100
+                self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+            }
+        } else {
+            self.imageView.layer.shadowColor = UIColor.gray.cgColor
+            self.imageView.layer.shadowRadius = 2
+            self.imageView.layer.shadowOpacity = 100
+            self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+        }
 		activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.gray
@@ -58,13 +68,22 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 		
         username.layer.cornerRadius = 10
         username.layer.masksToBounds = true
-		username.backgroundColor = systemGray5
+		//username.backgroundColor = systemGray5
+        if #available(iOS 13.0, *) {
+            username.backgroundColor = UIColor.systemGray5
+        } else {
+         username.backgroundColor = systemGray5
+        }
         //username.layer.borderWidth = 1
         //username.layer.borderColor = UIColor.lightGray.cgColor
 		username.tag = 0
         password.layer.cornerRadius = 10
         password.layer.masksToBounds = true
-		password.backgroundColor = systemGray5
+        if #available(iOS 13.0, *) {
+            password.backgroundColor = UIColor.systemGray5
+        } else {
+         password.backgroundColor = systemGray5
+        }
         //password.layer.borderWidth = 1
         //password.layer.borderColor = UIColor.lightGray.cgColor
 		password.tag = 1

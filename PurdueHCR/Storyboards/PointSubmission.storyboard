@@ -16,14 +16,14 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="3" id="SYW-5G-dIj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="scB-PW-YJU">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="255"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxG-nO-IHC">
                                     <rect key="frame" x="10" y="34.666666666666657" width="192" height="105"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                     <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="5" maxY="10"/>
                                     <state key="normal">
                                         <color key="titleColor" systemColor="labelColor"/>
@@ -31,7 +31,7 @@
                                 </button>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T56-zh-yfn">
                                     <rect key="frame" x="212" y="34.666666666666657" width="192" height="105"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="enY-fe-bcA"/>
                                     </constraints>
@@ -42,7 +42,7 @@
                                 </button>
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EUF-zY-xVw">
                                     <rect key="frame" x="10" y="149.66666666666666" width="192" height="105.33333333333334"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="ivQ-e7-stZ"/>
                                     </constraints>
@@ -84,7 +84,7 @@
                                 </label>
                                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Nr-zoQ">
                                     <rect key="frame" x="212" y="149.66666666666666" width="192" height="105.33333333333334"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="jCp-KT-0Iy"/>
                                     </constraints>
@@ -114,7 +114,7 @@
                                 </label>
                             </subviews>
                             <viewLayoutGuide key="safeArea" id="Tpu-Nm-riX"/>
-                            <color key="backgroundColor" red="0.89787995819999999" green="0.89772564170000002" blue="0.91833287480000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="T56-zh-yfn" firstAttribute="top" secondItem="cxG-nO-IHC" secondAttribute="top" id="17v-TH-TSa"/>
                                 <constraint firstItem="cxG-nO-IHC" firstAttribute="top" secondItem="ZeL-by-2gK" secondAttribute="bottom" constant="2" id="1Lw-3h-PmZ"/>
@@ -204,7 +204,9 @@
         <scene sceneID="ymG-0j-Wqh">
             <objects>
                 <navigationController storyboardIdentifier="Point_Submission_Initial" id="GaJ-ht-lTq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Submit Points" image="submit" selectedImage="submit" id="VQv-Mm-WXr"/>
+                    <tabBarItem key="tabBarItem" title="Submit Points" image="submit" selectedImage="submit" id="VQv-Mm-WXr">
+                        <color key="badgeColor" systemColor="systemBackgroundColor"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z1Z-nv-EXB">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -253,7 +255,6 @@
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="rgC-LL-GC3"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                        <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zbW-t0-8sl">
@@ -289,7 +290,7 @@
                                                         </constraints>
                                                     </activityIndicatorView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="N1k-ec-IwP" firstAttribute="top" secondItem="zbW-t0-8sl" secondAttribute="bottom" constant="5" id="5nq-uY-poc"/>
                                                     <constraint firstAttribute="trailing" secondItem="zbW-t0-8sl" secondAttribute="trailing" constant="15" id="6eC-wF-20c"/>
@@ -311,14 +312,15 @@
                                                 </constraints>
                                             </view>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="descriptionField" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fGY-ye-561" userLabel="descriptionField">
-                                                <rect key="frame" x="20" y="326" width="335" height="190"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+
+                                                <rect key="frame" x="20" y="317" width="335" height="190"/>
+                                                <color key="backgroundColor" systemColor="systemFillColor"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="descriptionField" label="descriptionField"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="190" id="88W-6v-Gyo"/>
                                                 </constraints>
                                                 <inset key="scrollIndicatorInsets" minX="1" minY="1" maxX="1" maxY="1"/>
-                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                 <userDefinedRuntimeAttributes>
@@ -346,7 +348,7 @@
                                                 </date>
                                             </datePicker>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="HvT-ph-Y7E" firstAttribute="top" secondItem="BhU-ko-xyN" secondAttribute="bottom" constant="12" id="CSC-jP-OSh"/>
                                             <constraint firstAttribute="bottom" secondItem="fGY-ye-561" secondAttribute="bottom" constant="20" id="DbC-jz-faf"/>
@@ -363,6 +365,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="CNA-Qv-Ft3" firstAttribute="top" secondItem="YGC-eD-Xkz" secondAttribute="top" id="333-qT-ln2"/>
                                     <constraint firstAttribute="trailing" secondItem="CNA-Qv-Ft3" secondAttribute="trailing" id="Khc-ys-m0J"/>
@@ -373,7 +376,7 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MgS-Vq-1xT"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="YGC-eD-Xkz" firstAttribute="leading" secondItem="MgS-Vq-1xT" secondAttribute="leading" id="7ui-SB-axi"/>
                             <constraint firstItem="CNA-Qv-Ft3" firstAttribute="width" secondItem="v9f-tb-ZSh" secondAttribute="width" id="ATP-Et-dtz"/>
@@ -408,11 +411,20 @@
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="secondarySystemGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

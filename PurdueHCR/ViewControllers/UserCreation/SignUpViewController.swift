@@ -41,10 +41,23 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 		self.hideKeyboardWhenTappedAround()
 		
 		self.imageView.image = #imageLiteral(resourceName: "emblem")
-		self.imageView.layer.shadowColor = UIColor.gray.cgColor
-		self.imageView.layer.shadowRadius = 2
-		self.imageView.layer.shadowOpacity = 100
-		self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+
+        if #available(iOS 12.0, *), #available(iOS 13.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+//                self.imageView.image = nil
+            } else {
+                self.imageView.layer.shadowColor = UIColor.gray.cgColor
+                self.imageView.layer.shadowRadius = 2
+                self.imageView.layer.shadowOpacity = 100
+                self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+            }
+        } else {
+            self.imageView.layer.shadowColor = UIColor.gray.cgColor
+            self.imageView.layer.shadowRadius = 2
+            self.imageView.layer.shadowOpacity = 100
+            self.imageView.layer.shadowOffset = CGSize.init(width: 0, height: 5)
+        }
+        
 		
 		DataManager.sharedManager.refreshHouses(onDone: {(h:[House]) in
             self.houses = h
@@ -62,17 +75,30 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 		
         emailField.layer.cornerRadius = 10
         emailField.layer.masksToBounds = true
-		emailField.backgroundColor = DefinedValues.systemGray5
+        if #available(iOS 13.0, *) {
+            emailField.backgroundColor = UIColor.systemGray5
+        } else {
+            emailField.backgroundColor = DefinedValues.systemGray5
+        }
         //emailField.layer.borderWidth = 1
         //emailField.layer.borderColor = UIColor.lightGray.cgColor
         passwordField.layer.cornerRadius = 10
         passwordField.layer.masksToBounds = true
-		passwordField.backgroundColor = DefinedValues.systemGray5
+        if #available(iOS 13.0, *) {
+            passwordField.backgroundColor = UIColor.systemGray5
+        } else {
+            passwordField.backgroundColor = DefinedValues.systemGray5
+        }
+		//passwordField.backgroundColor = DefinedValues.systemGray5
         //passwordField.layer.borderWidth = 1
         //passwordField.layer.borderColor = UIColor.lightGray.cgColor
         verifyPasswordField.layer.cornerRadius = 10
         verifyPasswordField.layer.masksToBounds = true
-		verifyPasswordField.backgroundColor = DefinedValues.systemGray5
+        if #available(iOS 13.0, *) {
+            verifyPasswordField.backgroundColor = UIColor.systemGray5
+        } else {
+            verifyPasswordField.backgroundColor = DefinedValues.systemGray5
+        }
         //verifyPasswordField.layer.borderWidth = 1
         //verifyPasswordField.layer.borderColor = UIColor.lightGray.cgColor
         signUpButton.layer.cornerRadius = 10

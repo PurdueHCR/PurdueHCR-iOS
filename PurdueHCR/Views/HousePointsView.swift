@@ -55,13 +55,21 @@ class HousePointsView: UIView {
         var houses = DataManager.sharedManager.getHouses()!
         self.house = houses.remove(at: houses.firstIndex(of: House(id: User.get(.house) as! String, points: 0,hexColor:""))!)
         
-        circleProgress.progressColors = [AppUtils.hexStringToUIColor(hex: house.hexColor),UIColor.white]
+        circleProgress.progressColors = [AppUtils.hexStringToUIColor(hex: house.hexColor), UIColor.white]
+        if #available(iOS 13.0, *) {
+            // Make ring white for dark mode
+            circleProgress.trackColor = .systemFill
+        }
         let reward = getCurrentReward()
 		let prevRewardValue = getPrevRewardValue()
 		print("Previous reward value: ", prevRewardValue)
         if(reward != nil){
 			nextRewardLabel.text = reward!.rewardName
-            rewardImageView?.image = reward!.image
+            if #available(iOS 13.0, *) {
+                rewardImageView?.image = reward!.image?.withTintColor(.label)
+            } else {
+                rewardImageView?.image = reward!.image
+            }
             circleProgress.angle = ((self.house.getPPR() - Double(prevRewardValue)) / Double(reward!.requiredPPR - prevRewardValue)) * 360.0
             var pointsToGo = Double(reward!.requiredPPR) - (Double(self.house.totalPoints) / Double(self.house.numResidents))
             // Round to two decimal places

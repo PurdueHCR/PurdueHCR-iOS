@@ -16,7 +16,7 @@ import PopupKit
 class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
 	@IBOutlet weak var settingsButton: UIBarButtonItem!
-	@IBOutlet weak var notificationsButton: UIButton!
+	@IBOutlet weak var notificationsButton: UIBarButtonItem!
     @IBOutlet var backgroundTable: UITableView!
     
     var refresher: UIRefreshControl?
@@ -39,8 +39,9 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         
+        
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         
         // Comment out when what's new page not needed
         let defaults = UserDefaults.standard
@@ -111,10 +112,10 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 		if (self.navigationItem.rightBarButtonItems != nil) {
 			DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs: [PointLog]) in
 				if (pointLogs.capacity > 0) {
-					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
+                    self.notificationsButton.image = #imageLiteral(resourceName: "BellNotification")
 				}
 				else {
-					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+                    self.notificationsButton.image = #imageLiteral(resourceName: "Bell")
 				}
 			})
 		}
@@ -153,12 +154,12 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
         })
 		if (navigationItem.rightBarButtonItems != nil) {
 			DataManager.sharedManager.getMessagesForUser(onDone: { (pointLogs: [PointLog]) in
-				if (pointLogs.capacity > 0) {
-					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
-				}
-				else {
-					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
-				}
+//				if (pointLogs.capacity > 0) {
+//					self.notificationsButton.setImage(#imageLiteral(resourceName: "BellNotification"), for: .normal)
+//				}
+//				else {
+//					self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+//				}
                 self.messageLogs = pointLogs
                 self.messageLogs.sort(by: {$0.dateSubmitted!.dateValue() > $1.dateSubmitted!.dateValue()})
 			})
@@ -220,7 +221,11 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 //                profileView?.layer.shadowOffset = CGSize.zero
 //                profileView?.layer.shadowRadius = shadowRadius
                 profileView?.layer.cornerRadius = DefinedValues.radius
-                profileView?.backgroundColor = UIColor.white
+                if #available(iOS 13.0, *) {
+                    profileView?.backgroundColor = UIColor.systemBackground
+                } else {
+                    profileView?.backgroundColor = UIColor.white
+                }
                 profileView?.clipsToBounds = false
                 profileView?.layer.masksToBounds = false
                 profileView?.delegate = self
@@ -250,7 +255,11 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
                 compareView?.layer.cornerRadius = DefinedValues.radius
                 compareView?.clipsToBounds = false
                 compareView?.layer.masksToBounds = false
-                compareView?.backgroundColor = UIColor.white
+                if #available(iOS 13.0, *) {
+                    compareView?.backgroundColor = UIColor.systemBackground
+                } else {
+                    compareView?.backgroundColor = UIColor.white
+                }
             }
             cell.contentView.clipsToBounds = false
             cell.clipsToBounds = false
@@ -298,7 +307,11 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
 //                topScorersView?.layer.shadowOffset = CGSize.zero
 //                topScorersView?.layer.shadowRadius = shadowRadius
                 topScorersView?.layer.cornerRadius = DefinedValues.radius
-                //topScorersView?.backgroundColor = UIColor.white
+                if #available(iOS 13.0, *) {
+                    topScorersView?.backgroundColor = UIColor.systemBackground
+                } else {
+                    topScorersView?.backgroundColor = UIColor.white
+                }
                 topScorersView?.autoresizingMask = [.flexibleHeight]
                 topScorersView?.sizeToFit()
             }
@@ -361,7 +374,7 @@ class HouseProfileViewController: UITableViewController, CustomViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "show_notifications") {
-            self.notificationsButton.setImage(#imageLiteral(resourceName: "Bell"), for: .normal)
+            self.notificationsButton.image = UIImage(imageLiteralResourceName: "Bell")
             let nextVC = segue.destination as! NotificationsTableViewController
             nextVC.displayedLogs = messageLogs
         }
