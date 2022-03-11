@@ -64,6 +64,8 @@ class FirebaseHelper {
     let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
     let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
     let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
+    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/updateSubmissionPointType"
+    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/getPointLogById"
     let CREATE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
     let UPDATE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
     let DELETE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
