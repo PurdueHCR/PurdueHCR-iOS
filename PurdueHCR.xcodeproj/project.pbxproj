@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
+		AA23FBEF27CD947900A451CA /* QRSelectPointTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA23FBEE27CD947900A451CA /* QRSelectPointTypeTableViewController.swift */; };
+		AA23FBF127CD970C00A451CA /* QRSelectPointTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA23FBF027CD970C00A451CA /* QRSelectPointTypeTableViewCell.swift */; };
 		AA7A7F8B251182FA002BD54B /* EventTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */; };
 		AA7C742B25DC64CE007A8076 /* SelectPointTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7C742A25DC64CE007A8076 /* SelectPointTypeTableViewController.swift */; };
 		AA95F66525DF02FC0003BEDF /* SelectPointTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95F66425DF02FC0003BEDF /* SelectPointTypeTableViewCell.swift */; };
@@ -149,6 +151,8 @@
 		172F6609F4B14DA0FA8D754A /* Pods_PurdueHCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurdueHCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F1172101702388B6147D7A8 /* Pods-PurdueHCRUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.release.xcconfig"; sourceTree = "<group>"; };
 		39366264BA748CDB712098B6 /* Pods-PurdueHCRUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurdueHCRUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PurdueHCRUITests/Pods-PurdueHCRUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AA23FBEE27CD947900A451CA /* QRSelectPointTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSelectPointTypeTableViewController.swift; sourceTree = "<group>"; };
+		AA23FBF027CD970C00A451CA /* QRSelectPointTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSelectPointTypeTableViewCell.swift; sourceTree = "<group>"; };
 		AA7A7F8825115CA5002BD54B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AA7A7F8A251182FA002BD54B /* EventTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		AA7C742A25DC64CE007A8076 /* SelectPointTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPointTypeTableViewController.swift; sourceTree = "<group>"; };
@@ -539,6 +543,8 @@
 		D39D442E210E73E70030F424 /* QRCodeViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AA23FBF027CD970C00A451CA /* QRSelectPointTypeTableViewCell.swift */,
+				AA23FBEE27CD947900A451CA /* QRSelectPointTypeTableViewController.swift */,
 				D39D4434210E748A0030F424 /* LinkCodesTableViewController.swift */,
 				D39D442C210E5CEB0030F424 /* LinkCodeViewController.swift */,
 				D39D442A210E52690030F424 /* QRCodeGeneratorViewController.swift */,
@@ -929,6 +935,7 @@
 				D39D442D210E5CEB0030F424 /* LinkCodeViewController.swift in Sources */,
 				B5AE2D4923DCA34F00B2323C /* FirebaseCollectionListener.swift in Sources */,
 				D30FBEEF20FC0B13000DD221 /* ProfileView.swift in Sources */,
+				AA23FBF127CD970C00A451CA /* QRSelectPointTypeTableViewCell.swift in Sources */,
 				D30FC90620DF35D800201E74 /* HouseProfileViewController.swift in Sources */,
 				B5ED711324A7D7C400080A52 /* EventViewController.swift in Sources */,
 				D3D062B920E7F75B00E8B3A3 /* Data.swift in Sources */,
@@ -939,6 +946,7 @@
 				B5AE2D4B23DCA35D00B2323C /* FirebaseDocumentListener.swift in Sources */,
 				B549E50F279A3EA9008E77C8 /* EditSubmissionPointTypeViewController.swift in Sources */,
 				D3912A73219CE7960002E7C7 /* RECPointCreationTableViewController.swift in Sources */,
+				AA23FBEF27CD947900A451CA /* QRSelectPointTypeTableViewController.swift in Sources */,
 				B5720C5C25F85D8800E83C47 /* LaundryViewController.swift in Sources */,
 				B5B7E98723D8CF5C00CE1866 /* HousePointsHistoryViewController.swift in Sources */,
 				B52FD0CB22B849AC009682CB /* UserPointsTableViewController.swift in Sources */,
@@ -1155,7 +1163,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PurdueHCR/PurdueHCRDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SLB9ULV5R2;
 				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1163,7 +1171,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1179,7 +1187,7 @@
 				CODE_SIGN_ENTITLEMENTS = PurdueHCR/PurdueHCRRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SLB9ULV5R2;
 				INFOPLIST_FILE = PurdueHCR/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1187,7 +1195,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = DecodeProgramming.HCRPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
