@@ -18,6 +18,7 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     @IBOutlet weak var gCalExportButton: UIButton!
     @IBOutlet weak var editEventButton: UIBarButtonItem!
     
+    @IBOutlet weak var GoToEvent: UIButton!
     //
     @IBOutlet weak var GoToEvents: UIButton!
     
@@ -55,6 +56,8 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
         
         iCalExportButton.layer.cornerRadius = DefinedValues.radius
         gCalExportButton.layer.cornerRadius = DefinedValues.radius
+        GoToEvent.layer.cornerRadius = DefinedValues.radius
+        
         
     }
     
