@@ -400,6 +400,29 @@ class EventViewController: UITableViewController {
         }
     }
     
+    // Reference code
+    
+    // This function is called before the segue from selected ROW
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//        // get a reference to the second view controller
+//        let nextViewController = segue.destination as! TypeSubmitViewController
+//
+//        let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+//
+//        if (indexPath != nil) {
+//            if(isFiltering()){
+//                nextViewController.type = filteredPoints[(indexPath?.row)!]
+//            }
+//            else{
+//                nextViewController.type = pointSystem[(indexPath?.section)!].points[(indexPath?.row)!]
+//            }
+//        } else {
+//            nextViewController.type = tappedPoint
+//        }
+//    }
+    
+    
     private func moveAndResizeImage(for height: CGFloat) {
         let coeff: CGFloat = {
             let delta = height - Const.NavBarHeightSmallState
