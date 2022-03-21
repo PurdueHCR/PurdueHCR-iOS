@@ -10,6 +10,7 @@ import Foundation
 import Firebase
 import Alamofire
 import NotificationBannerSwift
+import UIKit
 
 
 class FirebaseHelper {
@@ -40,35 +41,35 @@ class FirebaseHelper {
 //    let GET_POINT_LOG_BY_ID_URL = "http://localhost:5001/purdue-hcr-test/uscentral1/point_log/getPointLogById"
     
     //----- TEST URLS ------//
-//    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
-//    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
-//    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
-//    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
-//    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
-//    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
-//    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
-//    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
-//    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/updateSubmissionPointType"
-//    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/getPointLogById"
-//    let CREATE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
-//    let UPDATE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
-//    let DELETE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
+    let CREATE_QR_LINK = "https://us-central1-purdue-hcr-test.cloudfunctions.net/link/create"
+    let HANDLE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/handle"
+    let RANK_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/auth-rank"
+    let SUBMIT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/user/submitPoint"
+    let ADD_MESSAGE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/messages"
+    let GET_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/feed"
+    let ADD_EVENT_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/event/"
+    let GRANT_AWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/competition/houseAward"
+    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/updateSubmissionPointType"
+    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/point_log/getPointLogById"
+    let CREATE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
+    let UPDATE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
+    let DELETE_REWARD_URL = "https://us-central1-purdue-hcr-test.cloudfunctions.net/rewards/"
     
 
 //    ----- PRODUCTION URLS ------//
-    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
-    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
-    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
-    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
-    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
-    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
-    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
-    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
-    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/updateSubmissionPointType"
-    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/getPointLogById"
-    let CREATE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
-    let UPDATE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
-    let DELETE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
+//    let CREATE_QR_LINK = "https://us-central1-hcr-points.cloudfunctions.net/link/create"
+//    let HANDLE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/handle"
+//    let RANK_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/auth-rank"
+//    let SUBMIT_URL = "https://us-central1-hcr-points.cloudfunctions.net/user/submitPoint"
+//    let ADD_MESSAGE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/messages"
+//    let GET_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/feed"
+//    let ADD_EVENT_URL = "https://us-central1-hcr-points.cloudfunctions.net/event/"
+//    let GRANT_AWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/competition/houseAward"
+//    let UPDATE_POINT_LOG_TYPE_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/updateSubmissionPointType"
+//    let GET_POINT_LOG_BY_ID_URL = "https://us-central1-hcr-points.cloudfunctions.net/point_log/getPointLogById"
+//    let CREATE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
+//    let UPDATE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
+//    let DELETE_REWARD_URL = "https://us-central1-hcr-points.cloudfunctions.net/rewards/"
     
     
     init() {
@@ -1269,8 +1270,18 @@ class FirebaseHelper {
             let url = URL(string: self.UPDATE_REWARD_URL)!
             let parameters : [String : Any] = ["id":reward.id, "fileName":reward.fileName, "downloadURL":reward.downloadURL, "name":reward.rewardName, "requiredPPR":reward.requiredPPR]
             AF.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
-                if let result = response.value as? [String : Int] {
+                
+                switch response.result {
+                case .success:
+                    let banner = NotificationBanner(title: "Reward Updated", subtitle: "\(reward.rewardName): \(reward.requiredPPR) points", style: .success)
+                    banner.duration = 2
+                    banner.show()
                     onDone(nil)
+                case .failure(let error):
+                    let banner = NotificationBanner(title: "Error updating reward", subtitle: "\(error.localizedDescription)", style: .danger)
+                    banner.duration = 2
+                    banner.show()
+                    onDone(error)
                 }
             }
         }

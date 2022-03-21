@@ -118,7 +118,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             return
         }
         guard let pointValue = valueField.text, !pointValue.isEmpty, let value = Int(pointValue) else{
-            self.notify(title: "Failure", subtitle: "Pleade enter a number point value.", style: .danger)
+            self.notify(title: "Failure", subtitle: "Please enter a number point value.", style: .danger)
             topBarButton?.isEnabled = true
             return
         }
@@ -127,7 +127,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         let reward = Reward(requiredPPR: value, fileName: Date().description + rewardName+".png", rewardName: rewardName, downloadURL: "", id:reward!.id)
         DataManager.sharedManager.updateReward(reward: reward, image: image, oldFilename: oldName) { (error) in
             if(error == nil){
-            
+                self.navigationController?.popViewController(animated: true)
             }
             else{
                 self.notify(title: "Failure", subtitle: "Could not update", style: .danger)
