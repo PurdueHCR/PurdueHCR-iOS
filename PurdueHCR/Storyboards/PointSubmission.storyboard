@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oFJ-nJ-PE0">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -203,7 +203,7 @@
         <!--Submit Points-->
         <scene sceneID="ymG-0j-Wqh">
             <objects>
-                <navigationController storyboardIdentifier="Point_Submission_Initial" id="GaJ-ht-lTq" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Point_Submission_Initial" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GaJ-ht-lTq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Submit Points" image="submit" selectedImage="submit" id="VQv-Mm-WXr">
                         <color key="badgeColor" systemColor="systemBackgroundColor"/>
                     </tabBarItem>
@@ -312,8 +312,7 @@
                                                 </constraints>
                                             </view>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="descriptionField" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fGY-ye-561" userLabel="descriptionField">
-
-                                                <rect key="frame" x="20" y="317" width="335" height="190"/>
+                                                <rect key="frame" x="20" y="326" width="335" height="190"/>
                                                 <color key="backgroundColor" systemColor="systemFillColor"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="descriptionField" label="descriptionField"/>
                                                 <constraints>

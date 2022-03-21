@@ -18,6 +18,7 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     @IBOutlet weak var gCalExportButton: UIButton!
     @IBOutlet weak var editEventButton: UIBarButtonItem!
     
+    @IBOutlet weak var GoToEvent: UIButton!
     //
     @IBOutlet weak var GoToEvents: UIButton!
     
@@ -55,6 +56,8 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
         
         iCalExportButton.layer.cornerRadius = DefinedValues.radius
         gCalExportButton.layer.cornerRadius = DefinedValues.radius
+        GoToEvent.layer.cornerRadius = DefinedValues.radius
+        
         
     }
     
@@ -157,7 +160,7 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 9
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -169,11 +172,19 @@ class ViewEventTableViewController: UITableViewController, EKEventEditViewDelega
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("Preparing")
+        print(segue.destination) // PurdueHCR.TypeSubmitViewController
+
         if segue.destination is CreateEventTableViewController {
             let viewController = segue.destination as? CreateEventTableViewController
             viewController?.creating = false
             viewController?.event = event
             viewController?.delegate = delegate
+        }
+        if segue.destination is PurdueHCR.TypeSubmitViewController {
+            print("This works")
+            let viewController = segue.destination as? PurdueHCR.TypeSubmitViewController
+            viewController?.type = event.pointType
+            viewController?.date = event.startDate
         }
     }
     

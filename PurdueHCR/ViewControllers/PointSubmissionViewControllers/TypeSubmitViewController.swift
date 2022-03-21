@@ -27,6 +27,7 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
     var type:PointType?
     var user:User?
 	let placeholder = "Tell us what you did!"
+    var date:Date? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,9 @@ class TypeSubmitViewController: UIViewController, UIScrollViewDelegate, UITextVi
 		descriptionField.text = placeholder
 		descriptionField.textColor = UIColor.lightGray
 		descriptionField.selectedTextRange = descriptionField.textRange(from: descriptionField.beginningOfDocument, to: descriptionField.beginningOfDocument)
-        
+        if date != nil {
+            datePicker.setDate(date!, animated: false)
+        }
 //        descriptionField.layer.borderColor = UIColor.lightGray.cgColor
 //        descriptionField.layer.borderWidth = 1
 
