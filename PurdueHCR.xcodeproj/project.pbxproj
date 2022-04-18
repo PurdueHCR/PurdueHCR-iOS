@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CD4EE26280E1C75001F3048 /* CreateEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ED710F24A7D7C400080A52 /* CreateEventTableViewController.swift */; };
 		76743E43566ADBC9820A7F30 /* Pods_PurdueHCRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9352CC1FB986152D577038 /* Pods_PurdueHCRUITests.framework */; };
 		AA23FBEF27CD947900A451CA /* QRSelectPointTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA23FBEE27CD947900A451CA /* QRSelectPointTypeTableViewController.swift */; };
 		AA23FBF127CD970C00A451CA /* QRSelectPointTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA23FBF027CD970C00A451CA /* QRSelectPointTypeTableViewCell.swift */; };
@@ -998,6 +999,7 @@
 				D3BCD397224C984E0041AB2D /* UITestRHPApprovalPage.swift in Sources */,
 				D3CF6BDE2250264D00D97A0F /* UITestRHPHistoryPage.swift in Sources */,
 				D3BCD383224BE5120041AB2D /* UITestPageBase.swift in Sources */,
+				4CD4EE26280E1C75001F3048 /* CreateEventTableViewController.swift in Sources */,
 				B52B713D2252F02600C46C11 /* UITestRECSystemPreferences.swift in Sources */,
 				D3BCD387224C28910041AB2D /* UITestSignInPage.swift in Sources */,
 				D3BCD391224C6F0C0041AB2D /* UITestHouseOverviewPage.swift in Sources */,

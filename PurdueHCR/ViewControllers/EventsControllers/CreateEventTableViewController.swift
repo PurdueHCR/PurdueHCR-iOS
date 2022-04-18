@@ -9,8 +9,33 @@
 import UIKit
 import Firebase
 
+
+
 class CreateEventTableViewController: UITableViewController, UITextViewDelegate {
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//
+//    }
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//
+//    }
      
+    @objc func keyboardWillShow(sender: NSNotification) {
+        guard let userInfo = sender.userInfo else {return}
+        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        let keyboardFrame = keyboardSize.cgRectValue
+        
+        
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= keyboardFrame.height
+        }
+    }
+
+    @objc func keyboardWillHide(sender: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+
     @IBOutlet weak var newEventName: UITextField!
     @IBOutlet weak var newEventStartDate: UIDatePicker!
     @IBOutlet weak var newEventEndDate: UIDatePicker!
@@ -45,6 +70,16 @@ class CreateEventTableViewController: UITableViewController, UITextViewDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(CreateEventTableViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(CreateEventTableViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+//           NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+    
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil);
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil);
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
                 
